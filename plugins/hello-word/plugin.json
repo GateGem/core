@@ -1,0 +1,8 @@
+{
+    "name":"hello-word",
+    "namespace": "LaraPlatform\\Core\\Theme\\LaraAdmin\\",
+    "titile":"Hello word",
+    "description": "",
+    "author": "LaraPlatform",
+    "required_plugins": []
+}

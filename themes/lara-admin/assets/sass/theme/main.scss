@@ -1,0 +1,16 @@
+.main-page {
+    background-color: var(--bs-gray-100);
+    min-height: 100vh;
+
+    .page-container {
+        min-height: 100vh;
+        padding-left: 240px;
+        -webkit-transition: all 0.2s ease;
+        -o-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+        @media screen and (min-width: 992px) and (max-width: 1439px) {
+            padding-left: 70px;
+        }
+    }
+
+}

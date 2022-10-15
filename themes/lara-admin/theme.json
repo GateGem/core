@@ -1,0 +1,10 @@
+{
+    "name": "lara-admin",
+    "admin": true,
+    "namespace": "LaraPlatform\\Core\\Theme\\LaraAdmin\\",
+    "titile": "lara theme",
+    "description": "",
+    "author": "LaraPlatform",
+    "layout": "layout",
+    "required_plugins": []
+}
