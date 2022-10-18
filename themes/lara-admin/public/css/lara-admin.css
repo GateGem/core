@@ -10832,8 +10832,12 @@ textarea.form-control-lg {
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {
   .main-page .page-container {
-    padding-left: 70px;
+    padding-left: 60px;
   }
+}
+
+.is-sidebar-mini .page-container {
+  padding-left: 60px;
 }
 
 .sidebar {
@@ -10848,7 +10852,7 @@ textarea.form-control-lg {
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {
   .sidebar {
-    width: 70px;
+    width: 60px;
   }
 }
 .sidebar .sidebar-inner {
@@ -10858,10 +10862,25 @@ textarea.form-control-lg {
 .sidebar .sidebar-inner .sidebar-logo {
   border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
   border-right: 1px solid rgba(0, 0, 0, 0.0625);
-  line-height: 0;
   padding: 0 20px;
   transition: all 0.2s ease;
   height: 40px;
+}
+.sidebar .sidebar-inner .sidebar-logo .sidebar-logo-mini {
+  display: none;
+}
+@media screen and (min-width: 992px) and (max-width: 1439px) {
+  .sidebar .sidebar-inner .sidebar-logo .sidebar-logo-mini {
+    display: block;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1439px) {
+  .sidebar .sidebar-inner .sidebar-logo {
+    padding: 0 5px;
+  }
+  .sidebar .sidebar-inner .sidebar-logo .sidebar-logo-none {
+    display: none;
+  }
 }
 .sidebar .sidebar-inner .sidebar-menu {
   border-right: 1px solid rgba(0, 0, 0, 0.0625);
@@ -10873,11 +10892,25 @@ textarea.form-control-lg {
   position: relative;
 }
 
+.is-sidebar-mini .sidebar {
+  width: 60px;
+}
+.is-sidebar-mini .sidebar .sidebar-logo {
+  padding: 0 5px;
+}
+.is-sidebar-mini .sidebar .sidebar-logo .sidebar-logo-none {
+  display: none;
+}
+.is-sidebar-mini .sidebar .sidebar-logo .sidebar-logo-mini {
+  display: block;
+}
+
 .header {
   background-color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
+  height: 40px;
   display: block;
-  margin-bottom: 0;
+  margin: 0;
   padding: 0;
   position: fixed;
   transition: all 0.2s ease;
@@ -10886,14 +10919,15 @@ textarea.form-control-lg {
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {
   .header {
-    width: calc(100% - 70px);
+    width: calc(100% - 60px);
   }
 }
 .header .header-container {
-  height: 45px;
+  height: 100%;
 }
 .header .header-container .nav-left,
 .header .header-container .nav-right {
+  height: 100%;
   list-style: none;
   margin-bottom: 0;
   padding-left: 0;
@@ -10909,4 +10943,8 @@ textarea.form-control-lg {
 }
 .header .header-container .nav-right {
   float: right;
+}
+
+.is-sidebar-mini .header {
+  width: calc(100% - 60px);
 }

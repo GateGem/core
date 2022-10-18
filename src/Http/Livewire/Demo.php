@@ -4,7 +4,7 @@ namespace LaraPlatform\Core\Http\Livewire;
 
 use LaraPlatform\Core\Livewire\Component;
 
-class Dashboard extends Component
+class Demo extends Component
 {
     public $testdata = '';
 
@@ -22,6 +22,6 @@ class Dashboard extends Component
 
     public function render()
     {
-        return view('core::dashboard.index');
+        return view('core::demo');
     }
 }

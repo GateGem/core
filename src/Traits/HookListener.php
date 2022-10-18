@@ -1,28 +1,30 @@
 <?php
 
-namespace LaraPlatform\Core\Supports;
+namespace LaraPlatform\Core\Traits;
 
 use Closure;
 use Illuminate\Support\Arr;
 
-abstract class HookEvent
+trait HookListener
 {
-     /**
+/**
      * Holds the event listeners
+     *
      * @var array
      */
     protected $listeners = [];
 
     /**
      * Adds a listener
-     * @param string|array $hook Hook name
-     * @param mixed $callback Function to execute
-     * @param integer $priority Priority of the action
-     * @param integer $arguments Number of arguments to accept
+     *
+     * @param  string|array  $hook Hook name
+     * @param  mixed  $callback Function to execute
+     * @param  int  $priority Priority of the action
+     * @param  int  $arguments Number of arguments to accept
      */
     public function addListener($hook, $callback, int $priority = 20, int $arguments = 1)
     {
-        if (!is_array($hook)) {
+        if (! is_array($hook)) {
             $hook = [$hook];
         }
 
@@ -36,7 +38,7 @@ abstract class HookEvent
     }
 
     /**
-     * @param string $hook
+     * @param  string  $hook
      * @return $this
      */
     public function removeListener(string $hook): self
@@ -48,6 +50,7 @@ abstract class HookEvent
 
     /**
      * Gets a sorted list of all listeners
+     *
      * @return array
      */
     public function getListeners(): array
@@ -63,7 +66,8 @@ abstract class HookEvent
 
     /**
      * Gets the function
-     * @param mixed $callback Callback
+     *
+     * @param  mixed  $callback Callback
      * @return array|Closure|false|string A closure, an array if "class@method" or a string if "function_name"
      */
     protected function getFunction($callback)
@@ -71,7 +75,8 @@ abstract class HookEvent
         if (is_string($callback)) {
             if (strpos($callback, '@')) {
                 $callback = explode('@', $callback);
-                return [app('\\' . $callback[0]), $callback[1]];
+
+                return [app('\\'.$callback[0]), $callback[1]];
             }
 
             return $callback;
@@ -86,8 +91,9 @@ abstract class HookEvent
 
     /**
      * Fires a new action
-     * @param string $action Name of action
-     * @param array $args Arguments passed to the action
+     *
+     * @param  string  $action Name of action
+     * @param  array  $args Arguments passed to the action
      */
-    abstract public function fire(string $action, array $args);
+    public function fire(string $action, array $args){}
 }

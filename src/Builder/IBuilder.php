@@ -1,10 +1,14 @@
 <?php
+
 namespace LaraPlatform\Core\Builder;
 
 interface IBuilder
 {
-    function Config();
-    function BindData();
-    function RenderHtml();
-    function ToHtml();
+    public function Config();
+
+    public function BindData();
+
+    public function RenderHtml();
+
+    public function ToHtml();
 }

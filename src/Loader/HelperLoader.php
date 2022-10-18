@@ -13,6 +13,7 @@ class HelperLoader
             require_once $path;
         }
     }
+
     public static function Register($path)
     {
         BaseScan::AllFile($path, function (SplFileInfo $file) {

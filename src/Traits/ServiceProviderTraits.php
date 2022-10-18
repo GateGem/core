@@ -5,11 +5,11 @@ namespace LaraPlatform\Core\Traits;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
-use ReflectionClass;
 use LaraPlatform\Core\Exceptions\InvalidPackage;
 use LaraPlatform\Core\Loader\HelperLoader;
 use LaraPlatform\Core\Loader\LivewireLoader;
 use LaraPlatform\Core\Supports\ServicePackage;
+use ReflectionClass;
 
 trait ServiceProviderTraits
 {
@@ -50,18 +50,18 @@ trait ServiceProviderTraits
 
     public function boot()
     {
-
         $this->bootingPackage();
-       
-        if (class_exists('\\Livewire\\Component'))
-            LivewireLoader::Register($this->package->basePath("/Http/Livewire"), $this->getNamespaceName() . "\\Http\\Livewire", $this->package->shortName().'::');
+
+        if (class_exists('\\Livewire\\Component')) {
+            LivewireLoader::Register($this->package->basePath('/Http/Livewire'), $this->getNamespaceName().'\\Http\\Livewire', $this->package->shortName().'::');
+        }
 
         if ($this->package->hasTranslations) {
-            $langPath = 'vendor/' . $this->package->shortName();
+            $langPath = 'vendor/'.$this->package->shortName();
 
             $langPath = (function_exists('lang_path'))
                 ? lang_path($langPath)
-                : resource_path('lang/' . $langPath);
+                : resource_path('lang/'.$langPath);
         }
 
         if ($this->app->runningInConsole()) {
@@ -80,7 +80,7 @@ trait ServiceProviderTraits
             $now = Carbon::now();
             foreach ($this->package->migrationFileNames as $migrationFileName) {
                 $filePath = $this->package->basePath("/../database/migrations/{$migrationFileName}.php");
-                if (!file_exists($filePath)) {
+                if (! file_exists($filePath)) {
                     // Support for the .stub file extension
                     $filePath .= '.stub';
                 }
@@ -110,7 +110,7 @@ trait ServiceProviderTraits
             }
         }
 
-        if (!empty($this->package->commands)) {
+        if (! empty($this->package->commands)) {
             $this->commands($this->package->commands);
         }
 
@@ -145,7 +145,6 @@ trait ServiceProviderTraits
             ], "{$this->package->shortName()}-provider");
         }
 
-
         foreach ($this->package->routeFileNames as $routeFileName) {
             $this->loadRoutesFrom("{$this->package->basePath('/../routes/')}{$routeFileName}.php");
         }
@@ -175,12 +174,12 @@ trait ServiceProviderTraits
         }
 
         foreach (glob(database_path("{$migrationsPath}*.php")) as $filename) {
-            if ((substr($filename, -$len) === $migrationFileName . '.php')) {
+            if ((substr($filename, -$len) === $migrationFileName.'.php')) {
                 return $filename;
             }
         }
 
-        return database_path($migrationsPath . $now->format('Y_m_d_His') . '_' . Str::of($migrationFileName)->snake()->finish('.php'));
+        return database_path($migrationsPath.$now->format('Y_m_d_His').'_'.Str::of($migrationFileName)->snake()->finish('.php'));
     }
 
     public function registeringPackage()
@@ -205,6 +204,7 @@ trait ServiceProviderTraits
 
         return dirname($reflector->getFileName());
     }
+
     protected function getNamespaceName(): string
     {
         $reflector = new ReflectionClass(get_class($this));

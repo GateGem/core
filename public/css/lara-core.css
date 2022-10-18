@@ -33,3 +33,24 @@
     opacity: 0;
   }
 }
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.menu .menu-sub {
+  padding-left: 15px;
+}
+.menu a {
+  text-decoration: none;
+  color: black;
+}
+
+.modal-backdrop {
+  opacity: 0 !important;
+  visibility: hidden;
+}
+.modal-backdrop:last-child {
+  visibility: visible;
+  opacity: var(--bs-backdrop-opacity) !important;
+}

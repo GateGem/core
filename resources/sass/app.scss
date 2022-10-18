@@ -1,1 +1,25 @@
 @import './loader.scss';
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .menu-sub {
+        padding-left: 15px;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+.modal-backdrop {
+    opacity: 0 !important;
+    visibility: hidden;
+    &:last-child {
+        visibility: visible;
+        opacity: var(--bs-backdrop-opacity) !important;
+    }
+}

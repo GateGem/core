@@ -7,32 +7,43 @@ use Closure;
 class Assets
 {
     private $arrScript = [];
+
     private $arrStyle = [];
+
     private $arrDataPage = [];
+
     public function setData($key, $value)
     {
         $this->arrDataPage[$key] = $value;
     }
+
     public function getData($key, $default = '')
     {
         return $this->arrDataPage[$key] ?? $default;
     }
-    public function AddScript($local, $contentOrPath, $cdn = '', $priority = 20,  $isLink = true)
+
+    public function AddScript($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
     {
-        if (!isset($this->arrScript[$local])) $this->arrScript[$local] = [];
+        if (! isset($this->arrScript[$local])) {
+            $this->arrScript[$local] = [];
+        }
         while (isset($this->arrScript[$local][$priority])) {
             $priority += 1;
         }
         $this->arrScript[$local][] = compact('contentOrPath', 'cdn', 'isLink');
     }
-    public function AddStyle($local, $contentOrPath, $cdn = '', $priority = 20,  $isLink = true)
+
+    public function AddStyle($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
     {
-        if (!isset($this->arrStyle[$local])) $this->arrStyle[$local] = [];
+        if (! isset($this->arrStyle[$local])) {
+            $this->arrStyle[$local] = [];
+        }
         while (isset($this->arrStyle[$local][$priority])) {
             $priority += 1;
         }
         $this->arrStyle[$local][$priority] = compact('contentOrPath', 'cdn', 'isLink');
     }
+
     public function loadAsset($local)
     {
         // Style
@@ -45,7 +56,7 @@ class Assets
                 }
             }
             foreach ($styles as $item) {
-                if (!isset($item['isLink']) || $item['isLink'] == false) {
+                if (! isset($item['isLink']) || $item['isLink'] == false) {
                     echo '<style type="text/css">';
                     if ($item['contentOrPath'] instanceof Closure) {
                         call_user_func_array($item['contentOrPath'], []);
@@ -66,7 +77,7 @@ class Assets
                 }
             }
             foreach ($scripts as $item) {
-                if (!isset($item['isLink']) || $item['isLink'] == false) {
+                if (! isset($item['isLink']) || $item['isLink'] == false) {
                     echo '<script>';
                     if ($item['contentOrPath'] instanceof Closure) {
                         call_user_func_array($item['contentOrPath'], []);

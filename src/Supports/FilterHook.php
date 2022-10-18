@@ -2,18 +2,22 @@
 
 namespace LaraPlatform\Core\Supports;
 
-class FilterHook extends HookEvent
+use LaraPlatform\Core\Traits\HookListener;
+
+class FilterHook
 {
+    use HookListener;
     /**
      * Filters a value
-     * @param string $action Name of filter
-     * @param array $args Arguments passed to the filter
+     *
+     * @param  string  $action Name of filter
+     * @param  array  $args Arguments passed to the filter
      * @return mixed Always returns the value
      */
     public function fire(string $action, array $args)
     {
         $value = $args[0] ?? ''; // get the value, the first argument is always the value
-        if (!$this->getListeners()) {
+        if (! $this->getListeners()) {
             return $value;
         }
 

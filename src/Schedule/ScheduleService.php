@@ -1,4 +1,5 @@
 <?php
+
 namespace LaraPlatform\Core\Schedule;
 
 use LaraPlatform\Core\Models\Schedule;
@@ -17,6 +18,7 @@ class ScheduleService
         if (config('app.debug')) {
             return $this->model->active()->get();
         }
+
         return $this->getFromCache();
     }
 

@@ -1,0 +1,13 @@
+{
+    "menu": {
+      "sidebar": {
+        "dashboard": "Dashboard",
+        "option": "Option",
+        "setting": "Setting",
+        "user": "User",
+        "role": "Role",
+        "permission": "Permission"
+      }
+    }
+  }
+  

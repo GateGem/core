@@ -1,15 +1,15 @@
 <?php
 
+use  Illuminate\Support\Arr;
 use  LaraPlatform\Core\Facades\Action;
-use  LaraPlatform\Core\Facades\Filter;
-use Illuminate\Support\Arr;
+use LaraPlatform\Core\Facades\Filter;
 
 if (function_exists('add_action')) {
     /**
-     * @param string | array $hook
+     * @param  string | array  $hook
      * @param $callback
-     * @param int $priority
-     * @param int $arguments
+     * @param  int  $priority
+     * @param  int  $arguments
      */
     function add_action($hook, $callback, int $priority = 20, int $arguments = 1)
     {
@@ -19,7 +19,7 @@ if (function_exists('add_action')) {
 
 if (function_exists('remove_action')) {
     /**
-     * @param string $hook
+     * @param  string  $hook
      */
     function remove_action($hook, $callback = null)
     {
@@ -28,7 +28,7 @@ if (function_exists('remove_action')) {
 }
 if (function_exists('do_action')) {
     /**
-     * @param string $hook
+     * @param  string  $hook
      */
     function do_action()
     {
@@ -39,10 +39,10 @@ if (function_exists('do_action')) {
 
 if (function_exists('add_filter')) {
     /**
-     * @param string | array $hook
+     * @param  string | array  $hook
      * @param $callback
-     * @param int $priority
-     * @param int $arguments
+     * @param  int  $priority
+     * @param  int  $arguments
      */
     function add_filter($hook, $callback, int $priority = 20, int $arguments = 1)
     {
@@ -51,7 +51,7 @@ if (function_exists('add_filter')) {
 }
 if (function_exists('remove_filter')) {
     /**
-     * @param string $hook
+     * @param  string  $hook
      */
     function remove_filter($hook, $callback)
     {
@@ -59,7 +59,7 @@ if (function_exists('remove_filter')) {
     }
 }
 
-if (!function_exists('apply_filters')) {
+if (! function_exists('apply_filters')) {
     /**
      * @return mixed
      */
@@ -71,11 +71,10 @@ if (!function_exists('apply_filters')) {
     }
 }
 
-
-if (!function_exists('get_hooks')) {
+if (! function_exists('get_hooks')) {
     /**
-     * @param string|null $name
-     * @param bool $isFilter
+     * @param  string|null  $name
+     * @param  bool  $isFilter
      * @return array
      */
     function get_hooks(?string $name = null, bool $isFilter = true): array

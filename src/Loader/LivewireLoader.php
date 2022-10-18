@@ -2,11 +2,11 @@
 
 namespace LaraPlatform\Core\Loader;
 
+use Illuminate\Support\Str;
 use LaraPlatform\Core\Supports\BaseScan;
-use ReflectionClass;
 use Livewire\Component;
 use Livewire\Livewire;
-use Illuminate\Support\Str;
+use ReflectionClass;
 
 class LivewireLoader
 {
@@ -16,14 +16,14 @@ class LivewireLoader
             $path,
             $namespace,
             function ($class) use ($namespace, $aliasPrefix) {
-                $alias = $aliasPrefix . Str::of($class)
-                    ->after($namespace . '\\')
+                $alias = $aliasPrefix.Str::of($class)
+                    ->after($namespace.'\\')
                     ->replace(['/', '\\'], '.')
                     ->explode('.')
                     ->map([Str::class, 'kebab'])
                     ->implode('.');
                 // fix class namespace
-                $alias_class =  trim(Str::of($class)
+                $alias_class = trim(Str::of($class)
                     ->replace(['/', '\\'], '.')
                     ->explode('.')
                     ->map([Str::class, 'kebab'])
@@ -36,7 +36,7 @@ class LivewireLoader
                 Livewire::component($alias, $class);
             },
             function ($class) {
-                return is_subclass_of($class, Component::class) && !(new ReflectionClass($class))->isAbstract();
+                return is_subclass_of($class, Component::class) && ! (new ReflectionClass($class))->isAbstract();
             }
         );
     }

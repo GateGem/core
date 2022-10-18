@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use LaraPlatform\Core\Facades\Core;
 use LaraPlatform\Core\Http\Controllers\LaraServiceController;
 use LaraPlatform\Core\Http\Livewire\Dashboard;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

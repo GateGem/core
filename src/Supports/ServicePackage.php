@@ -14,7 +14,8 @@ class ServicePackage
     public bool $hasViews = false;
 
     public bool $hasHelpers = false;
-    public string $pathHelper="";
+
+    public string $pathHelper = '';
 
     public ?string $viewNamespace = null;
 
@@ -91,7 +92,8 @@ class ServicePackage
 
         return $this;
     }
-    public function hasHelpers(string $helper = "/../helpers/"): self
+
+    public function hasHelpers(string $helper = '/../helpers/'): self
     {
         $this->hasHelpers = true;
 
@@ -107,7 +109,7 @@ class ServicePackage
         return $this;
     }
 
-    public function hasViewComponents(string $prefix,  ...$viewComponentNames): self
+    public function hasViewComponents(string $prefix, ...$viewComponentNames): self
     {
         foreach ($viewComponentNames as $componentName) {
             $this->viewComponents[$componentName] = $prefix;
@@ -208,7 +210,7 @@ class ServicePackage
             return $this->basePath;
         }
 
-        return $this->basePath . DIRECTORY_SEPARATOR . ltrim($directory, DIRECTORY_SEPARATOR);
+        return $this->basePath.DIRECTORY_SEPARATOR.ltrim($directory, DIRECTORY_SEPARATOR);
     }
 
     public function viewNamespace(): string

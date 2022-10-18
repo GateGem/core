@@ -33,7 +33,7 @@ const loadComponentTo = (name, param, toEl) => {
     });
 };
 const eventClickLoadComponent = (e) => {
-  let elModal = e.target;
+  let elModal = e.currentTarget;
   let strModal = elModal.getAttribute("wire:component");
   let targetTo = elModal.getAttribute("component:target");
 
@@ -49,7 +49,8 @@ const eventClickLoadComponent = (e) => {
   if (elModal.hasAttribute("component:loading")) {
     loader.open();
   }
-  loadComponentTo(rs[1], rs[2], targetTo);
+  if (rs) loadComponentTo(rs[1], rs[2], targetTo);
+  else loadComponentTo(strModal, undefined, targetTo);
 };
 let loadEventComponent = (el) => {
   el.querySelectorAll("[wire\\:component]").forEach((elItem) => {

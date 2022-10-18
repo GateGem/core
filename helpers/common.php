@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('getValueByKey')) {
+if (! function_exists('getValueByKey')) {
     function getValueByKey($data, $key, $default = '')
     {
         if ($data && $key) {
@@ -13,8 +13,10 @@ if (!function_exists('getValueByKey')) {
                     return $default;
                 }
             }
+
             return $dataTemp;
         }
+
         return $default;
     }
 }

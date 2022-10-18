@@ -1,4 +1,4 @@
-<div class="modal fade show" style="display: block;" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+<div class="modal show" style="display: block;" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary">Open second modal</button>
-                <button class="btn btn-danger" wire:component='core::dashboard({"testdata":"adsfasfds{{time()}}"})''>Modal</button>
+                <button class="btn btn-danger" wire:component='core::demo'>Modal</button>
             </div>
         </div>
     </div>

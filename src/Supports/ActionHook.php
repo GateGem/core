@@ -2,16 +2,20 @@
 
 namespace LaraPlatform\Core\Supports;
 
-class ActionHook extends HookEvent
+use LaraPlatform\Core\Traits\HookListener;
+
+class ActionHook
 {
+    use HookListener;
     /**
      * Filters a value
-     * @param string $action Name of action
-     * @param array $args Arguments passed to the filter
+     *
+     * @param  string  $action Name of action
+     * @param  array  $args Arguments passed to the filter
      */
     public function fire(string $action, array $args)
     {
-        if (!$this->getListeners()) {
+        if (! $this->getListeners()) {
             return;
         }
 
