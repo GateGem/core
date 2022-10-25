@@ -7,11 +7,11 @@
     -webkit-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
-    width: 240px;
+    width: $sidebar_width;
     z-index: 1000;
 
     @media screen and (min-width: 992px) and (max-width: 1439px) {
-        width: 60px;
+        width: $sidebar_width_mini;
     }
 
     .sidebar-inner {
@@ -25,7 +25,7 @@
             -webkit-transition: all 0.2s ease;
             -o-transition: all 0.2s ease;
             transition: all 0.2s ease;
-            height: 40px;
+            height: $header_height;
 
             .sidebar-logo-mini {
                 display: none;
@@ -38,6 +38,7 @@
 
             @media screen and (min-width: 992px) and (max-width: 1439px) {
                 padding: 0 5px;
+
                 .sidebar-logo-none {
                     display: none;
                 }
@@ -52,21 +53,96 @@
             overflow: auto;
             padding: 0;
             position: relative;
+
         }
+    }
+}
+
+.menu-sidebar {
+    .menu-item {
+        &>a {
+            display: block;
+            padding: 5px 8px;
+        }
+
+        .menu-sub {
+            display: none;
+        }
+
+        &:hover {
+            border-top: 1px solid #ccc;
+        }
+
+        &:hover>a:hover {
+            background-color: antiquewhite;
+            cursor: pointer;
+        }
+
+        &:not(.active):hover>.menu-sub {
+            display: block;
+            position: fixed;
+            left: $sidebar_width;
+            top: 0px;
+            background-color: #ccc;
+            border-radius: 0px 1px 1px 0px;
+            padding-left: 0 !important;
+        }
+
+        &.active {
+            background-color: #eec;
+            border-top: 1px solid #ccc;
+            &>.menu-sub {
+                padding-left: 0 !important;
+                display: block;
+                position: relative;
+
+                a {
+                    padding-left: 23px;
+                }
+            }
+        }
+
     }
 }
 
 .is-sidebar-mini {
     .sidebar {
-        width: 60px;
-        .sidebar-logo{
+        width: $sidebar_width_mini;
+
+        .sidebar-logo {
             padding: 0 5px;
 
             .sidebar-logo-none {
                 display: none;
             }
+
             .sidebar-logo-mini {
                 display: block;
+            }
+        }
+    }
+
+    .menu-sidebar {
+        &>.menu-item {
+            &>a {
+                text-align: center;
+
+                span {
+                    display: none;
+                }
+            }
+
+            .menu-sub {
+                display: none;
+            }
+            &:hover>.menu-sub {
+                display: block;
+                position: fixed;
+                left: $sidebar_width_mini;
+                top: 0px;
+                background-color: #ccc;
+                border-radius: 0px 1px 1px 0px;
+                padding-left: 0 !important;
             }
         }
     }

@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use LaraPlatform\Core\Facades\Core;
-use LaraPlatform\Core\Http\Controllers\LaraServiceController;
-use LaraPlatform\Core\Http\Livewire\Dashboard;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,12 +14,9 @@ use LaraPlatform\Core\Http\Livewire\Dashboard;
 */
 
 Route::group(['prefix' => 'lara', 'middleware' => ['web']], function () {
-    Route::post('/livewire/component/{slug}', [LaraServiceController::class, 'loadComponent']);
+    Route::post('/livewire/component/{slug}', [LaraPlatform\Core\Http\Controllers\LaraServiceController::class, 'loadComponent']);
 });
 
 Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web']], function () {
-    Route::get('/', Dashboard::class);
-    Route::get('/test2', function () {
-        return view('core::demo2');
-    });
+    Route::get('/', LaraPlatform\Core\Http\Livewire\Page\Dashboard\Index::class)->name('core.dashboard');
 });

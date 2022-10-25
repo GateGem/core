@@ -93,7 +93,7 @@ class MenuBuilder extends BuilderBase
     public function checkPermission()
     {
         $permission = $this->getValue('permission');
-        return $permission == '' || Gate::check($permission, [auth()]);
+        return $permission == '' || Gate::check($permission, [auth()])|| true;
     }
     public function checkChild()
     {
@@ -102,7 +102,7 @@ class MenuBuilder extends BuilderBase
     public function checkActive()
     {
         if ($this->isCheckActive == false) return false;
-        if ($this->linkHref == Request::url())
+        if ($this->getLinkHref() == Request::url())
             return true;
         if ($this->checkChild()) {
             foreach ($this->items as $item) {
@@ -122,6 +122,10 @@ class MenuBuilder extends BuilderBase
     }
     private $items;
     private $linkHref = "";
+    public function getLinkHref()
+    {
+        return $this->linkHref;
+    }
     private function processLinkHref()
     {
         $actionValue = $this->getValue('actionValue');
@@ -172,12 +176,13 @@ class MenuBuilder extends BuilderBase
             foreach ($this->items as $item) {
                 $attrLink = "";
                 if ($item->checkValue('actionType', MenuBuilder::ItemComponent)) {
-                    $attrLink = "wire:component='" .$item->getValue('actionValue'). "'";
+                    $attrLink = "wire:component='" . $item->getValue('actionValue') . "'";
                 } else {
-                    $link = $item->linkHref;
+                    $link = $item->getLinkHref();
                     if ($link) {
                         $attrLink = 'href="' . $link . '"';
                     }
+                
                 }
                 if ($attrLink == "" && $item->checkChild() == false) continue;
                 echo "<li class='menu-item " . ($item->checkActive() ? 'active' : '') . "'>";

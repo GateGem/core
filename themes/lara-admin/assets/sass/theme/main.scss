@@ -4,17 +4,17 @@
 
     .page-container {
         min-height: 100vh;
-        padding-left: 240px;
+        padding-left: $sidebar_width;
         -webkit-transition: all 0.2s ease;
         -o-transition: all 0.2s ease;
         transition: all 0.2s ease;
         @media screen and (min-width: 992px) and (max-width: 1439px) {
-            padding-left: 60px;
+            padding-left: $sidebar_width_mini;
         }
     }
 }
 .is-sidebar-mini{
     .page-container {
-        padding-left: 60px;
+        padding-left: $sidebar_width_mini;
     }
 }

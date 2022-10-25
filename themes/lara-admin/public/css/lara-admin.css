@@ -10827,7 +10827,7 @@ textarea.form-control-lg {
 }
 .main-page .page-container {
   min-height: 100vh;
-  padding-left: 240px;
+  padding-left: 180px;
   transition: all 0.2s ease;
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {
@@ -10847,7 +10847,7 @@ textarea.form-control-lg {
   position: fixed;
   top: 0;
   transition: all 0.2s ease;
-  width: 240px;
+  width: 180px;
   z-index: 1000;
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {
@@ -10892,6 +10892,42 @@ textarea.form-control-lg {
   position: relative;
 }
 
+.menu-sidebar .menu-item > a {
+  display: block;
+  padding: 5px 8px;
+}
+.menu-sidebar .menu-item .menu-sub {
+  display: none;
+}
+.menu-sidebar .menu-item:hover {
+  border-top: 1px solid #ccc;
+}
+.menu-sidebar .menu-item:hover > a:hover {
+  background-color: antiquewhite;
+  cursor: pointer;
+}
+.menu-sidebar .menu-item:not(.active):hover > .menu-sub {
+  display: block;
+  position: fixed;
+  left: 180px;
+  top: 0px;
+  background-color: #ccc;
+  border-radius: 0px 1px 1px 0px;
+  padding-left: 0 !important;
+}
+.menu-sidebar .menu-item.active {
+  background-color: #eec;
+  border-top: 1px solid #ccc;
+}
+.menu-sidebar .menu-item.active > .menu-sub {
+  padding-left: 0 !important;
+  display: block;
+  position: relative;
+}
+.menu-sidebar .menu-item.active > .menu-sub a {
+  padding-left: 23px;
+}
+
 .is-sidebar-mini .sidebar {
   width: 60px;
 }
@@ -10904,6 +10940,24 @@ textarea.form-control-lg {
 .is-sidebar-mini .sidebar .sidebar-logo .sidebar-logo-mini {
   display: block;
 }
+.is-sidebar-mini .menu-sidebar > .menu-item > a {
+  text-align: center;
+}
+.is-sidebar-mini .menu-sidebar > .menu-item > a span {
+  display: none;
+}
+.is-sidebar-mini .menu-sidebar > .menu-item .menu-sub {
+  display: none;
+}
+.is-sidebar-mini .menu-sidebar > .menu-item:hover > .menu-sub {
+  display: block;
+  position: fixed;
+  left: 60px;
+  top: 0px;
+  background-color: #ccc;
+  border-radius: 0px 1px 1px 0px;
+  padding-left: 0 !important;
+}
 
 .header {
   background-color: #fff;
@@ -10914,7 +10968,7 @@ textarea.form-control-lg {
   padding: 0;
   position: fixed;
   transition: all 0.2s ease;
-  width: calc(100% - 240px);
+  width: calc(100% - 180px);
   z-index: 800;
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {

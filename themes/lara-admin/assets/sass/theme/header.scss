@@ -1,7 +1,7 @@
 .header {
     background-color: #fff;
     border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
-    height: 40px;
+    height: $header_height;
     display: block;
     margin: 0;
     padding: 0;
@@ -9,11 +9,11 @@
     -webkit-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
-    width: calc(100% - 240px);
+    width: calc(100% - $sidebar_width);
     z-index: 800;
 
     @media screen and (min-width: 992px) and (max-width: 1439px) {
-        width: calc(100% - 60px);
+        width: calc(100% - $sidebar_width_mini);
     }
 
     .header-container {
@@ -41,6 +41,6 @@
 }
 .is-sidebar-mini{
     .header{
-        width: calc(100% - 60px);
+        width: calc(100% - $sidebar_width_mini);
     }
 }
