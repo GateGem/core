@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use LaraPlatform\Core\Facades\Core;
+use LaraPlatform\Core\Supports\BaseScan;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,4 +21,9 @@ Route::group(['prefix' => 'lara', 'middleware' => ['web']], function () {
 
 Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web']], function () {
     Route::get('/', LaraPlatform\Core\Http\Livewire\Page\Dashboard\Index::class)->name('core.dashboard');
+});
+Route::get('/test',function(){
+    BaseScan::AllFile(__DIR__.'/../config/tables/',function($file){
+        print_r(BaseScan::FileReturn($file->getRealPath()));
+    });
 });

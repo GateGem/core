@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraPlatform\Core\Models;
+namespace DevHau\Modules\Models;
 
 use Illuminate\Console\Scheduling\ManagesFrequencies;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Schedule extends Model
@@ -14,17 +14,12 @@ class Schedule extends Model
     use SoftDeletes;
 
     public const SESSION_KEY_ORDER_BY = 'schedule_order_by';
-
     public const SESSION_KEY_DIRECTION = 'schedule_order_by_direction';
-
     public const SESSION_KEY_FILTERS = 'schedule_filters';
 
     public const STATUS_INACTIVE = '0';
-
     public const STATUS_ACTIVE = '1';
-
     public const STATUS_TRASHED = '2';
-
     protected $fillable = [
         'command',
         'command_custom',
@@ -56,9 +51,8 @@ class Schedule extends Model
 
     protected $casts = [
         'params' => 'array',
-        'options' => 'array',
+        'options' => 'array'
     ];
-
     public function histories()
     {
         return $this->hasMany(ScheduleHistory::class, 'schedule_id', 'id');
@@ -83,8 +77,8 @@ class Schedule extends Model
                 if (empty($value['value'])) {
                     continue;
                 }
-                if (isset($value['type']) && $value['type'] === 'function') {
-                    $arguments[$argument] = (string) $value['value']();
+                if (isset($value["type"]) && $value['type'] === 'function') {
+                    $arguments[$argument] = (string)$value['value']();
                 } else {
                     $arguments[$argument] = $value['value'];
                 }
@@ -102,10 +96,10 @@ class Schedule extends Model
                 if (is_array($value) && ($value['value'] ?? null) === null) {
                     continue;
                 }
-                $option = '--'.$option;
+                $option = '--' . $option;
                 if (is_array($value)) {
-                    if (isset($value['type']) && $value['type'] === 'function') {
-                        $options[$option] = (string) $value['value']();
+                    if (isset($value["type"]) && $value['type'] === 'function') {
+                        $options[$option] = (string)$value['value']();
                     } else {
                         $options[$option] = $value['value'];
                     }
@@ -114,6 +108,7 @@ class Schedule extends Model
                 }
             }
         }
+
 
         return $options;
     }

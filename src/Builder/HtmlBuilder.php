@@ -2,7 +2,7 @@
 
 namespace LaraPlatform\Core\Builder;
 
-class BuilderBase implements IBuilder
+class HtmlBuilder implements IBuilder
 {
     public function Config()
     {

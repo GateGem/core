@@ -2,12 +2,12 @@
 
 namespace LaraPlatform\Core\Builder\Menu;
 
-use LaraPlatform\Core\Builder\BuilderBase;
+use LaraPlatform\Core\Builder\HtmlBuilder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 
 
-class MenuBuilder extends BuilderBase
+class MenuBuilder extends HtmlBuilder
 {
     public const ItemLink = 1;
     public const ItemRouter = 2;

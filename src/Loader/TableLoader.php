@@ -4,7 +4,7 @@ namespace LaraPlatform\Core\Loader;
 
 use LaraPlatform\Core\Traits\WithDataLoader;
 
-class ThemeLoader
+class TableLoader
 {
-    use WithDataLoader;
+   use WithDataLoader;
 }

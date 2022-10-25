@@ -1,11 +1,25 @@
 <?php
 
-namespace LaraPlatform\Core\Models;
+namespace DevHau\Modules\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Setting extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'key',
+        'locked',
+        'value',
+    ];
+    protected $casts = [
+        'value' => 'array',
+    ];
 }

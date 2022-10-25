@@ -31,6 +31,9 @@ class BaseScan
     {
         return json_decode(file_get_contents($path), true);
     }
+    public static function FileReturn($path){
+        return include_once $path;
+    }
 
     public static function AllFile($directory, $callback = null, $filter = null)
     {

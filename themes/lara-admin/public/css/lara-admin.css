@@ -11002,3 +11002,7 @@ textarea.form-control-lg {
 .is-sidebar-mini .header {
   width: calc(100% - 60px);
 }
+
+.modal-content {
+  border-radius: 3px;
+}

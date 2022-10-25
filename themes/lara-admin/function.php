@@ -15,7 +15,7 @@ add_menu_with_sub('User', function ($subItem) {
     $subItem->addItem(function ($item) {
         $item->setItem('User', 'bi bi-speedometer', '', 'link');
     })->addItem(function ($item) {
-        $item->setItem('Dasboard2', 'bi bi-speedometer', '', 'core::demo', MenuBuilder::ItemComponent);
+        $item->setItem('Dasboard2', 'bi bi-speedometer', '', 'core::table.edit', MenuBuilder::ItemComponent);
     });
 }, 'bi bi-speedometer');
 add_menu_with_sub('Setting', function ($subItem) {
