@@ -2,11 +2,11 @@
 
 namespace LaraPlatform\Core\Supports;
 
-use LaraPlatform\Core\Traits\HookListener;
+use LaraPlatform\Core\Traits\WithHookListener;
 
 class FilterHook
 {
-    use HookListener;
+    use WithHookListener;
     /**
      * Filters a value
      *

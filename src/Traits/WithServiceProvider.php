@@ -11,7 +11,7 @@ use LaraPlatform\Core\Loader\LivewireLoader;
 use LaraPlatform\Core\Supports\ServicePackage;
 use ReflectionClass;
 
-trait ServiceProviderTraits
+trait WithServiceProvider
 {
     protected ServicePackage $package;
 

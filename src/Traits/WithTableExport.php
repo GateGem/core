@@ -2,20 +2,20 @@
 
 namespace LaraPlatform\Core\Traits;
 
-use LaraPlatform\Core\Builder\Modal\ModalSize;
-use DevHau\Modules\ModuleLoader;
+use LaraPlatform\Core\Livewire\Modal;
+use LaraPlatform\Core\Loader\TableLoader;
 
-trait UseModuleExport
+trait WithTableExport
 {
     public $module = '';
     public $filename = '';
     protected function getView()
     {
-        return 'devhau-module::admin.table.export';
+        return 'core::common.table.export';
     }
     public function getOptionProperty()
     {
-        return ModuleLoader::Table()->getDataByKey($this->module);
+        return TableLoader::getDataByKey($this->module);
     }
     public function LoadModule($module)
     {
@@ -26,7 +26,7 @@ trait UseModuleExport
             return abort(404);
 
         if (!$this->isPage) {
-            $this->sizeModal =  ModalSize::Small;
+            $this->sizeModal =  Modal::Small;
         }
         $this->filename = $module;
         $this->setTitle('Xuất excel ' . getValueByKey($option, 'title', ''));
@@ -37,7 +37,7 @@ trait UseModuleExport
         $this->refreshData(['module' => $this->module]);
         $this->hideModal();
         $this->ShowMessage('Export Excel successful!');
-        return \Excel::download((new (getValueByKey($this->option, 'excel.export', \DevHau\Modules\Excel\ExcelExport::class))($this->option)), $this->filename . '-' . time() . '.xlsx');
+        //return \Excel::download((new (getValueByKey($this->option, 'excel.export', \DevHau\Modules\Excel\ExcelExport::class))($this->option)), $this->filename . '-' . time() . '.xlsx');
     }
     public function render()
     {

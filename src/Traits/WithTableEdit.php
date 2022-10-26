@@ -2,8 +2,8 @@
 
 namespace LaraPlatform\Core\Traits;
 
-use LaraPlatform\Core\Builder\Modal\ModalSize;
-use DevHau\Modules\TableLoader;
+use LaraPlatform\Core\Livewire\Modal;
+use LaraPlatform\Core\Loader\TableLoader;
 use Livewire\WithFileUploads;
 
 trait WithTableEdit
@@ -15,7 +15,7 @@ trait WithTableEdit
     public $rules = [];
     protected function getView()
     {
-        return 'devhau-module::admin.table.edit';
+        return 'core::common.table.edit';
     }
     public function getOptionProperty()
     {
@@ -35,7 +35,7 @@ trait WithTableEdit
             return abort(404);
 
         if (!$this->isPage) {
-            $this->sizeModal = getValueByKey($option, 'formSize',  ModalSize::FullscreenMd);
+            $this->sizeModal = getValueByKey($option, 'formSize',  Modal::FullscreenMd);
         }
         $this->setTitle(getValueByKey($option, 'title', ''));
         $fields = $this->getFieldsProperty();

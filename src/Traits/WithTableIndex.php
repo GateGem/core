@@ -2,12 +2,12 @@
 
 namespace LaraPlatform\Core\Traits;
 
-use LaraPlatform\Core\Builder\Modal\ModalSize;
-use DevHau\Modules\ModuleLoader;
 use Illuminate\Support\Facades\Gate;
+use LaraPlatform\Core\Livewire\Modal;
+use LaraPlatform\Core\Loader\TableLoader;
 use Livewire\WithPagination;
 
-trait UseModuleIndex
+trait WithTableIndex
 {
     use WithPagination;
     public function queryStringWithPagination()
@@ -29,7 +29,7 @@ trait UseModuleIndex
     protected $isCheckDisableModule = true;
     protected function getView()
     {
-        return 'devhau-module::admin.table.index';
+        return 'core::common.table.index';
     }
     public $pageSize = 10;
     public $module = '';
@@ -54,7 +54,7 @@ trait UseModuleIndex
     public function getOptionProperty()
     {
         if (is_null($this->option_temp)) {
-            $option = ModuleLoader::Table()->getDataByKey($this->module);
+            $option = TableLoader::getDataByKey($this->module);
             if (!isset($option['fields'])) $option['fields'] = [];
             $this->option_temp = $option;
             $this->viewEdit = getValueByKey($option, 'viewEdit', 'devhau-module::admin.table.edit');
@@ -102,7 +102,7 @@ trait UseModuleIndex
             return abort(404);
 
         if (!$this->isPage) {
-            $this->sizeModal = getValueByKey($option, 'sizeModal',  ModalSize::ExtraLarge);
+            $this->sizeModal = getValueByKey($option, 'sizeModal',  Modal::ExtraLarge);
         }
         $this->setTitle(getValueByKey($option, 'title', ''));
         $this->pageSize = getValueByKey($option, 'pageSize', 10);

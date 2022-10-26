@@ -5,7 +5,7 @@ namespace LaraPlatform\Core\Traits;
 use Closure;
 use Illuminate\Support\Arr;
 
-trait HookListener
+trait WithHookListener
 {
 /**
      * Holds the event listeners

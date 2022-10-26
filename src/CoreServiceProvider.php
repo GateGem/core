@@ -6,11 +6,11 @@ use Illuminate\Support\ServiceProvider;
 use LaraPlatform\Core\Commands\CoreCommand;
 use LaraPlatform\Core\Facades\Theme;
 use LaraPlatform\Core\Supports\ServicePackage;
-use LaraPlatform\Core\Traits\ServiceProviderTraits;
+use LaraPlatform\Core\Traits\WithServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
 {
-    use ServiceProviderTraits;
+    use WithServiceProvider;
 
     public function configurePackage(ServicePackage $package): void
     {
