@@ -10901,6 +10901,7 @@ textarea.form-control-lg {
 }
 .menu-sidebar .menu-item .menu-sub {
   display: none;
+  min-width: 180px;
 }
 .menu-sidebar .menu-item:hover {
   border-top: 1px solid #ccc;

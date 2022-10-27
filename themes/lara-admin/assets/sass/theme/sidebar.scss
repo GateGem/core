@@ -67,6 +67,7 @@
 
         .menu-sub {
             display: none;
+            min-width: $sidebar_width;
         }
 
         &:hover {
