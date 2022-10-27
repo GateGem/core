@@ -27,7 +27,7 @@ trait WithTableImport
         if (!$option)
             return abort(404);
 
-        if (!$this->isPage) {
+        if (!$this->modal_isPage) {
             $this->sizeModal =  Modal::Small;
         }
         $this->setTitle('Nhập excel ' . getValueByKey($option, 'title', ''));

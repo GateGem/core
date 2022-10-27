@@ -1,4 +1,4 @@
-.main-page {
+.page-main {
     background-color: var(--bs-gray-100);
     min-height: 100vh;
 
@@ -10,6 +10,9 @@
         transition: all 0.2s ease;
         @media screen and (min-width: 992px) and (max-width: 1439px) {
             padding-left: $sidebar_width_mini;
+        }
+        .page-content{
+            padding-top: $header_height;
         }
     }
 }

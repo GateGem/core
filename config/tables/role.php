@@ -1,9 +1,9 @@
 <?php
 
-use LaraPlatform\Core\Builder\Modal\ModalSize;
+use LaraPlatform\Core\Livewire\Modal;
 
 return [
-    'model' => \DevHau\Modules\Models\Role::class,
+    'model' => \LaraPlatform\Core\Models\Role::class,
     'DisableModule' => true,
     'title' => 'Vai trò',
     'emptyData' => 'Không có dữ liệu',
@@ -19,10 +19,10 @@ return [
             [
                 'title' => 'Phân quyền',
                 'icon' => '<i class="bi bi-magic"></i>',
-                'permission' => 'admin.role.permission',
+                'permission' => 'core.role.permission',
                 'type' => 'update',
                 'action' => function ($id) {
-                    return 'wire:openmodal="devhau-module::admin.role.permission({\'roleId\':\'' . $id . '\'})"';
+                    return 'wire:component="core::role.permission({\'roleId\':\'' . $id . '\'})"';
                 }
             ], [
                 'title' => 'Quản lý quyền',
@@ -31,12 +31,12 @@ return [
                 'class' => 'btn-primary',
                 'type' => 'new',
                 'action' => function () {
-                    return 'wire:openmodal="devhau-module::admin.permission.index()"';
+                    return 'wire:component="core::table.index({\'module\':\'permission\'})"';
                 }
             ]
         ]
     ],
-    'formSize' => ModalSize::Small,
+    'formSize' => Modal::Small,
     'fields' => [
         [
             'field' => 'slug',

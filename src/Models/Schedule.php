@@ -1,6 +1,6 @@
 <?php
 
-namespace DevHau\Modules\Models;
+namespace LaraPlatform\Core\Models;
 
 use Illuminate\Console\Scheduling\ManagesFrequencies;
 use Illuminate\Database\Eloquent\Model;

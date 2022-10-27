@@ -21,6 +21,7 @@ Route::group(['prefix' => 'lara', 'middleware' => ['web']], function () {
 
 Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web']], function () {
     Route::get('/', LaraPlatform\Core\Http\Livewire\Page\Dashboard\Index::class)->name('core.dashboard');
+    Route::get('/table/{module}',LaraPlatform\Core\Http\Livewire\Table\Index::class)->name('core.table');
 });
 Route::get('/test',function(){
     BaseScan::AllFile(__DIR__.'/../config/tables/',function($file){

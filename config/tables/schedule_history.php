@@ -1,9 +1,9 @@
 <?php
 
-use LaraPlatform\Core\Builder\Modal\ModalSize;
+use LaraPlatform\Core\Livewire\Modal;
 
 return [
-    'model' => \DevHau\Modules\Models\ScheduleHistory::class,
+    'model' => \LaraPlatform\Core\Models\ScheduleHistory::class,
     'permission' => [
         'view' => ''
     ],
@@ -29,7 +29,7 @@ return [
             ]
         ]
     ],
-    'formSize' => ModalSize::ExtraLarge,
+    'formSize' => Modal::ExtraLarge,
     'fields' => [
         [
             'field' => 'command',

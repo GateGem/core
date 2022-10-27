@@ -5,26 +5,26 @@ use LaraPlatform\Core\Facades\Theme;
 if (! function_exists('add_asset_js')) {
     function add_asset_js($path, $cdnPath = '', $priority = 20, $local = 'asset_footer_before')
     {
-        Theme::getAssets()->addScript($local, $path, $cdnPath, true);
+        Theme::getAssets()->AddScript($local, $path, $cdnPath,$priority, true);
     }
 }
 if (! function_exists('add_asset_css')) {
-    function add_asset_css($path, $cdnPath = '', $local = 'asset_header_before', $priority = 20)
+    function add_asset_css($path, $cdnPath = '', $priority = 20, $local = 'asset_header_before')
     {
-        Theme::getAssets()->addStyle($local, $path, $cdnPath, true);
+        Theme::getAssets()->AddStyle($local, $path, $cdnPath,$priority, true);
     }
 }
 
 if (! function_exists('add_asset_script')) {
-    function add_asset_script($script, $local = 'asset_footer_after', $priority = 20)
+    function add_asset_script($script, $priority = 20, $local = 'asset_footer_after')
     {
-        Theme::getAssets()->addScript($local, $script);
+        Theme::getAssets()->AddScript($local, $script,'',$priority);
     }
 }
 if (! function_exists('add_asset_style')) {
-    function add_asset_style($style, $local = 'asset_header_after', $priority = 20)
+    function add_asset_style($style, $priority = 20, $local = 'asset_header_after')
     {
-        Theme::getAssets()->addStyle($local, $style);
+        Theme::getAssets()->AddStyle($local, $style,'',$priority);
     }
 }
 if (! function_exists('load_asset_local')) {

@@ -3,6 +3,7 @@
 namespace LaraPlatform\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Livewire\Livewire;
 
@@ -14,8 +15,8 @@ class LaraServiceController extends BaseController
         if (is_array($param)) {
             $param = $param[0];
         }
-        $param = json_decode($param, true);
-
+        $param = str_replace("'", "\"", $param);
+        $param = json_decode($param, true) ?? [];
         return [
             'html' => Livewire::mount($slug, $param)->html(),
             'slug' => $slug,

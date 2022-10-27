@@ -1,7 +1,9 @@
 <?php
 
+use LaraPlatform\Core\Http\Action\LoadPermission;
+
 return [
-    'model' => \DevHau\Modules\Models\Permission::class,
+    'model' => \LaraPlatform\Core\Models\Permission::class,
     'DisableModule' => true,
     'title' => 'Quyền',
     'emptyData' => 'Không có dữ liệu',
@@ -19,9 +21,9 @@ return [
                 'title' => 'Cập nhật quyền',
                 'icon' => '<i class="bi bi-magic"></i>',
                 'type' => 'new',
-                'permission' => 'admin.module.load-permission',
+                'permission' => 'core.module.load-permission',
                 'action' => function () {
-                    return 'wire:click="updatePermission()"';
+                    return get_do_action_hook(LoadPermission::class, '{}');
                 }
             ]
         ]

@@ -4,7 +4,7 @@ use  Illuminate\Support\Arr;
 use  LaraPlatform\Core\Facades\Action;
 use LaraPlatform\Core\Facades\Filter;
 
-if (function_exists('add_action')) {
+if (!function_exists('add_action')) {
     /**
      * @param  string | array  $hook
      * @param $callback
@@ -17,7 +17,7 @@ if (function_exists('add_action')) {
     }
 }
 
-if (function_exists('remove_action')) {
+if (!function_exists('remove_action')) {
     /**
      * @param  string  $hook
      */
@@ -26,7 +26,7 @@ if (function_exists('remove_action')) {
         Action::removeListener($hook, $callback);
     }
 }
-if (function_exists('do_action')) {
+if (!function_exists('do_action')) {
     /**
      * @param  string  $hook
      */
@@ -59,7 +59,7 @@ if (function_exists('remove_filter')) {
     }
 }
 
-if (! function_exists('apply_filters')) {
+if (!function_exists('apply_filters')) {
     /**
      * @return mixed
      */
@@ -71,7 +71,7 @@ if (! function_exists('apply_filters')) {
     }
 }
 
-if (! function_exists('get_hooks')) {
+if (!function_exists('get_hooks')) {
     /**
      * @param  string|null  $name
      * @param  bool  $isFilter
@@ -90,5 +90,17 @@ if (! function_exists('get_hooks')) {
         }
 
         return Arr::get($listeners, $name, []);
+    }
+}
+
+
+if (!function_exists('get_do_action_hook')) {
+    /**
+     * @param  string | array  $action
+     * @param $param
+     */
+    function get_do_action_hook($action, $param)
+    {
+        return 'wire:click="DoAction(\'' . urlencode($action) . '\',\'' . urlencode(json_encode($param ?? []))  . '\')"';
     }
 }

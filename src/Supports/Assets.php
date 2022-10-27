@@ -30,7 +30,7 @@ class Assets
         while (isset($this->arrScript[$local][$priority])) {
             $priority += 1;
         }
-        $this->arrScript[$local][] = compact('contentOrPath', 'cdn', 'isLink');
+        $this->arrScript[$local][$priority] = compact('contentOrPath', 'cdn', 'isLink');
     }
 
     public function AddStyle($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
@@ -49,15 +49,15 @@ class Assets
         // Style
         if (isset($this->arrStyle[$local]) && count($this->arrStyle[$local]) > 0) {
             $styles = $this->arrStyle[$local];
-            krsort($styles);
-            foreach ($styles as $item) {
+            ksort($styles,SORT_NUMERIC);
+            foreach ($styles as $key=> $item ) {
                 if (isset($item['isLink']) && $item['isLink'] == true) {
-                    echo '<link rel="stylesheet" href="'.$item['contentOrPath'].'"/>';
+                    echo '<link rel="stylesheet" priority="'.$key.'" href="'.$item['contentOrPath'].'"/>';
                 }
             }
-            foreach ($styles as $item) {
+            foreach ($styles as $key=> $item) {
                 if (! isset($item['isLink']) || $item['isLink'] == false) {
-                    echo '<style type="text/css">';
+                    echo '<style type="text/css" priority="'.$key.'">';
                     if ($item['contentOrPath'] instanceof Closure) {
                         call_user_func_array($item['contentOrPath'], []);
                     } else {
@@ -70,15 +70,15 @@ class Assets
         //script
         if (isset($this->arrScript[$local]) && count($this->arrScript[$local]) > 0) {
             $scripts = $this->arrScript[$local];
-            krsort($scripts);
-            foreach ($scripts as $item) {
+            ksort($scripts,SORT_NUMERIC);
+            foreach ($scripts as $key=> $item) {
                 if (isset($item['isLink']) && $item['isLink'] == true) {
-                    echo '<script type="text/javascript" src="'.$item['contentOrPath'].'"></script>';
+                    echo '<script type="text/javascript" priority="'.$key.'" src="'.$item['contentOrPath'].'"></script>';
                 }
             }
-            foreach ($scripts as $item) {
+            foreach ($scripts as $key=> $item) {
                 if (! isset($item['isLink']) || $item['isLink'] == false) {
-                    echo '<script>';
+                    echo '<script priority="'.$key.'">';
                     if ($item['contentOrPath'] instanceof Closure) {
                         call_user_func_array($item['contentOrPath'], []);
                     } else {

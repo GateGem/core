@@ -17,6 +17,7 @@
         "sass-loader": "^12.3.0"
     },
     "dependencies": {
+        "sweetalert2": "^11.6.3",
         "whatwg-fetch": "^3.6.2"
     }
 }

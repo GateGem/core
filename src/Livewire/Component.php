@@ -3,13 +3,15 @@
 namespace LaraPlatform\Core\Livewire;
 
 use LaraPlatform\Core\Facades\Theme;
+use LaraPlatform\Core\Traits\WithDoAction;
 use Livewire\Component as ComponentBase;
 
 class Component extends ComponentBase
 {
+    use WithDoAction;
     protected function getListeners()
     {
-        return ['refreshData' => 'loadData'];
+        return ['refreshData' . $this->id => 'loadData'];
     }
 
     public function loadData()
@@ -18,10 +20,10 @@ class Component extends ComponentBase
 
     public function refreshData($option = [])
     {
-        $this->dispatchBrowserEvent('refreshData', $option);
+        $this->dispatchBrowserEvent('reload_component', $option);
     }
 
-    public function ShowMessage($option)
+    public function showMessage($option)
     {
         $this->dispatchBrowserEvent('swal-message', $option);
     }
@@ -37,6 +39,6 @@ class Component extends ComponentBase
             return;
         }
         parent::ensureViewHasValidLivewireLayout($view);
-        $view->extends(Theme::Layout());
+        $view->extends(Theme::Layout())->section('content');
     }
 }

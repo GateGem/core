@@ -17,7 +17,10 @@ class ThemeManager
     private $app;
 
     private Assets $assets;
-
+    public function setTitle($title)
+    {
+        $this->getAssets()->setData('page_title', $title);
+    }
     public function getAssets(): Assets
     {
         return $this->assets ?? ($this->assets = new Assets());
@@ -47,7 +50,7 @@ class ThemeManager
     {
         $this->arrTheme[] = [
             'path' => $path,
-            'info' => BaseScan::FileJson($path.'/theme.json'),
+            'info' => BaseScan::FileJson($path . '/theme.json'),
         ];
     }
 
@@ -76,7 +79,7 @@ class ThemeManager
                 is_array($this->app->config['view']['paths'])
             ) {
                 foreach ($this->app->config['view']['paths'] as $viewPath) {
-                    if (is_dir($appPath = $viewPath.'/vendor/'.$namespace)) {
+                    if (is_dir($appPath = $viewPath . '/vendor/' . $namespace)) {
                         $view->addNamespace($namespace, $appPath);
                     }
                 }
@@ -95,9 +98,9 @@ class ThemeManager
             if ($item['info']['name'] == $themeName) {
                 $this->path = $item['path'];
                 $this->info = $item['info'];
-                $this->layout = 'theme::'.($this->info && isset($this->info['layout']) && $this->info['layout'] ? $this->info['layout'] : 'layout');
-                $this->loadViewsFrom($this->path.'/views');
-                HelperLoader::Load($this->path.'/function.php');
+                $this->layout = 'theme::' . ($this->info && isset($this->info['layout']) && $this->info['layout'] ? $this->info['layout'] : 'layout');
+                $this->loadViewsFrom($this->path . '/views');
+                HelperLoader::Load($this->path . '/function.php');
                 // \File::remove(public_path('themes/'.$themeName));
                 // \File::link($this->path."/public", public_path('themes/'.$themeName));
                 return;

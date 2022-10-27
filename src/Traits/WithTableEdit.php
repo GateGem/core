@@ -34,7 +34,7 @@ trait WithTableEdit
         if (!$option || !isset($option['model']) || $option['model'] == '')
             return abort(404);
 
-        if (!$this->isPage) {
+        if (!$this->modal_isPage) {
             $this->sizeModal = getValueByKey($option, 'formSize',  Modal::FullscreenMd);
         }
         $this->setTitle(getValueByKey($option, 'title', ''));
@@ -109,7 +109,7 @@ trait WithTableEdit
     }
     public function render()
     {
-        return $this->viewModal($this->getView(), null, null, [
+        return $this->viewModal($this->getView(), [
             'option' => $this->option,
             'fields' => $this->fields
         ]);

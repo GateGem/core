@@ -10821,19 +10821,22 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-.main-page {
+.page-main {
   background-color: var(--bs-gray-100);
   min-height: 100vh;
 }
-.main-page .page-container {
+.page-main .page-container {
   min-height: 100vh;
   padding-left: 180px;
   transition: all 0.2s ease;
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {
-  .main-page .page-container {
+  .page-main .page-container {
     padding-left: 60px;
   }
+}
+.page-main .page-container .page-content {
+  padding-top: 40px;
 }
 
 .is-sidebar-mini .page-container {
@@ -11003,6 +11006,21 @@ textarea.form-control-lg {
   width: calc(100% - 60px);
 }
 
+.manager-table {
+  padding: 10px;
+}
+
 .modal-content {
+  border-radius: 3px;
+}
+.modal-content .modal-header,
+.modal-content .modal-footer {
+  padding: 6px 12px;
+}
+.modal-content .modal-body {
+  padding: 1px;
+}
+
+.btn {
   border-radius: 3px;
 }

@@ -2,7 +2,21 @@
 @import './main.scss';
 @import './sidebar.scss';
 @import './header.scss';
+@import './table.scss';
 
 .modal-content {
+    border-radius: 3px;
+
+    .modal-header,
+    .modal-footer {
+        padding: 6px 12px;
+    }
+
+    .modal-body {
+        padding: 1px;
+    }
+}
+
+.btn {
     border-radius: 3px;
 }

@@ -25,7 +25,7 @@ trait WithTableExport
         if (!$option)
             return abort(404);
 
-        if (!$this->isPage) {
+        if (!$this->modal_isPage) {
             $this->sizeModal =  Modal::Small;
         }
         $this->filename = $module;
@@ -37,7 +37,7 @@ trait WithTableExport
         $this->refreshData(['module' => $this->module]);
         $this->hideModal();
         $this->ShowMessage('Export Excel successful!');
-        //return \Excel::download((new (getValueByKey($this->option, 'excel.export', \DevHau\Modules\Excel\ExcelExport::class))($this->option)), $this->filename . '-' . time() . '.xlsx');
+        //return \Excel::download((new (getValueByKey($this->option, 'excel.export', \LaraPlatform\Core\Excel\ExcelExport::class))($this->option)), $this->filename . '-' . time() . '.xlsx');
     }
     public function render()
     {

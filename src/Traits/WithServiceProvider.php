@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use LaraPlatform\Core\Exceptions\InvalidPackage;
 use LaraPlatform\Core\Loader\HelperLoader;
 use LaraPlatform\Core\Loader\LivewireLoader;
+use LaraPlatform\Core\Supports\BaseScan;
 use LaraPlatform\Core\Supports\ServicePackage;
 use ReflectionClass;
 
@@ -53,15 +54,15 @@ trait WithServiceProvider
         $this->bootingPackage();
 
         if (class_exists('\\Livewire\\Component')) {
-            LivewireLoader::Register($this->package->basePath('/Http/Livewire'), $this->getNamespaceName().'\\Http\\Livewire', $this->package->shortName().'::');
+            LivewireLoader::Register($this->package->basePath('/Http/Livewire'), $this->getNamespaceName() . '\\Http\\Livewire', $this->package->shortName() . '::');
         }
 
         if ($this->package->hasTranslations) {
-            $langPath = 'vendor/'.$this->package->shortName();
+            $langPath = 'vendor/' . $this->package->shortName();
 
             $langPath = (function_exists('lang_path'))
                 ? lang_path($langPath)
-                : resource_path('lang/'.$langPath);
+                : resource_path('lang/' . $langPath);
         }
 
         if ($this->app->runningInConsole()) {
@@ -80,7 +81,7 @@ trait WithServiceProvider
             $now = Carbon::now();
             foreach ($this->package->migrationFileNames as $migrationFileName) {
                 $filePath = $this->package->basePath("/../database/migrations/{$migrationFileName}.php");
-                if (! file_exists($filePath)) {
+                if (!file_exists($filePath)) {
                     // Support for the .stub file extension
                     $filePath .= '.stub';
                 }
@@ -94,6 +95,14 @@ trait WithServiceProvider
 
                 if ($this->package->runsMigrations) {
                     $this->loadMigrationsFrom($filePath);
+                }
+            }
+            if ($this->package->runsMigrations) {
+                $migrationFiles =  BaseScan::AllFile($this->package->basePath("/../database/migrations/"));
+                foreach ($migrationFiles  as $file) {
+                    if ($file->getExtension() == "php") {
+                        $this->loadMigrationsFrom($file->getRealPath());
+                    }
                 }
             }
 
@@ -110,7 +119,7 @@ trait WithServiceProvider
             }
         }
 
-        if (! empty($this->package->commands)) {
+        if (!empty($this->package->commands)) {
             $this->commands($this->package->commands);
         }
 
@@ -174,12 +183,12 @@ trait WithServiceProvider
         }
 
         foreach (glob(database_path("{$migrationsPath}*.php")) as $filename) {
-            if ((substr($filename, -$len) === $migrationFileName.'.php')) {
+            if ((substr($filename, -$len) === $migrationFileName . '.php')) {
                 return $filename;
             }
         }
 
-        return database_path($migrationsPath.$now->format('Y_m_d_His').'_'.Str::of($migrationFileName)->snake()->finish('.php'));
+        return database_path($migrationsPath . $now->format('Y_m_d_His') . '_' . Str::of($migrationFileName)->snake()->finish('.php'));
     }
 
     public function registeringPackage()

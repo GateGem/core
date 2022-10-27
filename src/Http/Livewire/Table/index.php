@@ -2,12 +2,14 @@
 
 namespace LaraPlatform\Core\Http\Livewire\Table;
 
-use LaraPlatform\Core\Livewire\Component;
+use LaraPlatform\Core\Livewire\Modal;
+use LaraPlatform\Core\Traits\WithTableIndex;
 
-class Index extends Component
+class Index extends Modal
 {
-    public function render()
+    use WithTableIndex;
+    public function mount($module)
     {
-        return view('core::page.dashboard.index');
+        $this->LoadModule($module);
     }
 }

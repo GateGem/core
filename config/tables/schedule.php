@@ -1,17 +1,17 @@
 <?php
 
-use LaraPlatform\Core\Builder\Form\FieldType;
-use LaraPlatform\Core\Builder\Modal\ModalSize;
+use LaraPlatform\Core\Builder\Form\FieldBuilder;
+use LaraPlatform\Core\Livewire\Modal;
 
 return [
-    'model' => \DevHau\Modules\Models\Schedule::class,
+    'model' => \LaraPlatform\Core\Models\Schedule::class,
     'poll' => '10s',
     'DisableModule' => true,
     'title' => 'Schedule',
     'emptyData' => 'Không có dữ liệu',
     'enableAction' => true,
-    'formInclude' => 'devhau-module::admin.schedule.edit',
-    'viewEdit' => 'devhau-module::admin.schedule.edit',
+    'formInclude' => 'core::schedule.edit',
+    'viewEdit' => 'core::schedule.edit',
     'action' => [
         'title' => '#',
         'add' => true,
@@ -34,12 +34,12 @@ return [
                 'icon' => '<i class="bi bi-magic"></i>',
                 'type' => 'new',
                 'action' => function () {
-                    return 'wire:openmodal=\'devhau-module::admin.schedule.history()\'';
+                    return 'wire:openmodal=\'core::schedule.history()\'';
                 }
             ]
         ]
     ],
-    'formSize' => ModalSize::FullscreenMd,
+    'formSize' => Modal::FullscreenMd,
     'fields' => [
         [
             'field' => 'command',
@@ -53,7 +53,7 @@ return [
             'field' => 'expression',
             'title' => 'Chạy tiếp theo vào lúc',
             'funcCell' => function ($row, $column) {
-                return CronNextRunDate($row['expression']);
+                // return CronNextRunDate($row['expression']);
             },
             'default' => '*/5 * * * *'
         ],
@@ -102,7 +102,7 @@ return [
             'view' => false
         ],
         [
-            'fieldType' => FieldType::Dropdown,
+            'fieldType' => FieldBuilder::Dropdown,
             'default' => 1,
             'funcData' => function () {
                 return [

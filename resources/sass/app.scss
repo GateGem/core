@@ -1,5 +1,4 @@
-@import './loader.scss';
-
+@import 'sweetalert2/dist/sweetalert2.css';
 .menu {
     list-style: none;
     padding: 0;
@@ -15,11 +14,20 @@
     }
 }
 
-.modal-backdrop {
-    opacity: 0 !important;
-    visibility: hidden;
-    &:last-child {
-        visibility: visible;
-        opacity: var(--bs-backdrop-opacity) !important;
+// .modal-backdrop {
+//     opacity: 0 !important;
+//     visibility: hidden;
+
+//     &:nth-last-child(1) {
+//         visibility: visible;
+//         opacity: var(--bs-backdrop-opacity) !important;
+//     }
+// }
+
+.modal {
+    z-index: var(--bs-backdrop-zindex) !important;
+
+    &:nth-last-child(2) {
+        z-index: var(--bs-modal-zindex) !important;
     }
 }

@@ -6278,8 +6278,9 @@ document.addEventListener("DOMContentLoaded", function () {
     el.addEventListener("mouseover", function (e) {
       var menuItem = e.target.closest(".menu-item");
 
-      if (menuItem && (!menuItem.classList.contains('active') || document.body.classList.contains("is-sidebar-mini"))) {
-        menuItem.querySelector(".menu").style.top = menuItem.offsetTop + 40 + "px";
+      if (menuItem && (!menuItem.classList.contains("active") || document.body.classList.contains("is-sidebar-mini"))) {
+        var menu = menuItem.querySelector(".menu");
+        if (menu) menu.setAttribute("style", "top:" + (menuItem.offsetTop + 40) + "px");
       }
     });
   }

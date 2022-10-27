@@ -1,7 +1,6 @@
 <?php
 
-use LaraPlatform\Core\Builder\Form\FieldSize;
-use LaraPlatform\Core\Builder\Form\FieldType;
+use LaraPlatform\Core\Builder\Form\FieldBuilder;
 
 return [
     'DisableModule' => true,
@@ -10,8 +9,8 @@ return [
     'modalkey' => 'name',
     'excel' => [
         'template' => '',
-        'import' => \DevHau\Modules\Excel\ExcelInport::class,
-        'export' => \DevHau\Modules\Excel\ExcelExport::class,
+        // 'import' => \LaraPlatform\Core\Excel\ExcelInport::class,
+        // 'export' => \LaraPlatform\Core\Excel\ExcelExport::class,
         'header' => ['id', 'Họ Tên', 'Trạng thái'],
         'mapdata' => function ($item) {
             return [
@@ -36,7 +35,7 @@ return [
                 'type' => 'update',
                 'class' => 'btn-primary',
                 'action' => function ($id) {
-                    return 'wire:openmodal="devhau-module::admin.module.create-file({\'module\':\'' . $id . '\'})"';
+                    return 'wire:component="core::module.create-file({\'module\':\'' . $id . '\'})"';
                 }
             ], [
                 'title' => 'Xóa module',
@@ -54,7 +53,7 @@ return [
                 'class' => 'btn-primary',
                 'type' => 'new',
                 'action' => function () {
-                    return 'wire:openmodal="devhau-module::admin.module.create()"';
+                    return 'wire:openmodal="core::module.create()"';
                 }
             ]
         ]
@@ -65,18 +64,18 @@ return [
     'layoutForm' => [
         'common' => [
             [
-                ['key' => 'row1_1', 'column' => FieldSize::Col6],
-                ['key' => 'row1_2', 'column' => FieldSize::Col6],
+                ['key' => 'row1_1', 'column' => FieldBuilder::Col6],
+                ['key' => 'row1_2', 'column' => FieldBuilder::Col6],
             ],
             [
-                ['key' => 'row2_1', 'column' => FieldSize::Col12],
+                ['key' => 'row2_1', 'column' => FieldBuilder::Col12],
             ]
         ]
     ],
     'fields' => [
         [
             'field' => 'name',
-            'fieldType' => FieldType::Text,
+            'fieldType' => FieldBuilder::Text,
             'title' => 'Module Name',
             'keyColumn' => 'row1_1'
         ],
@@ -92,7 +91,7 @@ return [
             'keyColumn' => 'row1_1'
         ],
         [
-            'fieldType' => FieldType::Dropdown,
+            'fieldType' => FieldBuilder::Dropdown,
             'funcData' => function () {
                 return [
                     [

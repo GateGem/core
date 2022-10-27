@@ -79,8 +79,10 @@ let removeComponent = (componentId) => {
   if (elComponent) {
     const modal = bootstrap?.Modal?.getOrCreateInstance(elComponent);
     modal?.hide();
-    modal?.dispose();
-    elComponent.remove();
+    setTimeout(() => {
+      //modal?.dispose();
+      elComponent.remove();
+    });
   }
 };
 if (window != undefined) {
@@ -91,9 +93,17 @@ if (window != undefined) {
     });
   });
 
-  window.addEventListener("removecomponent", (event) =>
+  window.addEventListener("remove_component", (event) =>
     removeComponent(event.detail.id)
   );
   window.loadComponentTo = loadComponentTo;
   window.removeComponent = removeComponent;
+  window.addEventListener("reload_component", function (e) {
+    if (e.detail.module) {
+      Livewire.emit("refreshData" + e.detail.module);
+    }
+    if (e.detail.id) {
+      Livewire.emit("refreshData" + e.detail.id);
+    }
+  });
 }

@@ -2,8 +2,8 @@
 
 use LaraPlatform\Core\Builder\Menu\MenuBuilder;
 
-add_asset_js(asset('themes/lara-admin/js/lara-admin.js'), 0);
-add_asset_css(asset('themes/lara-admin/css/lara-admin.css'), 0);
+add_asset_js(asset('themes/lara-admin/js/lara-admin.js'), '',  10);
+add_asset_css(asset('themes/lara-admin/css/lara-admin.css'), '', 10);
 add_page_body_class('lara-admin');
 add_menu_with_sub('Dasboard', function ($subItem) {
     $subItem->addItem(function ($item) {
@@ -15,7 +15,7 @@ add_menu_with_sub('User', function ($subItem) {
     $subItem->addItem(function ($item) {
         $item->setItem('User', 'bi bi-speedometer', '', 'link');
     })->addItem(function ($item) {
-        $item->setItem('Dasboard2', 'bi bi-speedometer', '', 'core::table.edit', MenuBuilder::ItemComponent);
+        $item->setItem('Dasboard2', 'bi bi-speedometer', '', 'core::table.index({"module":"role"})', MenuBuilder::ItemComponent);
     });
 }, 'bi bi-speedometer');
 add_menu_with_sub('Setting', function ($subItem) {

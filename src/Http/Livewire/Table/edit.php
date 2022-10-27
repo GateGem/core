@@ -3,11 +3,13 @@
 namespace LaraPlatform\Core\Http\Livewire\Table;
 
 use LaraPlatform\Core\Livewire\Modal;
+use LaraPlatform\Core\Traits\WithTableEdit;
 
 class edit extends Modal
 {
-    public function render()
+    use WithTableEdit;
+    public function mount($module, $dataId = null)
     {
-        return $this->viewModal('core::page.dashboard.index');
+        $this->LoadModule($module, $dataId);
     }
 }

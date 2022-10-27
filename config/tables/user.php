@@ -1,18 +1,17 @@
 <?php
 
-use LaraPlatform\Core\Builder\Form\FieldSize;
-use LaraPlatform\Core\Builder\Form\FieldType;
+use LaraPlatform\Core\Builder\Form\FieldBuilder;
 
 return [
-    'model' => \DevHau\Modules\Models\User::class,
+    'model' => LaraPlatform\Core\Models\User::class,
     'modelkey' => 'id',
     'DisableModule' => true,
     'title' => 'Tài khoản',
     'emptyData' => 'Không có dữ liệu',
     'excel' => [
         'template' => '',
-        'import' => \DevHau\Modules\Excel\ExcelInport::class,
-        'export' => \DevHau\Modules\Excel\ExcelExport::class,
+        // 'import' => \LaraPlatform\Core\Excel\ExcelInport::class,
+        // 'export' => \LaraPlatform\Core\Excel\ExcelExport::class,
         'header' => ['id', 'Họ Tên', 'Trạng thái'],
         'mapdata' => function ($item) {
             return [
@@ -37,7 +36,7 @@ return [
                 'class' => 'btn-primary',
                 'type' => 'update',
                 'action' => function ($id) {
-                    return 'wire:openmodal="devhau-module::admin.user.permission({\'userId\':\'' . $id . '\'})"';
+                    return 'wire:openmodal="core::user.permission({\'userId\':\'' . $id . '\'})"';
                 }
             ], [
                 'title' => 'Quản lý quyền',
@@ -45,7 +44,7 @@ return [
                 'permission' => 'admin.permission',
                 'type' => 'new',
                 'action' => function () {
-                    return 'wire:openmodal="devhau-module::admin.permission.index()"';
+                    return 'wire:openmodal="core::permission.index()"';
                 }
             ]
         ]
@@ -63,18 +62,18 @@ return [
     'layoutForm' => [
         'common' => [
             [
-                ['key' => 'row1_1', 'column' => FieldSize::Col6],
-                ['key' => 'row1_2', 'column' => FieldSize::Col6],
+                ['key' => 'row1_1', 'column' => FieldBuilder::Col6],
+                ['key' => 'row1_2', 'column' => FieldBuilder::Col6],
             ],
             [
-                ['key' => 'row2_1', 'column' => FieldSize::Col12],
+                ['key' => 'row2_1', 'column' => FieldBuilder::Col12],
             ]
         ]
     ],
     'fields' => [
         [
             'field' => 'name',
-            'fieldType' => FieldType::Text,
+            'fieldType' => FieldBuilder::Text,
             'title' => 'Họ tên',
             'keyColumn' => 'row1_1'
         ],
@@ -92,13 +91,13 @@ return [
         [
             'field' => 'password',
             'title' => 'Mật khẩu',
-            'fieldType' => FieldType::Password,
+            'fieldType' => FieldBuilder::Password,
             'view' => false,
             'edit' => false,
             'keyColumn' => 'row1_1'
         ],
         [
-            'fieldType' => FieldType::Dropdown,
+            'fieldType' => FieldBuilder::Dropdown,
             'default' => 0,
             'funcData' => function () {
                 return [

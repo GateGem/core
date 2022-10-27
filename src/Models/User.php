@@ -1,9 +1,9 @@
 <?php
 
-namespace DevHau\Modules\Models;
+namespace LaraPlatform\Core\Models;
 
 use App\Models\User as Authenticatable;
-use DevHau\Modules\Providers\AuthServiceProvider;
+use LaraPlatform\Core\Providers\AuthServiceProvider;
 use LaraPlatform\Core\Traits\WithPermission;
 use LaraPlatform\Core\Traits\WithSlug;
 use Illuminate\Support\Facades\Hash;
