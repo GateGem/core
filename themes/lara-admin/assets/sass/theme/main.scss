@@ -8,7 +8,7 @@
         -webkit-transition: all 0.2s ease;
         -o-transition: all 0.2s ease;
         transition: all 0.2s ease;
-        @media screen and (min-width: 992px) and (max-width: 1439px) {
+        @media screen  and (max-width:$sidebar_width_max) {
             padding-left: $sidebar_width_mini;
         }
         .page-content{
@@ -19,5 +19,8 @@
 .is-sidebar-mini{
     .page-container {
         padding-left: $sidebar_width_mini;
+        @media screen  and (max-width: $sidebar_width_max) {
+            padding-left: $sidebar_width;
+        }
     }
 }

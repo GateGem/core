@@ -10,10 +10,6 @@
     width: $sidebar_width;
     z-index: 1000;
 
-    @media screen and (min-width: 992px) and (max-width: 1439px) {
-        width: $sidebar_width_mini;
-    }
-
     .sidebar-inner {
         position: relative;
         height: 100%;
@@ -29,19 +25,6 @@
 
             .sidebar-logo-mini {
                 display: none;
-
-                @media screen and (min-width: 992px) and (max-width: 1439px) {
-
-                    display: block;
-                }
-            }
-
-            @media screen and (min-width: 992px) and (max-width: 1439px) {
-                padding: 0 5px;
-
-                .sidebar-logo-none {
-                    display: none;
-                }
             }
         }
 
@@ -56,59 +39,105 @@
 
         }
     }
-}
 
-.menu-sidebar {
-    .menu-item {
-        &>a {
-            display: block;
-            padding: 5px 8px;
-        }
-
-        .menu-sub {
-            display: none;
-            min-width: $sidebar_width;
-        }
-
-        &:hover {
-            border-top: 1px solid #ccc;
-        }
-
-        &:hover>a:hover {
-            background-color: antiquewhite;
-            cursor: pointer;
-        }
-
-        &:not(.active):hover>.menu-sub {
-            display: block;
-            position: fixed;
-            left: $sidebar_width;
-            top: 0px;
-            background-color: #ccc;
-            border-radius: 0px 1px 1px 0px;
-            padding-left: 0 !important;
-        }
-
-        &.active {
+    .menu-sidebar {
+        .menu-item {
             &>a {
-                background-color: rgb(234, 234, 231);
-                border-top: 1px solid #ccc;
-                border-bottom: 1px solid #ccc;
+                display: block;
+                padding: 5px 8px;
             }
 
-            &>.menu-sub {
+            .menu-sub {
+                display: none;
+                position: fixed;
+                left: calc($sidebar_width - 2px);
+                background-color: #ccc;
+                border-radius: 0px 1px 1px 0px;
                 padding-left: 0 !important;
-                display: block;
-                position: relative;
+            }
 
-                a {
-                    padding-left: 23px;
+            &:hover {
+                border-top: 1px solid #ccc;
+
+                &>a:hover {
+                    background-color: antiquewhite;
+                    cursor: pointer;
+                }
+
+                &>.menu-sub {
+                    display: block;
+                }
+            }
+
+            &.active {
+                &>a {
+                    background-color: rgb(234, 234, 231);
+                    border-top: 1px solid #ccc;
+                    border-bottom: 1px solid #ccc;
+                }
+
+                &>.menu-sub {
+                    padding-left: 0 !important;
+                    left: unset;
+                    display: block;
+                    position: relative;
+
+                    a {
+                        padding-left: 23px;
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    @media screen and (max-width: $sidebar_width_max) {
+        width: $sidebar_width_mini;
+
+        .sidebar-inner {
+            .sidebar-logo {
+                padding: 0 5px;
+
+                .sidebar-logo-none {
+                    display: none;
+                }
+
+                .sidebar-logo-mini {
+                    display: block;
                 }
             }
         }
 
+
+        .menu-sidebar {
+            &>.menu-item {
+                &>a {
+                    text-align: center;
+
+                    span {
+                        display: none;
+                    }
+                }
+
+                .menu-sub {
+                    display: none;
+                }
+
+                &.active>.menu-sub {
+                    display: none;
+                }
+
+                &:hover>.menu-sub {
+                    display: block;
+                    position: fixed;
+                    left: calc($sidebar_width_mini - 2px);
+                }
+            }
+        }
     }
 }
+
 
 .is-sidebar-mini {
     .sidebar {
@@ -125,30 +154,87 @@
                 display: block;
             }
         }
-    }
 
-    .menu-sidebar {
-        &>.menu-item {
-            &>a {
-                text-align: center;
 
-                span {
+        .menu-sidebar {
+            &>.menu-item {
+                &>a {
+                    text-align: center;
+
+                    span {
+                        display: none;
+                    }
+                }
+
+                .menu-sub {
                     display: none;
+                    position: fixed;
+                    left: calc($sidebar_width_mini - 2px);
+                }
+
+                &:hover>.menu-sub {
+                    display: block;
+                }
+            }
+        }
+
+        @media screen and (max-width: $sidebar_width_max) {
+            width: $sidebar_width;
+
+            .sidebar-inner {
+                .sidebar-logo {
+                    padding: 0 20px;
+
+                    .sidebar-logo-none {
+                        display: block;
+                    }
+
+                    .sidebar-logo-mini {
+                        display: none;
+                    }
                 }
             }
 
-            .menu-sub {
-                display: none;
-            }
+            .menu-sidebar {
+                &>.menu-item {
+                    &>a {
+                        text-align: left;
 
-            &:hover>.menu-sub {
-                display: block;
-                position: fixed;
-                left: $sidebar_width_mini;
-                top: 0px;
-                background-color: #ccc;
-                border-radius: 0px 1px 1px 0px;
-                padding-left: 0 !important;
+                        span {
+                            display: inline;
+                        }
+                    }
+
+                    .menu-sub {
+                        display: none;
+                        position: fixed;
+                        left: calc($sidebar_width - 2px);
+                    }
+
+                    &:hover>.menu-sub {
+                        display: block;
+                    }
+
+                    &.active {
+                        &>a {
+                            background-color: rgb(234, 234, 231);
+                            border-top: 1px solid #ccc;
+                            border-bottom: 1px solid #ccc;
+                        }
+
+                        &>.menu-sub {
+                            padding-left: 0 !important;
+                            left: unset;
+                            display: block;
+                            position: relative;
+
+                            a {
+                                padding-left: 23px;
+                            }
+
+                        }
+                    }
+                }
             }
         }
     }

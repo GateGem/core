@@ -12,12 +12,13 @@
     width: calc(100% - $sidebar_width);
     z-index: 800;
 
-    @media screen and (min-width: 992px) and (max-width: 1439px) {
+    @media screen and (max-width: $sidebar_width_max) {
         width: calc(100% - $sidebar_width_mini);
     }
 
     .header-container {
         height: 100%;
+
         .nav-left,
         .nav-right {
             height: 100%;
@@ -25,7 +26,8 @@
             margin-bottom: 0;
             padding-left: 0;
             position: relative;
-            li{
+
+            li {
                 float: left;
             }
         }
@@ -34,13 +36,19 @@
             float: left;
             margin-left: 15px;
         }
+
         .nav-right {
             float: right;
         }
     }
 }
-.is-sidebar-mini{
-    .header{
+
+.is-sidebar-mini {
+    .header {
         width: calc(100% - $sidebar_width_mini);
+
+        @media screen and (max-width: $sidebar_width_max) {
+            width: calc(100% - $sidebar_width);
+        }
     }
 }

@@ -54,7 +54,11 @@ trait WithTableIndex
     public function getOptionProperty()
     {
         if (is_null($this->option_temp)) {
-            $option = TableLoader::getDataByKey($this->module);
+            if (method_exists($this, "getOption")) {
+                $option = $this->getOption();
+            } else {
+                $option = TableLoader::getDataByKey($this->module);
+            }
             if (!isset($option['fields'])) $option['fields'] = [];
             $this->option_temp = $option;
             $this->viewEdit = getValueByKey($option, 'viewEdit', 'core::table.edit');
@@ -92,11 +96,8 @@ trait WithTableIndex
             $model->delete();
         $this->refreshData(['module' => $this->module]);
     }
-    public function LoadModule($module)
+    public function LoadData()
     {
-        if (!$module) return abort(404);
-        $this->module = $module;
-        $this->code_permission = "admin." . $this->module;
         $option = $this->option;
         if (!$option || ($this->isCheckDisableModule && getValueByKey($option, 'DisableModule', false)))
             return abort(404);
@@ -106,6 +107,13 @@ trait WithTableIndex
         }
         $this->setTitle(getValueByKey($option, 'title', ''));
         $this->pageSize = getValueByKey($option, 'pageSize', 10);
+    }
+    public function LoadModule($module)
+    {
+        if (!$module) return abort(404);
+        $this->module = $module;
+        $this->code_permission = "admin." . $this->module;
+        $this->LoadData();
     }
     public function getData($isAll = false)
     {
@@ -128,7 +136,7 @@ trait WithTableIndex
     }
     public function render()
     {
-        return $this->viewModal($this->getView(),[
+        return $this->viewModal($this->getView(), [
             'data' => $this->getData(),
             'option' => $this->option,
             'viewEdit' => $this->viewEdit,
@@ -157,22 +165,22 @@ trait WithTableIndex
     }
     public function checkAdd(): bool
     {
-        return getValueByKey($this->getAction(), 'add', true) && Gate::check($this->code_permission . '.add')|| true;
+        return getValueByKey($this->getAction(), 'add', true) && Gate::check($this->code_permission . '.add') || true;
     }
     protected function checkEdit()
     {
-        return getValueByKey($this->getAction(), 'edit', true) && Gate::check($this->code_permission . '.edit')|| true;
+        return getValueByKey($this->getAction(), 'edit', true) && Gate::check($this->code_permission . '.edit') || true;
     }
     protected function checkRemove()
     {
-        return getValueByKey($this->getAction(), 'delete', true) && Gate::check($this->code_permission . '.delete')|| true;
+        return getValueByKey($this->getAction(), 'delete', true) && Gate::check($this->code_permission . '.delete') || true;
     }
     protected function checkInportExcel()
     {
-        return getValueByKey($this->getAction(), 'inport', true) && Gate::check($this->code_permission . '.inport')|| true;
+        return getValueByKey($this->getAction(), 'inport', true) && Gate::check($this->code_permission . '.inport') || true;
     }
     protected function checkExportExcel()
     {
-        return getValueByKey($this->getAction(), 'export', true) && Gate::check($this->code_permission . '.export')|| true;
+        return getValueByKey($this->getAction(), 'export', true) && Gate::check($this->code_permission . '.export') || true;
     }
 }

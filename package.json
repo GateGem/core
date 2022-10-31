@@ -18,6 +18,8 @@
     },
     "dependencies": {
         "sweetalert2": "^11.6.3",
-        "whatwg-fetch": "^3.6.2"
+        "whatwg-fetch": "^3.6.2",
+        "alpinejs": "^3.10.4",
+        "bootstrap": "^5.2.2"
     }
 }

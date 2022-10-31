@@ -19,17 +19,15 @@ trait WithTableEdit
     }
     public function getOptionProperty()
     {
+        if (method_exists($this, "getOption")) return $this->getOption();
         return TableLoader::getDataByKey($this->module);
     }
     public function getFieldsProperty()
     {
         return  getValueByKey($this->getOptionProperty(), 'fields', []);
     }
-    public function LoadModule($module, $dataId = null)
+    public function LoadData()
     {
-        $this->dataId = $dataId;
-        if (!$module) return abort(404);
-        $this->module = $module;
         $option = $this->getOptionProperty();
         if (!$option || !isset($option['model']) || $option['model'] == '')
             return abort(404);
@@ -65,8 +63,15 @@ trait WithTableEdit
         }
         $fnRule = getValueByKey($option, 'formRule', null);
         if ($fnRule) {
-            $this->rules = $fnRule($dataId, $this->isFormNew) ?? [];
+            $this->rules = $fnRule($this->dataId, $this->isFormNew) ?? [];
         }
+    }
+    public function LoadModule($module, $dataId = null)
+    {
+        $this->dataId = $dataId;
+        if (!$module) return abort(404);
+        $this->module = $module;
+        $this->LoadData();
     }
     public function SaveForm()
     {
