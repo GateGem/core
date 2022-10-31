@@ -1169,3 +1169,30 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
 .modal:nth-last-child(2) {
   z-index: var(--bs-modal-zindex) !important;
 }
+
+.table .cell-header,
+.table .cell-data {
+  display: inline-block;
+}
+.table .action-header,
+.table .action-data {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 1px 6px;
+}
+.table tr td:last-child {
+  width: 5%;
+}
+
+.form-filter-column {
+  position: absolute;
+  right: 10px;
+  background: #ccc;
+  z-index: 10px;
+  border: 1px solid #111;
+  border-radius: 2px;
+  padding: 0 5px;
+}
+.form-filter-column p {
+  margin: 0 !important;
+}

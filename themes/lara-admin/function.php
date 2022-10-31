@@ -13,9 +13,11 @@ add_menu_with_sub('Dasboard', function ($subItem) {
 
 add_menu_with_sub('User', function ($subItem) {
     $subItem->addItem(function ($item) {
-        $item->setItem('User', 'bi bi-speedometer', '', 'link');
+        $item->setItem('User', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'user']], MenuBuilder::ItemRouter);
     })->addItem(function ($item) {
-        $item->setItem('Dasboard2', 'bi bi-speedometer', '', 'core::table.index({"module":"role"})', MenuBuilder::ItemComponent);
+        $item->setItem('Role', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'role']], MenuBuilder::ItemRouter);
+    })->addItem(function ($item) {
+        $item->setItem('Permission', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'permission']], MenuBuilder::ItemRouter);
     });
 }, 'bi bi-speedometer');
 add_menu_with_sub('Setting', function ($subItem) {
@@ -23,5 +25,7 @@ add_menu_with_sub('Setting', function ($subItem) {
         $item->setItem('Dasboard1', 'bi bi-speedometer', '', 'link');
     })->addItem(function ($item) {
         $item->setItem('Dasboard2', 'bi bi-speedometer', '', 'core::demo', MenuBuilder::ItemComponent);
+    })->addItem(function ($item) {
+        $item->setItem('Dasboard2', 'bi bi-speedometer', '', 'core::table.index({"module":"role"})', MenuBuilder::ItemComponent);
     });
 }, 'bi bi-speedometer');

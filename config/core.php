@@ -3,7 +3,7 @@
 // config for LaraPlatform\Core
 return [
     'web' => [
-        'admin' => '/admincp',
+        'admin' => '',
     ],
     'appdir' => [
         'root' => 'lara',

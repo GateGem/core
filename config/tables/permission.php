@@ -4,7 +4,7 @@ use LaraPlatform\Core\Http\Action\LoadPermission;
 
 return [
     'model' => \LaraPlatform\Core\Models\Permission::class,
-    'DisableModule' => true,
+   // 'DisableModule' => true,
     'title' => 'Quyền',
     'emptyData' => 'Không có dữ liệu',
     'enableAction' => true,

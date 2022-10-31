@@ -98,8 +98,8 @@ trait WithTableIndex
         $this->module = $module;
         $this->code_permission = "admin." . $this->module;
         $option = $this->option;
-        // if (!$option || ($this->isCheckDisableModule && getValueByKey($option, 'DisableModule', false)))
-        //     return abort(404);
+        if (!$option || ($this->isCheckDisableModule && getValueByKey($option, 'DisableModule', false)))
+            return abort(404);
 
         if (!$this->modal_isPage) {
             $this->sizeModal = getValueByKey($option, 'sizeModal',  Modal::ExtraLarge);

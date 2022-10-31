@@ -20,7 +20,6 @@ class HtmlBuilder implements IBuilder
     {
         ob_start();
         $this->RenderHtml();
-
         return ob_get_clean();
     }
 }

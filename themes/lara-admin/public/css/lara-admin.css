@@ -10919,9 +10919,10 @@ textarea.form-control-lg {
   border-radius: 0px 1px 1px 0px;
   padding-left: 0 !important;
 }
-.menu-sidebar .menu-item.active {
-  background-color: #eec;
+.menu-sidebar .menu-item.active > a {
+  background-color: rgb(234, 234, 231);
   border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 .menu-sidebar .menu-item.active > .menu-sub {
   padding-left: 0 !important;

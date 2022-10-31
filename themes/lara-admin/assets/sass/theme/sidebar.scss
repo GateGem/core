@@ -90,8 +90,12 @@
         }
 
         &.active {
-            background-color: #eec;
-            border-top: 1px solid #ccc;
+            &>a {
+                background-color: rgb(234, 234, 231);
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+            }
+
             &>.menu-sub {
                 padding-left: 0 !important;
                 display: block;
@@ -136,6 +140,7 @@
             .menu-sub {
                 display: none;
             }
+
             &:hover>.menu-sub {
                 display: block;
                 position: fixed;

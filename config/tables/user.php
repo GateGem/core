@@ -5,7 +5,7 @@ use LaraPlatform\Core\Builder\Form\FieldBuilder;
 return [
     'model' => LaraPlatform\Core\Models\User::class,
     'modelkey' => 'id',
-    'DisableModule' => true,
+    //'DisableModule' => true,
     'title' => 'Tài khoản',
     'emptyData' => 'Không có dữ liệu',
     'excel' => [
@@ -32,11 +32,11 @@ return [
             [
                 'title' => 'Phân quyền',
                 'icon' => '<i class="bi bi-magic"></i>',
-                'permission' => 'admin.user.permission',
+                //'permission' => 'admin.user.permission',
                 'class' => 'btn-primary',
                 'type' => 'update',
                 'action' => function ($id) {
-                    return 'wire:openmodal="core::user.permission({\'userId\':\'' . $id . '\'})"';
+                    return 'wire:component="core::page.permission.user({\'userId\':\'' . $id . '\'})"';
                 }
             ], [
                 'title' => 'Quản lý quyền',

@@ -1,4 +1,5 @@
 @import 'sweetalert2/dist/sweetalert2.css';
+
 .menu {
     list-style: none;
     padding: 0;
@@ -29,5 +30,41 @@
 
     &:nth-last-child(2) {
         z-index: var(--bs-modal-zindex) !important;
+    }
+}
+
+.table {
+
+    .cell-header,
+    .cell-data {
+        display: inline-block;
+    }
+
+    .action-header,
+    .action-data {
+        display: inline-block;
+        white-space: nowrap;
+        padding: 1px 6px;
+    }
+
+    tr {
+        td {
+            &:last-child {
+                width: 5%;
+            }
+        }
+    }
+}
+
+.form-filter-column {
+    position: absolute;
+    right: 10px;
+    background: #ccc;
+    z-index: 10px;
+    border: 1px solid #111;
+    border-radius: 2px;
+    padding: 0 5px;
+    p {
+        margin: 0 !important;
     }
 }

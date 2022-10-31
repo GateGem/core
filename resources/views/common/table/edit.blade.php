@@ -4,9 +4,9 @@
     @else
     <div class="p-1">
         {!!\LaraPlatform\Core\Builder\Form\FormBuilder::Render($this,$option,['isNew'=>$isFormNew,'errors'=>$errors])!!}
-        <div class="text-center pt-1">
+        <div class="text-center pt-3">
             <button class="btn btn-primary btn-sm" type="submit">
-                <i class="bi bi-download"></i> <span>Save</span>
+                <i class="bi bi-download"></i> <span class="p-1">Save</span>
             </button>
         </div>
     </div>
