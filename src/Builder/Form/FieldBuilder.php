@@ -24,6 +24,7 @@ class FieldBuilder extends HtmlBuilder
     public const Image = 14;
     public const Cron = 15;
     public const MultiCron = 16;
+    public const TreeView = 17;
     public const includeInput = 9999;
     public const AllColor = ["warning", "info", "danger", "primary", "success"];
     public const secondary = "text-white bg-secondary";
@@ -234,6 +235,9 @@ class FieldBuilder extends HtmlBuilder
                 break;
             case FieldBuilder::MultiCron:
                 echo '<textarea type="text" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-control text-warning fw-bold fs-6" id="input-' . $this->option['field'] . '" ' .  $this->getModelField() . '" style="background-color: rgb(56, 43, 95);"></textarea>';
+                break;
+            case FieldBuilder::TreeView:
+                echo TreeViewBuilder::Render($this->data, $this->option, $this->formData);
                 break;
             case FieldBuilder::Text:
             default:

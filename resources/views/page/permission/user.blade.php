@@ -18,16 +18,9 @@
         <div class="col-lg-9 col-md-12">
             <h2>Permission</h2>
             <div class="row">
-                @foreach ($permissionAll as $key=> $item)
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="form-check">
-                        <input wire:model="permission.{{$item->id}}" class="form-check-input" type="checkbox" value="{{$item->id}}" id="per_{{$key}}">
-                        <label class="form-check-label" for="per_{{$key}}">
-                            {{$item->name}}
-                        </label>
-                    </div>
+                <div class="p-1">
+                    <?php echo LaraPlatform\Core\Builder\Form\TreeViewBuilder::Render($optionTree, [], []); ?>
                 </div>
-                @endforeach
             </div>
         </div>
     </div>

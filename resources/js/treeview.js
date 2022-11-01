@@ -1,0 +1,102 @@
+if (window != undefined) {
+  const eventClickTreeview = (e) => {
+    if (
+      e.target.classList.contains("bi-chevron-down") ||
+      e.target.classList.contains("bi-chevron-right")
+    ) {
+      const li = e.target.closest("li");
+      if (li.classList.contains("show")) li.classList.remove("show");
+      else li.classList.add("show");
+    }
+  };
+  const eventChangeCheckRootInput = (e) => {
+    const li = e.target.closest("li");
+    const wireElent = e.target.closest("[wire\\:id]");
+    if (wireElent) {
+      const wireComponent =
+        livewire.components.componentsById[wireElent.getAttribute("wire:id")];
+      if (wireComponent) {
+        li.querySelectorAll("ul input").forEach((el) => {
+          el.checked = e.target.checked;
+          el.dispatchEvent(new Event("input"));
+          if (el.getAttribute("wire:model.defer")) {
+            wireComponent.set(
+              el.getAttribute("wire:model.defer"),
+              el.checked ? el.value : false,
+              true
+            );
+          }
+        });
+        return;
+      }
+    }
+    li.querySelectorAll("ul input").forEach((el) => {
+      el.checked = e.target.checked;
+      el.dispatchEvent(new Event("input"));
+    });
+  };
+  const eventChangeCheckInput = (e) => {
+    const treeView = e.target.closest(".tree-view");
+    isCheckTreeView(treeView);
+  };
+  const loadEventTreeview = (el) => {
+    el?.querySelectorAll(".tree-view").forEach((elItem) => {
+      elItem.removeEventListener("click", eventClickTreeview, true);
+      elItem.addEventListener("click", eventClickTreeview);
+      elItem.querySelectorAll(".cbk_root").forEach((elCheckInput) => {
+        elCheckInput.removeEventListener(
+          "change",
+          eventChangeCheckRootInput,
+          true
+        );
+        elCheckInput.addEventListener("change", eventChangeCheckRootInput);
+      });
+      elItem.querySelectorAll(".form-check-input").forEach((elCheckInput) => {
+        elCheckInput.removeEventListener("change", eventChangeCheckInput, true);
+        elCheckInput.addEventListener("change", eventChangeCheckInput);
+      });
+      isCheckTreeView(elItem);
+    });
+  };
+  const isCheckTreeView = (itemView) => {
+    itemView
+      .querySelectorAll(":scope > ul > li > .form-check > .cbk_root")
+      .forEach((item) => {
+        item.checked = isCheckRoot(item);
+      });
+  };
+  const isCheckRoot = (el) => {
+    let elLi = el.closest("li");
+    let arrRoot = elLi.querySelectorAll(
+      " :scope > ul > li > .form-check > .cbk_root"
+    );
+    if (arrRoot.length == 0) {
+      let arrInput = elLi.querySelectorAll(
+        ":scope > ul > li > .form-check > .form-check-input"
+      );
+      console.log(arrInput);
+      if (arrInput.length == 0) return false;
+      return (
+        arrInput.length ==
+        [...arrInput].filter((item) => item.checked == true).length
+      );
+    }
+
+    el.checked =
+      arrRoot.length ==
+      [...arrRoot].filter((item) => {
+        item.checked = isCheckRoot(item);
+        return item.checked;
+      }).length;
+    return el.checked;
+  };
+  window.addEventListener("load", function () {
+    loadEventTreeview(document.body);
+    Livewire.hook("message.processed", (message, component) => {
+      loadEventTreeview(component.el);
+    });
+  });
+  window.addEventListener("loadComponent", function ({ detail }) {
+    loadEventTreeview(detail);
+  });
+}

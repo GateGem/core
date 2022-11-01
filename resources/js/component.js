@@ -25,6 +25,7 @@ const loadComponentTo = (name, param, toEl) => {
         toEl.appendChild(el);
         livewire.rescan();
         loadEventComponent(el);
+        window.dispatchEvent(new CustomEvent('loadComponent', {'detail': el}))
       }
       loader.close();
     })

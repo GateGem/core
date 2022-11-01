@@ -10,6 +10,10 @@ use Livewire\WithPagination;
 trait WithTableIndex
 {
     use WithPagination;
+    public function mount()
+    {
+        return $this->LoadData();
+    }
     public function queryStringWithPagination()
     {
         foreach ($this->paginators as $key => $value) {

@@ -6345,12 +6345,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loader */ "./resources/js/loader.js");
 /* harmony import */ var _component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./component */ "./resources/js/component.js");
 /* harmony import */ var _confirm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./confirm */ "./resources/js/confirm.js");
+/* harmony import */ var _treeview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./treeview */ "./resources/js/treeview.js");
+/* harmony import */ var _treeview__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_treeview__WEBPACK_IMPORTED_MODULE_6__);
 
 
 window.bootstrap = bootstrap__WEBPACK_IMPORTED_MODULE_1__;
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
 if (document.querySelector('meta[name="web_url"]')) window.web_base_url = document.querySelector('meta[name="web_url"]').getAttribute("value");
+
 
 
 
@@ -6403,7 +6406,7 @@ var loadComponentTo = function loadComponentTo(name, param, toEl) {
           switch (_context.prev = _context.next) {
             case 0:
               if (!response.ok) {
-                _context.next = 8;
+                _context.next = 9;
                 break;
               }
               _context.next = 3;
@@ -6414,9 +6417,12 @@ var loadComponentTo = function loadComponentTo(name, param, toEl) {
               toEl.appendChild(el);
               livewire.rescan();
               loadEventComponent(el);
-            case 8:
-              _loader__WEBPACK_IMPORTED_MODULE_0__["default"].close();
+              window.dispatchEvent(new CustomEvent('loadComponent', {
+                'detail': el
+              }));
             case 9:
+              _loader__WEBPACK_IMPORTED_MODULE_0__["default"].close();
+            case 10:
             case "end":
               return _context.stop();
           }
@@ -6678,6 +6684,101 @@ if (window) {
   });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (loader);
+
+/***/ }),
+
+/***/ "./resources/js/treeview.js":
+/*!**********************************!*\
+  !*** ./resources/js/treeview.js ***!
+  \**********************************/
+/***/ (() => {
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+if (window != undefined) {
+  var eventClickTreeview = function eventClickTreeview(e) {
+    if (e.target.classList.contains("bi-chevron-down") || e.target.classList.contains("bi-chevron-right")) {
+      var li = e.target.closest("li");
+      if (li.classList.contains("show")) li.classList.remove("show");else li.classList.add("show");
+    }
+  };
+  var eventChangeCheckRootInput = function eventChangeCheckRootInput(e) {
+    var li = e.target.closest("li");
+    var wireElent = e.target.closest("[wire\\:id]");
+    if (wireElent) {
+      var wireComponent = livewire.components.componentsById[wireElent.getAttribute("wire:id")];
+      if (wireComponent) {
+        li.querySelectorAll("ul input").forEach(function (el) {
+          el.checked = e.target.checked;
+          el.dispatchEvent(new Event("input"));
+          if (el.getAttribute("wire:model.defer")) {
+            wireComponent.set(el.getAttribute("wire:model.defer"), el.checked ? el.value : false, true);
+          }
+        });
+        return;
+      }
+    }
+    li.querySelectorAll("ul input").forEach(function (el) {
+      el.checked = e.target.checked;
+      el.dispatchEvent(new Event("input"));
+    });
+  };
+  var eventChangeCheckInput = function eventChangeCheckInput(e) {
+    var treeView = e.target.closest(".tree-view");
+    isCheckTreeView(treeView);
+  };
+  var loadEventTreeview = function loadEventTreeview(el) {
+    el === null || el === void 0 ? void 0 : el.querySelectorAll(".tree-view").forEach(function (elItem) {
+      elItem.removeEventListener("click", eventClickTreeview, true);
+      elItem.addEventListener("click", eventClickTreeview);
+      elItem.querySelectorAll(".cbk_root").forEach(function (elCheckInput) {
+        elCheckInput.removeEventListener("change", eventChangeCheckRootInput, true);
+        elCheckInput.addEventListener("change", eventChangeCheckRootInput);
+      });
+      elItem.querySelectorAll(".form-check-input").forEach(function (elCheckInput) {
+        elCheckInput.removeEventListener("change", eventChangeCheckInput, true);
+        elCheckInput.addEventListener("change", eventChangeCheckInput);
+      });
+      isCheckTreeView(elItem);
+    });
+  };
+  var isCheckTreeView = function isCheckTreeView(itemView) {
+    itemView.querySelectorAll(":scope > ul > li > .form-check > .cbk_root").forEach(function (item) {
+      item.checked = isCheckRoot(item);
+    });
+  };
+  var isCheckRoot = function isCheckRoot(el) {
+    var elLi = el.closest("li");
+    var arrRoot = elLi.querySelectorAll(" :scope > ul > li > .form-check > .cbk_root");
+    if (arrRoot.length == 0) {
+      var arrInput = elLi.querySelectorAll(":scope > ul > li > .form-check > .form-check-input");
+      console.log(arrInput);
+      if (arrInput.length == 0) return false;
+      return arrInput.length == _toConsumableArray(arrInput).filter(function (item) {
+        return item.checked == true;
+      }).length;
+    }
+    el.checked = arrRoot.length == _toConsumableArray(arrRoot).filter(function (item) {
+      item.checked = isCheckRoot(item);
+      return item.checked;
+    }).length;
+    return el.checked;
+  };
+  window.addEventListener("load", function () {
+    loadEventTreeview(document.body);
+    Livewire.hook("message.processed", function (message, component) {
+      loadEventTreeview(component.el);
+    });
+  });
+  window.addEventListener("loadComponent", function (_ref) {
+    var detail = _ref.detail;
+    loadEventTreeview(detail);
+  });
+}
 
 /***/ }),
 

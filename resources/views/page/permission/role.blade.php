@@ -3,7 +3,9 @@
         <div class="col-lg-12 col-md-12">
             <h2>Permission</h2>
             <div class="row">
-                <?php echo LaraPlatform\Core\Builder\Form\TreeBuilder::Render($optionTree, [], []); ?>
+                <div class="p-1">
+                    <?php echo LaraPlatform\Core\Builder\Form\TreeViewBuilder::Render($optionTree, [], []); ?>
+                </div>
             </div>
         </div>
     </div>

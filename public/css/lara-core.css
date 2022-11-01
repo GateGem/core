@@ -11974,6 +11974,31 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.tree-view {
+  overflow: auto;
+  max-width: 1024px;
+  max-height: 700px;
+}
+.tree-view ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tree-view ul li .bi-chevron-down,
+.tree-view ul li ul {
+  display: none;
+}
+.tree-view ul li.show > .bi-chevron-right {
+  display: none;
+}
+.tree-view ul li.show > .bi-chevron-down {
+  display: unset;
+}
+.tree-view ul li.show > ul {
+  margin-left: 15px;
+  display: block;
+}
+
 .menu {
   list-style: none;
   padding: 0;

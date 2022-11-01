@@ -34,11 +34,26 @@ class User extends Modal
         $this->hideModal();
         $this->ShowMessage("Update successfull!");
     }
+    public function getOptionTree()
+    {
+        return [
+            'field'=>'permission',
+            'funcData' => function () {
+                return Permission::all()->map(function ($item) {
+                    return [
+                        'key' => $item->slug,
+                        'text'=>$item->name,
+                        'value'=>$item->id
+                    ];
+                })->toArray();
+            }
+        ];
+    }
     public function render()
     {
         return $this->viewModal('core::page.permission.user',[
             'roleAll' => Role::orderby('name')->get(),
-            'permissionAll' => Permission::orderby('name')->get(),
+            'optionTree' => $this->getOptionTree()
         ]);
     }
 }

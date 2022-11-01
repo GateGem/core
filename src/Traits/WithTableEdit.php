@@ -13,6 +13,10 @@ trait WithTableEdit
     public $dataId = 0;
     public $isFormNew = true;
     public $rules = [];
+    public function mount()
+    {
+        return $this->LoadData();
+    }
     protected function getView()
     {
         return 'core::common.table.edit';

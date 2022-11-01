@@ -12,3 +12,4 @@ import "whatwg-fetch";
 import "./loader";
 import "./component";
 import "./confirm";
+import "./treeview";
