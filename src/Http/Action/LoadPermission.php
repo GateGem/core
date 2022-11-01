@@ -22,8 +22,8 @@ class LoadPermission extends ActionBase
         'register',
         'ignition.',
         'livewire.',
-        'core.table.slug',
-        'core.dashboard',
+        'admin.table.slug',
+        'admin.dashboard',
     ];
     private static $permisisonCode = [];
     public static function SetPermission($name, $router = null)

@@ -27,7 +27,7 @@ trait WithTableIndex
     }
     protected function getListeners()
     {
-        return ['refreshData' . $this->module => 'loadData'];
+        return ['refreshData' . $this->module => '__loadData'];
     }
     protected $paginationTheme = 'bootstrap';
     protected $isCheckDisableModule = true;
@@ -107,7 +107,7 @@ trait WithTableIndex
             return abort(404);
 
         if (!$this->modal_isPage) {
-            $this->sizeModal = getValueByKey($option, 'sizeModal',  Modal::ExtraLarge);
+            $this->modal_size = getValueByKey($option, 'page_size',  Modal::ExtraLarge);
         }
         $this->setTitle(getValueByKey($option, 'title', ''));
         $this->pageSize = getValueByKey($option, 'pageSize', 10);

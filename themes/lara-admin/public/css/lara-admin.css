@@ -33,7 +33,7 @@
   top: 0;
   transition: all 0.2s ease;
   width: 180px;
-  z-index: 1000;
+  z-index: 99;
 }
 .sidebar .sidebar-inner {
   position: relative;
@@ -66,7 +66,7 @@
   display: none;
   position: fixed;
   left: 178px;
-  background-color: #ccc;
+  background-color: rgb(238, 234, 229);
   border-radius: 0px 1px 1px 0px;
   padding-left: 0 !important;
 }
@@ -74,16 +74,16 @@
   border-top: 1px solid #ccc;
 }
 .sidebar .menu-sidebar .menu-item:hover > a:hover {
-  background-color: antiquewhite;
+  background-color: rgb(217, 213, 207);
   cursor: pointer;
 }
 .sidebar .menu-sidebar .menu-item:hover > .menu-sub {
   display: block;
 }
 .sidebar .menu-sidebar .menu-item.active > a {
-  background-color: rgb(234, 234, 231);
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  background-color: rgb(207, 205, 203);
+  border-top: 1px solid rgb(184, 181, 181);
+  border-bottom: 1px solid rgb(184, 181, 181);
 }
 .sidebar .menu-sidebar .menu-item.active > .menu-sub {
   padding-left: 0 !important;

@@ -28,7 +28,7 @@
 // }
 
 .modal {
-    z-index: var(--bs-backdrop-zindex) !important;
+    z-index: 998 !important;
 
     &:nth-last-child(2) {
         z-index: var(--bs-modal-zindex) !important;

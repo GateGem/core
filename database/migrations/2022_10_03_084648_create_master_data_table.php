@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->id();
+        Schema::create('master_datas', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('entity_id');
+            $table->string('entity_type');
             $table->string('key');
             $table->longText('value');
             $table->timestamps();
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('master_data');
     }
 };

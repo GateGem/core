@@ -9,12 +9,13 @@ use Livewire\Component as ComponentBase;
 class Component extends ComponentBase
 {
     use WithDoAction;
+    public $_dataTemps = [];
     protected function getListeners()
     {
-        return ['refreshData' . $this->id => 'loadData'];
+        return ['refreshData' . $this->id => '__loadData'];
     }
 
-    public function loadData()
+    public function __loadData()
     {
     }
 

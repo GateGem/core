@@ -5,7 +5,7 @@ namespace LaraPlatform\Core\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Setting extends Model
+class MasterData extends Model
 {
     use HasFactory;
 

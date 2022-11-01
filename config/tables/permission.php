@@ -1,6 +1,7 @@
 <?php
 
 use LaraPlatform\Core\Http\Action\LoadPermission;
+use LaraPlatform\Core\Livewire\Modal;
 
 return [
     'model' => \LaraPlatform\Core\Models\Permission::class,
@@ -28,6 +29,7 @@ return [
             ]
         ]
     ],
+    'modal_size' => Modal::Small,
     'fields' => [
         [
             'field' => 'group',

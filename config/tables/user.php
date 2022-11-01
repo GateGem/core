@@ -44,7 +44,7 @@ return [
                 'permission' => 'admin.permission',
                 'type' => 'new',
                 'action' => function () {
-                    return 'wire:openmodal="core::permission.index()"';
+                    return 'wire:component="core::table.index({\'module\':\'permission\'})"';
                 }
             ]
         ]

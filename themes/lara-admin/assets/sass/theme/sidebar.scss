@@ -8,7 +8,7 @@
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
     width: $sidebar_width;
-    z-index: 1000;
+    z-index: 99;
 
     .sidebar-inner {
         position: relative;
@@ -51,7 +51,7 @@
                 display: none;
                 position: fixed;
                 left: calc($sidebar_width - 2px);
-                background-color: #ccc;
+                background-color: rgb(238, 234, 229);
                 border-radius: 0px 1px 1px 0px;
                 padding-left: 0 !important;
             }
@@ -60,7 +60,7 @@
                 border-top: 1px solid #ccc;
 
                 &>a:hover {
-                    background-color: antiquewhite;
+                    background-color: rgb(217, 213, 207);
                     cursor: pointer;
                 }
 
@@ -71,9 +71,9 @@
 
             &.active {
                 &>a {
-                    background-color: rgb(234, 234, 231);
-                    border-top: 1px solid #ccc;
-                    border-bottom: 1px solid #ccc;
+                    background-color: rgb(207, 205, 203);
+                    border-top: 1px solid rgb(184, 181, 181);
+                    border-bottom: 1px solid rgb(184, 181, 181);
                 }
 
                 &>.menu-sub {
