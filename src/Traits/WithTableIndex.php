@@ -111,6 +111,8 @@ trait WithTableIndex
         }
         $this->setTitle(getValueByKey($option, 'title', ''));
         $this->pageSize = getValueByKey($option, 'pageSize', 10);
+        do_action("module_loaddata", $this->module, $this);
+        do_action("module_" . $this->module . "_loaddata", $this);
     }
     public function LoadModule($module)
     {
@@ -122,6 +124,9 @@ trait WithTableIndex
     public function getData($isAll = false)
     {
         $model = app($this->option['model']);
+
+        do_action("module_getdata_before", $this->module, $this);
+        do_action("module_" . $this->module . "_getdata_before", $this, $model);
         foreach ($this->filter as $key => $value) {
             if ($value == '') {
                 unset($this->filter[$key]);
@@ -132,6 +137,9 @@ trait WithTableIndex
         foreach ($this->sort as $key => $value) {
             $model = $model->orderBy($key, $value == 0 ? 'DESC' : 'ASC');
         }
+
+        do_action("module_getdata_after", $this->module, $this);
+        do_action("module_" . $this->module . "_getdata_after", $this, $model);
         if ($isAll) {
             return $model->all();
         } else {

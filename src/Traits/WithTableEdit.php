@@ -69,6 +69,8 @@ trait WithTableEdit
         if ($fnRule) {
             $this->rules = $fnRule($this->dataId, $this->isFormNew) ?? [];
         }
+        do_action("module_edit_loaddata", $this->module, $this);
+        do_action("module_edit_" . $this->module . "_loaddata", $this);
     }
     public function LoadModule($module, $dataId = null)
     {

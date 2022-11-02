@@ -40,7 +40,7 @@ if (!function_exists('do_action')) {
     }
 }
 
-if (function_exists('add_filter')) {
+if (!function_exists('add_filter')) {
     /**
      * @param  string | array  $hook
      * @param $callback
@@ -52,7 +52,7 @@ if (function_exists('add_filter')) {
         Filter::addListener($hook, $callback, $priority, $arguments);
     }
 }
-if (function_exists('remove_filter')) {
+if (!function_exists('remove_filter')) {
     /**
      * @param  string  $hook
      */

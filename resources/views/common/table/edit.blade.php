@@ -8,6 +8,8 @@
             <button class="btn btn-primary btn-sm" type="submit">
                 <i class="bi bi-download"></i> <span class="p-1">Save</span>
             </button>
+            {!! apply_filters('module_edit_footer',  '', $this) !!}
+            {!! apply_filters('module_edit_' . $module . '_footer', '', $this) !!}
         </div>
     </div>
     @endif
