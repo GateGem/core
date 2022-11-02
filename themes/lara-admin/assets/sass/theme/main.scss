@@ -13,6 +13,9 @@
         }
         .page-content{
             padding-top: $header_height;
+            .page-manager{
+                padding: 10px;
+            }
         }
     }
 }

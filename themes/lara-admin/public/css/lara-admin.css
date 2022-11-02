@@ -9,15 +9,18 @@
 }
 @media screen and (max-width: 700px) {
   .page-main .page-container {
-    padding-left: 60px;
+    padding-left: 80px;
   }
 }
 .page-main .page-container .page-content {
   padding-top: 40px;
 }
+.page-main .page-container .page-content .page-manager {
+  padding: 10px;
+}
 
 .is-sidebar-mini .page-container {
-  padding-left: 60px;
+  padding-left: 80px;
 }
 @media screen and (max-width: 700px) {
   .is-sidebar-mini .page-container {
@@ -48,6 +51,7 @@
 }
 .sidebar .sidebar-inner .sidebar-logo .sidebar-logo-mini {
   display: none;
+  text-align: center;
 }
 .sidebar .sidebar-inner .sidebar-menu {
   border-right: 1px solid rgba(0, 0, 0, 0.0625);
@@ -96,7 +100,7 @@
 }
 @media screen and (max-width: 700px) {
   .sidebar {
-    width: 60px;
+    width: 80px;
   }
   .sidebar .sidebar-inner .sidebar-logo {
     padding: 0 5px;
@@ -109,9 +113,13 @@
   }
   .sidebar .menu-sidebar > .menu-item > a {
     text-align: center;
+    padding: 5px 2px;
   }
   .sidebar .menu-sidebar > .menu-item > a span {
-    display: none;
+    text-align: center;
+    display: block;
+    word-wrap: break-word;
+    font-size: 85%;
   }
   .sidebar .menu-sidebar > .menu-item .menu-sub {
     display: none;
@@ -122,12 +130,12 @@
   .sidebar .menu-sidebar > .menu-item:hover > .menu-sub {
     display: block;
     position: fixed;
-    left: 58px;
+    left: 78px;
   }
 }
 
 .is-sidebar-mini .sidebar {
-  width: 60px;
+  width: 80px;
 }
 .is-sidebar-mini .sidebar .sidebar-logo {
   padding: 0 5px;
@@ -137,17 +145,26 @@
 }
 .is-sidebar-mini .sidebar .sidebar-logo .sidebar-logo-mini {
   display: block;
+  text-align: center;
 }
 .is-sidebar-mini .sidebar .menu-sidebar > .menu-item > a {
   text-align: center;
 }
+@media screen and (min-width: 700px) {
+  .is-sidebar-mini .sidebar .menu-sidebar > .menu-item > a {
+    padding: 5px 2px;
+  }
+}
 .is-sidebar-mini .sidebar .menu-sidebar > .menu-item > a span {
-  display: none;
+  text-align: center;
+  display: block;
+  word-wrap: break-word;
+  font-size: 85%;
 }
 .is-sidebar-mini .sidebar .menu-sidebar > .menu-item .menu-sub {
   display: none;
   position: fixed;
-  left: 58px;
+  left: 78px;
 }
 .is-sidebar-mini .sidebar .menu-sidebar > .menu-item:hover > .menu-sub {
   display: block;
@@ -209,7 +226,7 @@
 }
 @media screen and (max-width: 700px) {
   .header {
-    width: calc(100% - 60px);
+    width: calc(100% - 80px);
   }
 }
 .header .header-container {
@@ -236,7 +253,7 @@
 }
 
 .is-sidebar-mini .header {
-  width: calc(100% - 60px);
+  width: calc(100% - 80px);
 }
 @media screen and (max-width: 700px) {
   .is-sidebar-mini .header {

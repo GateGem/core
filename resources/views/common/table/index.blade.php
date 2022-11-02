@@ -1,4 +1,4 @@
-<div @if($modal_isPage) class="manager-table" @else class="p-2" @endif @if(getValueByKey($option,'poll','')) wire:poll.{{getValueByKey($option,'poll','')}}@endif>
+<div @if($modal_isPage) class="page-manager" @else class="p-2" @endif @if(getValueByKey($option,'poll','')) wire:poll.{{getValueByKey($option,'poll','')}}@endif>
     <div @if($modal_isPage) class="manager-table-content" @endif>
         @if($modal_isPage)
         <div class="mb-2">

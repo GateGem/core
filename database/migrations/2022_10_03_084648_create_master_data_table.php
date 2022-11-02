@@ -18,8 +18,10 @@ return new class extends Migration
             $table->bigInteger('entity_id');
             $table->string('entity_type');
             $table->string('key');
-            $table->longText('value');
+            $table->json('value')->nullable();
             $table->timestamps();
+            $table->index(['entity_id', 'entity_type', 'key']);
+            $table->unique(['entity_id', 'entity_type', 'key']);
         });
     }
 

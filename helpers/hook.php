@@ -1,8 +1,11 @@
 <?php
 
 use  Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use  LaraPlatform\Core\Facades\Action;
 use LaraPlatform\Core\Facades\Filter;
+use LaraPlatform\Core\Models\Option;
+use LaraPlatform\Core\Supports\BaseScan;
 
 if (!function_exists('add_action')) {
     /**
@@ -102,5 +105,57 @@ if (!function_exists('get_do_action_hook')) {
     function get_do_action_hook($action, $param)
     {
         return 'wire:click="DoAction(\'' . urlencode($action) . '\',\'' . urlencode(json_encode($param ?? []))  . '\')"';
+    }
+}
+
+
+if (!function_exists('add_link_symbolic')) {
+    /**
+     * @param $target
+     * @param $link
+     * @param $relative
+     * @param $force
+     */
+    function add_link_symbolic($target, $link, $relative = false, $force = true)
+    {
+        BaseScan::Link($target, $link, $relative, $force);
+    }
+}
+
+
+
+if (!function_exists('set_option')) {
+    function set_option($key, $value = null, $locked = null)
+    {
+        Cache::forget($key);
+        $setting = Option::where('key', $key)->first();
+        if ($value !== null) {
+            $setting = $setting ?? new Option(['key' => $key]);
+            $setting->value = $value;
+            $setting->locked = $locked === true;
+            $setting->save();
+            Cache::forever($key, $setting->value);
+        } else if ($setting != null) {
+            $setting->delete();
+        }
+    }
+}
+if (!function_exists('get_option')) {
+    /**
+     * Get Value: get_option("seo_key")
+     * Get Value Or Default: get_option("seo_key","value_default")
+     */
+    function get_option($key, $default = null)
+    {
+        if (Cache::has($key) && Cache::get($key) != '') return Cache::get($key);
+
+        $setting = Option::where('key', $key)->first();
+
+        if ($setting == null) {
+            return $default;
+        }
+        //Set Cache Forever
+        Cache::forever($key, $setting->value);
+        return $setting->value ?? $default;
     }
 }

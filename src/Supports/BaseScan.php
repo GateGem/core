@@ -12,10 +12,21 @@ class BaseScan
     * @var \Illuminate\Filesystem\Filesystem;
     */
     public static $filesystem;
+    public static function checkFolder()
+    {
+        self::_check();
+        $arr = [config('core::appdir.theme','themes'), config('core::appdir.module','modules'),config('core::appdir.plugin','plugins')];
+        foreach ($arr as $item) {
+            $public = public_path($item);
+            $appdir = base_path(config('core::appdir.root','laro') . '/' . $item);
+            self::$filesystem->ensureDirectoryExists($item);
+            self::$filesystem->ensureDirectoryExists($appdir);
+        }
+    }
 
     private static function _check()
     {
-        if (! self::$filesystem) {
+        if (!self::$filesystem) {
             self::$filesystem = new Filesystem();
         }
     }
@@ -31,14 +42,15 @@ class BaseScan
     {
         return json_decode(file_get_contents($path), true);
     }
-    public static function FileReturn($path){
+    public static function FileReturn($path)
+    {
         return include_once $path;
     }
 
     public static function AllFile($directory, $callback = null, $filter = null)
     {
         self::_check();
-        if (! self::$filesystem->isDirectory($directory)) {
+        if (!self::$filesystem->isDirectory($directory)) {
             return false;
         }
         if ($callback) {
@@ -72,7 +84,7 @@ class BaseScan
     public static function AllFolder($directory, $callback = null, $filter = null)
     {
         self::_check();
-        if (! self::$filesystem->isDirectory($directory)) {
+        if (!self::$filesystem->isDirectory($directory)) {
             return false;
         }
         if ($callback) {
@@ -83,6 +95,24 @@ class BaseScan
             }
         } else {
             return self::$filesystem->directories($directory);
+        }
+    }
+    public static function Link($target, $link, $relative = false, $force = true)
+    {
+        if (file_exists($link) && is_link($link) && $force) {
+
+            return;
+        }
+
+        self::checkFolder();
+        if (is_link($link)) {
+            self::$filesystem->delete($link);
+        }
+
+        if ($relative) {
+            self::$filesystem->relativeLink($target, $link);
+        } else {
+            self::$filesystem->link($target, $link);
         }
     }
 }

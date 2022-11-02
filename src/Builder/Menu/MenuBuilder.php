@@ -85,15 +85,27 @@ class MenuBuilder extends HtmlBuilder
     {
         return  $this->setIcon($icon)->setId($id)->setPermission($permission)->setName($text)->setAction($actionValue)->setActionType($actionType)->setClass($class);
     }
-    public function addItem($callback)
+    public function addItem($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '')
     {
-        $this->callbackAdd[] = $callback;
+        $callbackAdd = function ($item) use ($text, $icon, $permission, $actionValue, $actionType, $class, $id) {
+            $item->setItem($text, $icon, $permission, $actionValue, $actionType, $class, $id);
+        };
+        $this->callbackAdd[] = $callbackAdd;
+        return $this;
+    }
+    public function addItemWith($callback, $text = '', $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '')
+    {
+        $callbackAdd = function ($item) use ($callback, $text, $icon, $permission, $actionValue, $actionType, $class, $id) {
+            $item->setItem($text, $icon, $permission, $actionValue, $actionType, $class, $id);
+            if (isset($callback) && $callback) $callback($item);
+        };
+        $this->callbackAdd[] = $callbackAdd;
         return $this;
     }
     public function checkPermission()
     {
         $permission = $this->getValue('permission');
-        return $permission == '' || Gate::check($permission, [auth()])|| true;
+        return $permission == '' || Gate::check($permission, [auth()]) || true;
     }
     public function checkChild()
     {
@@ -182,14 +194,13 @@ class MenuBuilder extends HtmlBuilder
                     if ($link) {
                         $attrLink = 'href="' . $link . '"';
                     }
-                
                 }
                 if ($attrLink == "" && $item->checkChild() == false) continue;
                 echo "<li class='menu-item " . ($item->checkActive() ? 'active' : '') . "'>";
                 echo "<a $attrLink title='" . $item->getValue('name', '') . "'>";
                 if ($item->checkValue('icon'))
                     echo " <i class='menu-icon " . $item->data["icon"] . "'></i> ";
-                echo " <span>" . $item->getValue('name', '') . "</span> ";
+                echo " <span>" . __($item->getValue('name', '')) . "</span> ";
 
                 echo "</a>";
                 if ($item->checkChild()) {
