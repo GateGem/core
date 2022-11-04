@@ -8,6 +8,9 @@ return [
         "user" => "Tài khoản",
         "role" => "Vai trò",
         "permission" =>
-        "Quyền"
+        "Quyền",
+        'plugin' => 'Plugin',
+        'theme' => 'Theme',
+        'module' => 'Module'
     ]
 ];

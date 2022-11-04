@@ -24,11 +24,11 @@ Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web']], functio
     Route::get('/', LaraPlatform\Core\Http\Livewire\Page\Dashboard\Index::class)->name('admin.dashboard');
     Route::get('/table/{module}', LaraPlatform\Core\Http\Livewire\Table\Index::class)->name('admin.table.slug');
     Route::get('/option', LaraPlatform\Core\Http\Livewire\Page\Option\Index::class)->name('admin.option');
+    do_action('register_route_admin');
 });
-Route::get('/test', function () {
-    return app('translator')->getLoader()->namespaces();
-});
+Route::group(['middleware' => ['web']], function () {
+    Route::get(apply_filters('route_page_login_url','login'),apply_filters('route_page_login_component',LaraPlatform\Core\Http\Livewire\Page\Auth\Login::class))->name('core.login');
 
-Route::get('/test2', function () {
-    return  OptionLoader::getData();
+    Route::get(apply_filters('route_page_register_url','register'),apply_filters('route_page_register_component',LaraPlatform\Core\Http\Livewire\Page\Auth\Register::class))->name('core.register');
+    
 });

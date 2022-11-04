@@ -3,7 +3,6 @@
 namespace LaraPlatform\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use Livewire\Livewire;
 

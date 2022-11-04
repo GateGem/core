@@ -5,6 +5,7 @@ namespace LaraPlatform\Core\Traits;
 use Illuminate\Support\Facades\Gate;
 use LaraPlatform\Core\Livewire\Modal;
 use LaraPlatform\Core\Loader\TableLoader;
+use LaraPlatform\Core\Supports\ColectionPaginate;
 use Livewire\WithPagination;
 
 trait WithTableIndex
@@ -123,8 +124,16 @@ trait WithTableIndex
     }
     public function getData($isAll = false)
     {
-        $model = app($this->option['model']);
-
+        if (isset($this->option['model']) && $this->option['model'] != '') {
+            $model = app($this->option['model']);
+        } else if (isset($this->option['funcData']) && $this->option['funcData'] != '') {
+            $model = $this->option['funcData']();
+        } else {
+            $model = collect([]);
+        }
+        if (method_exists($this, 'getData_before')) {
+            $this->getData_before($model);
+        }
         do_action("module_getdata_before", $this->module, $this);
         do_action("module_" . $this->module . "_getdata_before", $this, $model);
         foreach ($this->filter as $key => $value) {
@@ -134,16 +143,27 @@ trait WithTableIndex
                 $model = $model->where($key, $value);
             }
         }
-        foreach ($this->sort as $key => $value) {
-            $model = $model->orderBy($key, $value == 0 ? 'DESC' : 'ASC');
+        if (method_exists($model, 'orderBy')) {
+            foreach ($this->sort as $key => $value) {
+                $model = $model->orderBy($key, $value == 0 ? 'DESC' : 'ASC');
+            }
+        } else if (method_exists($model, 'sortBy')) {
+            foreach ($this->sort as $key => $value) {
+                if ($value == 0) {
+                    $model = $model->sortbydesc($key);
+                } else {
+                    $model = $model->sortBy($key);
+                }
+            }
         }
+
 
         do_action("module_getdata_after", $this->module, $this);
         do_action("module_" . $this->module . "_getdata_after", $this, $model);
         if ($isAll) {
             return $model->all();
         } else {
-            return $model->paginate($this->pageSize);
+            return ColectionPaginate::getPaginate($model, $this->pageSize);
         }
     }
     public function render()

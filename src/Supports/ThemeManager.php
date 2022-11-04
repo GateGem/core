@@ -53,6 +53,12 @@ class ThemeManager
             'info' => BaseScan::FileJson($path . '/theme.json'),
         ];
     }
+    public function getData()
+    {
+        return collect($this->arrTheme)->map(function ($item) {
+            return [...$item['info'], 'path' => $item['path']];
+        });
+    }
 
     /**
      * Setup an after resolving listener, or fire immediately if already resolved.
@@ -98,7 +104,7 @@ class ThemeManager
             if ($item['info']['name'] == $themeName) {
                 $this->path = $item['path'];
                 $this->info = $item['info'];
-                $this->layout = 'theme::' . ($this->info && isset($this->info['layout']) && $this->info['layout'] ? $this->info['layout'] : 'layout');
+                $this->layout = 'theme::' . getValueByKey($this->info, 'layout', 'layout');
                 $this->loadViewsFrom($this->path . '/views');
                 HelperLoader::Load($this->path . '/function.php');
                 // \File::remove(public_path('themes/'.$themeName));
@@ -107,7 +113,14 @@ class ThemeManager
             }
         }
     }
-
+    public function setLayoutNone()
+    {
+        $this->setLayout('none');
+    }
+    public function setLayout($layout)
+    {
+        $this->layout = 'theme::' . $layout;
+    }
     public function Layout()
     {
         return $this->layout;

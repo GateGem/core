@@ -104,7 +104,7 @@ if (!function_exists('get_do_action_hook')) {
      */
     function get_do_action_hook($action, $param)
     {
-        return 'wire:click="DoAction(\'' . urlencode($action) . '\',\'' . urlencode(json_encode($param ?? []))  . '\')"';
+        return 'wire:click="DoAction(\'' . base64_encode(urlencode($action))  . '\',\'' . base64_encode(urlencode(json_encode($param ?? [])))  . '\')"';
     }
 }
 
@@ -157,5 +157,13 @@ if (!function_exists('get_option')) {
         //Set Cache Forever
         Cache::forever($key, $setting->value);
         return $setting->value ?? $default;
+    }
+}
+
+
+if (!function_exists('add_route_admin')) {
+    function add_route_admin($callback)
+    {
+        add_action('register_route_admin', $callback);
     }
 }

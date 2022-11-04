@@ -25,7 +25,7 @@ class TableBuilder extends HtmlBuilder
         if (isset($column['funcCell'])) {
             echo $column['funcCell']($row, $column);
         } else if (isset($column['field'])) {
-            $cell_value = $row[$column['field']];
+            $cell_value = isset($row[$column['field']]) ? $row[$column['field']] : null;
             $funcData = getValueByKey($column, 'funcData', null);
 
             if ($funcData && is_array($funcData)) {

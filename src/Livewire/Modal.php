@@ -44,10 +44,11 @@ abstract class Modal extends Component implements ModalContract
         $this->viewInclude['footer'] = $footer;
         $this->viewInclude['header'] = $header;
         if ($this->modal_isPage && $content) {
-            Theme::setTitle($this->modal_title);
-            return view($content, $params??[]);
+            if ($this->modal_title)
+                Theme::setTitle($this->modal_title);
+            return view($content, $params ?? []);
         }
-        return view('core::common.modal.index', $params??[]);
+        return view('core::common.modal.index', $params ?? []);
     }
     public function hideModal()
     {

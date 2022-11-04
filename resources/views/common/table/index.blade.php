@@ -46,9 +46,9 @@
         </div>
         {!! \LaraPlatform\Core\Builder\Table\TableBuilder::Render($data, $option, ['sort' => $sort]) !!}
         @if (isset($data) && $data != null)
-            {{ $data->links() }}
+            {!! $data->links() !!}
         @endif
-        {!! apply_filters('module_footer',  '', $this) !!}
+        {!! apply_filters('module_footer', '', $this) !!}
         {!! apply_filters('module_' . $module . '_footer', '', $this) !!}
     </div>
 </div>

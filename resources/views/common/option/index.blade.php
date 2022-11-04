@@ -8,7 +8,7 @@
                 {!!\LaraPlatform\Core\Builder\Form\FieldBuilder::Render($field,null,null)!!}
               </div>
             @endforeach
-        <div><button wire:click="doSave()">Save</button></div>
+        <div><button class="btn btn-primary" wire:click="doSave()">Save</button></div>
         </div>
     @else
         <h2>Not found {{ $option_key }}</h2>
