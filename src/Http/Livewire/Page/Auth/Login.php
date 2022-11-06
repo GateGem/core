@@ -19,12 +19,12 @@ class Login extends Modal
 
     protected $rules = [
         'password' => 'required|min:6',
-        'email' => 'required|email',
+        'username' => 'required|min:1',
     ];
     public function DoLogin()
     {
-        $this->validate();
-        if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->isRememberMe)) {
+         $this->validate();
+        if (Auth::attempt(['email' => $this->username, 'password' => $this->password], $this->isRememberMe)) {
             return redirect('/');
         } else {
             $this->showMessage("Login Fail");

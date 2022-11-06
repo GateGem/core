@@ -8,35 +8,47 @@
                             <div class="card-body p-md-4 mx-md-3">
 
                                 <div class="text-center">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
+                                    <img src="{{asset('modules/lara-core/images/lotus.webp')}}"
                       style="width: 185px;" alt="logo">
                                     <h4 class="mt-1 mb-3 pb-1">Register to system</h4>
                                 </div>
 
-                                <form>
+                                <form  wire:submit.prevent="DoRegister()">
                                     <p>Please register to your account</p>
 
+                                    @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="px-3 m-0">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                     <div class="form-outline mb-2">
                                         <input type="email" id="formEmail" class="form-control"
+                                            wire:model="email"
                                             placeholder="email address" />
                                         <label class="form-label" for="formEmail">Email address</label>
                                     </div>
 
                                     <div class="form-outline mb-2">
                                         <input type="text" id="formYourName" class="form-control"
+                                        wire:model="name"
                                             placeholder="Your name" />
                                         <label class="form-label" for="formYourName">Your name</label>
                                     </div>
 
                                     <div class="form-outline mb-2">
                                         <input type="password" id="formPassword"
-                                        placeholder="Password" class="form-control" />
+                                        wire:model="password"
+                                        placeholder="password" class="form-control" />
                                         <label class="form-label" for="formPassword">Password</label>
                                     </div>
 
                                     <div class="text-center pt-1 mb-2 pb-1">
                                         <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                            type="button">Register</button>
+                                            type="submit">Register</button>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center pb-4">
                                         <p class="mb-0 me-2">Do have an account?</p>

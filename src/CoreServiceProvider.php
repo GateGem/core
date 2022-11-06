@@ -53,14 +53,13 @@ class CoreServiceProvider extends ServiceProvider
         }, 'core::menu.sidebar.user',  'bi bi-speedometer');
         add_menu_with_sub(function ($subItem) {
             $subItem->addItem('core::menu.sidebar.setting', 'bi bi-speedometer', '', ['name' => 'admin.option', 'param' => []], MenuBuilder::ItemRouter)
-                    ->addItem('core::menu.sidebar.module', 'bi bi-speedometer', '', ['name' => 'admin.table.slug', 'param' => ['module' => 'module']], MenuBuilder::ItemRouter)
-                    ->addItem('core::menu.sidebar.plugin', 'bi bi-speedometer', '', 'plugin');
+                ->addItem('core::menu.sidebar.module', 'bi bi-speedometer', '', ['name' => 'admin.table.slug', 'param' => ['module' => 'module']], MenuBuilder::ItemRouter)
+                ->addItem('core::menu.sidebar.plugin', 'bi bi-speedometer', '', 'plugin');
         }, 'core::menu.sidebar.setting', 'bi bi-speedometer');
     }
     public function packageRegistered()
     {
-        //\File::link(__DIR__.'/../public', public_path('modules/lara-core'));
-        BaseScan::Link(__DIR__ . '/../public', public_path('modules/lara-core'));
+        add_link_symbolic(__DIR__ . '/../public', public_path('modules/lara-core'));
         add_asset_js(asset('modules/lara-core/js/lara-core.js'), '', 0);
         add_asset_css(asset('modules/lara-core/css/lara-core.css'), '',  0);
         Theme::Register(__DIR__ . '/../themes');
