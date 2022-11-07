@@ -22,8 +22,8 @@ class LoadPermission extends ActionBase
         'register',
         'ignition.',
         'livewire.',
-        'admin.table.slug',
-        'admin.dashboard',
+        'core.table.slug',
+        'core.dashboard',
     ];
     private static $permisisonCode = [];
     public static function SetPermission($name, $router = null)
@@ -50,7 +50,7 @@ class LoadPermission extends ActionBase
                 config('core.auth.permission', \LaraPlatform\Core\Models\Permission::class)::create([
                     'name' => $code,
                     'slug' => $code,
-                    'group' => 'admin'
+                    'group' => 'core'
                 ]);
             }
         }
@@ -67,14 +67,14 @@ class LoadPermission extends ActionBase
         }
         $table = TableLoader::getData();
         foreach ($table as $key => $value) {
-            self::SetPermission('admin.' . $key, 1);
+            self::SetPermission('core.' . $key, 1);
         }
-        // $temp = config('core.permission');
-        // if ($temp != null) {
-        //     foreach ($temp as $key) {
-        //         self::SetPermission($key);
-        //     }
-        // }
+        $temp = apply_filters('permission_custom', []);
+        if ($temp != null) {
+            foreach ($temp as $key) {
+                self::SetPermission($key);
+            }
+        }
         // foreach (module_all() as $module) {
         //     foreach ($module->getPermission() as $key) {
         //         self::SetPermission($key);

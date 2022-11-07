@@ -32,7 +32,7 @@ return [
             [
                 'title' => 'Phân quyền',
                 'icon' => '<i class="bi bi-magic"></i>',
-                //'permission' => 'admin.user.permission',
+                'permission' => 'core.module.user.permission',
                 'class' => 'btn-primary',
                 'type' => 'update',
                 'action' => function ($id) {
@@ -41,7 +41,7 @@ return [
             ], [
                 'title' => 'Quản lý quyền',
                 'icon' => '<i class="bi bi-magic"></i>',
-                'permission' => 'admin.permission',
+                'permission' => 'core.permission',
                 'type' => 'new',
                 'action' => function () {
                     return 'wire:component="core::table.index({\'module\':\'permission\'})"';

@@ -50,7 +50,7 @@ if (!function_exists('page_description')) {
 if (!function_exists('page_body_class')) {
     function page_body_class()
     {
-        return trim(Theme::getAssets()->getData('page_body_class'));
+        return apply_filters('page_body_class', trim(Theme::getAssets()->getData('page_body_class')));
     }
 }
 if (!function_exists('add_page_body_class')) {

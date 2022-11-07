@@ -21,7 +21,7 @@ class Register extends Modal
         'name' => 'required|min:6',
         'email' => 'required|min:6',
     ];
-    public function DoRegister()
+    public function DoWork()
     {
         $this->validate();
         $user = new User();

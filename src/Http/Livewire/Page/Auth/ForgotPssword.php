@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use LaraPlatform\Core\Facades\Theme;
 use LaraPlatform\Core\Livewire\Modal;
 
-class Login extends Modal
+class ForgotPssword extends Modal
 {
     public function boot()
     {
@@ -18,17 +18,12 @@ class Login extends Modal
     public $isRememberMe;
 
     protected $rules = [
-        'password' => 'required|min:1',
+        'password' => 'required|min:6',
         'username' => 'required|min:1',
     ];
     public function DoWork()
     {
-         $this->validate();
-        if (Auth::attempt(['email' => $this->username, 'password' => $this->password], $this->isRememberMe)) {
-            return redirect('/');
-        } else {
-            $this->showMessage("Login Fail");
-        }
+       
     }
     public function mount()
     {
@@ -36,6 +31,6 @@ class Login extends Modal
     }
     public function render()
     {
-        return $this->viewModal('core::page.auth.login');
+        return $this->viewModal('core::page.auth.forgot_password');
     }
 }

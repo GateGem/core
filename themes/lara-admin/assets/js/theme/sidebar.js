@@ -1,9 +1,24 @@
-let sidebarSwitch = () => {
+import { getCsrfToken } from "../getCsrfToken";
+let switchSidebar = () => {
   if (document.body.classList.contains("is-sidebar-mini")) {
     document.body.classList.remove("is-sidebar-mini");
   } else {
     document.body.classList.add("is-sidebar-mini");
   }
+  let csrfToken = getCsrfToken();
+  fetch(`${web_base_url}lara/switchSidebar`, {
+    method: "POST",
+    credentials: "same-origin",
+    body: JSON.stringify({}),
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "text/html, application/xhtml+xml",
+      "X-Lara-Core": true,
+      Referer: window.location.href,
+      ...(csrfToken && { "X-CSRF-TOKEN": csrfToken }),
+      // ...(socketId && { 'X-Socket-ID': socketId })
+    },
+  });
 };
 document.addEventListener("DOMContentLoaded", function () {
   let el = document.querySelector(".menu-sidebar");
@@ -34,4 +49,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-window.sidebarSwitch = sidebarSwitch;
+window.switchSidebar = switchSidebar;

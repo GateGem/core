@@ -5,7 +5,7 @@ namespace LaraPlatform\Core\Builder\Menu;
 use LaraPlatform\Core\Builder\HtmlBuilder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
-
+use LaraPlatform\Core\Facades\Core;
 
 class MenuBuilder extends HtmlBuilder
 {
@@ -69,6 +69,10 @@ class MenuBuilder extends HtmlBuilder
     {
         return $this->setValue('permission', $permission);
     }
+    public function getPermission()
+    {
+        return $this->getValue('permission');
+    }
     public function setAttr($attr): self
     {
         return $this->setValue('attr', $attr);
@@ -81,22 +85,22 @@ class MenuBuilder extends HtmlBuilder
     {
         return $this->getValue('sort', 0);
     }
-    public function setItem($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = ''): self
+    public function setItem($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $sort = 500): self
     {
-        return  $this->setIcon($icon)->setId($id)->setPermission($permission)->setName($text)->setAction($actionValue)->setActionType($actionType)->setClass($class);
+        return  $this->setIcon($icon)->setId($id)->setPermission($permission)->setName($text)->setAction($actionValue)->setActionType($actionType)->setClass($class)->setSort($sort);
     }
-    public function addItem($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '')
+    public function addItem($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $sort = 500)
     {
-        $callbackAdd = function ($item) use ($text, $icon, $permission, $actionValue, $actionType, $class, $id) {
-            $item->setItem($text, $icon, $permission, $actionValue, $actionType, $class, $id);
+        $callbackAdd = function ($item) use ($text, $icon, $permission, $actionValue, $actionType, $class, $id, $sort) {
+            $item->setItem($text, $icon, $permission, $actionValue, $actionType, $class, $id, $sort);
         };
         $this->callbackAdd[] = $callbackAdd;
         return $this;
     }
-    public function addItemWith($callback, $text = '', $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '')
+    public function addItemWith($callback, $text = '', $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $sort = 500)
     {
-        $callbackAdd = function ($item) use ($callback, $text, $icon, $permission, $actionValue, $actionType, $class, $id) {
-            $item->setItem($text, $icon, $permission, $actionValue, $actionType, $class, $id);
+        $callbackAdd = function ($item) use ($callback, $text, $icon, $permission, $actionValue, $actionType, $class, $id, $sort) {
+            $item->setItem($text, $icon, $permission, $actionValue, $actionType, $class, $id, $sort);
             if (isset($callback) && $callback) $callback($item);
         };
         $this->callbackAdd[] = $callbackAdd;
@@ -104,8 +108,8 @@ class MenuBuilder extends HtmlBuilder
     }
     public function checkPermission()
     {
-        $permission = $this->getValue('permission');
-        return $permission == '' || Gate::check($permission, [auth()]) || true;
+        $permission = $this->getPermission();
+        return $permission == '' || Gate::check($permission, [auth()]);
     }
     public function checkChild()
     {
@@ -146,12 +150,12 @@ class MenuBuilder extends HtmlBuilder
             $this->linkHref = $actionValue;
         } else if ($actionType == MenuBuilder::ItemRouter) {
             if (is_array($actionValue)) {
-                if (!$this->getValue('permission')) {
-                    $this->setPermission($actionValue['name']);
+                if (!$this->getPermission()) {
+                    $this->setPermission(Core::MapPermissionModule($actionValue));
                 }
                 $this->linkHref = route($actionValue['name'], $actionValue['param']);
             } else {
-                if (!$this->getValue('permission')) {
+                if (!$this->getPermission()) {
                     $this->setPermission($actionValue);
                 }
                 $this->linkHref = route($actionValue, []);
@@ -167,7 +171,7 @@ class MenuBuilder extends HtmlBuilder
             $item = new MenuBuilder();
             $callback($item);
             $item->processLinkHref();
-            if ($item->checkPermission()) {
+            if ($item->checkPermission()|| true) {
                 $item->isCheckActive = $this->isCheckActive;
                 $item->BindData();
                 $this->items[] = $item;
@@ -196,6 +200,7 @@ class MenuBuilder extends HtmlBuilder
                     }
                 }
                 if ($attrLink == "" && $item->checkChild() == false) continue;
+                $attrLink = $attrLink.' permission="'. $this->getPermission() .'" ';
                 echo "<li class='menu-item " . ($item->checkActive() ? 'active' : '') . "'>";
                 echo "<a $attrLink title='" . $item->getValue('name', '') . "'>";
                 if ($item->checkValue('icon'))

@@ -22,4 +22,13 @@ class LaraServiceController extends BaseController
             'param' => $param,
         ];
     }
+    public function switchSidebar()
+    {
+        if (session('admin_sidebar_mini')) {
+            session(['admin_sidebar_mini' => false]);
+        } else {
+            session(['admin_sidebar_mini' => true]);
+        }
+        return session('admin_sidebar_mini') ? 'min' : 'none';
+    }
 }

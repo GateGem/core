@@ -22,7 +22,7 @@ return [
                 'title' => 'Cập nhật quyền',
                 'icon' => '<i class="bi bi-magic"></i>',
                 'type' => 'new',
-                'permission' => 'core.module.load-permission',
+                'permission' => 'core.module.permission.load-permission',
                 'action' => function () {
                     return get_do_action_hook(LoadPermission::class, '{}');
                 }

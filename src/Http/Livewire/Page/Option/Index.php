@@ -12,7 +12,12 @@ class Index extends Modal
     public function mount()
     {
         $this->data_option = OptionLoader::getData();
-        $this->active_option=array_keys($this->data_option)[0];
+        usort($this->data_option, function ($a, $b) {
+            $sortA = getValueByKey($a, 'sort', 100);
+            $sortB = getValueByKey($b, 'sort', 100);
+            return strcmp($sortA, $sortB);
+        });
+        $this->active_option = array_keys($this->data_option)[0];
         $this->setTitle(__('core::menu.sidebar.option'));
     }
     public function render()

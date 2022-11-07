@@ -5,15 +5,15 @@ use LaraPlatform\Core\Facades\Menu;
 
 
 if (!function_exists('add_menu_item')) {
-    function add_menu_item($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $postion = 'sidebar')
+    function add_menu_item($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $sort = 500, $postion = 'sidebar')
     {
-        return Menu::addMenuItem($text, $icon, $permission, $actionValue, $actionType, $class, $id, $postion);
+        return Menu::addMenuItem($text, $icon, $permission, $actionValue, $actionType, $class, $id, $sort, $postion);
     }
 }
 if (!function_exists('add_menu_with_sub')) {
-    function add_menu_with_sub($text, $callback, $icon, $class = '', $id = '', $postion = 'sidebar')
+    function add_menu_with_sub($text, $callback, $icon, $class = '', $id = '', $sort = 500, $postion = 'sidebar')
     {
-        return Menu::addMenuSub($text, $callback, $icon, $class, $id, $postion);
+        return Menu::addMenuSub($text, $callback, $icon, $class, $id, $sort, $postion);
     }
 }
 if (!function_exists('do_menu_render')) {

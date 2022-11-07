@@ -119,7 +119,7 @@ trait WithTableIndex
     {
         if (!$module) return abort(404);
         $this->module = $module;
-        $this->code_permission = "admin." . $this->module;
+        $this->code_permission = 'core.' . $this->module;
         $this->LoadData();
     }
     public function getData($isAll = false)
@@ -143,11 +143,11 @@ trait WithTableIndex
                 $model = $model->where($key, $value);
             }
         }
-        if (method_exists($model, 'orderBy')) {
+        if ($model instanceof  \Illuminate\Database\Eloquent\Model) {
             foreach ($this->sort as $key => $value) {
                 $model = $model->orderBy($key, $value == 0 ? 'DESC' : 'ASC');
             }
-        } else if (method_exists($model, 'sortBy')) {
+        } else if ($model instanceof \Illuminate\Support\Collection) {
             foreach ($this->sort as $key => $value) {
                 if ($value == 0) {
                     $model = $model->sortbydesc($key);
@@ -197,22 +197,22 @@ trait WithTableIndex
     }
     public function checkAdd(): bool
     {
-        return getValueByKey($this->getAction(), 'add', true) && Gate::check($this->code_permission . '.add') || true;
+        return getValueByKey($this->getAction(), 'add', true) && Gate::check($this->code_permission . '.add');
     }
     protected function checkEdit()
     {
-        return getValueByKey($this->getAction(), 'edit', true) && Gate::check($this->code_permission . '.edit') || true;
+        return getValueByKey($this->getAction(), 'edit', true) && Gate::check($this->code_permission . '.edit');
     }
     protected function checkRemove()
     {
-        return getValueByKey($this->getAction(), 'delete', true) && Gate::check($this->code_permission . '.delete') || true;
+        return getValueByKey($this->getAction(), 'delete', true) && Gate::check($this->code_permission . '.delete');
     }
     protected function checkInportExcel()
     {
-        return getValueByKey($this->getAction(), 'inport', true) && Gate::check($this->code_permission . '.inport') || true;
+        return getValueByKey($this->getAction(), 'inport', true) && Gate::check($this->code_permission . '.inport');
     }
     protected function checkExportExcel()
     {
-        return getValueByKey($this->getAction(), 'export', true) && Gate::check($this->code_permission . '.export') || true;
+        return getValueByKey($this->getAction(), 'export', true) && Gate::check($this->code_permission . '.export');
     }
 }

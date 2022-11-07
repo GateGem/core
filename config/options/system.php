@@ -3,9 +3,10 @@
 use LaraPlatform\Core\Builder\Form\FieldBuilder;
 
 return [
+    'sort' => 0,
     'icon' => '',
     'title' => 'System',
-    'fields'=>[
+    'fields' => [
         [
             'field' => 'page_title',
             'fieldType' => FieldBuilder::Text,

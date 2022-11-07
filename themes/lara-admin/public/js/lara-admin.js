@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./assets/js/app.js":
@@ -7,10 +8,33 @@
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./theme */ "./assets/js/theme/index.js");
 
+
+/***/ }),
+
+/***/ "./assets/js/getCsrfToken.js":
+/*!***********************************!*\
+  !*** ./assets/js/getCsrfToken.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getCsrfToken": () => (/* binding */ getCsrfToken)
+/* harmony export */ });
+function getCsrfToken() {
+  var _window$livewire_toke;
+
+  var tokenTag = document.head.querySelector('meta[name="csrf-token"]');
+
+  if (tokenTag) {
+    return tokenTag.content;
+  }
+
+  return (_window$livewire_toke = window.livewire_token) !== null && _window$livewire_toke !== void 0 ? _window$livewire_toke : undefined;
+}
 
 /***/ }),
 
@@ -20,10 +44,8 @@ __webpack_require__.r(__webpack_exports__);
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./sidebar */ "./assets/js/theme/sidebar.js");
-/* harmony import */ var _sidebar__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_sidebar__WEBPACK_IMPORTED_MODULE_0__);
 
 
 /***/ }),
@@ -32,14 +54,39 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************!*\
   !*** ./assets/js/theme/sidebar.js ***!
   \************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-var sidebarSwitch = function sidebarSwitch() {
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _getCsrfToken__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../getCsrfToken */ "./assets/js/getCsrfToken.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var switchSidebar = function switchSidebar() {
   if (document.body.classList.contains("is-sidebar-mini")) {
     document.body.classList.remove("is-sidebar-mini");
   } else {
     document.body.classList.add("is-sidebar-mini");
   }
+
+  var csrfToken = (0,_getCsrfToken__WEBPACK_IMPORTED_MODULE_0__.getCsrfToken)();
+  fetch("".concat(web_base_url, "lara/switchSidebar"), {
+    method: "POST",
+    credentials: "same-origin",
+    body: JSON.stringify({}),
+    headers: _objectSpread({
+      "Content-Type": "application/json",
+      Accept: "text/html, application/xhtml+xml",
+      "X-Lara-Core": true,
+      Referer: window.location.href
+    }, csrfToken && {
+      "X-CSRF-TOKEN": csrfToken
+    })
+  });
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -62,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-window.sidebarSwitch = sidebarSwitch;
+window.switchSidebar = switchSidebar;
 
 /***/ }),
 
@@ -72,7 +119,6 @@ window.sidebarSwitch = sidebarSwitch;
   \******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -138,18 +184,6 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

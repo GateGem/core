@@ -13,7 +13,7 @@
                                     <h4 class="mt-1 mb-3 pb-1">Login to system</h4>
                                 </div>
 
-                                <form wire:submit.prevent="DoLogin()">
+                                <form wire:submit.prevent="DoWork()">
                                     <p>Please login to your account</p>
 
                                     @if ($errors->any())
@@ -47,7 +47,7 @@
                                         </div>
 
                                         <div class="col">
-                                            <a class="text-muted" href="#!">Forgot password?</a>
+                                            <a class="text-muted" href="{{route('core.forgot_password')}}">Forgot password?</a>
                                         </div>
                                     </div>
                                     <div class="text-center pt-1 mb-2 pb-1">

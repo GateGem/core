@@ -2,11 +2,11 @@
 
 namespace LaraPlatform\Core\Models;
 
-use App\Models\User as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use LaraPlatform\Core\Traits\WithPermission;
 use LaraPlatform\Core\Traits\WithSlug;
 use Illuminate\Support\Facades\Hash;
-use LaraPlatform\Core\Supports\Core;
+use LaraPlatform\Core\Facades\Core;
 
 class User extends Authenticatable
 {

@@ -7,16 +7,16 @@ use LaraPlatform\Core\Builder\Menu\MenuBuilder;
 class MenuManager
 {
     private $menuPostion = [];
-    public function addMenuItem($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $postion = 'sidebar'): MenuBuilder
+    public function addMenuItem($text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $sort = 500, $postion = 'sidebar'): MenuBuilder
     {
         if (!isset($this->menuPostion[$postion])) $this->menuPostion[$postion] = new MenuBuilder(false, $postion);
-        $this->menuPostion[$postion]->addItem($text, $icon, $permission, $actionValue, $actionType, $class, $id);
+        $this->menuPostion[$postion]->addItem($text, $icon, $permission, $actionValue, $actionType, $class, $id, $sort);
         return $this->menuPostion[$postion];
     }
-    public function addMenuSub($callback, $text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $postion = 'sidebar'): MenuBuilder
+    public function addMenuSub($callback, $text, $icon = '', $permission = '', $actionValue = '', $actionType = MenuBuilder::ItemLink, $class = '', $id = '', $sort = 500, $postion = 'sidebar'): MenuBuilder
     {
         if (!isset($this->menuPostion[$postion])) $this->menuPostion[$postion] = new MenuBuilder(false, $postion);
-        $this->menuPostion[$postion]->addItemWith($callback, $text, $icon, $permission, $actionValue, $actionType, $class, $id);
+        $this->menuPostion[$postion]->addItemWith($callback, $text, $icon, $permission, $actionValue, $actionType, $class, $id, $sort);
         return $this->menuPostion[$postion];
     }
     public function doRender($postion)

@@ -1,13 +1,14 @@
 <?php
 
 use LaraPlatform\Core\Builder\Form\FieldBuilder;
+use LaraPlatform\Core\Facades\Theme;
 
 return [
     'DisableModule' => false,
-    'title' => 'Quản lý Module',
+    'title' => 'Quản lý Plugin',
     'emptyData' => 'Không có dữ liệu',
     'funcData' => function () {
-        return collect([]);
+       return collect([]);
     },
     'modalkey' => 'name',
     'excel' => [
@@ -54,14 +55,40 @@ return [
             'keyColumn' => 'row1_1'
         ],
         [
-            'field' => 'email',
-            'title' => 'Email',
+            'field' => 'titile',
+            'title' => 'Title',
             'view' => false,
             'keyColumn' => 'row1_2'
         ],
         [
-            'field' => 'description',
-            'title' => 'Thông tin',
+            'field' => 'admin',
+            'title' => 'Type',
+            'fieldType' => FieldBuilder::Dropdown,
+            'funcData' => function () {
+                return [
+                    [
+                        'id' => 0,
+                        'text' => 'User'
+                    ],
+                    [
+                        'id' => 1,
+                        'text' => 'Admin'
+                    ]
+                ];
+            },
+            'funcCell' => function ($row, $column) {
+                if (\Gate::check('core.module.plugin.change-status')) {
+                    if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
+                        return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-primary btn-sm text-nowrap">Kích hoạt</button>';
+                    }
+                    return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-danger btn-sm text-nowrap">Chưa kích hoạt</button>';
+                } else {
+                    if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
+                        return 'Admin';
+                    }
+                    return 'User';
+                }
+            },
             'keyColumn' => 'row1_1'
         ],
         [
@@ -79,7 +106,7 @@ return [
                 ];
             },
             'funcCell' => function ($row, $column) {
-                if (\Gate::check('core.module.module.change-status')) {
+                if (\Gate::check('core.module.change-status')) {
                     if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
                         return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-primary btn-sm text-nowrap">Kích hoạt</button>';
                     }

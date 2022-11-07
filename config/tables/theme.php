@@ -31,36 +31,7 @@ return [
         'delete' => false,
         'export' => false,
         'inport' => false,
-        'append' => [
-            [
-                'title' => 'Tạo File',
-                'permission' => 'admin.module.add-file',
-                'icon' => '<i class="bi bi-magic"></i>',
-                'type' => 'update',
-                'class' => 'btn-primary',
-                'action' => function ($id) {
-                    return 'wire:component="core::module.create-file({\'module\':\'' . $id . '\'})"';
-                }
-            ], [
-                'title' => 'Xóa module',
-                'permission' => 'admin.module.remove',
-                'icon' => '<i class="bi bi-eraser"></i>',
-                'type' => 'update',
-                'action' => function ($id) {
-                    return 'data-confirm-message="bạn có muốn xóa không? Lưu ý: không thể lấy lại khi xóa đi." wire:confirm=\'RemoveRow("' .  $id . '")\'';
-                }
-            ],
-            [
-                'title' => 'Tạo mới module',
-                'permission' => 'admin.module.add',
-                'icon' => '<i class="bi bi-folder-plus"></i>',
-                'class' => 'btn-primary',
-                'type' => 'new',
-                'action' => function () {
-                    return 'wire:openmodal="core::module.create()"';
-                }
-            ]
-        ]
+        'append' => []
     ],
     'formEdit' => '',
     'formInclude' => '',
@@ -106,7 +77,7 @@ return [
                 ];
             },
             'funcCell' => function ($row, $column) {
-                if (\Gate::check('admin.module.change-status')) {
+                if (\Gate::check('core.module.theme.change-status')) {
                     if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
                         return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-primary btn-sm text-nowrap">Kích hoạt</button>';
                     }
@@ -135,7 +106,7 @@ return [
                 ];
             },
             'funcCell' => function ($row, $column) {
-                if (\Gate::check('admin.module.change-status')) {
+                if (\Gate::check('core.module.change-status')) {
                     if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
                         return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-primary btn-sm text-nowrap">Kích hoạt</button>';
                     }

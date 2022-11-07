@@ -19,7 +19,7 @@ return [
             [
                 'title' => 'Phân quyền',
                 'icon' => '<i class="bi bi-magic"></i>',
-               // 'permission' => 'core.role.permission',
+               'permission' => 'core.module.user.permission',
                 'type' => 'update',
                 'action' => function ($id) {
                     return 'wire:component="core::page.permission.role({\'roleId\':\'' . $id . '\'})"';
@@ -27,7 +27,7 @@ return [
             ], [
                 'title' => 'Quản lý quyền',
                 'icon' => '<i class="bi bi-magic"></i>',
-                'permission' => 'admin.permission',
+                'permission' => 'core.permission',
                 'class' => 'btn-primary',
                 'type' => 'new',
                 'action' => function () {

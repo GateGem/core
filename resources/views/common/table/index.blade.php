@@ -8,7 +8,7 @@
         @endif
         <div class="mb-2 d-flex flex-row">
             <div style="flex:auto">
-                @if ($checkAdd === true || true)
+                @if ($checkAdd === true)
                     <button class="btn btn-primary btn-sm"
                         wire:component='{{ $viewEdit }}({"module":"{{ $module }}"})'>
                         <i class="bi bi-plus-square"></i> <span>Thêm mới</span>
@@ -16,7 +16,7 @@
                 @endif
                 @foreach (getValueByKey($option, 'action.append', []) as $button)
                     @if (getValueByKey($button, 'type', '') == 'new' &&
-                        (!isset($button['permission']) || \Gate::check($button['permission']) || true))
+                        (!isset($button['permission']) || \Gate::check($button['permission'])))
                         <button class="btn btn-sm  {{ getValueByKey($button, 'class', 'btn-danger') }}"
                             {!! getValueByKey($button, 'action', function () {})() !!}> {!! getValueByKey($button, 'icon', '') !!} <span>
                                 {{ getValueByKey($button, 'title', '') }} </span></button>
