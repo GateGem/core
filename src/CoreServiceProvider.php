@@ -2,6 +2,7 @@
 
 namespace LaraPlatform\Core;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -39,6 +40,13 @@ class CoreServiceProvider extends ServiceProvider
     {
         add_filter('page_body_class', function ($prev) {
             return $prev . (session('admin_sidebar_mini') ? ' is-sidebar-mini ' : '');
+        });
+        add_filter('language_list', function ($prev) {
+            return [
+                ...$prev,
+                'vi',
+                'en'
+            ];
         });
     }
     public function registerMenu()

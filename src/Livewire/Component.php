@@ -24,6 +24,10 @@ class Component extends ComponentBase
         $this->dispatchBrowserEvent('reload_component', $option);
     }
 
+    public function redirectCurrent()
+    {
+        return redirect(request()->header('Referer'));;
+    }
     public function showMessage($option)
     {
         $this->dispatchBrowserEvent('swal-message', $option);

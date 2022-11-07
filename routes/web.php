@@ -17,7 +17,7 @@ use LaraPlatform\Core\Http\Middleware\Authenticate;
 
 Route::group(['prefix' => 'lara', 'middleware' => ['web']], function () {
     Route::post('/livewire/component/{slug}', [LaraPlatform\Core\Http\Controllers\LaraServiceController::class, 'loadComponent']);
-    Route::post('/switchSidebar',[LaraPlatform\Core\Http\Controllers\LaraServiceController::class, 'switchSidebar']);
+    Route::post('/switchSidebar', [LaraPlatform\Core\Http\Controllers\LaraServiceController::class, 'switchSidebar']);
 });
 
 Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web', Authenticate::class]], function () {
