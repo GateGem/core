@@ -2,6 +2,7 @@
 @import "bootstrap/scss/bootstrap";
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
 @import './treeview.scss';
+
 .menu {
     list-style: none;
     padding: 0;
@@ -69,5 +70,15 @@
 
     p {
         margin: 0 !important;
+    }
+}
+
+.language-selector {
+    clear: both;
+    ul {
+        float:unset !important;
+        li {
+            float:unset !important;
+        }
     }
 }

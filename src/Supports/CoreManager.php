@@ -55,13 +55,13 @@ class CoreManager
                 }
                 // use default application lang
                 else {
-                    $lang = Config::get('application.language');
+                    $lang = Config::get('app.locale');
                 }
             }
             // no lang in uri nor in browser. use default
             else {
                 // use default application lang
-                $lang = Config::get('application.language');
+                $lang = Config::get('app.locale');
             }
 
             // set application language for that user
@@ -79,7 +79,7 @@ class CoreManager
             return Redirect::to(URL::current());
         }
         // a valid prefix is there, but not the correct lang? change app lang
-        elseif (in_array($lang_uri, $languages) and $lang_uri != Config::get('application.language')) {
+        elseif (in_array($lang_uri, $languages) and $lang_uri != Config::get('app.locale')) {
             Session::put('language', $lang_uri);
             app()->setLocale(Session::get('language'));
         }

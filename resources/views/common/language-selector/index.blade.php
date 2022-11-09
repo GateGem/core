@@ -1,10 +1,10 @@
-<div class="dropdown">
-    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-        {{ $lang_current }}
-    </button>
-    <ul class="dropdown-menu">
-        @foreach ($langs as $item)
-            <li wire:click='DoSelector("{{$item}}")'><a class="dropdown-item" href="#">{{ $item }}</a></li>
+<div class="dropdown language-selector">
+    <p class="p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="fi fi-{{ $langs[$lang_current] }}"></span> {{ $lang_current }}
+    </p>
+    <ul class="dropdown-menu  dropdown-menu-end" >
+        @foreach ($langs as $key=>$item)
+            <li wire:click='DoSelector("{{$key}}")'><a class="dropdown-item" href="#"><span class="fi fi-{{ $item }}"></span> {{ $key }}</a></li>
         @endforeach
     </ul>
 </div>

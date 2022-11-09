@@ -12045,3 +12045,13 @@ textarea.form-control-lg {
 .form-filter-column p {
   margin: 0 !important;
 }
+
+.language-selector {
+  clear: both;
+}
+.language-selector ul {
+  float: unset !important;
+}
+.language-selector ul li {
+  float: unset !important;
+}

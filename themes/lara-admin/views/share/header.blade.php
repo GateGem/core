@@ -7,7 +7,7 @@
             <li class="">
                 @livewire('core::common.language-selector')
             </li>
-            <li>{{ auth()->user()->name }}</li>
+            <li>  @livewire('core::common.profile')</li>
         </ul>
     </div>
 </div>

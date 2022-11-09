@@ -2,7 +2,6 @@
 
 namespace LaraPlatform\Core;
 
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -44,8 +43,9 @@ class CoreServiceProvider extends ServiceProvider
         add_filter('language_list', function ($prev) {
             return [
                 ...$prev,
-                'vi',
-                'en'
+                'en' => 'us',
+                'vi' => 'vn',
+                'jp'=>'jp'
             ];
         });
     }
@@ -70,6 +70,7 @@ class CoreServiceProvider extends ServiceProvider
         add_link_symbolic(__DIR__ . '/../public', public_path('modules/lara-core'));
         add_asset_js(asset('modules/lara-core/js/lara-core.js'), '', 0);
         add_asset_css(asset('modules/lara-core/css/lara-core.css'), '',  0);
+        add_asset_css('https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css', 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css',  0);
         Theme::Register(__DIR__ . '/../themes');
         Theme::active('lara-admin');
         Theme::print();

@@ -31,8 +31,19 @@ trait WithServiceProvider
         if (empty($this->package->name)) {
             throw InvalidPackage::nameIsRequired();
         }
+
         if ($this->package->hasHelpers) {
             HelperLoader::Register($this->package->basePath($this->package->pathHelper));
+        }
+        if (function_exists('add_filter')) {
+            $name = $this->package->name;
+            $path = $this->package->basePath('');
+            add_filter('service_provider_register', function ($prev) use ($name, $path) {
+                return [
+                    ...$prev,
+                    $name => $path
+                ];
+            });
         }
 
         foreach ($this->package->configFileNames as $configFileName) {
