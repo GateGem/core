@@ -6,6 +6,8 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
 
+use function PHPUnit\Framework\returnSelf;
+
 class BaseScan
 {
     /*
@@ -15,10 +17,10 @@ class BaseScan
     public static function checkFolder()
     {
         self::_check();
-        $arr = [config('core::appdir.theme','themes'), config('core::appdir.module','modules'),config('core::appdir.plugin','plugins')];
+        $arr = [config('core::appdir.theme', 'themes'), config('core::appdir.module', 'modules'), config('core::appdir.plugin', 'plugins')];
         foreach ($arr as $item) {
             $public = public_path($item);
-            $appdir = base_path(config('core::appdir.root','laro') . '/' . $item);
+            $appdir = base_path(config('core::appdir.root', 'laro') . '/' . $item);
             self::$filesystem->ensureDirectoryExists($item);
             self::$filesystem->ensureDirectoryExists($appdir);
         }
@@ -66,7 +68,10 @@ class BaseScan
 
     public static function AllClassFile($directory, $namespace, $callback = null, $filter = null)
     {
-        $classList = collect(self::AllFile($directory))->map(function (SplFileInfo $file) use ($namespace) {
+        $files = self::AllFile($directory);
+        if (!$files || !is_array($files)) return [];
+
+        $classList = collect($files)->map(function (SplFileInfo $file) use ($namespace) {
             return (string) Str::of($namespace)
                 ->append('\\', $file->getRelativePathname())
                 ->replace(['/', '.php'], ['\\', '']);

@@ -16,7 +16,7 @@ class CoreManager
     }
     public function adminPrefix()
     {
-        return config('core.web.admin', '/admincp');
+        return apply_filters("router_admin_prefix", config('core.web.admin', '/admincp'));
     }
     public function MapPermissionModule($arr)
     {
