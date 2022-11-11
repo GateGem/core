@@ -11,6 +11,6 @@ class Action extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraPlatform\Core\Supports\ActionHook::class;
+        return \LaraPlatform\Core\Support\Core\ActionHook::class;
     }
 }

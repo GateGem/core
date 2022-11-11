@@ -5,7 +5,7 @@ namespace LaraPlatform\Core\Http\Action;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use LaraPlatform\Core\Loader\TableLoader;
-use LaraPlatform\Core\Supports\ActionBase;
+use LaraPlatform\Core\Support\Core\ActionBase;
 
 class LoadPermission extends ActionBase
 {

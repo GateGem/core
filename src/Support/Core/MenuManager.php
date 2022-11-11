@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Supports;
+namespace LaraPlatform\Core\Support\Core;
 
 use LaraPlatform\Core\Builder\Menu\MenuBuilder;
 

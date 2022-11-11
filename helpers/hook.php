@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Cache;
 use  LaraPlatform\Core\Facades\Action;
 use LaraPlatform\Core\Facades\Filter;
 use LaraPlatform\Core\Models\Option;
-use LaraPlatform\Core\Supports\BaseScan;
+use LaraPlatform\Core\Utils\BaseScan;
 
 if (!function_exists('add_action')) {
     /**

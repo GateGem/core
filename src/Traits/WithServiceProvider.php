@@ -8,8 +8,8 @@ use Illuminate\Support\Str;
 use LaraPlatform\Core\Exceptions\InvalidPackage;
 use LaraPlatform\Core\Loader\HelperLoader;
 use LaraPlatform\Core\Loader\LivewireLoader;
-use LaraPlatform\Core\Supports\BaseScan;
-use LaraPlatform\Core\Supports\ServicePackage;
+use LaraPlatform\Core\Utils\BaseScan;
+use LaraPlatform\Core\Support\Core\ServicePackage;
 use ReflectionClass;
 
 trait WithServiceProvider

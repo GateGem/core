@@ -11,6 +11,6 @@ class Theme extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraPlatform\Core\Supports\ThemeManager::class;
+        return \LaraPlatform\Core\Support\Theme\ThemeManager::class;
     }
 }

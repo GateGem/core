@@ -3,7 +3,7 @@
 namespace LaraPlatform\Core\Loader;
 
 use Illuminate\Support\Str;
-use LaraPlatform\Core\Supports\BaseScan;
+use LaraPlatform\Core\Utils\BaseScan;
 use Livewire\Component;
 use Livewire\Livewire;
 use ReflectionClass;

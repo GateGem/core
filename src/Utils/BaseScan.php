@@ -1,12 +1,10 @@
 <?php
 
-namespace LaraPlatform\Core\Supports;
+namespace LaraPlatform\Core\Utils;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
-
-use function PHPUnit\Framework\returnSelf;
 
 class BaseScan
 {

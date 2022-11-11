@@ -11,6 +11,6 @@ class Core extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraPlatform\Core\Supports\CoreManager::class;
+        return \LaraPlatform\Core\Support\Core\CoreManager::class;
     }
 }

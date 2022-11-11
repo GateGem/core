@@ -5,7 +5,7 @@ namespace LaraPlatform\Core\Traits;
 use Illuminate\Support\Facades\Gate;
 use LaraPlatform\Core\Livewire\Modal;
 use LaraPlatform\Core\Loader\TableLoader;
-use LaraPlatform\Core\Supports\ColectionPaginate;
+use LaraPlatform\Core\Utils\ColectionPaginate;
 use Livewire\WithPagination;
 
 trait WithTableIndex
@@ -90,7 +90,7 @@ trait WithTableIndex
                     }
                 ];
             }
-            $this->option_temp = $option;
+            $this->option_temp = apply_filters('filter_module_option_'.$this->module, $option);
         }
         return  $this->option_temp;
     }

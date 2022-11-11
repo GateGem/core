@@ -2,7 +2,7 @@
 
 namespace LaraPlatform\Core\Traits;
 
-use LaraPlatform\Core\Supports\BaseScan;
+use LaraPlatform\Core\Utils\BaseScan;
 
 trait WithDataLoader
 {

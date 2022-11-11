@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Supports;
+namespace LaraPlatform\Core\Support\Core;
 
 use Illuminate\Support\Str;
 use LaraPlatform\Core\Commands\InstallCommand;

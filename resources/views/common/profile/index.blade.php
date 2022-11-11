@@ -3,11 +3,9 @@
         {{ $fullname }}
     </p>
     <ul class="dropdown-menu dropdown-menu-end">
-
-        <li class="user-header">
-            <p>
-                {{ $fullname }} - Web Developer
-                <small>Member since Nov. 2012</small>
+        <li class="user-header w-100">
+            <p class="text-center  w-100">
+                {{ $fullname }} 
             </p>
         </li>
         <li class="w-100">

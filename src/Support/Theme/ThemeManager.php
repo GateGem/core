@@ -1,8 +1,10 @@
 <?php
 
-namespace LaraPlatform\Core\Supports;
+namespace LaraPlatform\Core\Support\Theme;
 
 use LaraPlatform\Core\Loader\HelperLoader;
+use LaraPlatform\Core\Support\Core\Assets;
+use LaraPlatform\Core\Utils\BaseScan;
 
 class ThemeManager
 {

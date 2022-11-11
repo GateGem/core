@@ -11,11 +11,11 @@ abstract class Modal extends Component implements ModalContract
 {
     public const Small = "modal-sm";
     public const Default = "";
-    public const Large = "modal-lg";
+    public const Large = "modal-lg1";
     public const ExtraLarge = "modal-xl";
     public const Fullscreen = "modal-fullscreen";
-    public const FullscreenSm = "modal-fullscreen-sm-down modal-lg";
-    public const FullscreenMd = "modal-fullscreen-md-down modal-lg";
+    public const FullscreenSm = "modal-fullscreen-sm-down modal-sm";
+    public const FullscreenMd = "modal-fullscreen-md-down modal-md";
     public const FullscreenXL = "modal-fullscreen-xl-down modal-xl";
 
     public $hideHeader = false;

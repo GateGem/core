@@ -2,7 +2,7 @@
 
 namespace LaraPlatform\Core\Loader;
 
-use LaraPlatform\Core\Supports\BaseScan;
+use LaraPlatform\Core\Utils\BaseScan;
 use Symfony\Component\Finder\SplFileInfo;
 
 class HelperLoader

@@ -5,7 +5,7 @@ namespace LaraPlatform\Core\Commands;
 use Closure;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use LaraPlatform\Core\Supports\ServicePackage;
+use LaraPlatform\Core\Support\Core\ServicePackage;
 
 class InstallCommand extends Command
 {

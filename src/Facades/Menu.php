@@ -11,6 +11,6 @@ class Menu extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraPlatform\Core\Supports\MenuManager::class;
+        return \LaraPlatform\Core\Support\Core\MenuManager::class;
     }
 }

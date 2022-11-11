@@ -9,7 +9,7 @@ use LaraPlatform\Core\Commands\CoreCommand;
 use LaraPlatform\Core\Facades\Theme;
 use LaraPlatform\Core\Loader\OptionLoader;
 use LaraPlatform\Core\Loader\TableLoader;
-use LaraPlatform\Core\Supports\ServicePackage;
+use LaraPlatform\Core\Support\Core\ServicePackage;
 use LaraPlatform\Core\Traits\WithServiceProvider;
 use LaraPlatform\Core\Builder\Menu\MenuBuilder;
 use LaraPlatform\Core\Facades\Core;

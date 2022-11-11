@@ -11,6 +11,6 @@ class Filter extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraPlatform\Core\Supports\FilterHook::class;
+        return \LaraPlatform\Core\Support\Core\FilterHook::class;
     }
 }
