@@ -31,8 +31,10 @@ trait WithLoadInfoJson
 
     public function Register($path)
     {
-        foreach (BaseScan::AllFolder($path) as $item) {
-            $this->AddItem($item);
+        if ($files = BaseScan::AllFolder($path)) {
+            foreach ($files as $item) {
+                $this->AddItem($item);
+            }
         }
     }
     public function AddItem($path)
