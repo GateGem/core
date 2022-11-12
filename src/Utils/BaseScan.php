@@ -12,6 +12,7 @@ class BaseScan
     * @var \Illuminate\Filesystem\Filesystem;
     */
     public static $filesystem;
+
     public static function checkFolder()
     {
         self::_check();
@@ -118,4 +119,5 @@ class BaseScan
             self::$filesystem->link($target, $link);
         }
     }
+   
 }

@@ -10,6 +10,47 @@ use Illuminate\Support\Facades\URL;
 
 class CoreManager
 {
+
+    private $app;
+
+    public function __construct()
+    {
+        $this->app = app();
+    }
+
+     /**
+     * Setup an after resolving listener, or fire immediately if already resolved.
+     *
+     * @param  string  $name
+     * @param  callable  $callback
+     * @return void
+     */
+    public function callAfterResolving($name, $callback)
+    {
+        $this->app->afterResolving($name, $callback);
+
+        if ($this->app->resolved($name)) {
+            $callback($this->app->make($name), $this->app);
+        }
+    }
+
+    public function loadViewsFrom($path,$namespace = 'core')
+    {
+        $this->callAfterResolving('view', function ($view) use ($path, $namespace) {
+            if (
+                isset($this->app->config['view']['paths']) &&
+                is_array($this->app->config['view']['paths'])
+            ) {
+                foreach ($this->app->config['view']['paths'] as $viewPath) {
+                    if (is_dir($appPath = $viewPath . '/vendor/' . $namespace)) {
+                        $view->addNamespace($namespace, $appPath);
+                    }
+                }
+            }
+
+            $view->addNamespace($namespace, $path);
+        });
+    }
     public function RoleAdmin()
     {
         return config('core.permission.role', 'admin');
@@ -83,5 +124,21 @@ class CoreManager
             Session::put('language', $lang_uri);
             app()->setLocale(Session::get('language'));
         }
+    }
+    public function RootPath($path = '')
+    {
+        return base_path(config('core.appdir.root') . '/' . $path);
+    }
+    public function ThemePath($path = '')
+    {
+        return $this->RootPath(config('core.appdir.theme') . '/' . $path);
+    }
+    public function PluginPath($path = '')
+    {
+        return $this->RootPath(config('core.appdir.plugin') . '/' . $path);
+    }
+    public function ModulePath($path = '')
+    {
+        return $this->RootPath(config('core.appdir.module') . '/' . $path);
     }
 }

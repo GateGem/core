@@ -73,7 +73,6 @@ class CoreServiceProvider extends ServiceProvider
         add_asset_css('https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css', 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css',  0);
         Theme::Register(__DIR__ . '/../themes');
         Theme::active('lara-admin');
-        Theme::print();
         TableLoader::load(__DIR__ . '/../config/tables');
         OptionLoader::load(__DIR__ . '/../config/options');
         $this->registerMenu();
