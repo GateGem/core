@@ -1,9 +1,9 @@
 <?php
 
-use LaraPlatform\Core\Livewire\Modal;
+use LaraIO\Core\Livewire\Modal;
 
 return [
-    'model' => \LaraPlatform\Core\Models\ScheduleHistory::class,
+    'model' => \LaraIO\Core\Models\ScheduleHistory::class,
     'permission' => [
         'view' => ''
     ],

@@ -1,16 +1,16 @@
 <?php
 
-namespace LaraPlatform\Core\Facades;
+namespace LaraIO\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \LaraPlatform\Core\Facades\Plugin
+ * @see \LaraIO\Core\Facades\Plugin
  */
 class Plugin extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraPlatform\Core\Support\Plugin\PluginManager::class;
+        return \LaraIO\Core\Support\Plugin\PluginManager::class;
     }
 }

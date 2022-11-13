@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Database\Factories;
+namespace LaraIO\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

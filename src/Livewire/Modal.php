@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraPlatform\Core\Livewire;
+namespace LaraIO\Core\Livewire;
 
-use LaraPlatform\Core\Livewire\Contracts\ModalContract;
+use LaraIO\Core\Livewire\Contracts\ModalContract;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
-use LaraPlatform\Core\Facades\Theme;
+use LaraIO\Core\Facades\Theme;
 
 abstract class Modal extends Component implements ModalContract
 {

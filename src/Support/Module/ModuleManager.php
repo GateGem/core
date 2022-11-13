@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Support\Module;
+namespace LaraIO\Core\Support\Module;
 
-use LaraPlatform\Core\Traits\WithLoadInfoJson;
+use LaraIO\Core\Traits\WithLoadInfoJson;
 
 class ModuleManager
 {

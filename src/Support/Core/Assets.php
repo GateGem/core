@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Support\Core;
+namespace LaraIO\Core\Support\Core;
 
 use Closure;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraPlatform\Core\Commands;
+namespace LaraIO\Core\Commands;
 
 use Closure;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use LaraPlatform\Core\Support\Core\ServicePackage;
+use LaraIO\Core\Support\Core\ServicePackage;
 
 class InstallCommand extends Command
 {

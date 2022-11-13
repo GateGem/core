@@ -1,14 +1,14 @@
 {
-    "name": "laraplatform/core",
+    "name": "LaraIO/core",
     "description": "This is Lara Platform Core",
     "keywords": [
-        "laraplatform",
+        "LaraIO",
         "laravel",
         "core",
         "wordpress",
         "Lara Platform"
     ],
-    "homepage": "https://github.com/LaraPlatform/core",
+    "homepage": "https://github.com/LaraIO/core",
     "license": "MIT",
     "authors": [
         {
@@ -37,13 +37,13 @@
     },
     "autoload": {
         "psr-4": {
-            "LaraPlatform\\Core\\": "src",
-            "LaraPlatform\\Core\\Database\\Factories\\": "database/factories"
+            "LaraIO\\Core\\": "src",
+            "LaraIO\\Core\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaraPlatform\\Core\\Tests\\": "tests"
+            "LaraIO\\Core\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -58,10 +58,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "LaraPlatform\\Core\\CoreServiceProvider"
+                "LaraIO\\Core\\CoreServiceProvider"
             ],
             "aliases": {
-                "LaraCore": "LaraPlatform\\Core\\Facades\\Core"
+                "LaraCore": "LaraIO\\Core\\Facades\\Core"
             }
         }
     },

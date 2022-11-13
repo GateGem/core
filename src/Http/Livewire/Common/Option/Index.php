@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Livewire\Common\Option;
+namespace LaraIO\Core\Http\Livewire\Common\Option;
 
-use LaraPlatform\Core\Livewire\Modal;
+use LaraIO\Core\Livewire\Modal;
 
 class Index extends Modal
 {

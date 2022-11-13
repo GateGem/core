@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Livewire\Table;
+namespace LaraIO\Core\Http\Livewire\Table;
 
-use LaraPlatform\Core\Livewire\Modal;
-use LaraPlatform\Core\Traits\WithTableEdit;
+use LaraIO\Core\Livewire\Modal;
+use LaraIO\Core\Traits\WithTableEdit;
 
 class Edit extends Modal
 {

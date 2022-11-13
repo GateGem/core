@@ -1,12 +1,12 @@
 <?php
 
-namespace LaraPlatform\Core\Models;
+namespace LaraIO\Core\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use LaraPlatform\Core\Traits\WithPermission;
-use LaraPlatform\Core\Traits\WithSlug;
+use LaraIO\Core\Traits\WithPermission;
+use LaraIO\Core\Traits\WithSlug;
 use Illuminate\Support\Facades\Hash;
-use LaraPlatform\Core\Facades\Core;
+use LaraIO\Core\Facades\Core;
 
 class User extends Authenticatable
 {

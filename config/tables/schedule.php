@@ -1,10 +1,10 @@
 <?php
 
-use LaraPlatform\Core\Builder\Form\FieldBuilder;
-use LaraPlatform\Core\Livewire\Modal;
+use LaraIO\Core\Builder\Form\FieldBuilder;
+use LaraIO\Core\Livewire\Modal;
 
 return [
-    'model' => \LaraPlatform\Core\Models\Schedule::class,
+    'model' => \LaraIO\Core\Models\Schedule::class,
     'poll' => '10s',
     'DisableModule' => true,
     'title' => 'Schedule',

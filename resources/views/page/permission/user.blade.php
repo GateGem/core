@@ -19,7 +19,7 @@
             <h2>Permission</h2>
             <div class="row">
                 <div class="p-1">
-                    <?php echo LaraPlatform\Core\Builder\Form\TreeViewBuilder::Render($optionTree, [], []); ?>
+                    <?php echo LaraIO\Core\Builder\Form\TreeViewBuilder::Render($optionTree, [], []); ?>
                 </div>
             </div>
         </div>

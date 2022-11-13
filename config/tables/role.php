@@ -1,9 +1,9 @@
 <?php
 
-use LaraPlatform\Core\Livewire\Modal;
+use LaraIO\Core\Livewire\Modal;
 
 return [
-    'model' => \LaraPlatform\Core\Models\Role::class,
+    'model' => \LaraIO\Core\Models\Role::class,
     //'DisableModule' => true,
     'title' => 'Vai trò',
     'emptyData' => 'Không có dữ liệu',

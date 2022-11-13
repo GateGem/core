@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Builder\Form;
+namespace LaraIO\Core\Builder\Form;
 
-use LaraPlatform\Core\Builder\HtmlBuilder;
+use LaraIO\Core\Builder\HtmlBuilder;
 
 class FieldBuilder extends HtmlBuilder
 {

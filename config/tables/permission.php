@@ -1,10 +1,10 @@
 <?php
 
-use LaraPlatform\Core\Http\Action\LoadPermission;
-use LaraPlatform\Core\Livewire\Modal;
+use LaraIO\Core\Http\Action\LoadPermission;
+use LaraIO\Core\Livewire\Modal;
 
 return [
-    'model' => \LaraPlatform\Core\Models\Permission::class,
+    'model' => \LaraIO\Core\Models\Permission::class,
    // 'DisableModule' => true,
     'title' => 'Quyền',
     'emptyData' => 'Không có dữ liệu',

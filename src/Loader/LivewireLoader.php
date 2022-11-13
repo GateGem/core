@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraPlatform\Core\Loader;
+namespace LaraIO\Core\Loader;
 
 use Illuminate\Support\Str;
-use LaraPlatform\Core\Utils\BaseScan;
+use LaraIO\Core\Utils\BaseScan;
 use Livewire\Component;
 use Livewire\Livewire;
 use ReflectionClass;

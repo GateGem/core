@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Controllers;
+namespace LaraIO\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Request;

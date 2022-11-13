@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Support\Plugin;
+namespace LaraIO\Core\Support\Plugin;
 
-use LaraPlatform\Core\Traits\WithLoadInfoJson;
+use LaraIO\Core\Traits\WithLoadInfoJson;
 
 class PluginManager
 {

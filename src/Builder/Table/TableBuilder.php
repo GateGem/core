@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraPlatform\Core\Builder\Table;
+namespace LaraIO\Core\Builder\Table;
 
-use LaraPlatform\Core\Builder\HtmlBuilder;
-use LaraPlatform\Core\Builder\Form\FieldBuilder;
+use LaraIO\Core\Builder\HtmlBuilder;
+use LaraIO\Core\Builder\Form\FieldBuilder;
 
 class TableBuilder extends HtmlBuilder
 {

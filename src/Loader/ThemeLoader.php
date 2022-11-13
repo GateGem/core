@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Loader;
+namespace LaraIO\Core\Loader;
 
-use LaraPlatform\Core\Traits\WithDataLoader;
+use LaraIO\Core\Traits\WithDataLoader;
 
 class ThemeLoader
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace LaraPlatform\Core\Support\Theme;
+namespace LaraIO\Core\Support\Theme;
 
-use LaraPlatform\Core\Facades\Core;
-use LaraPlatform\Core\Loader\HelperLoader;
-use LaraPlatform\Core\Support\Core\Assets;
-use LaraPlatform\Core\Traits\WithLoadInfoJson;
-use LaraPlatform\Core\Utils\BaseScan;
+use LaraIO\Core\Facades\Core;
+use LaraIO\Core\Loader\HelperLoader;
+use LaraIO\Core\Support\Core\Assets;
+use LaraIO\Core\Traits\WithLoadInfoJson;
+use LaraIO\Core\Utils\BaseScan;
 
 class ThemeManager
 {

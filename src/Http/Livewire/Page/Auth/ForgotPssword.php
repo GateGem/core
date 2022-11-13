@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Livewire\Page\Auth;
+namespace LaraIO\Core\Http\Livewire\Page\Auth;
 
 use Illuminate\Support\Facades\Auth;
-use LaraPlatform\Core\Facades\Theme;
-use LaraPlatform\Core\Livewire\Modal;
+use LaraIO\Core\Facades\Theme;
+use LaraIO\Core\Livewire\Modal;
 
 class ForgotPssword extends Modal
 {

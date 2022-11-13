@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraPlatform\Core\Builder\Menu;
+namespace LaraIO\Core\Builder\Menu;
 
-use LaraPlatform\Core\Builder\HtmlBuilder;
+use LaraIO\Core\Builder\HtmlBuilder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
-use LaraPlatform\Core\Facades\Core;
+use LaraIO\Core\Facades\Core;
 
 class MenuBuilder extends HtmlBuilder
 {

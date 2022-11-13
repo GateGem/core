@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Builder;
+namespace LaraIO\Core\Builder;
 
 class HtmlBuilder implements IBuilder
 {

@@ -1,15 +1,15 @@
 <?php
 
-namespace LaraPlatform\Core\Traits;
+namespace LaraIO\Core\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
-use LaraPlatform\Core\Exceptions\InvalidPackage;
-use LaraPlatform\Core\Loader\HelperLoader;
-use LaraPlatform\Core\Loader\LivewireLoader;
-use LaraPlatform\Core\Utils\BaseScan;
-use LaraPlatform\Core\Support\Core\ServicePackage;
+use LaraIO\Core\Exceptions\InvalidPackage;
+use LaraIO\Core\Loader\HelperLoader;
+use LaraIO\Core\Loader\LivewireLoader;
+use LaraIO\Core\Utils\BaseScan;
+use LaraIO\Core\Support\Core\ServicePackage;
 use ReflectionClass;
 
 trait WithServiceProvider

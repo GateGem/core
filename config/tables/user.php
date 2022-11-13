@@ -1,17 +1,17 @@
 <?php
 
-use LaraPlatform\Core\Builder\Form\FieldBuilder;
+use LaraIO\Core\Builder\Form\FieldBuilder;
 
 return [
-    'model' => LaraPlatform\Core\Models\User::class,
+    'model' => LaraIO\Core\Models\User::class,
     'modelkey' => 'id',
     //'DisableModule' => true,
     'title' => 'Tài khoản',
     'emptyData' => 'Không có dữ liệu',
     'excel' => [
         'template' => '',
-        // 'import' => \LaraPlatform\Core\Excel\ExcelInport::class,
-        // 'export' => \LaraPlatform\Core\Excel\ExcelExport::class,
+        // 'import' => \LaraIO\Core\Excel\ExcelInport::class,
+        // 'export' => \LaraIO\Core\Excel\ExcelExport::class,
         'header' => ['id', 'Họ Tên', 'Trạng thái'],
         'mapdata' => function ($item) {
             return [

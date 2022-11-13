@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraPlatform\Core\Traits;
+namespace LaraIO\Core\Traits;
 
-use LaraPlatform\Core\Livewire\Modal;
-use LaraPlatform\Core\Loader\TableLoader;
+use LaraIO\Core\Livewire\Modal;
+use LaraIO\Core\Loader\TableLoader;
 use Livewire\WithFileUploads;
 
 trait WithTableImport

@@ -1,6 +1,6 @@
 <?php
 
-use LaraPlatform\Core\Builder\Form\FieldBuilder;
+use LaraIO\Core\Builder\Form\FieldBuilder;
 
 return [
     'icon' => '',

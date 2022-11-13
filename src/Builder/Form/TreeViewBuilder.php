@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraPlatform\Core\Builder\Form;
+namespace LaraIO\Core\Builder\Form;
 
 use Illuminate\Support\Arr;
-use LaraPlatform\Core\Builder\HtmlBuilder;
+use LaraIO\Core\Builder\HtmlBuilder;
 
 class TreeViewBuilder extends HtmlBuilder
 {

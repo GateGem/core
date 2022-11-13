@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Commands;
+namespace LaraIO\Core\Commands;
 
 use Illuminate\Console\Command;
 

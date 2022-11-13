@@ -1,16 +1,16 @@
 <?php
 
-namespace LaraPlatform\Core\Facades;
+namespace LaraIO\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \LaraPlatform\Core\Facades\Action
+ * @see \LaraIO\Core\Facades\Action
  */
 class Action extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraPlatform\Core\Support\Core\ActionHook::class;
+        return \LaraIO\Core\Support\Core\ActionHook::class;
     }
 }

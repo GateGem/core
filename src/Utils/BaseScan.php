@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Utils;
+namespace LaraIO\Core\Utils;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;

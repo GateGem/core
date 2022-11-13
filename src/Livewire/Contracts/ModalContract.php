@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Livewire\Contracts;
+namespace LaraIO\Core\Livewire\Contracts;
 
 interface ModalContract
 {

@@ -1,20 +1,20 @@
 <?php
 
-namespace LaraPlatform\Core;
+namespace LaraIO\Core;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use LaraPlatform\Core\Commands\CoreCommand;
-use LaraPlatform\Core\Facades\Theme;
-use LaraPlatform\Core\Loader\OptionLoader;
-use LaraPlatform\Core\Loader\TableLoader;
-use LaraPlatform\Core\Support\Core\ServicePackage;
-use LaraPlatform\Core\Traits\WithServiceProvider;
-use LaraPlatform\Core\Builder\Menu\MenuBuilder;
-use LaraPlatform\Core\Facades\Core;
-use LaraPlatform\Core\Facades\Module;
-use LaraPlatform\Core\Facades\Plugin;
+use LaraIO\Core\Commands\CoreCommand;
+use LaraIO\Core\Facades\Theme;
+use LaraIO\Core\Loader\OptionLoader;
+use LaraIO\Core\Loader\TableLoader;
+use LaraIO\Core\Support\Core\ServicePackage;
+use LaraIO\Core\Traits\WithServiceProvider;
+use LaraIO\Core\Builder\Menu\MenuBuilder;
+use LaraIO\Core\Facades\Core;
+use LaraIO\Core\Facades\Module;
+use LaraIO\Core\Facades\Plugin;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -86,7 +86,7 @@ class CoreServiceProvider extends ServiceProvider
     private function bootGate()
     {
         if (!$this->app->runningInConsole()) {
-            app(config('core.auth.permission', \LaraPlatform\Core\Models\Permission::class))->get()->map(function ($permission) {
+            app(config('core.auth.permission', \LaraIO\Core\Models\Permission::class))->get()->map(function ($permission) {
                 Gate::define($permission->slug, function ($user = null) use ($permission) {
                     if (!$user) $user = auth();
                     return $user->hasPermissionTo($permission) || $user->isSuperAdmin();

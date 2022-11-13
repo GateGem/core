@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Middleware;
+namespace LaraIO\Core\Http\Middleware;
 
-use LaraPlatform\Core\Facades\Core;
+use LaraIO\Core\Facades\Core;
 
 class CoreMiddleware
 {

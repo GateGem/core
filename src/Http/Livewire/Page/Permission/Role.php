@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Livewire\Page\Permission;
+namespace LaraIO\Core\Http\Livewire\Page\Permission;
 
-use LaraPlatform\Core\Livewire\Modal;
-use LaraPlatform\Core\Models\Permission;
-use LaraPlatform\Core\Models\Role as ModelsRole;
+use LaraIO\Core\Livewire\Modal;
+use LaraIO\Core\Models\Permission;
+use LaraIO\Core\Models\Role as ModelsRole;
 
 class Role extends Modal
 {

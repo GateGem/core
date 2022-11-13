@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraPlatform\Core\Support\Core;
+namespace LaraIO\Core\Support\Core;
 
 use Illuminate\Support\Str;
-use LaraPlatform\Core\Commands\InstallCommand;
+use LaraIO\Core\Commands\InstallCommand;
 
 class ServicePackage
 {

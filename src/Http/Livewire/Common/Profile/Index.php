@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Livewire\Common\Profile;
+namespace LaraIO\Core\Http\Livewire\Common\Profile;
 
 use Illuminate\Support\Facades\Auth;
-use LaraPlatform\Core\Facades\Core;
-use LaraPlatform\Core\Livewire\Modal;
+use LaraIO\Core\Facades\Core;
+use LaraIO\Core\Livewire\Modal;
 
 class Index extends Modal
 {

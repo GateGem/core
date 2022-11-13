@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Traits;
+namespace LaraIO\Core\Traits;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;

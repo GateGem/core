@@ -5,7 +5,7 @@
             @foreach($option_data['fields'] as $field)
             <div class="mb-3">
                 <label class="form-label">{{$field['title']}}</label>
-                {!!\LaraPlatform\Core\Builder\Form\FieldBuilder::Render($field,null,null)!!}
+                {!!\LaraIO\Core\Builder\Form\FieldBuilder::Render($field,null,null)!!}
               </div>
             @endforeach
         <div><button class="btn btn-primary" wire:click="doSave()">Save</button></div>

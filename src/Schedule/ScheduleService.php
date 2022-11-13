@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Schedule;
+namespace LaraIO\Core\Schedule;
 
-use LaraPlatform\Core\Models\Schedule;
+use LaraIO\Core\Models\Schedule;
 
 class ScheduleService
 {

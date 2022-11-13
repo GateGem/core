@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Utils;
+namespace LaraIO\Core\Utils;
 
 use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;

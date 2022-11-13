@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Builder;
+namespace LaraIO\Core\Builder;
 
 interface IBuilder
 {

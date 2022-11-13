@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Support\Core;
+namespace LaraIO\Core\Support\Core;
 
-use LaraPlatform\Core\Traits\WithHookListener;
+use LaraIO\Core\Traits\WithHookListener;
 
 class ActionHook
 {

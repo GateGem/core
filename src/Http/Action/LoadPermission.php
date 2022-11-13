@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Action;
+namespace LaraIO\Core\Http\Action;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-use LaraPlatform\Core\Loader\TableLoader;
-use LaraPlatform\Core\Support\Core\ActionBase;
+use LaraIO\Core\Loader\TableLoader;
+use LaraIO\Core\Support\Core\ActionBase;
 
 class LoadPermission extends ActionBase
 {
@@ -46,8 +46,8 @@ class LoadPermission extends ActionBase
         }
         foreach ($arrCode as $code) {
             self::$permisisonCode[] = $code;
-            if (!config('core.auth.permission', \LaraPlatform\Core\Models\Permission::class)::where('slug', $code)->exists()) {
-                config('core.auth.permission', \LaraPlatform\Core\Models\Permission::class)::create([
+            if (!config('core.auth.permission', \LaraIO\Core\Models\Permission::class)::where('slug', $code)->exists()) {
+                config('core.auth.permission', \LaraIO\Core\Models\Permission::class)::create([
                     'name' => $code,
                     'slug' => $code,
                     'group' => 'core'
@@ -80,7 +80,7 @@ class LoadPermission extends ActionBase
         //         self::SetPermission($key);
         //     }
         // }
-        config('core.auth.permission', \LaraPlatform\Core\Models\Permission::class)::query()->whereNotIn('slug', self::$permisisonCode)->delete();
+        config('core.auth.permission', \LaraIO\Core\Models\Permission::class)::query()->whereNotIn('slug', self::$permisisonCode)->delete();
         self::$permisisonCode = [];
     }
 }

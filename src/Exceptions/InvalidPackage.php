@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Exceptions;
+namespace LaraIO\Core\Exceptions;
 
 use Exception;
 

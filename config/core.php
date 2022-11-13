@@ -1,6 +1,6 @@
 <?php
 
-// config for LaraPlatform\Core
+// config for LaraIO\Core
 return [
     'web' => [
         'admin' => '',

@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraPlatform\Core\Traits;
+namespace LaraIO\Core\Traits;
 
-use LaraPlatform\Core\Models\Permission;
-use LaraPlatform\Core\Models\Role;
+use LaraIO\Core\Models\Permission;
+use LaraIO\Core\Models\Role;
 
 trait WithPermission
 {

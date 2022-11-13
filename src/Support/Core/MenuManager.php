@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Support\Core;
+namespace LaraIO\Core\Support\Core;
 
-use LaraPlatform\Core\Builder\Menu\MenuBuilder;
+use LaraIO\Core\Builder\Menu\MenuBuilder;
 
 class MenuManager
 {

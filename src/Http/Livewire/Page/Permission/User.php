@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraPlatform\Core\Http\Livewire\Page\Permission;
+namespace LaraIO\Core\Http\Livewire\Page\Permission;
 
-use LaraPlatform\Core\Models\User as ModelsUser;
-use LaraPlatform\Core\Livewire\Modal;
-use LaraPlatform\Core\Models\Permission;
-use LaraPlatform\Core\Models\Role;
+use LaraIO\Core\Models\User as ModelsUser;
+use LaraIO\Core\Livewire\Modal;
+use LaraIO\Core\Models\Permission;
+use LaraIO\Core\Models\Role;
 
 class User extends Modal
 {

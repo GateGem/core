@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraPlatform\Core\Traits;
+namespace LaraIO\Core\Traits;
 
-use LaraPlatform\Core\Utils\BaseScan;
+use LaraIO\Core\Utils\BaseScan;
 
 trait WithDataLoader
 {

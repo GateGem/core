@@ -1,6 +1,6 @@
 <?php
 
-use LaraPlatform\Core\Facades\Theme;
+use LaraIO\Core\Facades\Theme;
 
 if (!function_exists('add_asset_js')) {
     function add_asset_js($path, $cdnPath = '', $priority = 20, $local = 'asset_footer_before')

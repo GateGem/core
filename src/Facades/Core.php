@@ -1,16 +1,16 @@
 <?php
 
-namespace LaraPlatform\Core\Facades;
+namespace LaraIO\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \LaraPlatform\Core\Facades\Core
+ * @see \LaraIO\Core\Facades\Core
  */
 class Core extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraPlatform\Core\Support\Core\CoreManager::class;
+        return \LaraIO\Core\Support\Core\CoreManager::class;
     }
 }

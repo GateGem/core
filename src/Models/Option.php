@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraPlatform\Core\Models;
+namespace LaraIO\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

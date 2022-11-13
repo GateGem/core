@@ -1,7 +1,7 @@
 <?php
 
-use LaraPlatform\Core\Builder\Form\FieldBuilder;
-use LaraPlatform\Core\Facades\Theme;
+use LaraIO\Core\Builder\Form\FieldBuilder;
+use LaraIO\Core\Facades\Theme;
 
 return [
     'DisableModule' => false,
@@ -13,8 +13,8 @@ return [
     'modalkey' => 'name',
     'excel' => [
         'template' => '',
-        // 'import' => \LaraPlatform\Core\Excel\ExcelInport::class,
-        // 'export' => \LaraPlatform\Core\Excel\ExcelExport::class,
+        // 'import' => \LaraIO\Core\Excel\ExcelInport::class,
+        // 'export' => \LaraIO\Core\Excel\ExcelExport::class,
         'header' => ['id', 'Họ Tên', 'Trạng thái'],
         'mapdata' => function ($item) {
             return [
