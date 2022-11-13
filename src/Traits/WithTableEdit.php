@@ -39,7 +39,7 @@ trait WithTableEdit
         if (!$this->modal_isPage) {
             $this->modal_size = getValueByKey($option, 'modal_size',  Modal::FullscreenMd);
         }
-        $this->setTitle(getValueByKey($option, 'title', ''));
+        $this->setTitle(__(getValueByKey($option, 'title', 'core::tables.' . $this->module . '.title')));
         $fields = $this->getFieldsProperty();
         $data = null;
         if ($this->dataId) {

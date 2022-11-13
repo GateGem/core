@@ -6,13 +6,24 @@ if (!function_exists('getValueByKey')) {
         if ($data && $key) {
             $arrkey = explode('.', $key);
             $dataTemp = $data;
-            foreach ($arrkey as $keyItem) {
-                if (isset($dataTemp[$keyItem])) {
-                    $dataTemp = $dataTemp[$keyItem];
-                } else {
-                    return $default;
+            if (is_array($dataTemp)) {
+                foreach ($arrkey as $keyItem) {
+                    if (isset($dataTemp[$keyItem])) {
+                        $dataTemp = $dataTemp[$keyItem];
+                    } else {
+                        return $default;
+                    }
+                }
+            } else {
+                foreach ($arrkey as $keyItem) {
+                    if (isset($dataTemp->{$keyItem})) {
+                        $dataTemp = $dataTemp->{$keyItem};
+                    } else {
+                        return $default;
+                    }
                 }
             }
+
 
             return $dataTemp;
         }

@@ -12031,6 +12031,7 @@ textarea.form-control-lg {
 }
 .table tr td:last-child {
   width: 5%;
+  min-width: 100px;
 }
 
 .form-filter-column {

@@ -4,6 +4,7 @@ use  Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use  LaraIO\Core\Facades\Action;
 use LaraIO\Core\Facades\Filter;
+use LaraIO\Core\Http\Action\ChangeFieldValue;
 use LaraIO\Core\Models\Option;
 use LaraIO\Core\Utils\BaseScan;
 
@@ -108,6 +109,15 @@ if (!function_exists('get_do_action_hook')) {
     }
 }
 
+if (!function_exists('aciton_change_field_value_hook')) {
+    /**
+     * @param $param
+     */
+    function aciton_change_field_value_hook($param)
+    {
+        return get_do_action_hook(ChangeFieldValue::class,$param);
+    }
+}
 
 if (!function_exists('add_link_symbolic')) {
     /**

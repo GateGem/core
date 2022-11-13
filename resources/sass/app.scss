@@ -54,6 +54,7 @@
         td {
             &:last-child {
                 width: 5%;
+                min-width: 100px;
             }
         }
     }

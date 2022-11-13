@@ -4,25 +4,11 @@ use LaraIO\Core\Builder\Form\FieldBuilder;
 
 return [
     'DisableModule' => false,
-    'title' => 'Quản lý Module',
-    'emptyData' => 'Không có dữ liệu',
     'funcData' => function () {
         return collect([]);
     },
     'modalkey' => 'name',
-    'excel' => [
-        'template' => '',
-        // 'import' => \LaraIO\Core\Excel\ExcelInport::class,
-        // 'export' => \LaraIO\Core\Excel\ExcelExport::class,
-        'header' => ['id', 'Họ Tên', 'Trạng thái'],
-        'mapdata' => function ($item) {
-            return [
-                $item->id,
-                $item->name,
-                $item->status
-            ];
-        }
-    ],
+    'excel' => [],
     'action' => [
         'title' => '#',
         'add' => false,
@@ -50,50 +36,44 @@ return [
         [
             'field' => 'name',
             'fieldType' => FieldBuilder::Text,
-            'title' => 'Module Name',
+            'title' => 'core::tables.module.field.name',
             'keyColumn' => 'row1_1'
         ],
         [
             'field' => 'email',
-            'title' => 'Email',
+            'title' => 'core::tables.module.field.email',
             'view' => false,
             'keyColumn' => 'row1_2'
         ],
         [
             'field' => 'description',
-            'title' => 'Thông tin',
+            'title' => 'core::tables.module.field.description',
             'keyColumn' => 'row1_1'
         ],
         [
             'fieldType' => FieldBuilder::Dropdown,
             'funcData' => function () {
-                return [
-                    [
-                        'id' => 0,
-                        'text' => 'Chưa kích hoạt'
-                    ],
-                    [
-                        'id' => 1,
-                        'text' => 'Kích hoạt'
-                    ]
-                ];
+                return collect([0, 1])->map(function ($item) {
+                    return [
+                        'id' => $item,
+                        'text' => __('core::enums.status.' . $item)
+                    ];
+                });
             },
             'funcCell' => function ($row, $column) {
                 if (\Gate::check('core.module.module.change-status')) {
                     if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                        return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-primary btn-sm text-nowrap">Kích hoạt</button>';
+                        return '<button ' . aciton_change_field_value_hook('{"id":' . $row['name'] . ',"field":"' . $column['field'] . '","value":0}') . ' class="btn btn-primary btn-sm text-nowrap">' . __('core::enums.status.1') . '</button>';
                     }
-                    return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-danger btn-sm text-nowrap">Chưa kích hoạt</button>';
-                } else {
-                    if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                        return 'Kích hoạt';
-                    }
-                    return 'Chưa kích hoạt';
+                    return '<button ' . aciton_change_field_value_hook('{"id":' . $row['name'] . ',"field":"' . $column['field'] . '","value":1}') . ' class="btn btn-danger btn-sm text-nowrap">' . __('core::enums.status.0') . '</button>';
                 }
+                if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
+                    return __('core::enums.status.1');
+                }
+                return __('core::enums.status.0');
             },
             'field' => 'status',
-
-            'title' => '',
+            'title' => 'core::tables.module.field.status',
             'keyColumn' => 'row1_2',
         ]
     ]

@@ -6,8 +6,6 @@ use LaraIO\Core\Livewire\Modal;
 return [
     'model' => \LaraIO\Core\Models\Permission::class,
    // 'DisableModule' => true,
-    'title' => 'Quyền',
-    'emptyData' => 'Không có dữ liệu',
     'enableAction' => true,
 
     'action' => [
@@ -19,7 +17,7 @@ return [
         'inport' => true,
         'append' => [
             [
-                'title' => 'Cập nhật quyền',
+                'title' => 'core::tables.permission.button.load',
                 'icon' => '<i class="bi bi-magic"></i>',
                 'type' => 'new',
                 'permission' => 'core.module.permission.load-permission',
@@ -33,15 +31,15 @@ return [
     'fields' => [
         [
             'field' => 'group',
-            'title' => 'Nhóm'
+            'title' => 'core::tables.permission.field.group'
         ],
         [
             'field' => 'slug',
-            'title' => 'slug'
+            'title' => 'core::tables.permission.field.slug'
         ],
         [
             'field' => 'name',
-            'title' => 'Tên Quyền'
+            'title' => 'core::tables.permission.field.name'
         ],
     ]
 ];

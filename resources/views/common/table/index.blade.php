@@ -11,7 +11,7 @@
                 @if ($checkAdd === true)
                     <button class="btn btn-primary btn-sm"
                         wire:component='{{ $viewEdit }}({"module":"{{ $module }}"})'>
-                        <i class="bi bi-plus-square"></i> <span>Thêm mới</span>
+                        <i class="bi bi-plus-square"></i> <span>{{__("core::table.button.add")}}</span>
                     </button>
                 @endif
                 @foreach (getValueByKey($option, 'action.append', []) as $button)
@@ -19,25 +19,25 @@
                         (!isset($button['permission']) || \Gate::check($button['permission'])))
                         <button class="btn btn-sm  {{ getValueByKey($button, 'class', 'btn-danger') }}"
                             {!! getValueByKey($button, 'action', function () {})() !!}> {!! getValueByKey($button, 'icon', '') !!} <span>
-                                {{ getValueByKey($button, 'title', '') }} </span></button>
+                                {{ __(getValueByKey($button, 'title', ''))}} </span></button>
                     @endif
                 @endforeach
                 {!! apply_filters('module_action_left', '', $this) !!}
                 {!! apply_filters('module_' . $module . '_action_left', '', $this) !!}
             </div>
             <div style="flex:none">
-                @if ($checkInportExcel)
+                @if ($checkInportExcel&&false)
                     <button class="btn btn-primary btn-sm"
                         wire:openmodal='core::table.import({"module":"{{ $module }}"})'>
                         <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                        <span>Nhập excel</span>
+                        <span>{{__("core::table.button.import")}}</span>
                     </button>
                 @endif
-                @if ($checkExportExcel)
+                @if ($checkExportExcel&&false)
                     <button class="btn btn-primary btn-sm"
                         wire:openmodal='core::table.export({"module":"{{ $module }}"})'>
                         <i class="bi bi-file-earmark-excel-fill"></i>
-                        <span>Xuất excel</span>
+                        <span>{{__("core::table.button.export")}}</span>
                     </button>
                 @endif
                 {!! apply_filters('module_action_right', '', $this) !!}

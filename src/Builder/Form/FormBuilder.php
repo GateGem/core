@@ -18,7 +18,7 @@ class FormBuilder extends HtmlBuilder
     public function RenderItemField($item)
     {
         echo '<div class="form-group field-' . $item['field'] . '">';
-        echo ' <label for="input-' . $item['field'] . '" class="form-label">' . $item['title'] . '</label>';
+        echo ' <label for="input-' . $item['field'] . '" class="form-label">' . __($item['title']) . '</label>';
         echo FieldBuilder::Render($item, $this->data, $this->formData);
         echo '</div>';
     }

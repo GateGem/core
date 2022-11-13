@@ -5,8 +5,6 @@ use LaraIO\Core\Facades\Theme;
 
 return [
     'DisableModule' => false,
-    'title' => 'Quản lý Theme',
-    'emptyData' => 'Không có dữ liệu',
     'funcData' => function () {
         return Theme::getData();
     },
@@ -61,66 +59,30 @@ return [
             'keyColumn' => 'row1_2'
         ],
         [
-            'field' => 'admin',
-            'title' => 'Type',
             'fieldType' => FieldBuilder::Dropdown,
             'funcData' => function () {
-                return [
-                    [
-                        'id' => 0,
-                        'text' => 'User'
-                    ],
-                    [
-                        'id' => 1,
-                        'text' => 'Admin'
-                    ]
-                ];
+                return collect([0, 1])->map(function ($item) {
+                    return [
+                        'id' => $item,
+                        'text' => __('core::enums.status.' . $item)
+                    ];
+                });
             },
             'funcCell' => function ($row, $column) {
-                if (\Gate::check('core.module.theme.change-status')) {
+                if (\Gate::check('core.table.theme.change-status')) {
                     if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                        return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-primary btn-sm text-nowrap">Kích hoạt</button>';
+                        return '<button ' . aciton_change_field_value_hook('{"id":' . $row['name'] . ',"field":"' . $column['field'] . '","value":0}') . ' class="btn btn-primary btn-sm text-nowrap">' . __('core::enums.status.1') . '</button>';
                     }
-                    return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-danger btn-sm text-nowrap">Chưa kích hoạt</button>';
-                } else {
-                    if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                        return 'Admin';
-                    }
-                    return 'User';
+                    return '<button ' .  aciton_change_field_value_hook('{"id":' . $row['name'] . ',"field":"' . $column['field'] . '","value":1}') . ' class="btn btn-danger btn-sm text-nowrap">' . __('core::enums.status.0') . '</button>';
                 }
-            },
-            'keyColumn' => 'row1_1'
-        ],
-        [
-            'fieldType' => FieldBuilder::Dropdown,
-            'funcData' => function () {
-                return [
-                    [
-                        'id' => 0,
-                        'text' => 'Chưa kích hoạt'
-                    ],
-                    [
-                        'id' => 1,
-                        'text' => 'Kích hoạt'
-                    ]
-                ];
-            },
-            'funcCell' => function ($row, $column) {
-                if (\Gate::check('core.module.change-status')) {
-                    if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                        return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-primary btn-sm text-nowrap">Kích hoạt</button>';
-                    }
-                    return '<button wire:click="ChangeStatus(\'' . $row['name'] . '\')" class="btn btn-danger btn-sm text-nowrap">Chưa kích hoạt</button>';
-                } else {
-                    if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                        return 'Kích hoạt';
-                    }
-                    return 'Chưa kích hoạt';
+
+                if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
+                    return __('core::enums.status.1');
                 }
+                return __('core::enums.status.0');
             },
             'field' => 'status',
-
-            'title' => '',
+            'title' => 'core::tables.module.field.status',
             'keyColumn' => 'row1_2',
         ]
     ]

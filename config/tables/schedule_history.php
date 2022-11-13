@@ -8,8 +8,6 @@ return [
         'view' => ''
     ],
     'DisableModule' => true,
-    'title' => 'Schedule History',
-    'emptyData' => 'Không có dữ liệu',
     'enableAction' => false,
     'action' => [
         'title' => '#',

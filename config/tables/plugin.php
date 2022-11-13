@@ -5,8 +5,6 @@ use LaraIO\Core\Facades\Theme;
 
 return [
     'DisableModule' => false,
-    'title' => 'Quản lý Plugin',
-    'emptyData' => 'Không có dữ liệu',
     'funcData' => function () {
        return collect([]);
     },

@@ -78,7 +78,7 @@ class TableBuilder extends HtmlBuilder
                     echo '<td x-data="{ filter: false }" class="position-relative">';
                     echo '<div class="cell-header d-flex flex-row' . getValueByKey($column, 'classHeader', '') . '">';
                     echo '<div class="cell-header_title flex-grow-1">';
-                    echo $column['title'];
+                    echo __($column['title']);
                     echo '</div>';
                     echo '<div class="cell-header_extend">';
                     if (isset($column['field'])) {
@@ -93,7 +93,7 @@ class TableBuilder extends HtmlBuilder
                     echo '</div>';
                     if (isset($column['field'])) {
                         echo '<div  x-show="filter"  @click.outside="filter = false" style="display:none;" class="form-filter-column">';
-                        echo "<p class='p-0'>{$column['title']}</p>";
+                        echo "<p class='p-0'>".__($column["title"])."</p>";
                         echo  FieldBuilder::Render($column, [], ['prex' => 'filter.', 'filter' => true]);
                         echo '<p class="text-end text-white p-0"> <i class="bi bi-eraser"  wire:click="clearFilter(\'' . $column['field'] . '\')"></i></p>';
                         '</div>';
@@ -119,7 +119,7 @@ class TableBuilder extends HtmlBuilder
                 }
             }
         } else {
-            echo '<tr><td colspan="100000"><span "table-empty-data">' . getValueByKey($this->option, 'emptyData', 'The data is empty') . '</span></td</tr>';
+            echo '<tr><td colspan="100000"><span "table-empty-data">' . __(getValueByKey($this->option, 'emptyData', 'core::table.message.nodata')) . '</span></td</tr>';
         }
         echo '</tbody>';
         echo '</table>';

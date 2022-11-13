@@ -7,8 +7,6 @@ return [
     'model' => \LaraIO\Core\Models\Schedule::class,
     'poll' => '10s',
     'DisableModule' => true,
-    'title' => 'Schedule',
-    'emptyData' => 'Không có dữ liệu',
     'enableAction' => true,
     'formInclude' => 'core::schedule.edit',
     'viewEdit' => 'core::schedule.edit',

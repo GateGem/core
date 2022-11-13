@@ -69,28 +69,28 @@ trait WithTableIndex
             $this->viewEdit = getValueByKey($option, 'viewEdit', 'core::table.edit');
             if ($option && $this->checkAction()) {
                 $option['fields'][] =  [
-                    'title' => getValueByKey($option, 'action.title', '#'),
+                    'title' => __(getValueByKey($option, 'action.title', '#')),
                     'classData' => 'action-header',
                     'classHeader' => 'action-data text-center',
                     'funcCell' => function ($row, $column) use ($option) {
                         $html = '';
                         if ($this->checkEdit()) {
-                            $html = $html . '<button class="btn btn-sm btn-success" wire:component=\'' . $this->viewEdit . '({"module":"' . $this->module . '","dataId":' . $row[getValueByKey($option, 'modalkey', 'id')] . '})\'><i class="bi bi-pencil-square"></i> <span>Sửa</span></button>';
+                            $html = $html . '<button class="btn btn-sm btn-success" wire:component=\'' . $this->viewEdit . '({"module":"' . $this->module . '","dataId":' . $row[getValueByKey($option, 'modalkey', 'id')] . '})\'><i class="bi bi-pencil-square"></i> <span>' . __('core::table.button.edit') . '</span></button>';
                         }
                         if ($this->checkRemove()) {
-                            $html = $html . ' <button class="btn btn-sm btn-danger" data-confirm-message="bạn có muốn xóa không?" wire:confirm=\'RemoveRow(' .  $row[getValueByKey($option, 'modalkey', 'id')] . ')\'><i class="bi bi-trash"></i> <span>Xóa</span></button>';
+                            $html = $html . ' <button class="btn btn-sm btn-danger" data-confirm-message="' . __('core::table.message.confirm-remove') . '" wire:confirm=\'RemoveRow(' .  $row[getValueByKey($option, 'modalkey', 'id')] . ')\'><i class="bi bi-trash"></i> <span>' . __('core::table.button.remove') . '</span></button>';
                         }
                         $buttonAppend = getValueByKey($option, 'action.append', []);
                         foreach ($buttonAppend as $button) {
                             if (getValueByKey($button, 'type', '') == 'update' && (!isset($button['permission']) || Gate::check($button['permission']))) {
-                                $html = $html . ' <button class="btn btn-sm  ' . getValueByKey($button, 'class', 'btn-danger') . ' " ' .  ($button['action']($row[getValueByKey($option, 'modalkey', 'id')], $row)) . '\'>' . getValueByKey($button, 'icon', '') . ' <span> ' . getValueByKey($button, 'title', '') . ' </span></button>';
+                                $html = $html . ' <button class="btn btn-sm  ' . getValueByKey($button, 'class', 'btn-danger') . ' " ' .  ($button['action']($row[getValueByKey($option, 'modalkey', 'id')], $row)) . '\'>' . getValueByKey($button, 'icon', '') . ' <span> ' . __(getValueByKey($button, 'title', '')) . ' </span></button>';
                             }
                         }
                         return  $html;
                     }
                 ];
             }
-            $this->option_temp = apply_filters('filter_module_option_'.$this->module, $option);
+            $this->option_temp = apply_filters('filter_module_option_' . $this->module, $option);
         }
         return  $this->option_temp;
     }
@@ -110,7 +110,7 @@ trait WithTableIndex
         if (!$this->modal_isPage) {
             $this->modal_size = getValueByKey($option, 'page_size',  Modal::ExtraLarge);
         }
-        $this->setTitle(getValueByKey($option, 'title', ''));
+        $this->setTitle(__(getValueByKey($option, 'title', 'core::tables.' . $this->module . '.title')));
         $this->pageSize = getValueByKey($option, 'pageSize', 10);
         do_action("module_loaddata", $this->module, $this);
         do_action("module_" . $this->module . "_loaddata", $this);
@@ -122,7 +122,7 @@ trait WithTableIndex
         $this->code_permission = 'core.' . $this->module;
         $this->LoadData();
     }
-    public function getData($isAll = false)
+    public function getModel()
     {
         if (isset($this->option['model']) && $this->option['model'] != '') {
             $model = app($this->option['model']);
@@ -131,6 +131,11 @@ trait WithTableIndex
         } else {
             $model = collect([]);
         }
+        return $model;
+    }
+    public function getData($isAll = false)
+    {
+        $model = $this->getModel();
         if (method_exists($this, 'getData_before')) {
             $this->getData_before($model);
         }
