@@ -4,10 +4,12 @@ namespace LaraIO\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use LaraIO\Core\Traits\WithSlug;
 
 class Role extends Model
 {
-    use HasFactory;
+    use HasFactory, WithSlug;
+    public $FieldSlug = "name";
 
     protected $fillable = [
         'name',

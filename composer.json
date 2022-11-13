@@ -38,7 +38,8 @@
     "autoload": {
         "psr-4": {
             "LaraIO\\Core\\": "src",
-            "LaraIO\\Core\\Database\\Factories\\": "database/factories"
+            "LaraIO\\Core\\Database\\Factories\\": "database/factories",
+            "LaraIO\\Core\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {

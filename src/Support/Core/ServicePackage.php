@@ -25,6 +25,8 @@ class ServicePackage
 
     public bool $runsMigrations = false;
 
+    public bool $runsSeeds = false;
+
     public array $migrationFileNames = [];
 
     public array $routeFileNames = [];
@@ -159,6 +161,12 @@ class ServicePackage
         return $this;
     }
 
+    public function runsSeeds(bool $runsSeeds = true): self
+    {
+        $this->runsSeeds = $runsSeeds;
+
+        return $this;
+    }
     public function hasMigration(string $migrationFileName): self
     {
         $this->migrationFileNames[] = $migrationFileName;

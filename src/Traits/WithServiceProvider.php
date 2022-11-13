@@ -117,6 +117,14 @@ trait WithServiceProvider
                 }
             }
 
+            if ($this->package->runsSeeds) {
+                $seedFiles =  BaseScan::AllFile($this->package->basePath("/../database/Seeders/"));
+                foreach ($seedFiles  as $file) {
+                    if ($file->getExtension() == "php") {
+                        HelperLoader::Load($file->getRealPath());
+                    }
+                }
+            }
             if ($this->package->hasTranslations) {
                 $this->publishes([
                     $this->package->basePath('/../resources/lang') => $langPath,

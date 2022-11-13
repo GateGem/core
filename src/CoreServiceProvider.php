@@ -34,6 +34,7 @@ class CoreServiceProvider extends ServiceProvider
             ->hasAssets()
             ->hasTranslations()
             ->runsMigrations()
+            ->runsSeeds()
             ->hasRoutes('web')
             ->hasCommand(CoreCommand::class);
     }
