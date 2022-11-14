@@ -30,7 +30,8 @@ return [
             'name' => 'Name',
             'description' => 'Description',
             'status' => 'Status',
-            'info' => 'Info'
+            'info' => 'Info',
+            'email'=>'Email'
         ],
         'message' => [
             'unactivated' => 'UnActivated'
