@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use LaraIO\Core\Utils\BaseScan;
+use SplFileInfo;
 
 class CoreManager
 {
@@ -18,7 +20,7 @@ class CoreManager
         $this->app = app();
     }
 
-     /**
+    /**
      * Setup an after resolving listener, or fire immediately if already resolved.
      *
      * @param  string  $name
@@ -34,7 +36,7 @@ class CoreManager
         }
     }
 
-    public function loadViewsFrom($path,$namespace = 'core')
+    public function loadViewsFrom($path, $namespace = 'core')
     {
         $this->callAfterResolving('view', function ($view) use ($path, $namespace) {
             if (
@@ -140,5 +142,18 @@ class CoreManager
     public function ModulePath($path = '')
     {
         return $this->RootPath(config('core.appdir.module') . '/' . $path);
+    }
+    public function LoadHelper($path)
+    {
+        if ($path && BaseScan::FileExists($path)) {
+            require_once $path;
+        }
+    }
+
+    public function RegisterHelper($path)
+    {
+        BaseScan::AllFile($path, function (SplFileInfo $file) {
+            self::LoadHelper($file->getPathname());
+        });
     }
 }

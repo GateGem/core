@@ -39,6 +39,10 @@ class BaseScan
         return self::$filesystem->exists($path);
     }
 
+    public static function SaveFileJson($path, $content)
+    {
+        return file_put_contents($path, json_encode($content));
+    }
     public static function FileJson($path)
     {
         return json_decode(file_get_contents($path), true);
@@ -119,5 +123,4 @@ class BaseScan
             self::$filesystem->link($target, $link);
         }
     }
-   
 }

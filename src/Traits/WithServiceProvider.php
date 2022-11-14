@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use LaraIO\Core\Exceptions\InvalidPackage;
-use LaraIO\Core\Loader\HelperLoader;
+use LaraIO\Core\Facades\Core;
 use LaraIO\Core\Loader\LivewireLoader;
 use LaraIO\Core\Utils\BaseScan;
 use LaraIO\Core\Support\Core\ServicePackage;
@@ -33,7 +33,7 @@ trait WithServiceProvider
         }
 
         if ($this->package->hasHelpers) {
-            HelperLoader::Register($this->package->basePath($this->package->pathHelper));
+            Core::RegisterHelper($this->package->basePath($this->package->pathHelper));
         }
         if (function_exists('add_filter')) {
             $name = $this->package->name;
@@ -121,7 +121,7 @@ trait WithServiceProvider
                 $seedFiles =  BaseScan::AllFile($this->package->basePath("/../database/Seeders/"));
                 foreach ($seedFiles  as $file) {
                     if ($file->getExtension() == "php") {
-                        HelperLoader::Load($file->getRealPath());
+                        Core::LoadHelper($file->getRealPath());
                     }
                 }
             }

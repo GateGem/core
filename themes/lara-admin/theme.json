@@ -1,10 +1,1 @@
-{
-    "name": "lara-admin",
-    "admin": true,
-    "namespace": "LaraIO\\Core\\Theme\\LaraAdmin\\",
-    "titile": "lara theme",
-    "description": "",
-    "author": "LaraIO",
-    "layout": "layout",
-    "required_plugins": []
-}
+{"name":"lara-admin","admin":true,"namespace":"LaraIO\\Core\\Theme\\LaraAdmin\\","titile":"lara theme","description":"","author":"LaraIO","layout":"layout","required_plugins":[],"status":0}

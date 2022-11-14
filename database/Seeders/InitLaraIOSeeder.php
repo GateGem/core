@@ -28,7 +28,7 @@ class InitLaraIOSeeder extends Seeder
         $userAdmin->name = "nguyen van hau";
         $userAdmin->email = "admin@lara.asia";
         $userAdmin->password = "AdMin@123";
-        $userAdmin->status=1;
+        $userAdmin->status = 1;
         $userAdmin->save();
         $userAdmin->roles()->sync([$roleAdmin->id]);
     }

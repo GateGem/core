@@ -5,6 +5,7 @@ namespace LaraIO\Core\Http\Action;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use LaraIO\Core\Support\Core\ActionBase;
+use LaraIO\Core\Support\Core\DataInfo;
 
 class ChangeFieldValue extends ActionBase
 {
@@ -22,6 +23,10 @@ class ChangeFieldValue extends ActionBase
                 $elModel->{getValueByKey($this->param, 'field', 'status')} =  getValueByKey($this->param, 'value', 0);
                 Log::info($elModel->save());
                 Log::info('ChangeFieldValue');
+            }else if($elModel instanceof DataInfo){
+                $elModel->{getValueByKey($this->param, 'field', 'status')} =  getValueByKey($this->param, 'value', 0);
+                $elModel->DoSave();
+                
             }
         }
     }

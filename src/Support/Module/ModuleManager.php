@@ -19,4 +19,7 @@ class ModuleManager
     {
         return module_path();
     }
+    public function PublicFolder(){
+        return public_path('modules');
+    }
 }

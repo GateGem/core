@@ -19,4 +19,7 @@ class PluginManager
     {
         return plugin_path();
     }
+    public function PublicFolder(){
+        return public_path('plugins');
+    }
 }

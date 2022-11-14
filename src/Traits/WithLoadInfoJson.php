@@ -2,6 +2,7 @@
 
 namespace LaraIO\Core\Traits;
 
+use LaraIO\Core\Support\Core\DataInfo;
 use LaraIO\Core\Utils\BaseScan;
 
 trait WithLoadInfoJson
@@ -16,6 +17,10 @@ trait WithLoadInfoJson
         return 'info_path';
     }
     public function PathFolder()
+    {
+        return '';
+    }
+    public function PublicFolder()
     {
         return '';
     }
@@ -39,9 +44,6 @@ trait WithLoadInfoJson
     }
     public function AddItem($path)
     {
-        $this->arrData[] = [
-            ...BaseScan::FileJson($path . '/' . $this->FileInfoJson()),
-            'path' => $path
-        ];
+        $this->arrData[$path] = new DataInfo($path, $this->FileInfoJson(), $this->PublicFolder());
     }
 }

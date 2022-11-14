@@ -2,11 +2,9 @@
 
 namespace LaraIO\Core\Support\Theme;
 
-use LaraIO\Core\Facades\Core;
-use LaraIO\Core\Loader\HelperLoader;
 use LaraIO\Core\Support\Core\Assets;
+use LaraIO\Core\Support\Core\DataInfo;
 use LaraIO\Core\Traits\WithLoadInfoJson;
-use LaraIO\Core\Utils\BaseScan;
 
 class ThemeManager
 {
@@ -23,12 +21,13 @@ class ThemeManager
     {
         return theme_path();
     }
-    private $path;
-
-    private $info;
-
+    public function PublicFolder()
+    {
+        return public_path('themes');
+    }
     private $layout;
     private Assets $assets;
+    private ?DataInfo $data_active;
     public function setTitle($title)
     {
         $this->getAssets()->setData('page_title', $title);
@@ -39,18 +38,15 @@ class ThemeManager
     }
     public function active($themeName)
     {
-        $this->info = null;
-        $this->path = null;
         $this->layout = null;
         foreach ($this->getData() as $item) {
-            if ($item['name'] == $themeName) {
-                $this->path = $item['path'];
-                $this->info = $item;
-                $this->layout = 'theme::' . getValueByKey($this->info, 'layout', 'layout');
-                Core::loadViewsFrom($this->path . '/views','theme');
-                HelperLoader::Load($this->path . '/function.php');
-                BaseScan::Link($this->path . "/public", public_path('themes/' . $themeName));
-                return;
+            $item->setStatus(DataInfo::UnActive);
+            $this->data_active = null;
+            if ($item->checkKeyValue('name', $themeName)) {
+                $this->data_active = $item;
+                $this->layout = 'theme::' .   $this->data_active->getValue('layout', 'layout');
+                $this->data_active->setStatus(DataInfo::Active);
+                $this->data_active->DoActive('theme');
             }
         }
     }
