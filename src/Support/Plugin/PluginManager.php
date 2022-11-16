@@ -7,19 +7,8 @@ use LaraIO\Core\Traits\WithLoadInfoJson;
 class PluginManager
 {
     use WithLoadInfoJson;
-    public function FileInfoJson()
+    public function getName()
     {
-        return "plugin.json";
-    }
-    public function HookFilterPath()
-    {
-        return 'plugin_root_path';
-    }
-    public function PathFolder()
-    {
-        return plugin_path();
-    }
-    public function PublicFolder(){
-        return public_path('plugins');
+        return "theme";
     }
 }

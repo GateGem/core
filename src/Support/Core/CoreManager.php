@@ -133,15 +133,19 @@ class CoreManager
     }
     public function ThemePath($path = '')
     {
-        return $this->RootPath(config('core.appdir.theme') . '/' . $path);
+        return $this->PathBy('theme', $path);
     }
     public function PluginPath($path = '')
     {
-        return $this->RootPath(config('core.appdir.plugin') . '/' . $path);
+        return $this->PathBy('plugin', $path);
     }
     public function ModulePath($path = '')
     {
-        return $this->RootPath(config('core.appdir.module') . '/' . $path);
+        return $this->PathBy('module', $path);
+    }
+    public function PathBy($name, $path = '')
+    {
+        return $this->RootPath(config('core.appdir.' . $name) . '/' . $path);
     }
     public function LoadHelper($path)
     {

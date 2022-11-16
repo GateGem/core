@@ -6,7 +6,7 @@ return [
         'admin' => '',
     ],
     'appdir' => [
-        'root' => 'lara',
+        'root' => 'laraio',
         'theme' => 'themes',
         'module' => 'modules',
         'plugin' => 'plugins',

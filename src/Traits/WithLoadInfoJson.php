@@ -7,22 +7,30 @@ use LaraIO\Core\Utils\BaseScan;
 
 trait WithLoadInfoJson
 {
+    public function __construct()
+    {
+        $this->arrData = collect([]);
+    }
     private $arrData = [];
+    public function getName()
+    {
+        return 'info';
+    }
     public function FileInfoJson()
     {
-        return "info.json";
+        return $this->getName() . ".json";
     }
     public function HookFilterPath()
     {
-        return 'info_path';
+        return $this->getName() . '_path';
     }
     public function PathFolder()
     {
-        return '';
+        return path_by($this->getName());
     }
     public function PublicFolder()
     {
-        return '';
+        return public_path($this->getName() . 's');
     }
     public function Boot()
     {
@@ -30,7 +38,7 @@ trait WithLoadInfoJson
     }
     public function getData()
     {
-        return collect($this->arrData);
+        return $this->arrData;
     }
 
 

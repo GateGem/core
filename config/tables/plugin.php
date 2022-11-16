@@ -1,12 +1,13 @@
 <?php
 
 use LaraIO\Core\Builder\Form\FieldBuilder;
+use LaraIO\Core\Facades\Plugin;
 use LaraIO\Core\Facades\Theme;
 
 return [
     'DisableModule' => false,
     'funcData' => function () {
-       return collect([]);
+       return Plugin::getData();
     },
     'modalkey' => 'name',
     'excel' => [

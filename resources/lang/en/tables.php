@@ -5,7 +5,8 @@ return [
         'field' => [
             'name' => 'Name',
             'description' => 'Description',
-            'status' => 'Status'
+            'status' => 'Status',
+            'key'=>'Key'
         ]
     ],
     'plugin' => [

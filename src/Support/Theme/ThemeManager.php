@@ -9,21 +9,9 @@ use LaraIO\Core\Traits\WithLoadInfoJson;
 class ThemeManager
 {
     use WithLoadInfoJson;
-    public function FileInfoJson()
+    public function getName()
     {
-        return "theme.json";
-    }
-    public function HookFilterPath()
-    {
-        return 'theme_root_path';
-    }
-    public function PathFolder()
-    {
-        return theme_path();
-    }
-    public function PublicFolder()
-    {
-        return public_path('themes');
+        return "theme";
     }
     private $layout;
     private Assets $assets;

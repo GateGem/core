@@ -23,6 +23,13 @@ if (!function_exists('theme_path')) {
 if (!function_exists('plugin_path')) {
     function plugin_path($path = '')
     {
-        return Core::ThemePath($path);
+        return Core::PluginPath($path);
+    }
+}
+
+if (!function_exists('path_by')) {
+    function path_by($path = '')
+    {
+        return Core::PluginPath($path);
     }
 }

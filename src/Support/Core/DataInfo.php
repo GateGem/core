@@ -12,15 +12,21 @@ class DataInfo implements \ArrayAccess
     const UnActive = 0;
     private $path;
     private $public;
+    private $fileInfo;
     private $data;
     public function __construct($path, $fileInfo, $public)
     {
         $this->path = $path;
         $this->public = $public;
-        $this->data = BaseScan::FileJson($path . '/' . $fileInfo) ?? [];
-        $this->data['fileInfo'] = $fileInfo;
-        $this->data['path'] = $path;
-        $this->data['key'] = basename($path, ".php");
+        $this->fileInfo = $fileInfo;
+        $this->ReLoad();
+    }
+    public function ReLoad()
+    {
+        $this->data = BaseScan::FileJson($this->path . '/' . $this->fileInfo) ?? [];
+        $this->data['fileInfo'] = $this->fileInfo;
+        $this->data['path'] = $this->path;
+        $this->data['key'] = basename($this->path, ".php");
     }
     /**
      * Get a data by key
