@@ -28,7 +28,7 @@ trait WithTableIndex
     }
     protected function getListeners()
     {
-        return ['refreshData' . $this->module => '__loadData'];
+        return ['refreshData' . $this->module => '__loadData', 'refreshData' . $this->id => '__loadData'];
     }
     protected $paginationTheme = 'bootstrap';
     protected $isCheckDisableModule = true;

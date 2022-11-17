@@ -21,6 +21,7 @@ class Component extends ComponentBase
 
     public function refreshData($option = [])
     {
+        if (!isset($option['id'])) $option['id'] = $this->id;
         $this->dispatchBrowserEvent('reload_component', $option);
     }
 

@@ -10,17 +10,6 @@ return [
     },
     'modalkey' => 'name',
     'excel' => [
-        'template' => '',
-        // 'import' => \LaraIO\Core\Excel\ExcelInport::class,
-        // 'export' => \LaraIO\Core\Excel\ExcelExport::class,
-        'header' => ['id', 'Họ Tên', 'Trạng thái'],
-        'mapdata' => function ($item) {
-            return [
-                $item->id,
-                $item->name,
-                $item->status
-            ];
-        }
     ],
     'action' => [
         'title' => '#',
@@ -45,18 +34,18 @@ return [
             ]
         ]
     ],
-    'fields' => [
+    'fields' => [ 
+        [
+        'field' => 'key',
+        'fieldType' => FieldBuilder::Text,
+        'title' => 'core::tables.theme.key',
+        'keyColumn' => 'row1_1'
+    ],
         [
             'field' => 'name',
             'fieldType' => FieldBuilder::Text,
-            'title' => 'Module Name',
+            'title' => 'core::tables.theme.name',
             'keyColumn' => 'row1_1'
-        ],
-        [
-            'field' => 'titile',
-            'title' => 'Title',
-            'view' => false,
-            'keyColumn' => 'row1_2'
         ],
         [
             'fieldType' => FieldBuilder::Dropdown,
