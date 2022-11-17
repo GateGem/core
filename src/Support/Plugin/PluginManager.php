@@ -9,6 +9,6 @@ class PluginManager
     use WithLoadInfoJson;
     public function getName()
     {
-        return "theme";
+        return "plugin";
     }
 }

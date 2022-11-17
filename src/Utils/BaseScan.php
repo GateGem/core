@@ -45,6 +45,9 @@ class BaseScan
     }
     public static function FileJson($path)
     {
+        if (!self::FileExists($path)) {
+            return [];
+        }
         return json_decode(file_get_contents($path), true);
     }
     public static function FileReturn($path)

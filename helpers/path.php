@@ -28,7 +28,7 @@ if (!function_exists('plugin_path')) {
 }
 
 if (!function_exists('path_by')) {
-    function path_by($path = '')
+    function path_by($name,$path = '')
     {
         return Core::PluginPath($path);
     }

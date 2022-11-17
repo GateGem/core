@@ -160,4 +160,32 @@ class CoreManager
             self::LoadHelper($file->getPathname());
         });
     }
+    public function minifyOptimizeHtml($buffer)
+    {
+        if (strpos($buffer, '<pre>') !== false) {
+            $replace = array(
+                '/<!--[^\[](.*?)[^\]]-->/s' => '',
+                "/<\?php/"                  => '<?php ',
+                "/\r/"                      => '',
+                "/>\n</"                    => '><',
+                "/>\s+\n</"                 => '><',
+                "/>\n\s+</"                 => '><',
+                '/\>\s+/s'                  => '> ',
+                '/\s+</s'                   => ' <',
+            );
+        } else {
+            $replace = array(
+                '/<!--[^\[](.*?)[^\]]-->/s' => '',
+                "/<\?php/"                  => '<?php ',
+                "/\n([\S])/"                => '$1',
+                "/\r/"                      => '',
+                "/\n/"                      => '',
+                "/\t/"                      => '',
+                "/ +/"                      => ' ',
+                '/\>\s+/s'                  => '> ',
+                '/\s+</s'                   => ' <',
+            );
+        }
+        return preg_replace(array_keys($replace), array_values($replace), $buffer);
+    }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use LaraIO\Core\Facades\Core;
 use LaraIO\Core\Http\Middleware\Authenticate;
+use LaraIO\Core\Http\Middleware\HtmlMinifier;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ Route::group(['prefix' => 'lara', 'middleware' => ['web']], function () {
     Route::post('/switchSidebar', [LaraIO\Core\Http\Controllers\LaraServiceController::class, 'switchSidebar']);
 });
 
-Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web', Authenticate::class]], function () {
+Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web', Authenticate::class,HtmlMinifier::class]], function () {
     Route::get('/',  apply_filters('route_page_dashboard_component', LaraIO\Core\Http\Livewire\Page\Dashboard\Index::class))->name('core.dashboard');
     Route::get('/table/{module}', LaraIO\Core\Http\Livewire\Table\Index::class)->name('core.table.slug');
     Route::get('/option', LaraIO\Core\Http\Livewire\Page\Option\Index::class)->name('core.option');
