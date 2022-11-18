@@ -1,7 +1,7 @@
 <?php
 return [
     'module' => [
-        'title' => 'module managment',
+        'title' => 'Module managment',
         'field' => [
             'name' => 'Name',
             'description' => 'Description',
@@ -10,7 +10,7 @@ return [
         ]
     ],
     'plugin' => [
-        'title' => 'plugin managment',
+        'title' => 'Plugin managment',
         'field' => [
             'name' => 'Name',
             'description' => 'Description',
@@ -18,7 +18,7 @@ return [
         ]
     ],
     'theme' => [
-        'title' => 'theme managment',
+        'title' => 'Theme managment',
         'field' => [
             'name' => 'Name',
             'description' => 'Description',
@@ -26,7 +26,7 @@ return [
         ]
     ],
     'user' => [
-        'title' => 'user managment',
+        'title' => 'User managment',
         'field' => [
             'name' => 'Name',
             'description' => 'Description',

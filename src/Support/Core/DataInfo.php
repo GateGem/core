@@ -90,6 +90,8 @@ class DataInfo implements \ArrayAccess
         } else {
             $this->data[$offset] = $value;
         }
+
+        Log::info($value);
     }
 
     /**
@@ -158,11 +160,13 @@ class DataInfo implements \ArrayAccess
     }
     public function DoSave()
     {
+        Log::info($this->data);
         $data = $this->data;
         unset($data['fileInfo']);
         unset($data['path']);
         unset($data['key']);
         BaseScan::SaveFileJson($this->getPath($this->data['fileInfo']), $data);
+        Log::info($data);
         Log::info($this->getPath($this->data['fileInfo']));
     }
     public function DoActive($namespace)

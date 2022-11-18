@@ -1,7 +1,7 @@
 {
     "name":"hello-word",
     "namespace": "LaraIO\\Core\\Theme\\LaraAdmin\\",
-    "titile":"Hello word",
+    "title":"Hello word",
     "description": "",
     "author": "LaraIO",
     "required_plugins": []
