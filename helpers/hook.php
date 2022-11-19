@@ -105,6 +105,13 @@ if (!function_exists('get_do_action_hook')) {
      */
     function get_do_action_hook($action, $param)
     {
+        if ($param) {
+            if (is_string($param)) {
+                if (json_decode($param, true) == null) {
+                    throw new \Exception('param is not validate json');
+                }
+            }
+        }
         return 'wire:click="DoAction(\'' . base64_encode(urlencode($action))  . '\',\'' . base64_encode(urlencode(json_encode($param ?? [])))  . '\')"';
     }
 }
@@ -115,7 +122,7 @@ if (!function_exists('aciton_change_field_value_hook')) {
      */
     function aciton_change_field_value_hook($param)
     {
-        return get_do_action_hook(ChangeFieldValue::class,$param);
+        return get_do_action_hook(ChangeFieldValue::class, $param);
     }
 }
 

@@ -141,7 +141,11 @@ trait WithServiceProvider
         if (!empty($this->package->commands)) {
             $this->commands($this->package->commands);
         }
-
+        if ($commands = config($this->package->shortName() . '.commands')) {
+            if (is_array($commands) && count($commands) > 0) {
+                $this->commands($commands);
+            }
+        }
         if ($this->package->hasTranslations) {
             $this->loadTranslationsFrom(
                 $this->package->basePath('/../resources/lang/'),

@@ -65,7 +65,9 @@ trait WithTableIndex
                 $option = TableLoader::getDataByKey($this->module);
             }
             if (!isset($option['fields'])) $option['fields'] = [];
+            $option = apply_filters('filter_table_option_' . $this->module, $option);
             $this->option_temp = $option;
+            
             $this->viewEdit = getValueByKey($option, 'viewEdit', 'core::table.edit');
             if ($option && $this->checkAction()) {
                 $option['fields'][] =  [
@@ -82,7 +84,7 @@ trait WithTableIndex
                         }
                         $buttonAppend = getValueByKey($option, 'action.append', []);
                         foreach ($buttonAppend as $button) {
-                            if (getValueByKey($button, 'type', '') == 'update' && (!isset($button['permission']) || Gate::check($button['permission']))) {
+                            if (getValueByKey($button, 'type', '') == 'update' && (!isset($button['permission']) ||  Gate::check($button['permission']))) {
                                 $html = $html . ' <button class="btn btn-sm  ' . getValueByKey($button, 'class', 'btn-danger') . ' " ' .  ($button['action']($row[getValueByKey($option, 'modalkey', 'id')], $row)) . '\'>' . getValueByKey($button, 'icon', '') . ' <span> ' . __(getValueByKey($button, 'title', '')) . ' </span></button>';
                             }
                         }
@@ -90,7 +92,7 @@ trait WithTableIndex
                     }
                 ];
             }
-            $this->option_temp = apply_filters('filter_module_option_' . $this->module, $option);
+            $this->option_temp = $option;
         }
         return  $this->option_temp;
     }

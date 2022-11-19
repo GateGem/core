@@ -6,6 +6,7 @@ return [
             'name' => 'Name',
             'description' => 'Description',
             'status' => 'Status',
+            'title'=>'Title',
             'key'=>'Key'
         ]
     ],
@@ -14,6 +15,7 @@ return [
         'field' => [
             'name' => 'Name',
             'description' => 'Description',
+            'title'=>'Title',
             'status' => 'Status'
         ]
     ],
@@ -22,7 +24,8 @@ return [
         'field' => [
             'name' => 'Name',
             'description' => 'Description',
-            'status' => 'Status'
+            'status' => 'Status',
+            'title'=>'Title'
         ]
     ],
     'user' => [

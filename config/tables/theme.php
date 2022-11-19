@@ -8,9 +8,8 @@ return [
     'funcData' => function () {
         return Theme::getData();
     },
-    'modalkey' => 'name',
-    'excel' => [
-    ],
+    'modalkey' => 'key',
+    'excel' => [],
     'action' => [
         'title' => '#',
         'add' => false,
@@ -34,13 +33,13 @@ return [
             ]
         ]
     ],
-    'fields' => [ 
+    'fields' => [
         [
-        'field' => 'key',
-        'fieldType' => FieldBuilder::Text,
-        'title' => 'core::tables.theme.key',
-        'keyColumn' => 'row1_1'
-    ],
+            'field' => 'key',
+            'fieldType' => FieldBuilder::Text,
+            'title' => 'core::tables.theme.key',
+            'keyColumn' => 'row1_1'
+        ],
         [
             'field' => 'name',
             'fieldType' => FieldBuilder::Text,

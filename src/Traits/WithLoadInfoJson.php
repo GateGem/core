@@ -36,12 +36,31 @@ trait WithLoadInfoJson
     {
         $this->Register(apply_filters($this->HookFilterPath(), $this->PathFolder()));
     }
+    /**
+     * Get the data.
+     *
+     * @return \Illuminate\Support\Collection<string, \LaraIO\Core\Support\Core\DataInfo>
+     */
     public function getData()
     {
         return $this->arrData;
     }
-
-
+    /**
+     * Find item by name.
+     * @param string $name
+     *
+     * @return  \LaraIO\Core\Support\Core\DataInfo
+     */
+    public function find($name)
+    {
+        return $this->getData()->where(function (\LaraIO\Core\Support\Core\DataInfo $item) use ($name) {
+            return $item->CheckName($name);
+        })->first();
+    }
+    public function has($name)
+    {
+        return $this->find($name) != null;
+    }
     public function Register($path)
     {
         if ($files = BaseScan::AllFolder($path)) {

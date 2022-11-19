@@ -158,6 +158,10 @@ class DataInfo implements \ArrayAccess
             $this->data['status'] = $status;
         }
     }
+    public function CheckName($name)
+    {
+        return $this->getKey() == $name || $this->name == $name;
+    }
     public function DoSave()
     {
         Log::info($this->data);

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use LaraIO\Core\Facades\Module;
+use LaraIO\Core\Facades\Plugin;
+use LaraIO\Core\Facades\Theme;
 use LaraIO\Core\Utils\BaseScan;
 use SplFileInfo;
 
@@ -187,5 +190,17 @@ class CoreManager
             );
         }
         return preg_replace(array_keys($replace), array_values($replace), $buffer);
+    }
+    public function By($name)
+    {
+        if ($name == Theme::getName()) {
+            return Theme::class;
+        }
+        if ($name == Module::getName()) {
+            return Module::class;
+        }
+        if ($name == Plugin::getName()) {
+            return Theme::class;
+        }
     }
 }

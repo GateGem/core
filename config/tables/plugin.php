@@ -9,7 +9,7 @@ return [
     'funcData' => function () {
        return Plugin::getData();
     },
-    'modalkey' => 'name',
+    'modalkey' => 'key',
     'excel' => [
         'template' => '',
         // 'import' => \LaraIO\Core\Excel\ExcelInport::class,

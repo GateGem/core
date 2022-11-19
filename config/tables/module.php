@@ -8,7 +8,7 @@ return [
     'funcData' => function () {
         return Module::getData();
     },
-    'modalkey' => 'name',
+    'modalkey' => 'key',
     'excel' => [],
     'action' => [
         'title' => '#',
