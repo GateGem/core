@@ -26,7 +26,11 @@ trait WithLoadInfoJson
     }
     public function PathFolder()
     {
-        return path_by($this->getName());
+        return $this->getPath('');
+    }
+    public function getPath($path)
+    {
+        return path_by($this->getName(), $path);
     }
     public function PublicFolder()
     {
@@ -60,6 +64,13 @@ trait WithLoadInfoJson
     public function has($name)
     {
         return $this->find($name) != null;
+    }
+    public function delete($name)
+    {
+        $base = $this->find($name);
+        if ($base) {
+            $base->delete();
+        }
     }
     public function Register($path)
     {

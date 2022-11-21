@@ -194,13 +194,13 @@ class CoreManager
     public function By($name)
     {
         if ($name == Theme::getName()) {
-            return Theme::class;
+            return Theme::getFacadeRoot();
         }
         if ($name == Module::getName()) {
-            return Module::class;
+            return Module::getFacadeRoot();
         }
         if ($name == Plugin::getName()) {
-            return Theme::class;
+            return Plugin::getFacadeRoot();
         }
     }
 }

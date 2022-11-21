@@ -126,4 +126,10 @@ class BaseScan
             self::$filesystem->link($target, $link);
         }
     }
+    public static function delete($path)
+    {
+        if (file_exists($path)) {
+            self::$filesystem->delete($path);
+        }
+    }
 }

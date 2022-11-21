@@ -158,9 +158,13 @@ class DataInfo implements \ArrayAccess
             $this->data['status'] = $status;
         }
     }
+    public function delete()
+    {
+        BaseScan::delete($this->getPath());
+    }
     public function CheckName($name)
     {
-        return $this->getKey() == $name || $this->name == $name;
+        return $this->getKey() == $name || $this->getValue('name') == $name;
     }
     public function DoSave()
     {
