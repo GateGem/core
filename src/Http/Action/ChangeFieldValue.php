@@ -19,15 +19,17 @@ class ChangeFieldValue extends ActionBase
             $model = $this->component->getModel();
             $model = $model->where(getValueByKey($this->param, 'key', 'id'), getValueByKey($this->param, 'id'));
             $elModel = $model->first();
+            if ($elModel == null) {
+                $this->component->showMessage(__('core::message.not-founds'));
+                return;
+            }
             Log::info($this->component->module);
             if ($elModel instanceof Model) {
                 $elModel->{getValueByKey($this->param, 'field', 'status')} =  getValueByKey($this->param, 'value', 0);
-                Log::info($elModel->save());
-                Log::info('ChangeFieldValue');
+                $elModel->save();
             } else if ($elModel instanceof DataInfo) {
                 $elModel[getValueByKey($this->param, 'field', 'status')] =  getValueByKey($this->param, 'value', 0);
                 $elModel->DoSave();
-                Log::info('ChangeFieldValue');
             }
         }
     }

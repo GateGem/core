@@ -17,10 +17,11 @@ class BaseScan
     {
         self::_check();
         $arr = [config('core::appdir.theme', 'themes'), config('core::appdir.module', 'modules'), config('core::appdir.plugin', 'plugins')];
+        $root_path=config('core::appdir.root', 'laro');
         foreach ($arr as $item) {
             $public = public_path($item);
-            $appdir = base_path(config('core::appdir.root', 'laro') . '/' . $item);
-            self::$filesystem->ensureDirectoryExists($item);
+            $appdir = base_path( $root_path . '/' . $item);
+            self::$filesystem->ensureDirectoryExists($public);
             self::$filesystem->ensureDirectoryExists($appdir);
         }
     }
@@ -129,7 +130,7 @@ class BaseScan
     public static function delete($path)
     {
         if (file_exists($path)) {
-            self::$filesystem->delete($path);
+            self::$filesystem->deleteDirectory($path);
         }
     }
 }

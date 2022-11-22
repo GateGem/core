@@ -5,9 +5,9 @@
         </ul>
         <ul class="nav-right">
             <li class="">
-                @livewire('core::common.language-selector')
+                @livewire(apply_filters("filter_theme_language_selector",'core::common.language-selector'))
             </li>
-            <li>  @livewire('core::common.profile')</li>
+            <li>  @livewire(apply_filters("filter_theme_language_selector",'core::common.profile'))</li>
         </ul>
     </div>
 </div>

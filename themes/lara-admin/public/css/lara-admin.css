@@ -75,6 +75,7 @@
   padding-left: 0 !important;
   width: -moz-fit-content;
   width: fit-content;
+  min-width: 178px;
   height: -moz-min-content;
   height: min-content;
 }

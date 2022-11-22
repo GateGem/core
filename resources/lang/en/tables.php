@@ -45,7 +45,7 @@ return [
         ]
     ],
     'role' => [
-        'title' => 'role managment',
+        'title' => 'Role managment',
         'field' => [
             'name' => 'Name',
             'slug' => 'Slug',
@@ -60,7 +60,7 @@ return [
         ]
     ],
     'permission' => [
-        'title' => 'permission managment',
+        'title' => 'Permission managment',
         'field' => [
             'name' => 'Name',
             'slug' => 'slug',
@@ -74,9 +74,9 @@ return [
         ]
     ],
     'schedule' => [
-        'title' => 'schedule managment'
+        'title' => 'Schedule managment'
     ],
     'schedule_history' => [
-        'title' => 'schedule history managment'
+        'title' => 'Schedule history managment'
     ]
 ];

@@ -107,8 +107,10 @@ if (!function_exists('get_do_action_hook')) {
     {
         if ($param) {
             if (is_string($param)) {
-                if (json_decode($param, true) == null) {
+                if (json_decode($param, true) == null && $param != '{}') {
                     throw new \Exception('param is not validate json');
+                } else {
+                    $param = json_decode($param, true)??[];
                 }
             }
         }

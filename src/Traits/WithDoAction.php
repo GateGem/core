@@ -8,7 +8,7 @@ trait WithDoAction
 {
     public function DoAction($action, $param)
     {
-        $varParam = json_decode(json_decode(urldecode(base64_decode($param))));
+        $varParam = json_decode(urldecode(base64_decode($param)), true);
         // Log::info('DoAction');
         // Log::info(gettype($varParam));
         // Log::info('/DoAction');

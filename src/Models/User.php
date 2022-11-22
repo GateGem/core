@@ -13,6 +13,9 @@ class User extends Authenticatable
     use WithPermission, WithSlug;
     public $FieldSlug = "name";
     protected $fillable = ["*"];
+    public function isActive(){
+        return $this->status==1;
+    }
     public function isSuperAdmin(): bool
     {
         return $this->hasRole(Core::RoleAdmin());
