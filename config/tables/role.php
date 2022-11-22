@@ -18,6 +18,7 @@ return [
                 'title' =>  'core::tables.role.button.permission',
                 'icon' => '<i class="bi bi-magic"></i>',
                 'permission' => 'core.module.role.permission',
+                'class' => 'btn-primary',
                 'type' => 'update',
                 'action' => function ($id) {
                     return 'wire:component="core::page.permission.role({\'roleId\':\'' . $id . '\'})"';

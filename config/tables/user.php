@@ -34,6 +34,10 @@ return [
             'password' => ['required'],
         ];
     },
+
+    'ruleMessages' => function ($id, $isNew) {
+        return [];
+    },
     'formInclude' => '',
     'formClass' => 'p-1',
     'layoutForm' => [
@@ -55,6 +59,12 @@ return [
             'keyColumn' => 'row1_1'
         ],
         [
+            'field' => 'avatar',
+            'fieldType' => FieldBuilder::Image,
+            'title' => 'core::tables.user.field.avatar',
+            'keyColumn' => 'row1_1'
+        ],
+        [
             'field' => 'email',
             'title' => 'core::tables.user.field.email',
             'view' => false,
@@ -63,7 +73,8 @@ return [
         [
             'field' => 'info',
             'title' => 'core::tables.user.field.info',
-            'keyColumn' => 'row1_1'
+            'fieldType' => FieldBuilder::Textarea,
+            'keyColumn' => 'row2_1'
         ],
         [
             'field' => 'password',

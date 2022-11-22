@@ -62,7 +62,7 @@ class LoadPermission extends ActionBase
 
         foreach ($routeCollection as $value) {
             $name = $value->getName();
-            if (!$name) continue;
+            if (!$name || !in_array(Illuminate\Auth\Middleware\Authenticate::class, $value->gatherMiddleware())) continue;
             self::SetPermission($name, $value);
         }
         $table = TableLoader::getData();

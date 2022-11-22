@@ -117,7 +117,7 @@ class CoreServiceProvider extends ServiceProvider
                     ...$prev,
                     'core.module.user.permission',
                     'core.module.role.permission',
-                    'core.module.permission.load-permission'
+                    'core.module.permission.load-permission',
                 ];
             });
         }

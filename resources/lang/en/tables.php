@@ -35,13 +35,15 @@ return [
             'description' => 'Description',
             'status' => 'Status',
             'info' => 'Info',
-            'email'=>'Email'
+            'email'=>'Email',
+            'avatar'=>'Avatar',
+            'password'=>'Password'
         ],
         'message' => [
             'unactivated' => 'UnActivated'
         ],
         'button' => [
-            'permission' => 'Setup permission'
+            'permission' => 'Permission'
         ]
     ],
     'role' => [
@@ -56,7 +58,7 @@ return [
             'unactivated' => 'UnActivated'
         ],
         'button' => [
-            'permission' => 'Setup permission'
+            'permission' => 'Permission'
         ]
     ],
     'permission' => [
@@ -64,7 +66,8 @@ return [
         'field' => [
             'name' => 'Name',
             'slug' => 'slug',
-            'group' => 'group'
+            'group' => 'group',
+            
         ],
         'message' => [
             'unactivated' => 'UnActivated'
