@@ -158,7 +158,9 @@ class CoreManager
     {
         if ($path && $this->FileExists($path)) {
             require_once $path;
+            return true;
         }
+        return false;
     }
 
     public function RegisterAllFile($path)

@@ -2,6 +2,7 @@
 
 namespace LaraIO\Core\Support\Core;
 
+use Illuminate\Support\Str;
 use LaraIO\Core\Facades\Core;
 
 class DataInfo implements \ArrayAccess
@@ -116,7 +117,10 @@ class DataInfo implements \ArrayAccess
             unset($this->data[$offset]);
         }
     }
-
+    public function __toString()
+    {
+        return $this->getName();
+    }
     /**
      * Returns the value at specified offset
      *
@@ -159,7 +163,10 @@ class DataInfo implements \ArrayAccess
     {
         return $this->getValue('key');
     }
-
+    public function getName()
+    {
+        return $this->getValue('name');
+    }
     public function setStatus($status)
     {
         if ($this->getValue('status') !== $status) {
@@ -169,6 +176,14 @@ class DataInfo implements \ArrayAccess
     public function isActive()
     {
         return $this->getValue('status') == self::Active;
+    }
+    public function Active()
+    {
+        $this->setStatus(self::Active);
+    }
+    public function UnActive()
+    {
+        $this->setStatus(self::UnActive);
     }
     public function delete()
     {
@@ -186,11 +201,20 @@ class DataInfo implements \ArrayAccess
         unset($data['key']);
         Core::SaveFileJson($this->getPath($this->data['fileInfo']), $data);
     }
+    public function getStudlyName()
+    {
+        return Str::studly($this->getName());
+    }
+    public function getLowerName()
+    {
+        return Str::lower($this->getName());
+    }
     private $providers;
     public function DoRegister($namespace = null)
     {
         $providers = $this->getProviders();
         if (is_array($providers) && count($providers) > 0) {
+            if (!Core::LoadHelper($this->getPath('vendor/autoload.php')));
             Core::RegisterAllFile($this->getPath('src'));
             $this->providers =  collect($providers)->map(function ($item) {
                 return app()->register($item, true);
