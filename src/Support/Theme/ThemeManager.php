@@ -28,13 +28,11 @@ class ThemeManager
     {
         $this->layout = null;
         foreach ($this->getData() as $item) {
-            $item->setStatus(DataInfo::UnActive);
             $this->data_active = null;
             if ($item->checkKeyValue('name', $themeName)) {
                 $this->data_active = $item;
                 $this->layout = 'theme::' .   $this->data_active->getValue('layout', 'layout');
-                $this->data_active->setStatus(DataInfo::Active);
-                $this->data_active->DoActive('theme');
+                $this->data_active->DoRegister('theme');
             }
         }
     }

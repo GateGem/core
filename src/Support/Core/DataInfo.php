@@ -2,9 +2,7 @@
 
 namespace LaraIO\Core\Support\Core;
 
-use Illuminate\Support\Facades\Log;
 use LaraIO\Core\Facades\Core;
-use LaraIO\Core\Utils\BaseScan;
 
 class DataInfo implements \ArrayAccess
 {
@@ -13,17 +11,19 @@ class DataInfo implements \ArrayAccess
     private $path;
     private $public;
     private $fileInfo;
-    private $data;
-    public function __construct($path, $fileInfo, $public)
+    private $base_type;
+    protected $data;
+    public function __construct($path, $parent)
     {
         $this->path = $path;
-        $this->public = $public;
-        $this->fileInfo = $fileInfo;
+        $this->public = $parent->PublicFolder();
+        $this->fileInfo = $parent->FileInfoJson();
+        $this->base_type = $parent->getName();
         $this->ReLoad();
     }
     public function ReLoad()
     {
-        $this->data = BaseScan::FileJson($this->path . '/' . $this->fileInfo) ?? [];
+        $this->data = Core::FileJson($this->path . '/' . $this->fileInfo) ?? [];
         $this->data['fileInfo'] = $this->fileInfo;
         $this->data['path'] = $this->path;
         $this->data['key'] = basename($this->path, ".php");
@@ -34,7 +34,7 @@ class DataInfo implements \ArrayAccess
      * @param string The key data to retrieve
      * @access public
      */
-    public function &__get($key)
+    public function __get($key)
     {
         return $this->getValue($key);
     }
@@ -90,8 +90,6 @@ class DataInfo implements \ArrayAccess
         } else {
             $this->data[$offset] = $value;
         }
-
-        Log::info($value);
     }
 
     /**
@@ -148,19 +146,33 @@ class DataInfo implements \ArrayAccess
     {
         return $this->public . ($_path ? ('/' . $_path) : '');
     }
+
+    public function getFiles()
+    {
+        return $this->getValue('files', []);
+    }
+    public function getProviders()
+    {
+        return $this->getValue('providers', []);
+    }
     public function getKey()
     {
         return $this->getValue('key');
     }
+
     public function setStatus($status)
     {
         if ($this->getValue('status') !== $status) {
             $this->data['status'] = $status;
         }
     }
+    public function isActive()
+    {
+        return $this->getValue('status') == self::Active;
+    }
     public function delete()
     {
-        BaseScan::delete($this->getPath());
+        Core::delete($this->getPath());
     }
     public function CheckName($name)
     {
@@ -168,19 +180,36 @@ class DataInfo implements \ArrayAccess
     }
     public function DoSave()
     {
-        Log::info($this->data);
         $data = $this->data;
         unset($data['fileInfo']);
         unset($data['path']);
         unset($data['key']);
-        BaseScan::SaveFileJson($this->getPath($this->data['fileInfo']), $data);
-        Log::info($data);
-        Log::info($this->getPath($this->data['fileInfo']));
+        Core::SaveFileJson($this->getPath($this->data['fileInfo']), $data);
     }
-    public function DoActive($namespace)
+    private $providers;
+    public function DoRegister($namespace = null)
     {
-        Core::loadViewsFrom($this->getPath('views'), $namespace);
-        Core::LoadHelper($this->getPath('function.php'));
-        BaseScan::Link($this->getPath('public'), $this->getPublic($this->getKey()));
+        $providers = $this->getProviders();
+        if (is_array($providers) && count($providers) > 0) {
+            Core::RegisterAllFile($this->getPath('src'));
+            $this->providers =  collect($providers)->map(function ($item) {
+                return app()->register($item, true);
+            });
+        } else {
+            Core::loadViewsFrom($this->getPath('resources/views'), $namespace);
+            Core::Link($this->getPath('public'), $this->getPublic($this->getKey()));
+        }
+        foreach ($this->getFiles() as $file) {
+            Core::LoadHelper($this->getPath($file));
+        }
+    }
+    public function DoBoot()
+    {
+        if (isset($this->providers) && $this->providers != null && is_array($this->providers) && count($this->providers) > 0) {
+            foreach ($this->providers as $item) {
+                if (method_exists($item, 'boot'))
+                    $item->boot();
+            }
+        }
     }
 }

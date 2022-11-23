@@ -31,10 +31,11 @@ class HtmlMinifier
         if (($response instanceof BinaryFileResponse) or
             ($response instanceof JsonResponse) or
             ($response instanceof RedirectResponse) or
-            ($response instanceof StreamedResponse)
+            ($response instanceof StreamedResponse) or
+            (!$response->isOk()&& app()->hasDebugModeEnabled())
         )
             return $response;
-        if (!$response instanceof Response||!$response->headers) {
+        if (!$response instanceof Response || !$response->headers) {
             $response = new Response($response);
             if (!$response->headers->has('content-type'))
                 $response->headers->set('content-type', 'text/html');

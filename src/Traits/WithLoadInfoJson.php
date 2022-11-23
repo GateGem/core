@@ -2,8 +2,8 @@
 
 namespace LaraIO\Core\Traits;
 
+use LaraIO\Core\Facades\Core;
 use LaraIO\Core\Support\Core\DataInfo;
-use LaraIO\Core\Utils\BaseScan;
 
 trait WithLoadInfoJson
 {
@@ -36,9 +36,18 @@ trait WithLoadInfoJson
     {
         return public_path($this->getName() . 's');
     }
-    public function Boot()
+    public function RegisterApp()
     {
         $this->Register(apply_filters($this->HookFilterPath(), $this->PathFolder()));
+    }
+    public function BootApp()
+    {
+        $name = $this->getName();
+        foreach ($this->getData() as $item) {
+            if ($item->isActive()) {
+                $item->DoBoot();
+            }
+        }
     }
     /**
      * Get the data.
@@ -74,7 +83,7 @@ trait WithLoadInfoJson
     }
     public function Register($path)
     {
-        if ($files = BaseScan::AllFolder($path)) {
+        if ($files = Core::AllFolder($path)) {
             foreach ($files as $item) {
                 $this->AddItem($item);
             }
@@ -82,6 +91,9 @@ trait WithLoadInfoJson
     }
     public function AddItem($path)
     {
-        $this->arrData[$path] = new DataInfo($path, $this->FileInfoJson(), $this->PublicFolder());
+        $this->arrData[$path] = new DataInfo($path, $this);
+        if ($this->arrData[$path]->isActive())
+            $this->arrData[$path]->DoRegister();
+        return $this->arrData[$path];
     }
 }

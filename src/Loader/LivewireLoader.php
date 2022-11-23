@@ -3,7 +3,7 @@
 namespace LaraIO\Core\Loader;
 
 use Illuminate\Support\Str;
-use LaraIO\Core\Utils\BaseScan;
+use LaraIO\Core\Facades\Core;
 use Livewire\Component;
 use Livewire\Livewire;
 use ReflectionClass;
@@ -12,7 +12,7 @@ class LivewireLoader
 {
     public static function Register($path, $namespace, $aliasPrefix = '')
     {
-        BaseScan::AllClassFile(
+        Core::AllClassFile(
             $path,
             $namespace,
             function ($class) use ($namespace, $aliasPrefix) {

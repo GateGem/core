@@ -7,27 +7,31 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
+use Symfony\Component\Finder\SplFileInfo;
 use LaraIO\Core\Facades\Module;
 use LaraIO\Core\Facades\Plugin;
 use LaraIO\Core\Facades\Theme;
-use LaraIO\Core\Utils\BaseScan;
-use SplFileInfo;
 
 class CoreManager
 {
 
     private $app;
+    private $filesystem;
 
-    public function __construct()
-    {
-        $this->app = app();
+    public function __construct(
+        \Illuminate\Contracts\Foundation\Application $app,
+        \Illuminate\Filesystem\Filesystem $filesystem
+    ) {
+        $this->app = $app;
+        $this->filesystem = $filesystem;
     }
 
     /**
      * Setup an after resolving listener, or fire immediately if already resolved.
      *
-     * @param  string  $name
-     * @param  callable  $callback
+     * @param string $name
+     * @param callable $callback
      * @return void
      */
     public function callAfterResolving($name, $callback)
@@ -152,14 +156,14 @@ class CoreManager
     }
     public function LoadHelper($path)
     {
-        if ($path && BaseScan::FileExists($path)) {
+        if ($path && $this->FileExists($path)) {
             require_once $path;
         }
     }
 
-    public function RegisterHelper($path)
+    public function RegisterAllFile($path)
     {
-        BaseScan::AllFile($path, function (SplFileInfo $file) {
+        $this->AllFile($path, function (SplFileInfo $file) {
             self::LoadHelper($file->getPathname());
         });
     }
@@ -168,25 +172,25 @@ class CoreManager
         if (strpos($buffer, '<pre>') !== false) {
             $replace = array(
                 '/<!--[^\[](.*?)[^\]]-->/s' => '',
-                "/<\?php/"                  => '<?php ',
-                "/\r/"                      => '',
-                "/>\n</"                    => '><',
-                "/>\s+\n</"                 => '><',
-                "/>\n\s+</"                 => '><',
-                '/\>\s+/s'                  => '> ',
-                '/\s+</s'                   => ' <',
+                "/<\?php/"         => '<?php ',
+                "/\r/"           => '',
+                "/>\n</"          => '><',
+                "/>\s+\n</"         => '><',
+                "/>\n\s+</"         => '><',
+                '/\>\s+/s'         => '> ',
+                '/\s+</s'          => ' <',
             );
         } else {
             $replace = array(
                 '/<!--[^\[](.*?)[^\]]-->/s' => '',
-                "/<\?php/"                  => '<?php ',
-                "/\n([\S])/"                => '$1',
-                "/\r/"                      => '',
-                "/\n/"                      => '',
-                "/\t/"                      => '',
-                "/ +/"                      => ' ',
-                '/\>\s+/s'                  => '> ',
-                '/\s+</s'                   => ' <',
+                "/<\?php/"         => '<?php ',
+                "/\n([\S])/"        => '$1',
+                "/\r/"           => '',
+                "/\n/"           => '',
+                "/\t/"           => '',
+                "/ +/"           => ' ',
+                '/\>\s+/s'         => '> ',
+                '/\s+</s'          => ' <',
             );
         }
         return preg_replace(array_keys($replace), array_values($replace), $buffer);
@@ -201,6 +205,114 @@ class CoreManager
         }
         if ($name == Plugin::getName()) {
             return Plugin::getFacadeRoot();
+        }
+    }
+    public function checkFolder()
+    {
+        $arr = [config('core::appdir.theme', 'themes'), config('core::appdir.module', 'modules'), config('core::appdir.plugin', 'plugins')];
+        $root_path = config('core::appdir.root', 'laro');
+        foreach ($arr as $item) {
+            $public = public_path($item);
+            $appdir = base_path($root_path . '/' . $item);
+            $this->filesystem->ensureDirectoryExists($public);
+            $this->filesystem->ensureDirectoryExists($appdir);
+        }
+    }
+
+    public function FileExists($path)
+    {
+        return $this->filesystem->exists($path);
+    }
+
+    public function SaveFileJson($path, $content)
+    {
+        return file_put_contents($path, json_encode($content));
+    }
+    public function FileJson($path)
+    {
+        if (!$this->FileExists($path)) {
+            return [];
+        }
+        return json_decode(file_get_contents($path), true);
+    }
+    public function FileReturn($path)
+    {
+        return include_once $path;
+    }
+
+    public function AllFile($directory, $callback = null, $filter = null)
+    {
+        if (!$this->filesystem->isDirectory($directory)) {
+            return false;
+        }
+        if ($callback) {
+            if ($filter) {
+                collect($this->filesystem->allFiles($directory))->filter($filter)->each($callback);
+            } else {
+                collect($this->filesystem->allFiles($directory))->each($callback);
+            }
+        } else {
+            return $this->filesystem->allFiles($directory);
+        }
+    }
+
+    public function AllClassFile($directory, $namespace, $callback = null, $filter = null)
+    {
+        $files = self::AllFile($directory);
+        if (!$files || !is_array($files)) return [];
+
+        $classList = collect($files)->map(function (SplFileInfo $file) use ($namespace) {
+            return (string) Str::of($namespace)
+                ->append('\\', $file->getRelativePathname())
+                ->replace(['/', '.php'], ['\\', '']);
+        });
+        if ($callback) {
+            if ($filter) {
+                $classList = $classList->filter($filter);
+            }
+            $classList->each($callback);
+        } else {
+            return $classList;
+        }
+    }
+
+    public function AllFolder($directory, $callback = null, $filter = null)
+    {
+        if (!$this->filesystem->isDirectory($directory)) {
+            return false;
+        }
+        if ($callback) {
+            if ($filter) {
+                collect($this->filesystem->directories($directory))->filter($filter)->each($callback);
+            } else {
+                collect($this->filesystem->directories($directory))->each($callback);
+            }
+        } else {
+            return $this->filesystem->directories($directory);
+        }
+    }
+    public function Link($target, $link, $relative = false, $force = true)
+    {
+        if (file_exists($link) && is_link($link) && $force) {
+
+            return;
+        }
+
+        self::checkFolder();
+        if (is_link($link)) {
+            $this->filesystem->delete($link);
+        }
+
+        if ($relative) {
+            $this->filesystem->relativeLink($target, $link);
+        } else {
+            $this->filesystem->link($target, $link);
+        }
+    }
+    public function deleteDirectory($path)
+    {
+        if (file_exists($path)) {
+            $this->filesystem->deleteDirectory($path);
         }
     }
 }

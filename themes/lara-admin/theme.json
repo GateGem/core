@@ -6,6 +6,7 @@
   "description": "",
   "author": "LaraIO",
   "layout": "layout",
+  "files": ["function.php"],
   "required_plugins": [],
-  "status": 0
+  "status": 1
 }

@@ -3,12 +3,12 @@
 namespace LaraIO\Core\Traits;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use LaraIO\Core\Exceptions\InvalidPackage;
 use LaraIO\Core\Facades\Core;
 use LaraIO\Core\Loader\LivewireLoader;
-use LaraIO\Core\Utils\BaseScan;
 use LaraIO\Core\Support\Core\ServicePackage;
 use ReflectionClass;
 
@@ -33,7 +33,7 @@ trait WithServiceProvider
         }
 
         if ($this->package->hasHelpers) {
-            Core::RegisterHelper($this->package->basePath($this->package->pathHelper));
+            Core::RegisterAllFile($this->package->basePath($this->package->pathHelper));
         }
         if (function_exists('add_filter')) {
             $name = $this->package->name;
@@ -109,19 +109,23 @@ trait WithServiceProvider
                 }
             }
             if ($this->package->runsMigrations) {
-                $migrationFiles =  BaseScan::AllFile($this->package->basePath("/../database/migrations/"));
-                foreach ($migrationFiles  as $file) {
-                    if ($file->getExtension() == "php") {
-                        $this->loadMigrationsFrom($file->getRealPath());
+                $migrationFiles =  Core::AllFile($this->package->basePath("/../database/migrations/"));
+                if ($migrationFiles && count($migrationFiles) > 0) {
+                    foreach ($migrationFiles  as $file) {
+                        if ($file->getExtension() == "php") {
+                            $this->loadMigrationsFrom($file->getRealPath());
+                        }
                     }
                 }
             }
 
             if ($this->package->runsSeeds) {
-                $seedFiles =  BaseScan::AllFile($this->package->basePath("/../database/Seeders/"));
-                foreach ($seedFiles  as $file) {
-                    if ($file->getExtension() == "php") {
-                        Core::LoadHelper($file->getRealPath());
+                $seedFiles =  Core::AllFile($this->package->basePath("/../database/Seeders/"));
+                if ($seedFiles && count($seedFiles) > 0) {
+                    foreach ($seedFiles  as $file) {
+                        if ($file->getExtension() == "php") {
+                            Core::LoadHelper($file->getRealPath());
+                        }
                     }
                 }
             }

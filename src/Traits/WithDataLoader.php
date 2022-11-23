@@ -2,7 +2,7 @@
 
 namespace LaraIO\Core\Traits;
 
-use LaraIO\Core\Utils\BaseScan;
+use LaraIO\Core\Facades\Core;
 
 trait WithDataLoader
 {
@@ -26,9 +26,9 @@ trait WithDataLoader
     }
     public static function load($path)
     {
-        $files = BaseScan::AllFile($path);
+        $files = Core::AllFile($path);
         foreach ($files as $file) {
-            self::Data($file->getBasename('.' . $file->getExtension()), BaseScan::FileReturn($file->getRealPath()));
+            self::Data($file->getBasename('.' . $file->getExtension()), Core::FileReturn($file->getRealPath()));
         }
     }
 }

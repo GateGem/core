@@ -3,26 +3,26 @@
 use LaraIO\Core\Facades\Theme;
 
 if (!function_exists('add_asset_js')) {
-    function add_asset_js($path, $cdnPath = '', $priority = 20, $local = 'asset_footer_before')
+    function add_asset_js($path, $cdnPath = '', $priority = 100, $local = 'asset_footer_before')
     {
         Theme::getAssets()->AddScript($local, $path, $cdnPath, $priority, true);
     }
 }
 if (!function_exists('add_asset_css')) {
-    function add_asset_css($path, $cdnPath = '', $priority = 20, $local = 'asset_header_before')
+    function add_asset_css($path, $cdnPath = '', $priority = 100, $local = 'asset_header_before')
     {
         Theme::getAssets()->AddStyle($local, $path, $cdnPath, $priority, true);
     }
 }
 
 if (!function_exists('add_asset_script')) {
-    function add_asset_script($script, $priority = 20, $local = 'asset_footer_after')
+    function add_asset_script($script, $priority = 100, $local = 'asset_footer_after')
     {
         Theme::getAssets()->AddScript($local, $script, '', $priority);
     }
 }
 if (!function_exists('add_asset_style')) {
-    function add_asset_style($style, $priority = 20, $local = 'asset_header_after')
+    function add_asset_style($style, $priority = 100, $local = 'asset_header_after')
     {
         Theme::getAssets()->AddStyle($local, $style, '', $priority);
     }

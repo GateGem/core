@@ -3,10 +3,10 @@
 use  Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use  LaraIO\Core\Facades\Action;
+use LaraIO\Core\Facades\Core;
 use LaraIO\Core\Facades\Filter;
 use LaraIO\Core\Http\Action\ChangeFieldValue;
 use LaraIO\Core\Models\Option;
-use LaraIO\Core\Utils\BaseScan;
 
 if (!function_exists('add_action')) {
     /**
@@ -137,7 +137,7 @@ if (!function_exists('add_link_symbolic')) {
      */
     function add_link_symbolic($target, $link, $relative = false, $force = true)
     {
-        BaseScan::Link($target, $link, $relative, $force);
+        Core::Link($target, $link, $relative, $force);
     }
 }
 
