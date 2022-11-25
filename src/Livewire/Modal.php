@@ -28,6 +28,7 @@ abstract class Modal extends Component implements ModalContract
 
     public function boot()
     {
+        
         $this->modal_isPage = Request::method() == 'GET';
     }
     public function setTitle($modal_title)

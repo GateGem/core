@@ -22,6 +22,7 @@ return [
     'theme' => [
         'title' => 'Theme managment',
         'field' => [
+            'key' => 'Key',
             'name' => 'Name',
             'description' => 'Description',
             'status' => 'Status',

@@ -1,4 +1,4 @@
-<div >
+<div>
     @if (isset($option_data) && isset($option_data['title']))
         <h4>{{ $option_data['title'] }}</h4>
         <div>

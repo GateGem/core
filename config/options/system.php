@@ -23,10 +23,26 @@ return [
             'fieldType' => FieldBuilder::Dropdown,
             'fieldKey' => 'key',
             'fieldText' => 'name',
+            'optionDefault' => true,
             'funcData' => function () {
-                return Theme::getData()->toArray();
+                return Theme::getData()->where(function ($item) {
+                    return $item->getValue('admin') == true;
+                })->toArray();
             },
             'title' => 'Theme Admin',
+        ],
+        [
+            'field' => 'page_site_theme',
+            'fieldType' => FieldBuilder::Dropdown,
+            'fieldKey' => 'key',
+            'fieldText' => 'name',
+            'optionDefault' => true,
+            'funcData' => function () {
+                return Theme::getData()->where(function ($item) {
+                    return !($item->getValue('admin') == true);
+                })->toArray();
+            },
+            'title' => 'Theme Site',
         ]
     ]
 ];

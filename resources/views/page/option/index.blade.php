@@ -19,7 +19,7 @@
                 <div class="tab-pane @if ($active_option == $key) show active @endif"
                     id="tab-{{ $key }}-{{ $this->id }}" role="tabpanel"
                     aria-labelledby="tab-{{ $key }}-{{ $this->id }}">
-                    @livewire('core::common.option.index', ['option_key' => $key, 'option_data' => $item])
+                    @livewire('core::common.option.index', ['option_key' => $item['key']])
                 </div>
             @endforeach
         </div>

@@ -37,13 +37,13 @@ return [
         [
             'field' => 'key',
             'fieldType' => FieldBuilder::Text,
-            'title' => 'core::tables.theme.key',
+            'title' => 'core::tables.theme.field.key',
             'keyColumn' => 'row1_1'
         ],
         [
             'field' => 'name',
             'fieldType' => FieldBuilder::Text,
-            'title' => 'core::tables.theme.name',
+            'title' => 'core::tables.theme.field.name',
             'keyColumn' => 'row1_1'
         ],
         [
@@ -70,7 +70,7 @@ return [
                 return __('core::enums.status.0');
             },
             'field' => 'status',
-            'title' => 'core::tables.module.field.status',
+            'title' => 'core::tables.theme.field.status',
             'keyColumn' => 'row1_2',
         ]
     ]

@@ -42,7 +42,6 @@ trait WithLoadInfoJson
     }
     public function BootApp()
     {
-        $name = $this->getName();
         foreach ($this->getData() as $item) {
             if ($item->isActive()) {
                 $item->DoBoot();

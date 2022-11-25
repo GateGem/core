@@ -24,18 +24,6 @@ class ThemeManager
     {
         return $this->assets ?? ($this->assets = new Assets());
     }
-    public function active($themeName)
-    {
-        $this->layout = null;
-        foreach ($this->getData() as $item) {
-            $this->data_active = null;
-            if ($item->checkKeyValue('name', $themeName)) {
-                $this->data_active = $item;
-                $this->layout = 'theme::' .   $this->data_active->getValue('layout', 'layout');
-                $this->data_active->DoRegister('theme');
-            }
-        }
-    }
     public function setLayoutNone()
     {
         $this->setLayout('none');
@@ -46,6 +34,15 @@ class ThemeManager
     }
     public function Layout()
     {
+        if (!isset($this->data_active) || !$this->data_active) {
+            $this->data_active = $this->find(apply_filters("filter_theme_layout", get_option('page_site_theme')));
+            if ($this->data_active) {
+                if (!$this->layout) {
+                    $this->layout = 'theme::' .   $this->data_active->getValue('layout', 'layout');
+                }
+                $this->data_active->DoRegister('theme');
+            }
+        }
         return $this->layout;
     }
 }
