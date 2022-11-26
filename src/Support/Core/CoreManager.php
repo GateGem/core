@@ -311,10 +311,4 @@ class CoreManager
             $this->filesystem->link($target, $link);
         }
     }
-    public function deleteDirectory($path)
-    {
-        if (file_exists($path)) {
-            $this->filesystem->deleteDirectory($path);
-        }
-    }
 }
