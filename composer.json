@@ -1,71 +1,55 @@
 {
-    "name": "laraio/core",
-    "description": "This is Lara Platform Core",
-    "keywords": [
-        "LaraIO",
-        "laravel",
-        "core",
-        "wordpress",
-        "Lara Platform"
-    ],
-    "homepage": "https://github.com/LaraIO/core",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Nguyen Van Hau",
-            "email": "nguyenvanhau.soft@gmail.com",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^8.0",
-        "illuminate/contracts": "^9.0",
-        "livewire/livewire": "^2.10"
-    },
-    "require-dev": {
-        "laravel/pint": "^1.0",
-        "nunomaduro/collision": "^6.0",
-        "nunomaduro/larastan": "^2.0.1",
-        "orchestra/testbench": "^7.0",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.1",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^9.5",
-        "spatie/laravel-ray": "^1.26"
-    },
-    "autoload": {
-        "psr-4": {
-            "LaraIO\\Core\\": "src",
-            "LaraIO\\Core\\Database\\Factories\\": "database/factories",
-            "LaraIO\\Core\\Database\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "LaraIO\\Core\\Tests\\": "tests"
-        }
-    },
-    "scripts": {
-        "analyse": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "LaraIO\\Core\\CoreServiceProvider"
-            ],
-            "aliases": {
-                "LaraCore": "LaraIO\\Core\\Facades\\Core"
-            }
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "laraio/core",
+  "description": "This is Lara Platform Core",
+  "keywords": [
+    "LaraIO",
+    "laravel",
+    "core",
+    "wordpress",
+    "Lara Platform"
+  ],
+  "homepage": "https://github.com/LaraIO/core",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nguyen Van Hau",
+      "email": "nguyenvanhau.soft@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {},
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "LaraIO\\Core\\": "src",
+      "LaraIO\\Core\\Database\\Factories\\": "database/factories",
+      "LaraIO\\Core\\Database\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LaraIO\\Core\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse",
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest --coverage",
+    "format": "vendor/bin/pint"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "LaraIO\\Core\\CoreServiceProvider"
+      ],
+      "aliases": {
+        "LaraCore": "LaraIO\\Core\\Facades\\Core"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 if (!function_exists('getValueByKey')) {
     function getValueByKey($data, $key, $default = '')
     {
@@ -51,5 +53,20 @@ if (!function_exists('groupBy')) {
             array_push($accumulator[$key], $item);
             return $accumulator;
         }, []);
+    }
+}
+
+if (!function_exists('ReplaceTextInFile')) {
+    function ReplaceTextInFile($file, $search, $replace, $checkOnly = false)
+    {
+        $content = file_get_contents($file);
+        if ($checkOnly && Str::contains($replace, $content, true)) {
+            return;
+        }
+        file_put_contents($file, str_replace(
+            $search,
+            $replace,
+            $content
+        ));
     }
 }

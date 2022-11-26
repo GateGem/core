@@ -66,6 +66,7 @@ class CoreServiceProvider extends ServiceProvider
                 ->addItem('core::menu.sidebar.plugin', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'plugin']], MenuBuilder::ItemRouter)
                 ->addItem('core::menu.sidebar.theme', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'theme']], MenuBuilder::ItemRouter);
         }, 'core::menu.sidebar.setting', 'bi bi-speedometer');
+        
         add_menu_item('core::menu.sidebar.dashboard', 'bi bi-speedometer', '', 'core.dashboard', MenuBuilder::ItemRouter, '', '', -100);
     }
     public function packageRegistered()
@@ -73,7 +74,7 @@ class CoreServiceProvider extends ServiceProvider
         Theme::RegisterApp();
         Module::RegisterApp();
         Plugin::RegisterApp();
-      
+
         Theme::Register(__DIR__ . '/../themes');
         TableLoader::load(__DIR__ . '/../config/tables');
         OptionLoader::load(__DIR__ . '/../config/options');

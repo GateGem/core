@@ -16,6 +16,8 @@ class CoreMiddleware
     {
         // It does other things here
         Core::checkCurrentLanguage();
-        return $next($request);
+        $response = $next($request);
+
+        return $response;
     }
 }

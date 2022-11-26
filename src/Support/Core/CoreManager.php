@@ -211,8 +211,8 @@ class CoreManager
     }
     public function checkFolder()
     {
-        $arr = [config('core::appdir.theme', 'themes'), config('core::appdir.module', 'modules'), config('core::appdir.plugin', 'plugins')];
-        $root_path = config('core::appdir.root', 'laro');
+        $arr = [config('core.appdir.theme', 'Themes'), config('core.appdir.module', 'Modules'), config('core.appdir.plugin', 'Plugins')];
+        $root_path = config('core.appdir.root', 'LaraApp');
         foreach ($arr as $item) {
             $public = public_path($item);
             $appdir = base_path($root_path . '/' . $item);

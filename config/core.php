@@ -1,6 +1,10 @@
 <?php
 
 // config for LaraIO\Core
+
+use LaraIO\Core\Commands\CoreCommand;
+use LaraIO\Core\Commands\InstallCommand;
+
 return [
     'web' => [
         'admin' => '',
@@ -11,4 +15,7 @@ return [
         'module' => 'Modules',
         'plugin' => 'Plugins',
     ],
+    'commands' => [
+      
+    ]
 ];

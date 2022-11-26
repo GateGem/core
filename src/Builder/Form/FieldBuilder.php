@@ -171,6 +171,7 @@ class FieldBuilder extends HtmlBuilder
                     $funcData = $funcData();
                 }
                 echo '<select ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-control"  id="input-' . $this->option['field'] . '" ' .  $this->getModelField() . ' >';
+                $optionDefault = '';
                 if (getValueByKey($this->formData, 'filter', false) || ($optionDefault = getValueByKey($this->option, 'optionDefault', ''))) {
                     if ($optionDefault === true)
                         echo '<option value="">' . __($this->option['title']) . '</option>';
