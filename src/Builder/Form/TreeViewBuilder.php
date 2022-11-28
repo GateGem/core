@@ -2,7 +2,6 @@
 
 namespace LaraIO\Core\Builder\Form;
 
-use Illuminate\Support\Arr;
 use LaraIO\Core\Builder\HtmlBuilder;
 
 class TreeViewBuilder extends HtmlBuilder
@@ -35,25 +34,30 @@ class TreeViewBuilder extends HtmlBuilder
         ksort($gropData, SORT_STRING);
         echo "<ul>";
         foreach ($gropData as $key => $items) {
-            if ($treeLevel == 0) {
+            if ($treeLevel == 0 || (isset($items[0]['isChild']) && $items[0]['isChild'] && isset($items[0]['show']) && $items[0]['show'])) {
                 echo '<li class="show">';
             } else {
-                echo '<li>';
+                echo '<li >';
             }
-
-            if (count($items) == 1) {
-                echo '<div class="form-check  ms-4">
-                <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $this->option['field'] . '_' . $items[0]['value'] . '" ' .  $this->getModelField($items[0]['value']) . '/>
-                <label class="form-check-label" for="cbk_id_' . $this->option['field'] . '_' . $items[0]['value'] . '">' . $items[0]['text'] . '</label>
-                </div>';
+            $key_id = $this->option['field'] . '_' . $items[0]['value'] . '_' . time();
+            if ((isset($items[0]['isChild']) && $items[0]['isChild']) || count($items) > 1) {
+                if (((isset($items[0]['show']) && $items[0]['show']) && count($items) > 1) || ((!isset($items[0]['show']) || !$items[0]['show']))) {
+                    echo '<i class="bi bi-chevron-down"></i>
+                    <i class="bi bi-chevron-right"></i>';
+                    echo '<div class="d-inline-block form-check ms-2">';
+                } else {
+                    echo '<div class="form-check  ms-4">';
+                }
+                echo '<input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
+                    <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
+                    </div>';
+                if (count($items) > 1)
+                    $this->TreeRender($items, strlen($key) + 2);
             } else {
-                echo '<i class="bi bi-chevron-down"></i>
-                <i class="bi bi-chevron-right"></i>
-                <div class="d-inline-block form-check ms-1">
-                <input type="checkbox" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input cbk_root cbk_' . $this->option['field'] . '_' . $key . '" tree-root="cbk_' . $this->option['field'] . '_' . $key . '" id="cbk_id_' . $this->option['field'] . '_' . $key . '"/>
-                <label class="form-check-label" for="cbk_id_' . $this->option['field'] . '_' . $key . '">' . $key . '</label>
+                echo '<div class="form-check  ms-4">
+                <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
+                <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
                 </div>';
-                $this->TreeRender($items, strlen($key) + 1);
             }
             echo "</li>";
         }
@@ -67,7 +71,7 @@ class TreeViewBuilder extends HtmlBuilder
             $funcData = $funcData();
         }
         if ($funcData) {
-            echo '<div class="tree-view form-tree" id="input-' . $this->option['field'] . '">';
+            echo '<div class="tree-view form-tree" tree-event-expand="' . getValueByKey($this->option, 'event-expand') . '" id="input-' . $this->option['field'] . '">';
             $this->TreeRender($funcData, 0);
             echo '</div>';
         }

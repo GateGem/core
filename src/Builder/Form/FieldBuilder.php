@@ -25,6 +25,7 @@ class FieldBuilder extends HtmlBuilder
     public const Cron = 15;
     public const MultiCron = 16;
     public const TreeView = 17;
+    public const HtmlBuilder = 18;
     public const includeInput = 9999;
     public const AllColor = ["warning", "info", "danger", "primary", "success"];
     public const secondary = "text-white bg-secondary";

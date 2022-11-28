@@ -11999,6 +11999,16 @@ textarea.form-control-lg {
   display: block;
 }
 
+.el-filemanager {
+  width: 100%;
+  min-height: 400px;
+  background-color: #fff;
+}
+.el-filemanager__toolbar {
+  height: 45px;
+  background-color: red;
+}
+
 .menu {
   list-style: none;
   padding: 0;

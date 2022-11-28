@@ -1,0 +1,10 @@
+.el-filemanager {
+    width: 100%;
+    min-height: 400px;
+    background-color: #fff;
+
+    &__toolbar {
+        height: 45px;
+        background-color: red;
+    }
+}

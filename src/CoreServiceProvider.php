@@ -35,8 +35,7 @@ class CoreServiceProvider extends ServiceProvider
             ->hasTranslations()
             ->runsMigrations()
             ->runsSeeds()
-            ->hasRoutes('web')
-            ->hasCommand(CoreCommand::class);
+            ->hasRoutes('web');
     }
     public function extending()
     {

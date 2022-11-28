@@ -3,7 +3,9 @@
 // config for LaraIO\Core
 
 use LaraIO\Core\Commands\CoreCommand;
-use LaraIO\Core\Commands\InstallCommand;
+use LaraIO\Core\Commands\ModuleDisableCommand;
+use LaraIO\Core\Commands\ModuleDumpCommand;
+use LaraIO\Core\Commands\ModuleEnableCommand;
 
 return [
     'web' => [
@@ -16,6 +18,9 @@ return [
         'plugin' => 'Plugins',
     ],
     'commands' => [
-      
+        CoreCommand::class,
+        ModuleDumpCommand::class,
+        ModuleDisableCommand::class,
+        ModuleEnableCommand::class,
     ]
 ];

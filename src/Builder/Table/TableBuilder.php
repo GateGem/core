@@ -47,7 +47,9 @@ class TableBuilder extends HtmlBuilder
             }
             if (is_object($cell_value) || is_array($cell_value))
                 htmlentities(print_r($cell_value));
-            else if ($cell_value != "")
+            else if (getValueByKey($column, 'fieldType', '') === FieldBuilder::Image) {
+                echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
+            } else if ($cell_value != "")
                 echo htmlentities($cell_value);
             else
                 echo "&nbsp;";
@@ -93,7 +95,7 @@ class TableBuilder extends HtmlBuilder
                     echo '</div>';
                     if (isset($column['field'])) {
                         echo '<div  x-show="filter"  @click.outside="filter = false" style="display:none;" class="form-filter-column">';
-                        echo "<p class='p-0'>".__($column["title"])."</p>";
+                        echo "<p class='p-0'>" . __($column["title"]) . "</p>";
                         echo  FieldBuilder::Render($column, [], ['prex' => 'filter.', 'filter' => true]);
                         echo '<p class="text-end text-white p-0"> <i class="bi bi-eraser"  wire:click="clearFilter(\'' . $column['field'] . '\')"></i></p>';
                         '</div>';

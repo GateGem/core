@@ -29,6 +29,8 @@ Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web', Authentic
     Route::get('/',  apply_filters('route_page_dashboard_component', LaraIO\Core\Http\Livewire\Page\Dashboard\Index::class))->name('core.dashboard');
     Route::get('/table/{module}', LaraIO\Core\Http\Livewire\Table\Index::class)->name('core.table.slug');
     Route::get('/option', LaraIO\Core\Http\Livewire\Page\Option\Index::class)->name('core.option');
+    Route::get('/filemanager', LaraIO\Core\Http\Livewire\Common\Filemanager\Index::class)->name('core.filemanager');
+    
     do_action('register_route_admin');
 });
 Route::group(['middleware' => ['web']], function () {

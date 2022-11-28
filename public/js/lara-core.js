@@ -6704,6 +6704,15 @@ if (window != undefined) {
     if (e.target.classList.contains("bi-chevron-down") || e.target.classList.contains("bi-chevron-right")) {
       var li = e.target.closest("li");
       if (li.classList.contains("show")) li.classList.remove("show");else li.classList.add("show");
+      var wireElent = e.target.closest("[wire\\:id]");
+      if (wireElent) {
+        var _e$target$closest;
+        var eventChangeExpand = (_e$target$closest = e.target.closest(".tree-view")) === null || _e$target$closest === void 0 ? void 0 : _e$target$closest.getAttribute("tree-event-expand");
+        if (eventChangeExpand) {
+          var valueInput = li.querySelector("input").value;
+          window.livewire.find(wireElent.getAttribute("wire:id"))[eventChangeExpand](valueInput, li.classList.contains("show"));
+        }
+      }
     }
   };
   var eventChangeCheckRootInput = function eventChangeCheckRootInput(e) {
@@ -6733,10 +6742,10 @@ if (window != undefined) {
   };
   var loadEventTreeview = function loadEventTreeview(el) {
     el === null || el === void 0 ? void 0 : el.querySelectorAll(".tree-view").forEach(function (elItem) {
-      elItem.removeEventListener("click", eventClickTreeview, true);
+      elItem.removeEventListener("click", eventClickTreeview);
       elItem.addEventListener("click", eventClickTreeview);
       elItem.querySelectorAll(".cbk_root").forEach(function (elCheckInput) {
-        elCheckInput.removeEventListener("change", eventChangeCheckRootInput, true);
+        elCheckInput.removeEventListener("change", eventChangeCheckRootInput);
         elCheckInput.addEventListener("change", eventChangeCheckRootInput);
       });
       elItem.querySelectorAll(".form-check-input").forEach(function (elCheckInput) {
@@ -6756,7 +6765,6 @@ if (window != undefined) {
     var arrRoot = elLi.querySelectorAll(" :scope > ul > li > .form-check > .cbk_root");
     if (arrRoot.length == 0) {
       var arrInput = elLi.querySelectorAll(":scope > ul > li > .form-check > .form-check-input");
-      console.log(arrInput);
       if (arrInput.length == 0) return false;
       return arrInput.length == _toConsumableArray(arrInput).filter(function (item) {
         return item.checked == true;

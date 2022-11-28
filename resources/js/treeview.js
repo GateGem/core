@@ -7,6 +7,18 @@ if (window != undefined) {
       const li = e.target.closest("li");
       if (li.classList.contains("show")) li.classList.remove("show");
       else li.classList.add("show");
+      const wireElent = e.target.closest("[wire\\:id]");
+      if (wireElent) {
+        const eventChangeExpand = e.target
+          .closest(".tree-view")
+          ?.getAttribute("tree-event-expand");
+        if (eventChangeExpand) {
+          let valueInput = li.querySelector("input").value;
+          window.livewire
+            .find(wireElent.getAttribute("wire:id"))
+            [eventChangeExpand](valueInput,li.classList.contains("show"));
+        }
+      }
     }
   };
   const eventChangeCheckRootInput = (e) => {
@@ -41,13 +53,12 @@ if (window != undefined) {
   };
   const loadEventTreeview = (el) => {
     el?.querySelectorAll(".tree-view").forEach((elItem) => {
-      elItem.removeEventListener("click", eventClickTreeview, true);
+      elItem.removeEventListener("click", eventClickTreeview);
       elItem.addEventListener("click", eventClickTreeview);
       elItem.querySelectorAll(".cbk_root").forEach((elCheckInput) => {
         elCheckInput.removeEventListener(
           "change",
-          eventChangeCheckRootInput,
-          true
+          eventChangeCheckRootInput
         );
         elCheckInput.addEventListener("change", eventChangeCheckRootInput);
       });
@@ -74,7 +85,6 @@ if (window != undefined) {
       let arrInput = elLi.querySelectorAll(
         ":scope > ul > li > .form-check > .form-check-input"
       );
-      console.log(arrInput);
       if (arrInput.length == 0) return false;
       return (
         arrInput.length ==

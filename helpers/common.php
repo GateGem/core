@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 if (!function_exists('getValueByKey')) {
@@ -49,7 +50,6 @@ if (!function_exists('groupBy')) {
             if (!array_key_exists($key, $accumulator)) {
                 $accumulator[$key] = [];
             }
-
             array_push($accumulator[$key], $item);
             return $accumulator;
         }, []);

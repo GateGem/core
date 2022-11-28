@@ -108,7 +108,10 @@ trait WithTableEdit
             if (isset($item['field']) && $item['field'] != '') {
                 $valuePreview = $this->{$item['field']};
                 if (is_object($valuePreview)) {
-                    $valuePreview = $valuePreview->store('public');
+                    if (isset($item['imageFolder']) && $item['imageFolder'] != '')
+                        $valuePreview = $valuePreview->store('public/' . $item['imageFolder']);
+                    else
+                        $valuePreview = $valuePreview->store('public');
                     $valuePreview = str_replace('public', 'storage', $valuePreview);
                 }
                 $data->{$item['field']} =  $valuePreview;

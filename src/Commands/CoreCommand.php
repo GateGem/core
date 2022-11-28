@@ -58,6 +58,7 @@ class CoreCommand extends Command
         ReplaceTextInFile(base_path('database/seeders/DatabaseSeeder.php'), "\\App\\Models\\User::factory(10)->create();", "\\App\\Models\\User::factory(10)->create();\n\t\t\$this->call([\\LaraIO\\Core\\Database\\Seeders\\InitLaraIOSeeder::class]);", true);
         $this->info("database/seeders/DatabaseSeeder.php has been updated!");
         Core::checkFolder();
+        $this->call('storage:link');
         return $this;
     }
 }
