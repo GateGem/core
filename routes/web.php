@@ -22,9 +22,9 @@ Route::group(['prefix' => 'lara', 'middleware' => ['web']], function () {
     Route::post('/switchSidebar', [LaraIO\Core\Http\Controllers\LaraServiceController::class, 'switchSidebar']);
 });
 
-Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web', Authenticate::class, HtmlMinifier::class]], function () {
+Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web', Authenticate::class]], function () {
     add_filter('filter_theme_layout', function () {
-        return get_option('page_admin_theme');
+       return get_option('page_admin_theme','lara-admin');
     });
     Route::get('/',  apply_filters('route_page_dashboard_component', LaraIO\Core\Http\Livewire\Page\Dashboard\Index::class))->name('core.dashboard');
     Route::get('/table/{module}', LaraIO\Core\Http\Livewire\Table\Index::class)->name('core.table.slug');

@@ -12,13 +12,14 @@ use Illuminate\Support\Facades\Facade;
  * @method static string PathFolder()
  * @method static string getPath(string $path)
  * @method static string PublicFolder()
+ * @method static void LoadApp()
  * @method static void RegisterApp()
  * @method static void BootApp()
  * @method static \Illuminate\Support\Collection<string, \LaraIO\Core\Support\Core\DataInfo> getData()
  * @method static \LaraIO\Core\Support\Core\DataInfo find(string $name)
  * @method static bool has(string $name)
  * @method static void delete(string $name)
- * @method static void Register(string $path)
+ * @method static void Load(string $path)
  * @method static void AddItem(string $path)
  *
  * @see \LaraIO\Core\Facades\Plugin

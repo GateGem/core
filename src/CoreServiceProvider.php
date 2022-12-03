@@ -5,7 +5,6 @@ namespace LaraIO\Core;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use LaraIO\Core\Commands\CoreCommand;
 use LaraIO\Core\Facades\Theme;
 use LaraIO\Core\Loader\OptionLoader;
 use LaraIO\Core\Loader\TableLoader;
@@ -22,6 +21,9 @@ class CoreServiceProvider extends ServiceProvider
 
     public function configurePackage(ServicePackage $package): void
     {
+        // $router = $this->app['router'];
+        //\LaraIO\Core\Http\Middleware\CoreMiddleware::class,
+        // $router->middlewareGroup('web',[\LaraIO\Core\Http\Middleware\CoreMiddleware::class]);
         /*
          * This class is a Package Service Provider
          *
@@ -65,16 +67,15 @@ class CoreServiceProvider extends ServiceProvider
                 ->addItem('core::menu.sidebar.plugin', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'plugin']], MenuBuilder::ItemRouter)
                 ->addItem('core::menu.sidebar.theme', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'theme']], MenuBuilder::ItemRouter);
         }, 'core::menu.sidebar.setting', 'bi bi-speedometer');
-        
+
         add_menu_item('core::menu.sidebar.dashboard', 'bi bi-speedometer', '', 'core.dashboard', MenuBuilder::ItemRouter, '', '', -100);
     }
     public function packageRegistered()
     {
-        Theme::RegisterApp();
-        Module::RegisterApp();
-        Plugin::RegisterApp();
-
-        Theme::Register(__DIR__ . '/../themes');
+        Theme::LoadApp();
+        Module::LoadApp();
+        Plugin::LoadApp();
+        Theme::Load(__DIR__ . '/../themes');
         TableLoader::load(__DIR__ . '/../config/tables');
         OptionLoader::load(__DIR__ . '/../config/options');
         $this->registerMenu();
@@ -117,6 +118,12 @@ class CoreServiceProvider extends ServiceProvider
             });
         }
     }
+    public function bootingPackage()
+    {
+        Theme::RegisterApp();
+        Module::RegisterApp();
+        Plugin::RegisterApp();
+    }
     public function packageBooted()
     {
         add_link_symbolic(__DIR__ . '/../public', public_path('modules/lara-core'));
@@ -124,8 +131,9 @@ class CoreServiceProvider extends ServiceProvider
         add_asset_css(asset('modules/lara-core/css/lara-core.css'), '',  0);
         add_asset_css('https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css', 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css',  0);
 
+
         $this->bootGate();
-        Module::BootApp();
-        Plugin::BootApp();
+        // Module::BootApp();
+        // Plugin::BootApp();
     }
 }

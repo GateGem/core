@@ -1,12 +1,10 @@
 {
   "name": "lara-admin",
   "admin": true,
-  "namespace": "LaraIO\\Core\\Theme\\LaraAdmin\\",
-  "titile": "lara theme",
+  "title": "lara theme",
   "description": "",
   "author": "LaraIO",
   "layout": "layout",
   "files": ["function.php"],
-  "required_plugins": [],
-  "status": 1
+  "required_plugins": []
 }

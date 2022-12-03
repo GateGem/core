@@ -2,6 +2,7 @@
 
 use  Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use  LaraIO\Core\Facades\Action;
 use LaraIO\Core\Facades\Core;
 use LaraIO\Core\Facades\Filter;
@@ -110,7 +111,7 @@ if (!function_exists('get_do_action_hook')) {
                 if (json_decode($param, true) == null && $param != '{}') {
                     throw new \Exception('param is not validate json');
                 } else {
-                    $param = json_decode($param, true)??[];
+                    $param = json_decode($param, true) ?? [];
                 }
             }
         }
@@ -167,9 +168,10 @@ if (!function_exists('get_option')) {
     function get_option($key, $default = null)
     {
         if (Cache::has($key) && Cache::get($key) != '') return Cache::get($key);
-
-        $setting = Option::where('key', $key)->first();
-
+        $setting = Option::where('key', trim($key))->first();
+        Log::info(Option::all());
+        Log::info($key);
+        Log::info($setting);
         if ($setting == null) {
             return $default;
         }

@@ -2,8 +2,11 @@
 
 namespace LaraIO\Core\Support\Core;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LaraIO\Core\Facades\Core;
+
+use function PHPUnit\Framework\returnSelf;
 
 class DataInfo implements \ArrayAccess
 {
@@ -37,6 +40,8 @@ class DataInfo implements \ArrayAccess
      */
     public function __get($key)
     {
+        if (method_exists($this, 'get' . Str::studly($key) . 'Data'))
+            return $this->{'get' . Str::studly($key) . 'Data'}();
         return $this->getValue($key);
     }
 
@@ -49,6 +54,8 @@ class DataInfo implements \ArrayAccess
      */
     public function __set($key, $value)
     {
+        if (method_exists($this, 'set' . Str::studly($key) . 'Data'))
+            return $this->{'set' . Str::studly($key) . 'Data'}($value);
         $this->data[$key] = $value;
     }
 
@@ -62,6 +69,8 @@ class DataInfo implements \ArrayAccess
      */
     public function __isset($key)
     {
+        if (method_exists($this, 'get' . Str::studly($key) . 'Data'))
+            return true;
         return isset($this->data[$key]);
     }
 
@@ -86,8 +95,11 @@ class DataInfo implements \ArrayAccess
      */
     public function offsetSet($offset,  $value)
     {
+
         if (is_null($offset)) {
             $this->data[] = $value;
+        } else if (method_exists($this, 'set' . Str::studly($offset) . 'Data')) {
+            return $this->{'set' . Str::studly($offset) . 'Data'}($value);
         } else {
             $this->data[$offset] = $value;
         }
@@ -102,6 +114,8 @@ class DataInfo implements \ArrayAccess
      */
     public function offsetExists($offset)
     {
+        if (method_exists($this, 'get' . Str::studly($offset) . 'Data'))
+            return true;
         return isset($this->data[$offset]);
     }
 
@@ -130,6 +144,8 @@ class DataInfo implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
+        if (!is_null($offset) && method_exists($this, 'get' . Str::studly($offset) . 'Data'))
+            return $this->{'get' . Str::studly($offset) . 'Data'}();
         return $this->offsetExists($offset) ? $this->data[$offset] : null;
     }
     public function checkKeyValue($key, $value)
@@ -167,23 +183,30 @@ class DataInfo implements \ArrayAccess
     {
         return $this->getValue('name');
     }
-    public function setStatus($status)
+    protected function getKeyOption($key)
     {
-        if ($this->getValue('status') !== $status) {
-            $this->data['status'] = $status;
-        }
+        return trim(Str::lower("option_datainfo_" . $this->base_type . '_' . $this->getKey() . '_' . $key . '_value'));
+    }
+    public function getStatusData()
+    {
+        return get_option($this->getKeyOption('status'));
+    }
+
+    public function setStatusData($value)
+    {
+        return set_option($this->getKeyOption('status'), $value);
     }
     public function isActive()
     {
-        return $this->getValue('status') == self::Active;
+        return $this->getStatusData() == self::Active;
     }
     public function Active()
     {
-        $this->setStatus(self::Active);
+        $this->setStatusData(self::Active);
     }
     public function UnActive()
     {
-        $this->setStatus(self::UnActive);
+        $this->setStatusData(self::UnActive);
     }
     public function delete()
     {
@@ -192,14 +215,6 @@ class DataInfo implements \ArrayAccess
     public function CheckName($name)
     {
         return $this->getKey() == $name || $this->getValue('name') == $name;
-    }
-    public function DoSave()
-    {
-        $data = $this->data;
-        unset($data['fileInfo']);
-        unset($data['path']);
-        unset($data['key']);
-        Core::SaveFileJson($this->getPath($this->data['fileInfo']), $data);
     }
     public function getStudlyName()
     {
@@ -214,8 +229,8 @@ class DataInfo implements \ArrayAccess
     {
         $providers = $this->getProviders();
         if (is_array($providers) && count($providers) > 0) {
-            if (!Core::LoadHelper($this->getPath('vendor/autoload.php')));
-            Core::RegisterAllFile($this->getPath('src'));
+            if (!Core::LoadHelper($this->getPath('vendor/autoload.php')))
+                Core::RegisterAllFile($this->getPath('src'));
             $this->providers =  collect($providers)->map(function ($item) {
                 return app()->register($item, true);
             });

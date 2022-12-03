@@ -36,9 +36,17 @@ trait WithLoadInfoJson
     {
         return public_path($this->getName() . 's');
     }
+    public function LoadApp()
+    {
+        $this->Load(apply_filters($this->HookFilterPath(), $this->PathFolder()));
+    }
     public function RegisterApp()
     {
-        $this->Register(apply_filters($this->HookFilterPath(), $this->PathFolder()));
+        foreach ($this->getData() as $item) {
+            if ($item->isActive()) {
+                $item->DoRegister();
+            }
+        }
     }
     public function BootApp()
     {
@@ -80,7 +88,7 @@ trait WithLoadInfoJson
             $base->delete();
         }
     }
-    public function Register($path)
+    public function Load($path)
     {
         if ($files = Core::AllFolder($path)) {
             foreach ($files as $item) {
@@ -91,8 +99,6 @@ trait WithLoadInfoJson
     public function AddItem($path)
     {
         $this->arrData[$path] = new DataInfo($path, $this);
-        if ($this->arrData[$path]->isActive())
-            $this->arrData[$path]->DoRegister();
         return $this->arrData[$path];
     }
 }
