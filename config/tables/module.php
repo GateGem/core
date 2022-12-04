@@ -69,9 +69,9 @@ return [
                 }
 
                 if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                    return __('core::enums.status.1');
+                    return '<span class="bg-primary text-white p-2 rounded">'.__('core::enums.status.1').'</span>';
                 }
-                return __('core::enums.status.0');
+                return '<span class="bg-warning text-white p-2 rounded">'.__('core::enums.status.1').'</span>';
             },
             'field' => 'status',
             'title' => 'core::tables.module.field.status',

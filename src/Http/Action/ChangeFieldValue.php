@@ -12,14 +12,14 @@ class ChangeFieldValue extends ActionBase
     public function DoAction()
     {
         if (method_exists($this->component, 'getModel')) {
-           
+
             $message = getValueByKey($this->param, 'message');
             if ($message)
                 $this->component->showMessage(__($message));
             $model = $this->component->getModel();
-            $elModel = $model->where(getValueByKey($this->param, 'key', 'id'), getValueByKey($this->param, 'id'))->first();
+            $model = $model->where(getValueByKey($this->param, 'key', 'id'), getValueByKey($this->param, 'id'));
+            $elModel = $model->first();
 
-            Log::info($elModel);
             if ($elModel == null) {
                 $this->component->showMessage(__('core::message.not-founds'));
                 return;

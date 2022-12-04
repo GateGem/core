@@ -169,9 +169,6 @@ if (!function_exists('get_option')) {
     {
         if (Cache::has($key) && Cache::get($key) != '') return Cache::get($key);
         $setting = Option::where('key', trim($key))->first();
-        Log::info(Option::all());
-        Log::info($key);
-        Log::info($setting);
         if ($setting == null) {
             return $default;
         }

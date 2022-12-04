@@ -3,6 +3,7 @@
 namespace LaraIO\Core\Support\Core;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
@@ -78,9 +79,10 @@ class CoreManager
         }
         return $arr;
     }
+    private const KeyLanguage = 'language';
     public function SwitchLanguage($lang, $redirect_current = false)
     {
-        Session::put('language', $lang);
+        Session::put(self::KeyLanguage, $lang);
         if ($redirect_current)
             return Redirect::to(URL::current());
     }
@@ -90,7 +92,7 @@ class CoreManager
         $lang_uri = Request::segment(1);
         $languages = apply_filters('language_list', []);
         // Set default session language if none is set
-        if (!Session::has('language')) {
+        if (!Session::has(self::KeyLanguage)) {
             // use lang in uri, if provided
             if (in_array($lang_uri, $languages)) {
                 $lang = $lang_uri;
@@ -115,13 +117,14 @@ class CoreManager
             }
 
             // set application language for that user
-            Session::put('language', $lang);
-            app()->setLocale(Session::get('language'));
+            Session::put(self::KeyLanguage, $lang);
+            app()->setLocale(Session::get(self::KeyLanguage));
         }
         // session is available
         else {
+            Log::info(Session::get(self::KeyLanguage));
             // set application to session lang
-            app()->setLocale(Session::get('language'));
+            app()->setLocale(Session::get(self::KeyLanguage));
         }
 
         // prefix is missing? add it
@@ -130,8 +133,8 @@ class CoreManager
         }
         // a valid prefix is there, but not the correct lang? change app lang
         elseif (in_array($lang_uri, $languages) and $lang_uri != Config::get('app.locale')) {
-            Session::put('language', $lang_uri);
-            app()->setLocale(Session::get('language'));
+            Session::put(self::KeyLanguage, $lang_uri);
+            app()->setLocale(Session::get(self::KeyLanguage));
         }
     }
     public function RootPath($path = '')

@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use LaraIO\Core\Facades\Core;
 
-use function PHPUnit\Framework\returnSelf;
-
 class DataInfo implements \ArrayAccess
 {
     const Active = 1;
@@ -17,13 +15,17 @@ class DataInfo implements \ArrayAccess
     private $fileInfo;
     private $base_type;
     protected $data;
+    public $parent;
     public function __construct($path, $parent)
     {
+        $this->parent = $parent;
         $this->path = $path;
         $this->public = $parent->PublicFolder();
         $this->fileInfo = $parent->FileInfoJson();
         $this->base_type = $parent->getName();
         $this->ReLoad();
+        Log::info('setStatusData');
+        Log::info(method_exists($this->parent, 'setStatusData'));
     }
     public function ReLoad()
     {
@@ -40,6 +42,8 @@ class DataInfo implements \ArrayAccess
      */
     public function __get($key)
     {
+        if (method_exists($this->parent, 'get' . Str::studly($key) . 'Data'))
+            return $this->parent->{'get' . Str::studly($key) . 'Data'}($this);
         if (method_exists($this, 'get' . Str::studly($key) . 'Data'))
             return $this->{'get' . Str::studly($key) . 'Data'}();
         return $this->getValue($key);
@@ -54,6 +58,8 @@ class DataInfo implements \ArrayAccess
      */
     public function __set($key, $value)
     {
+        if (method_exists($this->parent, 'set' . Str::studly($key) . 'Data'))
+            return $this->parent->{'set' . Str::studly($key) . 'Data'}($this, $value);
         if (method_exists($this, 'set' . Str::studly($key) . 'Data'))
             return $this->{'set' . Str::studly($key) . 'Data'}($value);
         $this->data[$key] = $value;
@@ -69,6 +75,8 @@ class DataInfo implements \ArrayAccess
      */
     public function __isset($key)
     {
+        if (method_exists($this->parent, 'get' . Str::studly($key) . 'Data'))
+            return true;
         if (method_exists($this, 'get' . Str::studly($key) . 'Data'))
             return true;
         return isset($this->data[$key]);
@@ -95,9 +103,10 @@ class DataInfo implements \ArrayAccess
      */
     public function offsetSet($offset,  $value)
     {
-
         if (is_null($offset)) {
             $this->data[] = $value;
+        } else if (method_exists($this->parent, 'set' . Str::studly($offset) . 'Data')) {
+            return $this->parent->{'set' . Str::studly($offset) . 'Data'}($this, $value);
         } else if (method_exists($this, 'set' . Str::studly($offset) . 'Data')) {
             return $this->{'set' . Str::studly($offset) . 'Data'}($value);
         } else {
@@ -114,6 +123,8 @@ class DataInfo implements \ArrayAccess
      */
     public function offsetExists($offset)
     {
+        if (method_exists($this->parent, 'get' . Str::studly($offset) . 'Data'))
+            return true;
         if (method_exists($this, 'get' . Str::studly($offset) . 'Data'))
             return true;
         return isset($this->data[$offset]);
@@ -144,6 +155,8 @@ class DataInfo implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
+        if (!is_null($offset) && method_exists($this->parent, 'get' . Str::studly($offset) . 'Data'))
+            return $this->parent->{'get' . Str::studly($offset) . 'Data'}($this);
         if (!is_null($offset) && method_exists($this, 'get' . Str::studly($offset) . 'Data'))
             return $this->{'get' . Str::studly($offset) . 'Data'}();
         return $this->offsetExists($offset) ? $this->data[$offset] : null;
@@ -191,22 +204,21 @@ class DataInfo implements \ArrayAccess
     {
         return get_option($this->getKeyOption('status'));
     }
-
     public function setStatusData($value)
     {
         return set_option($this->getKeyOption('status'), $value);
     }
     public function isActive()
     {
-        return $this->getStatusData() == self::Active;
+        return $this['status'] == self::Active;
     }
     public function Active()
     {
-        $this->setStatusData(self::Active);
+        $this['status'] = self::Active;
     }
     public function UnActive()
     {
-        $this->setStatusData(self::UnActive);
+        $this['status'] = self::UnActive;
     }
     public function delete()
     {

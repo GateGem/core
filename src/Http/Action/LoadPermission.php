@@ -13,7 +13,6 @@ class LoadPermission extends ActionBase
     {
         $this->component->refreshData();
         $this->component->showMessage("LoadPermission");
-        Log::info('LoadPermission');
         self::UpdatePermission();
     }
     private const routerExcept = [

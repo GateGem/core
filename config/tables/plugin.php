@@ -7,7 +7,7 @@ use LaraIO\Core\Facades\Theme;
 return [
     'DisableModule' => false,
     'funcData' => function () {
-       return Plugin::getData();
+        return Plugin::getData();
     },
     'modalkey' => 'key',
     'excel' => [
@@ -50,12 +50,12 @@ return [
         [
             'field' => 'name',
             'fieldType' => FieldBuilder::Text,
-            'title' =>'core::tables.plugin.field.name',
+            'title' => 'core::tables.plugin.field.name',
             'keyColumn' => 'row1_1'
         ],
         [
             'field' => 'title',
-            'title' =>'core::tables.plugin.field.title',
+            'title' => 'core::tables.plugin.field.title',
             'keyColumn' => 'row1_2'
         ],
         [
@@ -70,7 +70,7 @@ return [
             },
             'funcCell' => function ($row, $column) {
                 if (\Gate::check('core.table.plugin.change-status')) {
-                
+
                     if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
                         return '<button ' . aciton_change_field_value_hook('{"id":"' . $row['name'] . '","field":"' . $column['field'] . '","value":0,"key":"key"}') . ' class="btn btn-primary btn-sm text-nowrap">' . __('core::enums.status.1') . '</button>';
                     }
@@ -78,9 +78,9 @@ return [
                 }
 
                 if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                    return __('core::enums.status.1');
+                    return '<span class="bg-primary text-white p-2 rounded">'.__('core::enums.status.1').'</span>';
                 }
-                return __('core::enums.status.0');
+                return '<span class="bg-warning text-white p-2 rounded">'.__('core::enums.status.1').'</span>';
             },
             'field' => 'status',
             'title' => 'core::tables.plugin.field.status',

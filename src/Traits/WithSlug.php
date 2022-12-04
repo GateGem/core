@@ -29,7 +29,6 @@ trait WithSlug
                 $this->slug = $count ? "{$slug}-{$count}" : $slug;
                 if (static::where('slug',   $this->slug)->exists()) {
                     $this->slug = null;
-                    Log::info($count);
                 }
                 $count++;
             } while ($this->slug == null || $count < 100);
