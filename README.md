@@ -97,13 +97,6 @@ Optionally, you can publish the views using
 php artisan vendor:publish --tag="core-views"
 ```
 
-## Usage
-
-```php
-$laraCore = new GateGem\Core();
-echo $laraCore->echoPhrase('Hello, GateGem!');
-```
-
 ## Testing
 
 ```bash
