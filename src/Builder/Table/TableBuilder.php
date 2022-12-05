@@ -47,7 +47,7 @@ class TableBuilder extends HtmlBuilder
             }
             if (is_object($cell_value) || is_array($cell_value))
                 htmlentities(print_r($cell_value));
-            else if (getValueByKey($column, 'fieldType', '') === FieldBuilder::Image) {
+            else if ($cell_value != ""&&getValueByKey($column, 'fieldType', '') === FieldBuilder::Image) {
                 echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
             } else if ($cell_value != "")
                 echo htmlentities($cell_value);
