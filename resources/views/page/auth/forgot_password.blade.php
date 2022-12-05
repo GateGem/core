@@ -61,7 +61,7 @@
                             style="background: #fccb90;background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
               background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);">
                             <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                                <h4 class="mb-4 text-center">{{ get_option('page_message_register_title', 'Welcome to lara system') }}
+                                <h4 class="mb-4 text-center">{{ get_option('page_message_register_title', 'Welcome to GateGem System') }}
                                 </h4>
                                 <p class="small mb-0">{{ get_option('page_message_register_content') }}</p>
                             </div>
