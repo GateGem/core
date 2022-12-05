@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Common\LanguageSelector;
+namespace GateGem\Core\Http\Livewire\Common\LanguageSelector;
 
-use LaraIO\Core\Facades\Core;
-use LaraIO\Core\Livewire\Modal;
+use GateGem\Core\Facades\Core;
+use GateGem\Core\Livewire\Modal;
 
 class Index extends Modal
 {

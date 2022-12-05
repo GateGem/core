@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Support\Core;
+namespace GateGem\Core\Support\Core;
 
 use Closure;
 

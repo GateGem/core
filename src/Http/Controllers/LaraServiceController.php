@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Http\Controllers;
+namespace GateGem\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Request;

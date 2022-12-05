@@ -4,7 +4,7 @@
             <h2>Permission</h2>
             <div class="row">
                 <div class="p-1">
-                    {!! LaraIO\Core\Builder\Form\TreeViewBuilder::Render($optionTree, [], []) !!}
+                    {!! GateGem\Core\Builder\Form\TreeViewBuilder::Render($optionTree, [], []) !!}
                 </div>
             </div>
         </div>

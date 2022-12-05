@@ -1,10 +1,10 @@
 <?php
 
-use LaraIO\Core\Http\Action\LoadPermission;
-use LaraIO\Core\Livewire\Modal;
+use GateGem\Core\Http\Action\LoadPermission;
+use GateGem\Core\Livewire\Modal;
 
 return [
-    'model' => \LaraIO\Core\Models\Permission::class,
+    'model' => \GateGem\Core\Models\Permission::class,
    // 'DisableModule' => true,
     'enableAction' => true,
 

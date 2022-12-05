@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Support\Module;
+namespace GateGem\Core\Support\Module;
 
-use LaraIO\Core\Traits\WithLoadInfoJson;
+use GateGem\Core\Traits\WithLoadInfoJson;
 
 class ModuleManager
 {

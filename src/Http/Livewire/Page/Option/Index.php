@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Page\Option;
+namespace GateGem\Core\Http\Livewire\Page\Option;
 
-use LaraIO\Core\Livewire\Modal;
-use LaraIO\Core\Loader\OptionLoader;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Loader\OptionLoader;
 
 class Index extends Modal
 {

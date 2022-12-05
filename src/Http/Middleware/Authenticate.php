@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Http\Middleware;
+namespace GateGem\Core\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 

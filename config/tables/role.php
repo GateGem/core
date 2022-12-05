@@ -1,9 +1,9 @@
 <?php
 
-use LaraIO\Core\Livewire\Modal;
+use GateGem\Core\Livewire\Modal;
 
 return [
-    'model' => \LaraIO\Core\Models\Role::class,
+    'model' => \GateGem\Core\Models\Role::class,
     //'DisableModule' => true,
     'enableAction' => true,
     'action' => [

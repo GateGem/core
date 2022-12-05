@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Database\Factories;
+namespace GateGem\Core\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraIO\Core\Http\Action;
+namespace GateGem\Core\Http\Action;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
-use LaraIO\Core\Support\Core\ActionBase;
-use LaraIO\Core\Support\Core\DataInfo;
+use GateGem\Core\Support\Core\ActionBase;
+use GateGem\Core\Support\Core\DataInfo;
 
 class ChangeFieldValue extends ActionBase
 {

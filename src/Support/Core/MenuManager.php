@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Support\Core;
+namespace GateGem\Core\Support\Core;
 
-use LaraIO\Core\Builder\Menu\MenuBuilder;
+use GateGem\Core\Builder\Menu\MenuBuilder;
 
 class MenuManager
 {

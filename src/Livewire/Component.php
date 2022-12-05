@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Livewire;
+namespace GateGem\Core\Livewire;
 
-use LaraIO\Core\Facades\Theme;
-use LaraIO\Core\Traits\WithDoAction;
+use GateGem\Core\Facades\Theme;
+use GateGem\Core\Traits\WithDoAction;
 use Livewire\Component as ComponentBase;
 
 class Component extends ComponentBase

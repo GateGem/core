@@ -1,14 +1,14 @@
 <?php
 
-namespace LaraIO\Core\Database\Seeders;
+namespace GateGem\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use LaraIO\Core\Facades\Core;
-use LaraIO\Core\Http\Action\LoadPermission;
-use LaraIO\Core\Models\Role;
-use LaraIO\Core\Models\User;
+use GateGem\Core\Facades\Core;
+use GateGem\Core\Http\Action\LoadPermission;
+use GateGem\Core\Models\Role;
+use GateGem\Core\Models\User;
 
-class InitLaraIOSeeder extends Seeder
+class InitGateGemSeeder extends Seeder
 {
     /**
      * Run the database seeds.

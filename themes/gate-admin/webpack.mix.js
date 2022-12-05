@@ -14,5 +14,5 @@ const mix = require('laravel-mix');
     stats: {
         children: true,
     },});
-mix.js('resources/assets/js/app.js', 'public/js/lara-admin.js')
-    .sass('resources/assets/sass/app.scss', 'public/css/lara-admin.css');
+mix.js('resources/assets/js/app.js', 'public/js/gate-admin.js')
+    .sass('resources/assets/sass/app.scss', 'public/css/gate-admin.css');

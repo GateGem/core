@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Support\Core;
+namespace GateGem\Core\Support\Core;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\SplFileInfo;
-use LaraIO\Core\Facades\Module;
-use LaraIO\Core\Facades\Plugin;
-use LaraIO\Core\Facades\Theme;
+use GateGem\Core\Facades\Module;
+use GateGem\Core\Facades\Plugin;
+use GateGem\Core\Facades\Theme;
 
 class CoreManager
 {
@@ -215,7 +215,7 @@ class CoreManager
     public function checkFolder()
     {
         $arr = [config('core.appdir.theme', 'Themes'), config('core.appdir.module', 'Modules'), config('core.appdir.plugin', 'Plugins')];
-        $root_path = config('core.appdir.root', 'LaraApp');
+        $root_path = config('core.appdir.root', 'GateApp');
         foreach ($arr as $item) {
             $public = public_path($item);
             $appdir = base_path($root_path . '/' . $item);

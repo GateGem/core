@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
 
 trait WithScopeQuery

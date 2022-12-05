@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Common\Profile;
+namespace GateGem\Core\Http\Livewire\Common\Profile;
 
 use Illuminate\Support\Facades\Auth;
-use LaraIO\Core\Facades\Core;
-use LaraIO\Core\Livewire\Modal;
+use GateGem\Core\Facades\Core;
+use GateGem\Core\Livewire\Modal;
 
 class Index extends Modal
 {

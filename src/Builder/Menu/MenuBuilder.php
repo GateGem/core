@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraIO\Core\Builder\Menu;
+namespace GateGem\Core\Builder\Menu;
 
-use LaraIO\Core\Builder\HtmlBuilder;
+use GateGem\Core\Builder\HtmlBuilder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 
 class MenuBuilder extends HtmlBuilder
 {

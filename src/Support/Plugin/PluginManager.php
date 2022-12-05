@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Support\Plugin;
+namespace GateGem\Core\Support\Plugin;
 
-use LaraIO\Core\Traits\WithLoadInfoJson;
+use GateGem\Core\Traits\WithLoadInfoJson;
 
 class PluginManager
 {

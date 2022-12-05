@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Utils;
+namespace GateGem\Core\Utils;
 
 use Illuminate\Container\Container;
 use Illuminate\Pagination\LengthAwarePaginator;

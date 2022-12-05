@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Common\Filemanager;
+namespace GateGem\Core\Http\Livewire\Common\Filemanager;
 
-use LaraIO\Core\Livewire\Component;
+use GateGem\Core\Livewire\Component;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 

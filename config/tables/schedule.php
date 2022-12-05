@@ -1,10 +1,10 @@
 <?php
 
-use LaraIO\Core\Builder\Form\FieldBuilder;
-use LaraIO\Core\Livewire\Modal;
+use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Livewire\Modal;
 
 return [
-    'model' => \LaraIO\Core\Models\Schedule::class,
+    'model' => \GateGem\Core\Models\Schedule::class,
     'poll' => '10s',
     'DisableModule' => true,
     'enableAction' => true,

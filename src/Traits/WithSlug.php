@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;

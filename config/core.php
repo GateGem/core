@@ -1,18 +1,18 @@
 <?php
 
-// config for LaraIO\Core
+// config for GateGem\Core
 
-use LaraIO\Core\Commands\CoreCommand;
-use LaraIO\Core\Commands\ModuleDisableCommand;
-use LaraIO\Core\Commands\ModuleDumpCommand;
-use LaraIO\Core\Commands\ModuleEnableCommand;
+use GateGem\Core\Commands\CoreCommand;
+use GateGem\Core\Commands\ModuleDisableCommand;
+use GateGem\Core\Commands\ModuleDumpCommand;
+use GateGem\Core\Commands\ModuleEnableCommand;
 
 return [
     'web' => [
         'admin' => '',
     ],
     'appdir' => [
-        'root' => 'LaraApp',
+        'root' => 'GateApp',
         'theme' => 'Themes',
         'module' => 'Modules',
         'plugin' => 'Plugins',

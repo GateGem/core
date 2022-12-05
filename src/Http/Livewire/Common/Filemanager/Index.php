@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Common\Filemanager;
+namespace GateGem\Core\Http\Livewire\Common\Filemanager;
 
-use LaraIO\Core\Livewire\Modal;
+use GateGem\Core\Livewire\Modal;
 
 class Index extends Modal
 {

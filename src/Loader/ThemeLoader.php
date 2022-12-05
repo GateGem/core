@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Loader;
+namespace GateGem\Core\Loader;
 
-use LaraIO\Core\Traits\WithDataLoader;
+use GateGem\Core\Traits\WithDataLoader;
 
 class ThemeLoader
 {

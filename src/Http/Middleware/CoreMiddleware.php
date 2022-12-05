@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Http\Middleware;
+namespace GateGem\Core\Http\Middleware;
 
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 
 class CoreMiddleware
 {

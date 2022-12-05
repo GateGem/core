@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Support\Core;
+namespace GateGem\Core\Support\Core;
 
 use Illuminate\Support\Str;
-use LaraIO\Core\Commands\InstallCommand;
+use GateGem\Core\Commands\InstallCommand;
 
 class ServicePackage
 {

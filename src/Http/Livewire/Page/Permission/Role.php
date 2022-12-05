@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Page\Permission;
+namespace GateGem\Core\Http\Livewire\Page\Permission;
 
-use LaraIO\Core\Livewire\Modal;
-use LaraIO\Core\Models\Permission;
-use LaraIO\Core\Models\Role as ModelsRole;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Models\Permission;
+use GateGem\Core\Models\Role as ModelsRole;
 
 class Role extends Modal
 {

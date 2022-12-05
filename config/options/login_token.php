@@ -1,6 +1,6 @@
 <?php
 
-use LaraIO\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Builder\Form\FieldBuilder;
 
 return [
     'icon' => '',

@@ -44,7 +44,7 @@
                 {!! apply_filters('module_' . $module . '_action_right', '', $this) !!}
             </div>
         </div>
-        {!! \LaraIO\Core\Builder\Table\TableBuilder::Render($data, $option, ['sort' => $sort]) !!}
+        {!! \GateGem\Core\Builder\Table\TableBuilder::Render($data, $option, ['sort' => $sort]) !!}
         @if (isset($data) && $data != null)
             {!! $data->links() !!}
         @endif

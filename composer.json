@@ -1,14 +1,14 @@
 {
-  "name": "laraio/core",
+  "name": "gategem/core",
   "description": "This is Lara Platform Core",
   "keywords": [
-    "LaraIO",
+    "GateGem",
     "laravel",
     "core",
     "wordpress",
     "Lara Platform"
   ],
-  "homepage": "https://github.com/LaraIO/core",
+  "homepage": "https://github.com/GateGem/core",
   "license": "MIT",
   "authors": [
     {
@@ -21,14 +21,14 @@
   "require-dev": {},
   "autoload": {
     "psr-4": {
-      "LaraIO\\Core\\": "src",
-      "LaraIO\\Core\\Database\\Factories\\": "database/factories",
-      "LaraIO\\Core\\Database\\Seeders\\": "database/seeders/"
+      "GateGem\\Core\\": "src",
+      "GateGem\\Core\\Database\\Factories\\": "database/factories",
+      "GateGem\\Core\\Database\\Seeders\\": "database/seeders/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "LaraIO\\Core\\Tests\\": "tests"
+      "GateGem\\Core\\Tests\\": "tests"
     }
   },
   "scripts": {
@@ -43,10 +43,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "LaraIO\\Core\\CoreServiceProvider"
+        "GateGem\\Core\\CoreServiceProvider"
       ],
       "aliases": {
-        "LaraCore": "LaraIO\\Core\\Facades\\Core"
+        "LaraCore": "GateGem\\Core\\Facades\\Core"
       }
     }
   },

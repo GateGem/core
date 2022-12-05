@@ -1,9 +1,9 @@
 <?php
 
-use LaraIO\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Builder\Form\FieldBuilder;
 
 return [
-    'model' => LaraIO\Core\Models\User::class,
+    'model' => GateGem\Core\Models\User::class,
     'modelkey' => 'id',
     'excel' => [],
     'action' => [

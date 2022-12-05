@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Exceptions;
+namespace GateGem\Core\Exceptions;
 
 use Exception;
 

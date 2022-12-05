@@ -1,15 +1,15 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
-use LaraIO\Core\Exceptions\InvalidPackage;
-use LaraIO\Core\Facades\Core;
-use LaraIO\Core\Loader\LivewireLoader;
-use LaraIO\Core\Support\Core\ServicePackage;
+use GateGem\Core\Exceptions\InvalidPackage;
+use GateGem\Core\Facades\Core;
+use GateGem\Core\Loader\LivewireLoader;
+use GateGem\Core\Support\Core\ServicePackage;
 use ReflectionClass;
 
 trait WithServiceProvider

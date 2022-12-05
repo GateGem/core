@@ -1,9 +1,9 @@
 <?php
 
-use LaraIO\Core\Livewire\Modal;
+use GateGem\Core\Livewire\Modal;
 
 return [
-    'model' => \LaraIO\Core\Models\ScheduleHistory::class,
+    'model' => \GateGem\Core\Models\ScheduleHistory::class,
     'permission' => [
         'view' => ''
     ],

@@ -1,9 +1,9 @@
 # This is Lara Platform Core
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/laraio/core.svg?style=flat-square)](https://packagist.org/packages/laraio/core)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/laraio/core/run-tests?label=tests)](https://github.com/laraio/core/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/laraio/core/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/laraio/core/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/laraio/core.svg?style=flat-square)](https://packagist.org/packages/laraio/core)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/GateGem/core.svg?style=flat-square)](https://packagist.org/packages/GateGem/core)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/GateGem/core/run-tests?label=tests)](https://github.com/GateGem/core/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/GateGem/core/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/GateGem/core/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/GateGem/core.svg?style=flat-square)](https://packagist.org/packages/GateGem/core)
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
@@ -13,7 +13,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 You can install the package via composer:
 
 ```bash
-composer require laraio/core
+composer require gategem/core
 ```
 
 Setup middleware:
@@ -30,7 +30,7 @@ File: app/Http/Kernel.php
     protected $middlewareGroups = [
         'web' => [
             ...
-            \LaraIO\Core\Http\Middleware\CoreMiddleware::class
+            \GateGem\Core\Http\Middleware\CoreMiddleware::class
         ],
 
         'api' => [
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         ...
-        $this->call([\LaraIO\Core\Database\Seeders\InitLaraIOSeeder::class]);
+        $this->call([\GateGem\Core\Database\Seeders\InitGateGemSeeder::class]);
     }
 }
 ```
@@ -100,8 +100,8 @@ php artisan vendor:publish --tag="core-views"
 ## Usage
 
 ```php
-$laraCore = new laraio\Core();
-echo $laraCore->echoPhrase('Hello, laraio!');
+$laraCore = new GateGem\Core();
+echo $laraCore->echoPhrase('Hello, GateGem!');
 ```
 
 ## Testing
@@ -124,7 +124,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Nguyen Van Hau](https://github.com/laraio)
+- [Nguyen Van Hau](https://github.com/GateGem)
 - [All Contributors](../../contributors)
 
 ## License

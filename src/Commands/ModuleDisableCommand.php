@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Commands;
+namespace GateGem\Core\Commands;
 
 use Illuminate\Console\Command;
-use LaraIO\Core\Facades\Module;
+use GateGem\Core\Facades\Module;
 use Symfony\Component\Console\Input\InputArgument;
 
 class ModuleDisableCommand extends Command

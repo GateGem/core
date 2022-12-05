@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Models;
+namespace GateGem\Core\Models;
 
 use Illuminate\Console\Scheduling\ManagesFrequencies;
 use Illuminate\Database\Eloquent\Model;

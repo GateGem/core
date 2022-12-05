@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Facades;
+namespace GateGem\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -15,19 +15,19 @@ use Illuminate\Support\Facades\Facade;
  * @method static void LoadApp()
  * @method static void RegisterApp()
  * @method static void BootApp()
- * @method static \Illuminate\Support\Collection<string, \LaraIO\Core\Support\Core\DataInfo> getData()
- * @method static \LaraIO\Core\Support\Core\DataInfo find(string $name)
+ * @method static \Illuminate\Support\Collection<string, \GateGem\Core\Support\Core\DataInfo> getData()
+ * @method static \GateGem\Core\Support\Core\DataInfo find(string $name)
  * @method static bool has(string $name)
  * @method static void delete(string $name)
  * @method static void Load(string $path)
  * @method static void AddItem(string $path)
  *
- * @see \LaraIO\Core\Facades\Module
+ * @see \GateGem\Core\Facades\Module
  */
 class Module extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraIO\Core\Support\Module\ModuleManager::class;
+        return \GateGem\Core\Support\Module\ModuleManager::class;
     }
 }

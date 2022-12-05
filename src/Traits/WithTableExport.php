@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
-use LaraIO\Core\Livewire\Modal;
-use LaraIO\Core\Loader\TableLoader;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Loader\TableLoader;
 
 trait WithTableExport
 {
@@ -37,7 +37,7 @@ trait WithTableExport
         $this->refreshData(['module' => $this->module]);
         $this->hideModal();
         $this->ShowMessage('Export Excel successful!');
-        //return \Excel::download((new (getValueByKey($this->option, 'excel.export', \LaraIO\Core\Excel\ExcelExport::class))($this->option)), $this->filename . '-' . time() . '.xlsx');
+        //return \Excel::download((new (getValueByKey($this->option, 'excel.export', \GateGem\Core\Excel\ExcelExport::class))($this->option)), $this->filename . '-' . time() . '.xlsx');
     }
     public function render()
     {

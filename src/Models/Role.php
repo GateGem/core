@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraIO\Core\Models;
+namespace GateGem\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use LaraIO\Core\Traits\WithSlug;
+use GateGem\Core\Traits\WithSlug;
 
 class Role extends Model
 {

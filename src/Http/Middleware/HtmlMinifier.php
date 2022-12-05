@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Http\Middleware;
+namespace GateGem\Core\Http\Middleware;
 
 
 use Closure;
@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

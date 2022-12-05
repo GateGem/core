@@ -1,7 +1,7 @@
 <?php
 
-use LaraIO\Core\Builder\Form\FieldBuilder;
-use LaraIO\Core\Facades\Theme;
+use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Facades\Theme;
 
 return [
     'sort' => 0,

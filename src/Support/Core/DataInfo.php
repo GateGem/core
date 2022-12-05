@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraIO\Core\Support\Core;
+namespace GateGem\Core\Support\Core;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 
 class DataInfo implements \ArrayAccess
 {

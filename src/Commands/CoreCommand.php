@@ -1,17 +1,17 @@
 <?php
 
-namespace LaraIO\Core\Commands;
+namespace GateGem\Core\Commands;
 
 use Illuminate\Console\Command;
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 
 class CoreCommand extends Command
 {
     public $signature = 'core-install';
-    public $description = 'laraio\core install';
+    public $description = 'GateGem\core install';
     protected bool $askToRunMigrations = false;
     protected bool $copyServiceProviderInApp = true;
-    protected ?string $starRepo = "laraio/core";
+    protected ?string $starRepo = "GateGem/core";
 
     public function handle(): int
     {
@@ -43,7 +43,7 @@ class CoreCommand extends Command
             }
         }
 
-        $this->info("LaraIO\\Core has been installed!");
+        $this->info("GateGem\\Core has been installed!");
         $this->comment('All done');
 
         return self::SUCCESS;
@@ -51,11 +51,11 @@ class CoreCommand extends Command
 
     protected function copyServiceProviderInApp(): self
     {
-        ReplaceTextInFile(app_path('Models/User.php'), "Illuminate\\Foundation\\Auth\\User", "LaraIO\\Core\\Models\\User");
+        ReplaceTextInFile(app_path('Models/User.php'), "Illuminate\\Foundation\\Auth\\User", "GateGem\\Core\\Models\\User");
         $this->info("App/Models/User.php has been updated!");
-        ReplaceTextInFile(app_path('Http/Kernel.php'), "\\App\\Http\\Middleware\\VerifyCsrfToken::class,", "\\App\\Http\\Middleware\\VerifyCsrfToken::class,\n\\LaraIO\\Core\\Http\\Middleware\\CoreMiddleware::class,", true);
+        ReplaceTextInFile(app_path('Http/Kernel.php'), "\\App\\Http\\Middleware\\VerifyCsrfToken::class,", "\\App\\Http\\Middleware\\VerifyCsrfToken::class,\n\\GateGem\\Core\\Http\\Middleware\\CoreMiddleware::class,", true);
         $this->info("App/Http/Kernel.php has been updated!");
-        ReplaceTextInFile(base_path('database/seeders/DatabaseSeeder.php'), "\\App\\Models\\User::factory(10)->create();", "\\App\\Models\\User::factory(10)->create();\n\t\t\$this->call([\\LaraIO\\Core\\Database\\Seeders\\InitLaraIOSeeder::class]);", true);
+        ReplaceTextInFile(base_path('database/seeders/DatabaseSeeder.php'), "\\App\\Models\\User::factory(10)->create();", "\\App\\Models\\User::factory(10)->create();\n\t\t\$this->call([\\GateGem\\Core\\Database\\Seeders\\InitGateGemSeeder::class]);", true);
         $this->info("database/seeders/DatabaseSeeder.php has been updated!");
         Core::checkFolder();
         $this->call('storage:link');

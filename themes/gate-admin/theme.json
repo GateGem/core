@@ -1,9 +1,9 @@
 {
-  "name": "lara-admin",
+  "name": "gate-admin",
   "admin": true,
-  "title": "lara theme",
+  "title": "gate theme",
   "description": "",
-  "author": "LaraIO",
+  "author": "GateGem",
   "layout": "layout",
   "files": ["function.php"],
   "required_plugins": []

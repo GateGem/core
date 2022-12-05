@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Page\Dashboard;
+namespace GateGem\Core\Http\Livewire\Page\Dashboard;
 
-use LaraIO\Core\Livewire\Component;
+use GateGem\Core\Livewire\Component;
 
 class Index extends Component
 {

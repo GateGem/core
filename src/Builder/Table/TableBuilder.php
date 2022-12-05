@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Builder\Table;
+namespace GateGem\Core\Builder\Table;
 
-use LaraIO\Core\Builder\HtmlBuilder;
-use LaraIO\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Builder\HtmlBuilder;
+use GateGem\Core\Builder\Form\FieldBuilder;
 
 class TableBuilder extends HtmlBuilder
 {

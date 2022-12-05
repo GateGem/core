@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 
 trait WithDataLoader
 {

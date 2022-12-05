@@ -1,6 +1,6 @@
 <?php
 
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 
 if (!function_exists('root_path')) {
     function root_path($path = '')

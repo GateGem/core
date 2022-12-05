@@ -1,7 +1,7 @@
 <?php
 
-use LaraIO\Core\Builder\Menu\MenuBuilder;
-use LaraIO\Core\Facades\Menu;
+use GateGem\Core\Builder\Menu\MenuBuilder;
+use GateGem\Core\Facades\Menu;
 
 
 if (!function_exists('add_menu_item')) {

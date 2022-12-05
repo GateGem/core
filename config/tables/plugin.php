@@ -1,8 +1,8 @@
 <?php
 
-use LaraIO\Core\Builder\Form\FieldBuilder;
-use LaraIO\Core\Facades\Plugin;
-use LaraIO\Core\Facades\Theme;
+use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Facades\Plugin;
+use GateGem\Core\Facades\Theme;
 
 return [
     'DisableModule' => false,
@@ -12,8 +12,8 @@ return [
     'modalkey' => 'key',
     'excel' => [
         'template' => '',
-        // 'import' => \LaraIO\Core\Excel\ExcelInport::class,
-        // 'export' => \LaraIO\Core\Excel\ExcelExport::class,
+        // 'import' => \GateGem\Core\Excel\ExcelInport::class,
+        // 'export' => \GateGem\Core\Excel\ExcelExport::class,
         'header' => ['id', 'Họ Tên', 'Trạng thái'],
         'mapdata' => function ($item) {
             return [

@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Page\Auth;
+namespace GateGem\Core\Http\Livewire\Page\Auth;
 
-use LaraIO\Core\Facades\Theme;
-use LaraIO\Core\Livewire\Modal;
-use LaraIO\Core\Models\User;
+use GateGem\Core\Facades\Theme;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Models\User;
 
 class Register extends Modal
 {

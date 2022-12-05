@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
-use LaraIO\Core\Facades\Core;
-use LaraIO\Core\Support\Core\DataInfo;
+use GateGem\Core\Facades\Core;
+use GateGem\Core\Support\Core\DataInfo;
 
 trait WithLoadInfoJson
 {
@@ -59,7 +59,7 @@ trait WithLoadInfoJson
     /**
      * Get the data.
      *
-     * @return \Illuminate\Support\Collection<string, \LaraIO\Core\Support\Core\DataInfo>
+     * @return \Illuminate\Support\Collection<string, \GateGem\Core\Support\Core\DataInfo>
      */
     public function getData()
     {
@@ -69,11 +69,11 @@ trait WithLoadInfoJson
      * Find item by name.
      * @param string $name
      *
-     * @return  \LaraIO\Core\Support\Core\DataInfo
+     * @return  \GateGem\Core\Support\Core\DataInfo
      */
     public function find($name)
     {
-        return $this->getData()->where(function (\LaraIO\Core\Support\Core\DataInfo $item) use ($name) {
+        return $this->getData()->where(function (\GateGem\Core\Support\Core\DataInfo $item) use ($name) {
             return $item->CheckName($name);
         })->first();
     }

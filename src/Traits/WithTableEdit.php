@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
-use LaraIO\Core\Livewire\Modal;
-use LaraIO\Core\Loader\TableLoader;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Loader\TableLoader;
 use Livewire\WithFileUploads;
 
 trait WithTableEdit

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Builder;
+namespace GateGem\Core\Builder;
 
 interface IBuilder
 {

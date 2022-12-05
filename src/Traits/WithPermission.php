@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
-use LaraIO\Core\Models\Permission;
-use LaraIO\Core\Models\Role;
+use GateGem\Core\Models\Permission;
+use GateGem\Core\Models\Role;
 
 trait WithPermission
 {

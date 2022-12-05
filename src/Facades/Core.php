@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraIO\Core\Facades;
+namespace GateGem\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -32,12 +32,12 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed AllFolder(string $path,callable $callback = null,callable $filter = null)
  * @method static mixed Link(string $target,string $link,bool $relative = false,bool $force = true)
  * 
- * @see \LaraIO\Core\Facades\Core
+ * @see \GateGem\Core\Facades\Core
  */
 class Core extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \LaraIO\Core\Support\Core\CoreManager::class;
+        return \GateGem\Core\Support\Core\CoreManager::class;
     }
 }

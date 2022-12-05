@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Page\Auth;
+namespace GateGem\Core\Http\Livewire\Page\Auth;
 
 use Illuminate\Support\Facades\Auth;
-use LaraIO\Core\Facades\Theme;
-use LaraIO\Core\Livewire\Modal;
+use GateGem\Core\Facades\Theme;
+use GateGem\Core\Livewire\Modal;
 
 class Login extends Modal
 {

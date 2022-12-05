@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraIO\Core\Traits;
+namespace GateGem\Core\Traits;
 
 use Illuminate\Support\Facades\Gate;
-use LaraIO\Core\Livewire\Modal;
-use LaraIO\Core\Loader\TableLoader;
-use LaraIO\Core\Utils\ColectionPaginate;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Loader\TableLoader;
+use GateGem\Core\Utils\ColectionPaginate;
 use Livewire\WithPagination;
 
 trait WithTableIndex

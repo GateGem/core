@@ -1,12 +1,12 @@
 <?php
 
-namespace LaraIO\Core\Models;
+namespace GateGem\Core\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use LaraIO\Core\Traits\WithPermission;
-use LaraIO\Core\Traits\WithSlug;
+use GateGem\Core\Traits\WithPermission;
+use GateGem\Core\Traits\WithSlug;
 use Illuminate\Support\Facades\Hash;
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 
 class User extends Authenticatable
 {

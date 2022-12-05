@@ -1,11 +1,11 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Page\Permission;
+namespace GateGem\Core\Http\Livewire\Page\Permission;
 
-use LaraIO\Core\Models\User as ModelsUser;
-use LaraIO\Core\Livewire\Modal;
-use LaraIO\Core\Models\Permission;
-use LaraIO\Core\Models\Role;
+use GateGem\Core\Models\User as ModelsUser;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Models\Permission;
+use GateGem\Core\Models\Role;
 
 class User extends Modal
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Loader;
+namespace GateGem\Core\Loader;
 
 use Illuminate\Support\Str;
-use LaraIO\Core\Facades\Core;
+use GateGem\Core\Facades\Core;
 use Livewire\Component;
 use Livewire\Livewire;
 use ReflectionClass;

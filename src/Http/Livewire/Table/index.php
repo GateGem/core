@@ -1,9 +1,9 @@
 <?php
 
-namespace LaraIO\Core\Http\Livewire\Table;
+namespace GateGem\Core\Http\Livewire\Table;
 
-use LaraIO\Core\Livewire\Modal;
-use LaraIO\Core\Traits\WithTableIndex;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Traits\WithTableIndex;
 
 class Index extends Modal
 {

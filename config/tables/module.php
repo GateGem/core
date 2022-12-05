@@ -1,7 +1,7 @@
 <?php
 
-use LaraIO\Core\Builder\Form\FieldBuilder;
-use LaraIO\Core\Facades\Module;
+use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Facades\Module;
 
 return [
     'DisableModule' => false,

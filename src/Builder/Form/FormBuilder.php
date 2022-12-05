@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Builder\Form;
+namespace GateGem\Core\Builder\Form;
 
-use LaraIO\Core\Builder\HtmlBuilder;
+use GateGem\Core\Builder\HtmlBuilder;
 
 class FormBuilder extends HtmlBuilder
 {

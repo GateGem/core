@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Schedule;
+namespace GateGem\Core\Schedule;
 
-use LaraIO\Core\Models\Schedule;
+use GateGem\Core\Models\Schedule;
 
 class ScheduleService
 {

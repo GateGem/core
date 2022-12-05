@@ -1,19 +1,19 @@
 <?php
 
-namespace LaraIO\Core;
+namespace GateGem\Core;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use LaraIO\Core\Facades\Theme;
-use LaraIO\Core\Loader\OptionLoader;
-use LaraIO\Core\Loader\TableLoader;
-use LaraIO\Core\Support\Core\ServicePackage;
-use LaraIO\Core\Traits\WithServiceProvider;
-use LaraIO\Core\Builder\Menu\MenuBuilder;
-use LaraIO\Core\Facades\Core;
-use LaraIO\Core\Facades\Module;
-use LaraIO\Core\Facades\Plugin;
+use GateGem\Core\Facades\Theme;
+use GateGem\Core\Loader\OptionLoader;
+use GateGem\Core\Loader\TableLoader;
+use GateGem\Core\Support\Core\ServicePackage;
+use GateGem\Core\Traits\WithServiceProvider;
+use GateGem\Core\Builder\Menu\MenuBuilder;
+use GateGem\Core\Facades\Core;
+use GateGem\Core\Facades\Module;
+use GateGem\Core\Facades\Plugin;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -22,8 +22,8 @@ class CoreServiceProvider extends ServiceProvider
     public function configurePackage(ServicePackage $package): void
     {
         // $router = $this->app['router'];
-        //\LaraIO\Core\Http\Middleware\CoreMiddleware::class,
-        // $router->middlewareGroup('web',[\LaraIO\Core\Http\Middleware\CoreMiddleware::class]);
+        //\GateGem\Core\Http\Middleware\CoreMiddleware::class,
+        // $router->middlewareGroup('web',[\GateGem\Core\Http\Middleware\CoreMiddleware::class]);
         /*
          * This class is a Package Service Provider
          *
@@ -84,7 +84,7 @@ class CoreServiceProvider extends ServiceProvider
     private function bootGate()
     {
         if (!$this->app->runningInConsole()) {
-            app(config('core.auth.permission', \LaraIO\Core\Models\Permission::class))->get()->map(function ($permission) {
+            app(config('core.auth.permission', \GateGem\Core\Models\Permission::class))->get()->map(function ($permission) {
                 Gate::define($permission->slug, function ($user = null) use ($permission) {
                     if (!$user) $user = auth();
                     return $user->hasPermissionTo($permission) || $user->isSuperAdmin();

@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraIO\Core\Support\Theme;
+namespace GateGem\Core\Support\Theme;
 
-use LaraIO\Core\Support\Core\Assets;
-use LaraIO\Core\Support\Core\DataInfo;
-use LaraIO\Core\Traits\WithLoadInfoJson;
+use GateGem\Core\Support\Core\Assets;
+use GateGem\Core\Support\Core\DataInfo;
+use GateGem\Core\Traits\WithLoadInfoJson;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ThemeManager

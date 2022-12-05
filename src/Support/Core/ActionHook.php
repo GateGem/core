@@ -1,8 +1,8 @@
 <?php
 
-namespace LaraIO\Core\Support\Core;
+namespace GateGem\Core\Support\Core;
 
-use LaraIO\Core\Traits\WithHookListener;
+use GateGem\Core\Traits\WithHookListener;
 
 class ActionHook
 {

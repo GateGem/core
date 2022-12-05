@@ -11,5 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js/lara-core.js')
-    .sass('resources/sass/app.scss', 'public/css/lara-core.css');
+mix.js('resources/js/app.js', 'public/js/gategem-core.js')
+    .sass('resources/sass/app.scss', 'public/css/gategem-core.css');
