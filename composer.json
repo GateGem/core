@@ -23,7 +23,7 @@
     "psr-4": {
       "GateGem\\Core\\": "src",
       "GateGem\\Core\\Database\\Factories\\": "database/factories",
-      "GateGem\\Core\\Database\\Seeders\\": "database/seeders/"
+      "GateGem\\Core\\Database\\Seeders\\": "database/seeders"
     }
   },
   "autoload-dev": {
