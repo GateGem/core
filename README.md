@@ -1,4 +1,4 @@
-# This is Lara Platform Core
+# This is GateGem Core
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/GateGem/core.svg?style=flat-square)](https://packagist.org/packages/GateGem/core)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/GateGem/core/run-tests?label=tests)](https://github.com/GateGem/core/actions?query=workflow%3Arun-tests+branch%3Amain)
