@@ -9,7 +9,7 @@ return [
         return Theme::getData()->where(function ($item) {
             if (isset($item['hide']) && $item['hide'] == true) return false;
             return true;
-        })->all();
+        })->toBase();
     },
     'modalkey' => 'key',
     'excel' => [],
