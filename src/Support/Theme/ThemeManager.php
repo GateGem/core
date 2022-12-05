@@ -36,7 +36,7 @@ class ThemeManager
     public function findAndActive($theme)
     {
         $theme_data = $this->find($theme);
-        if ($theme_data == null) return;
+        if ($theme_data == null) return null;
         if ($parent = $theme_data->getValue('parent')) {
             $this->findAndActive($parent);
         }
@@ -56,21 +56,31 @@ class ThemeManager
     public function setStatusData($theme, $value)
     {
         if (isset($theme['admin']) && $theme['admin'] == 1) {
-            
+
             set_option('page_admin_theme', $theme->getKey());
         } else {
             set_option('page_site_theme', $theme->getKey());
         }
     }
-    public function Layout()
+    public function Layout($layout = '')
     {
         if (!isset($this->data_active) || !$this->data_active) {
+           
             $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_site_theme')));
+            if ($this->data_active == null) {
+                $this->data_active = $this->findAndActive('gate-none');
+            }
             if ($this->data_active) {
+                if ($layout != '') {
+                    return $layout;
+                }
                 if (!$this->layout) {
                     $this->layout = 'theme::' .   $this->data_active->getValue('layout', 'layout');
                 }
             }
+        }
+        if ($layout != '') {
+            return $layout;
         }
         return $this->layout;
     }

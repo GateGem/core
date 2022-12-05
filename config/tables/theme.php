@@ -6,7 +6,10 @@ use GateGem\Core\Facades\Theme;
 return [
     'DisableModule' => false,
     'funcData' => function () {
-        return Theme::getData();
+        return Theme::getData()->where(function ($item) {
+            if (isset($item['hide']) && $item['hide'] == true) return false;
+            return true;
+        })->all();
     },
     'modalkey' => 'key',
     'excel' => [],
@@ -65,9 +68,9 @@ return [
                 }
 
                 if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                    return '<span class="bg-primary text-white p-2 rounded">'.__('core::enums.status.1').'</span>';
+                    return '<span class="bg-primary text-white p-2 rounded">' . __('core::enums.status.1') . '</span>';
                 }
-                return '<span class="bg-warning text-white p-2 rounded">'.__('core::enums.status.1').'</span>';
+                return '<span class="bg-warning text-white p-2 rounded">' . __('core::enums.status.1') . '</span>';
             },
             'field' => 'status',
             'title' => 'core::tables.theme.field.status',

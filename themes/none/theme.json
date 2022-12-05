@@ -1,0 +1,10 @@
+{
+  "name": "gate-none",
+  "hide": true,
+  "title": "gate theme",
+  "description": "",
+  "author": "GateGem",
+  "layout": "layout",
+  "files": ["function.php"],
+  "required_plugins": []
+}

@@ -2,13 +2,16 @@
 <html lang="{{ page_lang() }}">
 
 <head>
-    <title>{{ page_title() }}</title>
+    @php
+     do_action('theme_head_before');   
+    @endphp
     <meta name="web_url" value="{{ asset('') }}" />
     <meta name="csrf_token" value="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @livewireStyles
-    {{ load_asset_local('asset_header_before') }}
-    {{ load_asset_local('asset_header_after') }}
+    @php
+     do_action('theme_head_after');   
+    @endphp
     <style>
         #page-loader {
             transition: all 0.3s ease-in-out;
@@ -67,8 +70,9 @@
 </head>
 
 <body class="{{ page_body_class() }}">
-    {{ load_asset_local('asset_body_before') }}
-    {{ load_asset_local('asset_body_after') }}
+    @php
+     do_action('theme_body_before');   
+    @endphp
     <div class="page-main">
         @include('theme::share.sidebar')
         <div class="page-container">
@@ -80,8 +84,9 @@
         </div>
     </div>
     @livewireScripts
-    {{ load_asset_local('asset_footer_before') }}
-    {{ load_asset_local('asset_footer_after') }}
+    @php
+     do_action('theme_body_after');   
+    @endphp
     <div id='page-loader'>
         <div class="spinner"></div>
     </div>

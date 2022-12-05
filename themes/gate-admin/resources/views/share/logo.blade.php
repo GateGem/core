@@ -1,6 +1,6 @@
 <div class="sidebar-logo-mini">
-    <span style="color: red;">Lara</span>IO
+    <span style="color: red;">Gate</span>A
 </div>
 <div class="sidebar-logo-none">
-    GateGem
+    <span style="color: red;">Gate</span>Admin
 </div>

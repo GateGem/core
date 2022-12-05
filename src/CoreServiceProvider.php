@@ -41,6 +41,23 @@ class CoreServiceProvider extends ServiceProvider
     }
     public function extending()
     {
+        // First Setup Layout Theme
+        add_action("theme_head_before", function ($isPageTitle = true) {
+            if (!isset($isPageTitle) || $isPageTitle === true) {
+                echo "<title>" . page_title() . "</title>";
+            }
+            Theme::getAssets()->loadAsset("asset_head_before");
+        }, 0);
+        add_action("theme_head_after", function () {
+            Theme::getAssets()->loadAsset("asset_head_after");
+        }, 0);
+
+        add_action("theme_body_before", function () {
+            Theme::getAssets()->loadAsset("asset_body_before");
+        }, 0);
+        add_action("theme_body_after", function () {
+            Theme::getAssets()->loadAsset("asset_body_after");
+        }, 0);
         add_filter('page_body_class', function ($prev) {
             return $prev . (session('admin_sidebar_mini') ? ' is-sidebar-mini ' : '');
         });

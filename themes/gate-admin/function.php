@@ -1,5 +1,5 @@
 <?php
 
-add_asset_js(asset('themes/lara-admin/js/lara-admin.js'), '',  10);
-add_asset_css(asset('themes/lara-admin/css/lara-admin.css'), '', 10);
-add_page_body_class('lara-admin');
+add_asset_js(asset('themes/gate-admin/js/gate-admin.js'), '',  10);
+add_asset_css(asset('themes/gate-admin/css/gate-admin.css'), '', 10);
+add_page_body_class('gate-admin');
