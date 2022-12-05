@@ -1,6 +1,6 @@
 {
   "name": "gategem/core",
-  "description": "This is GateGem Core",
+  "description": "laravel support module plugin theme hook. like wordpress.",
   "keywords": [
     "GateGem",
     "laravel",
