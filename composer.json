@@ -1,12 +1,12 @@
 {
   "name": "gategem/core",
-  "description": "This is Lara Platform Core",
+  "description": "This is GateGem Core",
   "keywords": [
     "GateGem",
     "laravel",
     "core",
     "wordpress",
-    "Lara Platform"
+    "GateGem Platform"
   ],
   "homepage": "https://github.com/GateGem/core",
   "license": "MIT",
