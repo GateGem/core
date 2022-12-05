@@ -17,7 +17,10 @@
       "role": "Developer"
     }
   ],
-  "require": {},
+  "require": {
+    "livewire/livewire": "^2.10",
+    "laravel/framework": "^9"
+  },
   "require-dev": {},
   "autoload": {
     "psr-4": {
