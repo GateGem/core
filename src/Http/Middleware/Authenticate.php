@@ -18,7 +18,7 @@ class Authenticate extends Middleware
 
         $guest_permission = Core::getPermissionGuest();
         // Hasn't permission
-        if ((count($guest_permission) === 0 || !in_array($route, $guest_permission)) && !empty($user) && !$user->isSuperAdmin() && !empty($route) && !Gate::check($route, [$user])) {
+        if (!Gate::check($route, [$user])) {
             return abort(403);
         }
         return parent::handle($request, $next, ...$guards);
