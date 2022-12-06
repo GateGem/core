@@ -136,6 +136,9 @@ trait WithTableIndex
         } else {
             $model = collect([]);
         }
+        if (isset($this->option['funcQuery']) && $this->option['funcQuery'] != '') {
+            return $this->option['funcQuery']($model, request(), $this);
+        }
         return $model;
     }
     public function getData($isAll = false)

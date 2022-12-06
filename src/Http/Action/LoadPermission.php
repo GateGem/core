@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Http\Action;
 
+use GateGem\Core\Facades\Core;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use GateGem\Core\Loader\TableLoader;
@@ -68,7 +69,7 @@ class LoadPermission extends ActionBase
         foreach ($table as $key => $value) {
             self::SetPermission('core.' . $key, 1);
         }
-        $temp = apply_filters('core_auth_permission_custom',  config('core.permission.custom') ?? []);
+        $temp = Core::getPermissionCustom();
         if ($temp != null) {
             foreach ($temp as $key) {
                 self::SetPermission($key);

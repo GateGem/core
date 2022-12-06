@@ -4,7 +4,6 @@ namespace GateGem\Core\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Closure;
-use GateGem\Core\Facades\Core;
 use Illuminate\Support\Facades\Gate;
 
 class Authenticate extends Middleware
@@ -16,9 +15,8 @@ class Authenticate extends Middleware
         // Like: users.index
         $route = app()->router->getCurrentRoute()->getName();
 
-        $guest_permission = Core::getPermissionGuest();
         // Hasn't permission
-        if (!Gate::check($route, [$user])) {
+         if ( $user && !Gate::check($route, [$user])) {
             return abort(403);
         }
         return parent::handle($request, $next, ...$guards);
