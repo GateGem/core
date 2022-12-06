@@ -24,8 +24,6 @@ class DataInfo implements \ArrayAccess
         $this->fileInfo = $parent->FileInfoJson();
         $this->base_type = $parent->getName();
         $this->ReLoad();
-        Log::info('setStatusData');
-        Log::info(method_exists($this->parent, 'setStatusData'));
     }
     public function ReLoad()
     {
@@ -206,6 +204,9 @@ class DataInfo implements \ArrayAccess
     }
     public function setStatusData($value)
     {
+        if ($value == self::Active && !$this->checkDump()) {
+            $this->Dump();
+        }
         return set_option($this->getKeyOption('status'), $value);
     }
     public function isActive()
@@ -224,6 +225,19 @@ class DataInfo implements \ArrayAccess
     {
         Core::delete($this->getPath());
     }
+    public function checkComposer()
+    {
+        return Core::FileExists($this->getPath('composer.json'));
+    }
+    public function checkDump()
+    {
+        return Core::FileExists($this->getPath('vendor/autoload.php'));
+    }
+    public function Dump()
+    {
+        chdir($this->getPath());
+        passthru('composer dump -o -n -q');
+    }
     public function CheckName($name)
     {
         return $this->getKey() == $name || $this->getValue('name') == $name;
@@ -239,8 +253,17 @@ class DataInfo implements \ArrayAccess
     private $providers;
     public function DoRegister($namespace = null)
     {
+        if ($this->checkComposer() && !$this->checkDump()) {
+            $this->Dump();
+        }
+        if ($this->checkDump()) {
+            Core::LoadHelper($this->getPath('vendor/autoload.php'));
+        }
         $providers = $this->getProviders();
         if (is_array($providers) && count($providers) > 0) {
+            if (!$this->checkDump()) {
+                Core::RegisterAllFile($this->getPath('src'));
+            }
             if (!Core::LoadHelper($this->getPath('vendor/autoload.php')))
                 Core::RegisterAllFile($this->getPath('src'));
             $this->providers =  collect($providers)->map(function ($item) {
@@ -256,6 +279,7 @@ class DataInfo implements \ArrayAccess
     }
     public function DoBoot()
     {
+        $this->Dump();
         if (isset($this->providers) && $this->providers != null && is_array($this->providers) && count($this->providers) > 0) {
             foreach ($this->providers as $item) {
                 if (method_exists($item, 'boot'))

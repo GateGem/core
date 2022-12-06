@@ -67,7 +67,7 @@ trait WithTableIndex
             if (!isset($option['fields'])) $option['fields'] = [];
             $option = apply_filters('filter_table_option_' . $this->module, $option);
             $this->option_temp = $option;
-            
+
             $this->viewEdit = getValueByKey($option, 'viewEdit', 'core::table.edit');
             if ($option && $this->checkAction()) {
                 $option['fields'][] =  [
@@ -112,6 +112,7 @@ trait WithTableIndex
         if (!$this->modal_isPage) {
             $this->modal_size = getValueByKey($option, 'page_size',  Modal::ExtraLarge);
         }
+
         $this->setTitle(__(getValueByKey($option, 'title', 'core::tables.' . $this->module . '.title')));
         $this->pageSize = getValueByKey($option, 'pageSize', 10);
         do_action("module_loaddata", $this->module, $this);
@@ -121,7 +122,9 @@ trait WithTableIndex
     {
         if (!$module) return abort(404);
         $this->module = $module;
-        $this->code_permission = 'core.' . $this->module;
+        $this->_code_permission = 'core.' . $this->module;
+        if (!$this->checkPermissionView())
+            return abort(403);
         $this->LoadData();
     }
     public function getModel()
@@ -204,22 +207,22 @@ trait WithTableIndex
     }
     public function checkAdd(): bool
     {
-        return getValueByKey($this->getAction(), 'add', true) && Gate::check($this->code_permission . '.add');
+        return getValueByKey($this->getAction(), 'add', true) && Gate::check($this->_code_permission . '.add');
     }
     protected function checkEdit()
     {
-        return getValueByKey($this->getAction(), 'edit', true) && Gate::check($this->code_permission . '.edit');
+        return getValueByKey($this->getAction(), 'edit', true) && Gate::check($this->_code_permission . '.edit');
     }
     protected function checkRemove()
     {
-        return getValueByKey($this->getAction(), 'delete', true) && Gate::check($this->code_permission . '.delete');
+        return getValueByKey($this->getAction(), 'delete', true) && Gate::check($this->_code_permission . '.delete');
     }
     protected function checkInportExcel()
     {
-        return getValueByKey($this->getAction(), 'inport', true) && Gate::check($this->code_permission . '.inport');
+        return getValueByKey($this->getAction(), 'inport', true) && Gate::check($this->_code_permission . '.inport');
     }
     protected function checkExportExcel()
     {
-        return getValueByKey($this->getAction(), 'export', true) && Gate::check($this->code_permission . '.export');
+        return getValueByKey($this->getAction(), 'export', true) && Gate::check($this->_code_permission . '.export');
     }
 }

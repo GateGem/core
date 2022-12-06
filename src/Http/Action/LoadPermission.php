@@ -68,7 +68,7 @@ class LoadPermission extends ActionBase
         foreach ($table as $key => $value) {
             self::SetPermission('core.' . $key, 1);
         }
-        $temp = apply_filters('permission_custom', []);
+        $temp = apply_filters('core_auth_permission_custom',  config('core.permission.custom') ?? []);
         if ($temp != null) {
             foreach ($temp as $key) {
                 self::SetPermission($key);

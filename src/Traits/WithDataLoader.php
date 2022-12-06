@@ -30,8 +30,10 @@ trait WithDataLoader
     public static function load($path)
     {
         $files = Core::AllFile($path);
-        foreach ($files as $file) {
-            self::Data($file->getBasename('.' . $file->getExtension()), Core::FileReturn($file->getRealPath()));
+        if ($files && count($files)) {
+            foreach ($files as $file) {
+                self::Data($file->getBasename('.' . $file->getExtension()), Core::FileReturn($file->getRealPath()));
+            }
         }
     }
 }

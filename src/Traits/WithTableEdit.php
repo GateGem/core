@@ -80,6 +80,10 @@ trait WithTableEdit
     {
         $this->dataId = $dataId;
         if (!$module) return abort(404);
+
+        $this->_code_permission = 'core.' . $this->module . ($dataId ? '.edit' : '.add');
+        if (!$this->checkPermissionView())
+            return abort(403);
         $this->module = $module;
         $this->LoadData();
     }

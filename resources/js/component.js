@@ -3,7 +3,7 @@ import { getCsrfToken } from "./util/getCsrfToken";
 import { htmlToElement } from "./util/html";
 const loadComponentTo = (name, param, toEl) => {
   let csrfToken = getCsrfToken();
-  fetch(`${web_base_url}lara/livewire/component/${name}`, {
+  fetch(`${web_base_url}gategem/livewire/component/${name}`, {
     method: "POST",
     credentials: "same-origin",
     body: JSON.stringify({
@@ -25,7 +25,7 @@ const loadComponentTo = (name, param, toEl) => {
         toEl.appendChild(el);
         livewire.rescan();
         loadEventComponent(el);
-        window.dispatchEvent(new CustomEvent('loadComponent', {'detail': el}))
+        window.dispatchEvent(new CustomEvent("loadComponent", { detail: el }));
       }
       loader.close();
     })

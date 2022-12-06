@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use GateGem\Core\Exceptions\InvalidPackage;
 use GateGem\Core\Facades\Core;
+use GateGem\Core\Facades\Theme;
 use GateGem\Core\Loader\LivewireLoader;
+use GateGem\Core\Loader\OptionLoader;
+use GateGem\Core\Loader\TableLoader;
 use GateGem\Core\Support\Core\ServicePackage;
 use ReflectionClass;
 
@@ -50,6 +53,9 @@ trait WithServiceProvider
             $this->mergeConfigFrom($this->package->basePath("/../config/{$configFileName}.php"), $configFileName);
         }
 
+        Theme::Load($this->package->basePath('/../themes'));
+        TableLoader::load($this->package->basePath('/../config/tables'));
+        OptionLoader::load($this->package->basePath('/../config/options'));
         $this->packageRegistered();
 
         return $this;

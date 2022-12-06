@@ -2,11 +2,11 @@
 
 namespace GateGem\Core\Support\Module;
 
-use GateGem\Core\Traits\WithLoadInfoJson;
+use GateGem\Core\Traits\WithSystemExtend;
 
 class ModuleManager
 {
-    use WithLoadInfoJson;
+    use WithSystemExtend;
     public function getName()
     {
         return "module";

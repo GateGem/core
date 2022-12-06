@@ -3,6 +3,7 @@
 namespace GateGem\Core\Support\Core;
 
 use GateGem\Core\Traits\WithHookListener;
+use Illuminate\Support\Facades\Log;
 
 class FilterHook
 {

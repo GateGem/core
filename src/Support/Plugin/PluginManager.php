@@ -2,11 +2,11 @@
 
 namespace GateGem\Core\Support\Plugin;
 
-use GateGem\Core\Traits\WithLoadInfoJson;
+use GateGem\Core\Traits\WithSystemExtend;
 
 class PluginManager
 {
-    use WithLoadInfoJson;
+    use WithSystemExtend;
     public function getName()
     {
         return "plugin";

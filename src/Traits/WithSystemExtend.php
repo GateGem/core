@@ -4,8 +4,9 @@ namespace GateGem\Core\Traits;
 
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Support\Core\DataInfo;
+use Illuminate\Support\Facades\Cache;
 
-trait WithLoadInfoJson
+trait WithSystemExtend
 {
     public function __construct()
     {
@@ -100,5 +101,17 @@ trait WithLoadInfoJson
     {
         $this->arrData[$path] = new DataInfo($path, $this);
         return $this->arrData[$path];
+    }
+    public function getUsed()
+    {
+        return Cache::get($this->getName() . '_used');
+    }
+    public function setUsed($name)
+    {
+        Cache::forever($this->getName() . '_used', $name);
+    }
+    public function forgetUsed()
+    {
+        Cache::forget($this->getName() . '_used');
     }
 }

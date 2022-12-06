@@ -11,6 +11,14 @@ return [
     'web' => [
         'admin' => '',
     ],
+    'permission' => [
+        'guest' => ['core.dashboard'],
+        'custom' => [
+            'core.user.permission',
+            'core.role.permission',
+            'core.permission.load-permission'
+        ],
+    ],
     'appdir' => [
         'root' => 'GateApp',
         'theme' => 'Themes',

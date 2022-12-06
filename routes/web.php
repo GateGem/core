@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Theme;
 use GateGem\Core\Http\Middleware\Authenticate;
-use GateGem\Core\Http\Middleware\HtmlMinifier;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +16,7 @@ use GateGem\Core\Http\Middleware\HtmlMinifier;
 |
 */
 
-Route::group(['prefix' => 'lara', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'gategem', 'middleware' => ['web']], function () {
     Route::post('/livewire/component/{slug}', [GateGem\Core\Http\Controllers\LaraServiceController::class, 'loadComponent']);
     Route::post('/switchSidebar', [GateGem\Core\Http\Controllers\LaraServiceController::class, 'switchSidebar']);
 });

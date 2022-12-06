@@ -72,8 +72,8 @@ class CoreManager
     public function MapPermissionModule($arr)
     {
         if (is_array($arr)) {
-            if ($arr['name'] == 'core.table.slug') {
-                return 'core.module.' . getValueByKey($arr, 'param.module', '');
+            if ($arr['name'] == 'core.table.slug' && ($module = getValueByKey($arr, 'param.module', '')) != '') {
+                return 'core.' . $module;
             }
             return $arr['name'];
         }
@@ -313,5 +313,13 @@ class CoreManager
         } else {
             $this->filesystem->link($target, $link);
         }
+    }
+    public function getPermissionGuest()
+    {
+        return apply_filters('core_auth_permission_guest', config('core.permission.guest') ?? []);
+    }
+    public function getPermissionCustom()
+    {
+        return apply_filters('core_auth_permission_custom', config('core.permission.custom') ?? []);
     }
 }

@@ -4,12 +4,11 @@ namespace GateGem\Core\Support\Theme;
 
 use GateGem\Core\Support\Core\Assets;
 use GateGem\Core\Support\Core\DataInfo;
-use GateGem\Core\Traits\WithLoadInfoJson;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use GateGem\Core\Traits\WithSystemExtend;
 
 class ThemeManager
 {
-    use WithLoadInfoJson;
+    use WithSystemExtend;
     public function getName()
     {
         return "theme";

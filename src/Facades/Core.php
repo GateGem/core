@@ -31,6 +31,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed AllClassFile(string $path,string $namespace,callable $callback = null,callable $filter = null)
  * @method static mixed AllFolder(string $path,callable $callback = null,callable $filter = null)
  * @method static mixed Link(string $target,string $link,bool $relative = false,bool $force = true)
+ * @method static mixed getPermissionGuest()
+ * @method static mixed getPermissionCustom()
+ * 
  * 
  * @see \GateGem\Core\Facades\Core
  */

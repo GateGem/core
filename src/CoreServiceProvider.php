@@ -14,6 +14,7 @@ use GateGem\Core\Builder\Menu\MenuBuilder;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Module;
 use GateGem\Core\Facades\Plugin;
+use Illuminate\Support\Facades\Log;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -69,6 +70,12 @@ class CoreServiceProvider extends ServiceProvider
                 'jp' => 'jp'
             ];
         });
+        add_filter('core_auth_filter_gate', function ($prev, $user, $permission) {
+            if ($permission->slug == 'core.option') {
+                return false;
+            }
+            return $prev;
+        }, 20, 3);
     }
     public function registerMenu()
     {
@@ -92,30 +99,33 @@ class CoreServiceProvider extends ServiceProvider
         Theme::LoadApp();
         Module::LoadApp();
         Plugin::LoadApp();
-        Theme::Load(__DIR__ . '/../themes');
-        TableLoader::load(__DIR__ . '/../config/tables');
-        OptionLoader::load(__DIR__ . '/../config/options');
         $this->registerMenu();
         $this->extending();
     }
     private function bootGate()
     {
         if (!$this->app->runningInConsole()) {
+
             app(config('core.auth.permission', \GateGem\Core\Models\Permission::class))->get()->map(function ($permission) {
                 Gate::define($permission->slug, function ($user = null) use ($permission) {
                     if (!$user) $user = auth();
+                    if ($user->isBlock()) return false;
+                    if (!apply_filters('core_auth_filter_gate', true, $user, $permission) || !apply_filters('core_auth_filter_gate_admin', true, $user)) return false;
                     return $user->hasPermissionTo($permission) || $user->isSuperAdmin();
                 });
             });
             Gate::before(function ($user, $ability) {
                 if (!$user) $user = auth();
-                if ($user->isSuperAdmin()) {
+                if (apply_filters('core_auth_filter_gate_admin', true, $user) && $user->isSuperAdmin()) {
                     return true;
                 }
             });
-            Gate::define(Core::adminPrefix(), function ($user) {
-                return true;
-            });
+            foreach (Core::getPermissionGuest() as $item) {
+                Gate::define($item, function () {
+                    return true;
+                });
+            }
+
 
             //Blade directives
             Blade::directive('role', function ($role) {
@@ -125,32 +135,22 @@ class CoreServiceProvider extends ServiceProvider
             Blade::directive('endrole', function ($role) {
                 return "endif;"; //return this endif statement inside php tag
             });
-            add_filter('permission_custom', function ($prev) {
-                return [
-                    ...$prev,
-                    'core.module.user.permission',
-                    'core.module.role.permission',
-                    'core.module.permission.load-permission',
-                ];
-            });
         }
     }
     public function bootingPackage()
     {
-        Theme::RegisterApp();
+        add_link_symbolic(__DIR__ . '/../public', public_path('modules/gate-core'));
+        add_asset_js(asset('modules/gate-core/js/gate-core.js'), '', 0);
+        add_asset_css(asset('modules/gate-core/css/gate-core.css'), '',  0);
+        add_asset_css('https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css', 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css',  0);
+
         Module::RegisterApp();
         Plugin::RegisterApp();
     }
     public function packageBooted()
     {
-        add_link_symbolic(__DIR__ . '/../public', public_path('modules/lara-core'));
-        add_asset_js(asset('modules/lara-core/js/lara-core.js'), '', 0);
-        add_asset_css(asset('modules/lara-core/css/lara-core.css'), '',  0);
-        add_asset_css('https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css', 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css',  0);
-
-
+        Module::BootApp();
+        Plugin::BootApp();
         $this->bootGate();
-        // Module::BootApp();
-        // Plugin::BootApp();
     }
 }

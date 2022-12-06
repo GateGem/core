@@ -6,6 +6,7 @@ use GateGem\Core\Builder\HtmlBuilder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 use GateGem\Core\Facades\Core;
+use Illuminate\Support\Facades\Log;
 
 class MenuBuilder extends HtmlBuilder
 {
@@ -109,7 +110,7 @@ class MenuBuilder extends HtmlBuilder
     public function checkPermission()
     {
         $permission = $this->getPermission();
-        return $permission == '' || Gate::check($permission, [auth()]);
+        return $permission == '' || Gate::check($permission);
     }
     public function checkChild()
     {
@@ -171,7 +172,7 @@ class MenuBuilder extends HtmlBuilder
             $item = new MenuBuilder();
             $callback($item);
             $item->processLinkHref();
-            if ($item->checkPermission()|| true) {
+            if ($item->checkPermission()) {
                 $item->isCheckActive = $this->isCheckActive;
                 $item->BindData();
                 $this->items[] = $item;
@@ -200,7 +201,7 @@ class MenuBuilder extends HtmlBuilder
                     }
                 }
                 if ($attrLink == "" && $item->checkChild() == false) continue;
-                $attrLink = $attrLink.' permission="'. $this->getPermission() .'" ';
+                $attrLink = $attrLink . ' permission="' . $this->getPermission() . '" ';
                 echo "<li class='menu-item " . ($item->checkActive() ? 'active' : '') . "'>";
                 echo "<a $attrLink title='" . $item->getValue('name', '') . "'>";
                 if ($item->checkValue('icon'))

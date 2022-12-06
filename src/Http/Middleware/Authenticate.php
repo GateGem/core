@@ -3,10 +3,26 @@
 namespace GateGem\Core\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Closure;
+use GateGem\Core\Facades\Core;
+use Illuminate\Support\Facades\Gate;
 
 class Authenticate extends Middleware
 {
-    
+    public function handle($request, Closure $next, ...$guards)
+    {
+        /** @var \App\User $user */
+        $user = $request->user();
+        // Like: users.index
+        $route = app()->router->getCurrentRoute()->getName();
+
+        $guest_permission = Core::getPermissionGuest();
+        // Hasn't permission
+        if ((count($guest_permission) === 0 || !in_array($route, $guest_permission)) && !empty($user) && !$user->isSuperAdmin() && !empty($route) && !Gate::check($route, [$user])) {
+            return abort(403);
+        }
+        return parent::handle($request, $next, ...$guards);
+    }
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
