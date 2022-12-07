@@ -35,8 +35,7 @@ class CoreServiceProvider extends ServiceProvider
             ->hasAssets()
             ->hasTranslations()
             ->runsMigrations()
-            ->runsSeeds()
-            ->hasRoutes('web');
+            ->runsSeeds();
     }
     public function extending()
     {

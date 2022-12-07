@@ -9,10 +9,12 @@ use Illuminate\Support\Str;
 use GateGem\Core\Exceptions\InvalidPackage;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Theme;
+use GateGem\Core\Http\Middleware\Authenticate;
 use GateGem\Core\Loader\LivewireLoader;
 use GateGem\Core\Loader\OptionLoader;
 use GateGem\Core\Loader\TableLoader;
 use GateGem\Core\Support\Core\ServicePackage;
+use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 
 trait WithServiceProvider
@@ -186,10 +188,22 @@ trait WithServiceProvider
                 $this->package->basePath("/../resources/stubs/{$this->package->publishableProviderName}.php.stub") => base_path("app/Providers/{$this->package->publishableProviderName}.php"),
             ], "{$this->package->shortName()}-provider");
         }
+        if (Core::FileExists($this->package->basePath('/../routes/api.php')))
+            Route::middleware('api')
+                ->prefix('api')
+                ->group($this->package->basePath('/../routes/api.php'));
 
-        foreach ($this->package->routeFileNames as $routeFileName) {
-            $this->loadRoutesFrom("{$this->package->basePath('/../routes/')}{$routeFileName}.php");
-        }
+        if (Core::FileExists($this->package->basePath('/../routes/web.php')))
+            Route::middleware('web')
+                ->group($this->package->basePath('/../routes/web.php'));
+
+        if (Core::FileExists($this->package->basePath('/../routes/admin.php')))
+            Route::middleware('web', Authenticate::class)
+                ->prefix(Core::adminPrefix())
+                ->group($this->package->basePath('/../routes/admin.php'));
+        // foreach ($this->package->routeFileNames as $routeFileName) {
+        //     $this->loadRoutesFrom("{$this->package->basePath('/../routes/')}{$routeFileName}.php");
+        // }
 
         foreach ($this->package->sharedViewData as $name => $value) {
             View::share($name, $value);

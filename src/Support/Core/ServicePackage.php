@@ -29,8 +29,6 @@ class ServicePackage
 
     public array $migrationFileNames = [];
 
-    public array $routeFileNames = [];
-
     public array $commands = [];
 
     public array $viewComponents = [];
@@ -69,18 +67,6 @@ class ServicePackage
 
         return $this;
     }
-
-    public function hasInstallCommand($callable): self
-    {
-        $installCommand = new InstallCommand($this);
-
-        $callable($installCommand);
-
-        $this->commands[] = $installCommand;
-
-        return $this;
-    }
-
     public function shortName(): string
     {
         return Str::after($this->name, 'laravel-');
@@ -197,21 +183,6 @@ class ServicePackage
 
         return $this;
     }
-
-    public function hasRoute(string $routeFileName): self
-    {
-        $this->routeFileNames[] = $routeFileName;
-
-        return $this;
-    }
-
-    public function hasRoutes(...$routeFileNames): self
-    {
-        $this->routeFileNames = array_merge($this->routeFileNames, collect($routeFileNames)->flatten()->toArray());
-
-        return $this;
-    }
-
     public function basePath(string $directory = null): string
     {
         if ($directory === null) {
