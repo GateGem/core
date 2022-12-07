@@ -118,7 +118,7 @@ trait WithTableEdit
         foreach ($fields as $item) {
             if (isset($item['field']) && $item['field'] != '') {
                 $valuePreview = $this->{$item['field']};
-                if (is_object($valuePreview)) {
+                if ($valuePreview && $valuePreview instanceof \Illuminate\Http\UploadedFile) {
                     if (isset($item['imageFolder']) && $item['imageFolder'] != '')
                         $valuePreview = $valuePreview->store('public/' . $item['imageFolder']);
                     else
