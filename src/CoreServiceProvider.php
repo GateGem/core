@@ -3,17 +3,15 @@
 namespace GateGem\Core;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use GateGem\Core\Facades\Theme;
-use GateGem\Core\Loader\OptionLoader;
-use GateGem\Core\Loader\TableLoader;
 use GateGem\Core\Support\Core\ServicePackage;
 use GateGem\Core\Traits\WithServiceProvider;
 use GateGem\Core\Builder\Menu\MenuBuilder;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Module;
 use GateGem\Core\Facades\Plugin;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
 class CoreServiceProvider extends ServiceProvider

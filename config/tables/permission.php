@@ -20,7 +20,7 @@ return [
                 'title' => 'core::tables.permission.button.load',
                 'icon' => '<i class="bi bi-magic"></i>',
                 'type' => 'new',
-                'permission' => 'core.module.permission.load-permission',
+                'permission' => 'core.permission.load-permission',
                 'action' => function () {
                     return get_do_action_hook(LoadPermission::class, '{}');
                 }

@@ -51,12 +51,10 @@ class CoreCommand extends Command
 
     protected function copyServiceProviderInApp(): self
     {
-        ReplaceTextInFile(app_path('Models/User.php'), "Illuminate\\Foundation\\Auth\\User", "GateGem\\Core\\Models\\User");
+        ReplaceTextInFile(app_path('Models/User.php'), "Illuminate\\Foundation\\Auth\\User", "GateGem\\Core\\Models\\User",true,"GateGem\\Core\\Models\\User");
         $this->info("App/Models/User.php has been updated!");
-        ReplaceTextInFile(app_path('Http/Kernel.php'), "\\App\\Http\\Middleware\\VerifyCsrfToken::class,", "\\App\\Http\\Middleware\\VerifyCsrfToken::class,\n\\GateGem\\Core\\Http\\Middleware\\CoreMiddleware::class,", true);
+        ReplaceTextInFile(app_path('Http/Kernel.php'), "\\App\\Http\\Middleware\\VerifyCsrfToken::class,", "\\App\\Http\\Middleware\\VerifyCsrfToken::class,\n\\GateGem\\Core\\Http\\Middleware\\CoreMiddleware::class,", true,"GateGem\\Core\\Http\\Middleware\\CoreMiddleware::class");
         $this->info("App/Http/Kernel.php has been updated!");
-        ReplaceTextInFile(base_path('database/seeders/DatabaseSeeder.php'), "\\App\\Models\\User::factory(10)->create();", "\\App\\Models\\User::factory(10)->create();\n\t\t\$this->call([\\GateGem\\Core\\Database\\Seeders\\InitGateGemSeeder::class]);", true);
-        $this->info("database/seeders/DatabaseSeeder.php has been updated!");
         Core::checkFolder();
         $this->call('storage:link');
         return $this;

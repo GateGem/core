@@ -126,7 +126,7 @@ trait WithServiceProvider
             }
 
             if ($this->package->runsSeeds) {
-                $seedFiles =  Core::AllFile($this->package->basePath("/../database/Seeders/"));
+                $seedFiles =  Core::AllFile($this->package->basePath("/../database/seeders/"));
                 if ($seedFiles && count($seedFiles) > 0) {
                     foreach ($seedFiles  as $file) {
                         if ($file->getExtension() == "php") {

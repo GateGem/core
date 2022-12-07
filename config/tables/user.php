@@ -1,6 +1,7 @@
 <?php
 
 use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Facades\Core;
 
 return [
     'model' => GateGem\Core\Models\User::class,
@@ -17,7 +18,7 @@ return [
             [
                 'title' => 'core::tables.user.button.permission',
                 'icon' => '<i class="bi bi-magic"></i>',
-                'permission' => 'core.module.user.permission',
+                'permission' => 'core.user.permission',
                 'class' => 'btn-primary',
                 'type' => 'update',
                 'action' => function ($id) {
@@ -97,7 +98,7 @@ return [
                 });
             },
             'funcCell' => function ($row, $column) {
-                if (\Gate::check('core.module.user.change-status')) {
+                if (Core::checkPermission('core.user.change-status')) {
                     if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
                         return '<button ' . aciton_change_field_value_hook('{"message":"core::tables.user.message.unactivated","id":' . $row['id'] . ',"field":"' . $column['field'] . '","value":0}') . ' class="btn btn-primary btn-sm text-nowrap">' . __('core::enums.status.1') . '</button>';
                     }

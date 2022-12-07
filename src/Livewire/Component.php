@@ -2,9 +2,9 @@
 
 namespace GateGem\Core\Livewire;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Theme;
 use GateGem\Core\Traits\WithDoAction;
-use Illuminate\Support\Facades\Gate;
 use Livewire\Component as ComponentBase;
 
 class Component extends ComponentBase
@@ -13,7 +13,7 @@ class Component extends ComponentBase
     public $_code_permission = "";
     public function checkPermissionView()
     {
-        return $this->_code_permission == '' || Gate::check($this->_code_permission);
+        return $this->_code_permission == '' || Core::checkPermission($this->_code_permission);
     }
     public $_dataTemps = [];
     protected function getListeners()

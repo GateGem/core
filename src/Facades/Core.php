@@ -33,6 +33,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static mixed Link(string $target,string $link,bool $relative = false,bool $force = true)
  * @method static mixed getPermissionGuest()
  * @method static mixed getPermissionCustom()
+ * @method static \GateGem\Core\Models\User user()
+ * @method static bool checkPermission(string $per)
  * 
  * 
  * @see \GateGem\Core\Facades\Core

@@ -13,10 +13,10 @@ use Symfony\Component\Finder\SplFileInfo;
 use GateGem\Core\Facades\Module;
 use GateGem\Core\Facades\Plugin;
 use GateGem\Core\Facades\Theme;
+use Illuminate\Support\Facades\Gate;
 
 class CoreManager
 {
-
     private $app;
     private $filesystem;
 
@@ -27,7 +27,15 @@ class CoreManager
         $this->app = $app;
         $this->filesystem = $filesystem;
     }
-
+    private $user;
+    public function user()
+    {
+        return $this->user ?? ($this->user = request()->user());
+    }
+    public function checkPermission(string $per = '')
+    {
+        return $per == '' || Gate::check($per, [$this->user()]);
+    }
     /**
      * Setup an after resolving listener, or fire immediately if already resolved.
      *

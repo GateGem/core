@@ -238,6 +238,9 @@ class DataInfo implements \ArrayAccess
         chdir($this->getPath());
         passthru('composer dump -o -n -q');
     }
+    public function update()
+    {
+    }
     public function CheckName($name)
     {
         return $this->getKey() == $name || $this->getValue('name') == $name;
@@ -279,7 +282,6 @@ class DataInfo implements \ArrayAccess
     }
     public function DoBoot()
     {
-        $this->Dump();
         if (isset($this->providers) && $this->providers != null && is_array($this->providers) && count($this->providers) > 0) {
             foreach ($this->providers as $item) {
                 if (method_exists($item, 'boot'))

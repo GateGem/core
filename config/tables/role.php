@@ -17,7 +17,7 @@ return [
             [
                 'title' =>  'core::tables.role.button.permission',
                 'icon' => '<i class="bi bi-magic"></i>',
-                'permission' => 'core.module.role.permission',
+                'permission' => 'core.role.permission',
                 'class' => 'btn-primary',
                 'type' => 'update',
                 'action' => function ($id) {

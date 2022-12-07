@@ -57,10 +57,10 @@ if (!function_exists('groupBy')) {
 }
 
 if (!function_exists('ReplaceTextInFile')) {
-    function ReplaceTextInFile($file, $search, $replace, $checkOnly = false)
+    function ReplaceTextInFile($file, $search, $replace, $checkOnly = false, $textCheck = '')
     {
         $content = file_get_contents($file);
-        if ($checkOnly && Str::contains($replace, $content, true)) {
+        if ($checkOnly && (Str::contains($replace, $content, true)|| ($textCheck!=''&&Str::contains($textCheck, $content, true)))) {
             return;
         }
         file_put_contents($file, str_replace(

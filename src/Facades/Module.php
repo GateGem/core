@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static void delete(string $name)
  * @method static void Load(string $path)
  * @method static void AddItem(string $path)
+ * @method static string getUsed()
+ * @method static void forgetUsed()
+ * @method static void setUsed(string $name)
+ * @method static void update(string $name)
  *
  * @see \GateGem\Core\Facades\Module
  */

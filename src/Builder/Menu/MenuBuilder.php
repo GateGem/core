@@ -3,7 +3,6 @@
 namespace GateGem\Core\Builder\Menu;
 
 use GateGem\Core\Builder\HtmlBuilder;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 use GateGem\Core\Facades\Core;
 use Illuminate\Support\Facades\Log;
@@ -109,8 +108,7 @@ class MenuBuilder extends HtmlBuilder
     }
     public function checkPermission()
     {
-        $permission = $this->getPermission();
-        return $permission == '' || Gate::check($permission);
+        return Core::checkPermission($this->getPermission());
     }
     public function checkChild()
     {

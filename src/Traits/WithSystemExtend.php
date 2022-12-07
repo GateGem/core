@@ -114,4 +114,11 @@ trait WithSystemExtend
     {
         Cache::forget($this->getName() . '_used');
     }
+    public function update(string $name)
+    {
+        $base = $this->find($name);
+        if ($base) {
+            $base->update();
+        }
+    }
 }

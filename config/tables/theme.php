@@ -1,6 +1,7 @@
 <?php
 
 use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Theme;
 
 return [
@@ -60,7 +61,7 @@ return [
                 });
             },
             'funcCell' => function ($row, $column) {
-                if (\Gate::check('core.table.theme.change-status')) {
+                if (Core::checkPermission('core.table.theme.change-status')) {
                     if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
                         return '<button ' . aciton_change_field_value_hook('{"id":"' . $row['name'] . '","field":"' . $column['field'] . '","value":0,"key":"key"}') . ' class="btn btn-primary btn-sm text-nowrap">' . __('core::enums.status.1') . '</button>';
                     }

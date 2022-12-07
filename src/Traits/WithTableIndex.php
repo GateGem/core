@@ -2,7 +2,6 @@
 
 namespace GateGem\Core\Traits;
 
-use Illuminate\Support\Facades\Gate;
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Loader\TableLoader;
 use GateGem\Core\Utils\ColectionPaginate;
@@ -84,7 +83,7 @@ trait WithTableIndex
                         }
                         $buttonAppend = getValueByKey($option, 'action.append', []);
                         foreach ($buttonAppend as $button) {
-                            if (getValueByKey($button, 'type', '') == 'update' && (!isset($button['permission']) ||  Gate::check($button['permission']))) {
+                            if (getValueByKey($button, 'type', '') == 'update' && (!isset($button['permission']) ||  \GateGem\Core\Facades\Core::checkPermission($button['permission']))) {
                                 $html = $html . ' <button class="btn btn-sm  ' . getValueByKey($button, 'class', 'btn-danger') . ' " ' .  ($button['action']($row[getValueByKey($option, 'modalkey', 'id')], $row)) . '\'>' . getValueByKey($button, 'icon', '') . ' <span> ' . __(getValueByKey($button, 'title', '')) . ' </span></button>';
                             }
                         }
@@ -210,22 +209,22 @@ trait WithTableIndex
     }
     public function checkAdd(): bool
     {
-        return getValueByKey($this->getAction(), 'add', true) && Gate::check($this->_code_permission . '.add');
+        return getValueByKey($this->getAction(), 'add', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.add');
     }
     protected function checkEdit()
     {
-        return getValueByKey($this->getAction(), 'edit', true) && Gate::check($this->_code_permission . '.edit');
+        return getValueByKey($this->getAction(), 'edit', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.edit');
     }
     protected function checkRemove()
     {
-        return getValueByKey($this->getAction(), 'delete', true) && Gate::check($this->_code_permission . '.delete');
+        return getValueByKey($this->getAction(), 'delete', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.delete');
     }
     protected function checkInportExcel()
     {
-        return getValueByKey($this->getAction(), 'inport', true) && Gate::check($this->_code_permission . '.inport');
+        return getValueByKey($this->getAction(), 'inport', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.inport');
     }
     protected function checkExportExcel()
     {
-        return getValueByKey($this->getAction(), 'export', true) && Gate::check($this->_code_permission . '.export');
+        return getValueByKey($this->getAction(), 'export', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.export');
     }
 }

@@ -16,7 +16,7 @@
                 @endif
                 @foreach (getValueByKey($option, 'action.append', []) as $button)
                     @if (getValueByKey($button, 'type', '') == 'new' &&
-                        (!isset($button['permission']) || \Gate::check($button['permission'])))
+                        (!isset($button['permission']) || \GateGem\Core\Facades\Core::checkPermission($button['permission'])))
                         <button class="btn btn-sm  {{ getValueByKey($button, 'class', 'btn-danger') }}"
                             {!! getValueByKey($button, 'action', function () {})() !!}> {!! getValueByKey($button, 'icon', '') !!} <span>
                                 {{ __(getValueByKey($button, 'title', ''))}} </span></button>

@@ -3,7 +3,6 @@
 namespace GateGem\Core\Livewire;
 
 use GateGem\Core\Livewire\Contracts\ModalContract;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Request;
 use GateGem\Core\Facades\Theme;
 
@@ -24,11 +23,10 @@ abstract class Modal extends Component implements ModalContract
     public $modal_title = "";
     public $modal_isPage = false;
     public $modal_size = Modal::Large;
-    public $modal_permission = "";
 
     public function boot()
     {
-        
+
         $this->modal_isPage = Request::method() == 'GET';
     }
     public function setTitle($modal_title)
@@ -37,9 +35,8 @@ abstract class Modal extends Component implements ModalContract
     }
     public function viewModal($content = null, $params = [], $footer = null, $header = null)
     {
-        if (isset($this->modal_permission) && $this->modal_permission != '') {
-            if (!Gate::check($this->modal_permission, [auth()]))
-                return abort(403);
+        if (!$this->checkPermissionView()) {
+            return abort(403);
         }
         $this->viewInclude['content'] = $content;
         $this->viewInclude['footer'] = $footer;
