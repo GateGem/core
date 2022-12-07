@@ -243,7 +243,7 @@ class DataInfo implements \ArrayAccess
     }
     public function CheckName($name)
     {
-        return $this->getKey() == $name || $this->getValue('name') == $name;
+        return Str::lower($this->getKey())  ==  Str::lower($name) || Str::lower($this->getValue('name')) == Str::lower($name);
     }
     public function getStudlyName()
     {
