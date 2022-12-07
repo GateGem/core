@@ -6,7 +6,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Request;
 use Livewire\Livewire;
 
-class LaraServiceController extends BaseController
+class GateGemServiceController extends BaseController
 {
     public function loadComponent($slug)
     {

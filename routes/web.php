@@ -17,8 +17,8 @@ use GateGem\Core\Http\Middleware\Authenticate;
 */
 
 Route::group(['prefix' => 'gategem', 'middleware' => ['web']], function () {
-    Route::post('/livewire/component/{slug}', [GateGem\Core\Http\Controllers\LaraServiceController::class, 'loadComponent']);
-    Route::post('/switchSidebar', [GateGem\Core\Http\Controllers\LaraServiceController::class, 'switchSidebar']);
+    Route::post('/livewire/component/{slug}', [GateGem\Core\Http\Controllers\GateGemServiceController::class, 'loadComponent']);
+    Route::post('/switchSidebar', [GateGem\Core\Http\Controllers\GateGemServiceController::class, 'switchSidebar']);
 });
 
 Route::group(['prefix' => Core::adminPrefix(), 'middleware' => ['web', Authenticate::class]], function () {
