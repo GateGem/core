@@ -13,3 +13,5 @@ import "./loader";
 import "./component";
 import "./confirm";
 import "./treeview";
+import "./datetime";
+import "./tagify";

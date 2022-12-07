@@ -28,8 +28,8 @@ class TableBuilder extends HtmlBuilder
             $cell_value = isset($row[$column['field']]) ? $row[$column['field']] : null;
             $funcData = getValueByKey($column, 'funcData', null);
 
-            if ($funcData && is_array($funcData)) {
-            } else if ($funcData) {
+
+            if ($funcData && is_callable($funcData)) {
                 if (!isset($this->cacheData[$column['field']])) {
                     $funcData = $funcData();
                     $this->cacheData[$column['field']] = $funcData;
@@ -37,7 +37,7 @@ class TableBuilder extends HtmlBuilder
                     $funcData = $this->cacheData[$column['field']];
                 }
             }
-            if (!is_null($funcData) && is_array($funcData)) {
+            if (!is_null($funcData) && (is_array($funcData) || $funcData instanceof \Illuminate\Database\Eloquent\Collection)) {
                 foreach ($funcData as $item) {
                     if ($item['id'] == $cell_value) {
                         $cell_value = $item['text'];
