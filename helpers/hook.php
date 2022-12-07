@@ -177,11 +177,3 @@ if (!function_exists('get_option')) {
         return $setting->value ?? $default;
     }
 }
-
-
-if (!function_exists('add_route_admin')) {
-    function add_route_admin($callback)
-    {
-        add_action('register_route_admin', $callback);
-    }
-}
