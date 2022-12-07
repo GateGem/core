@@ -31,13 +31,13 @@
 //     }
 // }
 
-.modal {
-    z-index: 998 !important;
+// .modal {
+//     z-index: 998 !important;
 
-    &:nth-last-child(2) {
-        z-index: var(--bs-modal-zindex) !important;
-    }
-}
+//     &:nth-last-child(1) {
+//         z-index: var(--bs-modal-zindex) !important;
+//     }
+// }
 
 .table {
 
