@@ -148,13 +148,18 @@ trait WithTableIndex
         }
         do_action("module_getdata_before", $this->module, $this);
         do_action("module_" . $this->module . "_getdata_before", $this, $model);
-        foreach ($this->filter as $key => $value) {
-            if ($value == '') {
-                unset($this->filter[$key]);
-            } else {
-                $model = $model->where($key, $value);
+        if (getValueByKey($this->option, 'funcFilter')) {
+            $model = getValueByKey($this->option, 'funcFilter')($model, $this->filter, $this);
+        } else {
+            foreach ($this->filter as $key => $value) {
+                if ($value == '') {
+                    unset($this->filter[$key]);
+                } else {
+                    $model = $model->where($key, $value);
+                }
             }
         }
+
         if ($model instanceof  \Illuminate\Database\Eloquent\Model) {
             foreach ($this->sort as $key => $value) {
                 $model = $model->orderBy($key, $value == 0 ? 'DESC' : 'ASC');

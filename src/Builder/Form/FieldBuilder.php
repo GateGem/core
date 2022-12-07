@@ -25,8 +25,10 @@ class FieldBuilder extends HtmlBuilder
     public const Cron = 15;
     public const MultiCron = 16;
     public const TreeView = 17;
-    public const HtmlBuilder = 18;
+
+    public const Button = 900;
     public const includeInput = 9999;
+
     public const AllColor = ["warning", "info", "danger", "primary", "success"];
     public const secondary = "text-white bg-secondary";
     public const primary = "text-white bg-primary";
@@ -243,6 +245,14 @@ class FieldBuilder extends HtmlBuilder
                 break;
             case FieldBuilder::TreeView:
                 echo TreeViewBuilder::Render($this->data, $this->option, $this->formData);
+                break;
+            case FieldBuilder::Button:
+                echo ' <button type="button" class="btn btn-sm  ' . getValueByKey($this->option, 'class', 'btn-danger') . ' " ' .  ($this->option['action']($this->data, $this->option, $this->formData)) . '\'>' . getValueByKey($this->option, 'icon', '') . ' <span> ' . __(getValueByKey($this->option, 'title', '')) . ' </span></button>';
+                break;
+            case FieldBuilder::includeInput:
+                if (getValueByKey($this->option, 'file')) {
+                    include_once(getValueByKey($this->option, 'file'));
+                }
                 break;
             case FieldBuilder::Text:
             default:

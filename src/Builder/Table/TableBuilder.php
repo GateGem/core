@@ -47,7 +47,7 @@ class TableBuilder extends HtmlBuilder
             }
             if (is_object($cell_value) || is_array($cell_value))
                 htmlentities(print_r($cell_value));
-            else if ($cell_value != ""&&getValueByKey($column, 'fieldType', '') === FieldBuilder::Image) {
+            else if ($cell_value != "" && getValueByKey($column, 'fieldType', '') === FieldBuilder::Image) {
                 echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
             } else if ($cell_value != "")
                 echo htmlentities($cell_value);
@@ -64,7 +64,7 @@ class TableBuilder extends HtmlBuilder
         if ($this->option && isset($this->option['fields'])) {
             echo '<tr>';
             foreach ($this->option['fields'] as $column) {
-                if (getValueByKey($column, 'view', true)) {
+                if (getValueByKey($column, 'view', true) && getValueByKey($column, 'fieldType', FieldBuilder::Text) != FieldBuilder::Button) {
                     $this->RenderCell($row, $column);
                 }
             }
@@ -76,7 +76,10 @@ class TableBuilder extends HtmlBuilder
         echo '<thead  class="table-light"><tr>';
         if ($this->option && isset($this->option['fields'])) {
             foreach ($this->option['fields'] as $column) {
-                if (getValueByKey($column, 'view', true)) {
+                if (getValueByKey($column, 'view', true) && getValueByKey($column, 'fieldType', FieldBuilder::Text) != FieldBuilder::Button) {
+
+
+
                     echo '<td x-data="{ filter: false }" class="position-relative">';
                     echo '<div class="cell-header d-flex flex-row' . getValueByKey($column, 'classHeader', '') . '">';
                     echo '<div class="cell-header_title flex-grow-1">';
@@ -84,11 +87,15 @@ class TableBuilder extends HtmlBuilder
                     echo '</div>';
                     echo '<div class="cell-header_extend">';
                     if (isset($column['field'])) {
-                        echo '<i class="bi bi-funnel" @click="filter = true"></i>';
-                        if (getValueByKey($this->formData, 'sort.' . $column['field'], 1) == 1) {
-                            echo '<i class="bi bi-sort-alpha-down" wire:click="doSort(\'' . $column['field'] . '\',0)"></i>';
-                        } else {
-                            echo '<i class="bi bi-sort-alpha-down-alt" wire:click="doSort(\'' . $column['field'] . '\', 1)"></i>';
+                        if (getValueByKey($this->option, 'columnFilter', true) && getValueByKey($column, "filter", true)) {
+                            echo '<i class="bi bi-funnel" @click="filter = true"></i>';
+                        }
+                        if (getValueByKey($this->option, 'columnSort', true) && getValueByKey($column, "sort", true)) {
+                            if (getValueByKey($this->formData, 'sort.' . $column['field'], 1) == 1) {
+                                echo '<i class="bi bi-sort-alpha-down" wire:click="doSort(\'' . $column['field'] . '\',0)"></i>';
+                            } else {
+                                echo '<i class="bi bi-sort-alpha-down-alt" wire:click="doSort(\'' . $column['field'] . '\', 1)"></i>';
+                            }
                         }
                     }
                     echo '</div>';

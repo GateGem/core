@@ -61,7 +61,7 @@ return [
         ],
         [
             'field' => 'avatar',
-            'imageFolder'=>'user',
+            'imageFolder' => 'user',
             'fieldType' => FieldBuilder::Image,
             'title' => 'core::tables.user.field.avatar',
             'keyColumn' => 'row1_1'

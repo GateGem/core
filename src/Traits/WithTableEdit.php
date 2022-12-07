@@ -58,9 +58,17 @@ trait WithTableEdit
                     $this->{$item['field']} = $data->{$item['field']};
                 else {
                     if ($this->isFormNew) {
-                        $this->{$item['field']} = getValueByKey($item, 'default', '');
+                        $default_value = getValueByKey($item, 'default', '');
+                        if (is_callable($default_value))
+                            $this->{$item['field']} = $default_value($this->isFormNew);
+                        else
+                            $this->{$item['field']} = $default_value;
                     } else {
-                        $this->{$item['field']} = '';
+                        $default_value = getValueByKey($item, 'default', '');
+                        if (is_callable($default_value))
+                            $this->{$item['field']} = $default_value($this->isFormNew);
+                        else
+                            $this->{$item['field']} = '';
                     }
                 }
             }
@@ -80,11 +88,10 @@ trait WithTableEdit
     {
         $this->dataId = $dataId;
         if (!$module) return abort(404);
-
+        $this->module = $module;
         $this->_code_permission = 'core.' . $this->module . ($dataId ? '.edit' : '.add');
         if (!$this->checkPermissionView())
             return abort(403);
-        $this->module = $module;
         $this->LoadData();
     }
     public function SaveForm()

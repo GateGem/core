@@ -5,7 +5,7 @@ use GateGem\Core\Livewire\Modal;
 
 return [
     'model' => \GateGem\Core\Models\Permission::class,
-   // 'DisableModule' => true,
+    // 'DisableModule' => true,
     'enableAction' => true,
 
     'action' => [
