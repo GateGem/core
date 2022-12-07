@@ -123,6 +123,14 @@ class FieldBuilder extends HtmlBuilder
         }
         return (getValueByKey($this->option, 'defer', true) ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', getValueByKey($this->option, 'prex', ''))  . $this->option['field'] . '"';
     }
+    public function getFormatDateTime()
+    {
+        $formatDate = getValueByKey($this->option, 'formatjs', '');
+        if ($formatDate) {
+            return 'data-date-format="' . $formatDate . '"';
+        }
+        return '';
+    }
     public function RenderHtml()
     {
         $fieldType = getValueByKey($this->option, 'fieldType', '');
@@ -138,15 +146,15 @@ class FieldBuilder extends HtmlBuilder
                 break;
 
             case FieldBuilder::Date:
-                echo '<input type="date" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-control el-date" id="input-' . $this->option['field'] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="text" ' . (getValueByKey($this->option, 'attr', '')) . ' ' . $this->getFormatDateTime() . ' class="form-control el-date" id="input-' . $this->option['field'] . '" ' .  $this->getModelField() . ' />';
                 break;
 
             case FieldBuilder::DateTime:
-                echo '<input type="datetime" ' . (getValueByKey($this->option, 'attr', '')) . ' data-enable-time="true" class="form-control el-date" id="input-' . $this->option['field'] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="text" ' . (getValueByKey($this->option, 'attr', '')) . ' ' . $this->getFormatDateTime() . ' data-enable-time="true" class="form-control el-date" id="input-' . $this->option['field'] . '" ' .  $this->getModelField() . ' />';
                 break;
 
             case FieldBuilder::Time:
-                echo '<input type="time" data-mode="time" class="form-control el-date" id="input-' . $this->option['field'] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="text"  ' . (getValueByKey($this->option, 'attr', '')) . ' ' . $this->getFormatDateTime() . ' data-mode="time" class="form-control el-date" id="input-' . $this->option['field'] . '" ' .  $this->getModelField() . ' />';
                 break;
 
             case FieldBuilder::Color:

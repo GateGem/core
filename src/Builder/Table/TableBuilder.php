@@ -45,9 +45,13 @@ class TableBuilder extends HtmlBuilder
                     }
                 }
             }
-            if (is_object($cell_value) || is_array($cell_value))
-                htmlentities(print_r($cell_value));
-            else if ($cell_value != "" && getValueByKey($column, 'fieldType', '') === FieldBuilder::Image) {
+            if (is_object($cell_value) || is_array($cell_value)) {
+                if ($cell_value instanceof \Illuminate\Support\Carbon) {
+                    echo $cell_value->format(getValueByKey($column, 'format', 'd/M/Y'));
+                } else {
+                    htmlentities(print_r($cell_value));
+                }
+            } else if ($cell_value != "" && getValueByKey($column, 'fieldType', '') === FieldBuilder::Image) {
                 echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
             } else if ($cell_value != "")
                 echo htmlentities($cell_value);
@@ -77,8 +81,6 @@ class TableBuilder extends HtmlBuilder
         if ($this->option && isset($this->option['fields'])) {
             foreach ($this->option['fields'] as $column) {
                 if (getValueByKey($column, 'view', true) && getValueByKey($column, 'fieldType', FieldBuilder::Text) != FieldBuilder::Button) {
-
-
 
                     echo '<td x-data="{ filter: false }" class="position-relative">';
                     echo '<div class="cell-header d-flex flex-row' . getValueByKey($column, 'classHeader', '') . '">';
