@@ -143,10 +143,10 @@ if (!function_exists('add_link_symbolic')) {
 }
 
 
-
 if (!function_exists('set_option')) {
     function set_option($key, $value = null, $locked = null)
     {
+      try{
         Cache::forget($key);
         $setting = Option::where('key', $key)->first();
         if ($value !== null) {
@@ -158,6 +158,9 @@ if (!function_exists('set_option')) {
         } else if ($setting != null) {
             $setting->delete();
         }
+      }catch(\Exception $e){
+
+      }
     }
 }
 if (!function_exists('get_option')) {
@@ -167,6 +170,7 @@ if (!function_exists('get_option')) {
      */
     function get_option($key, $default = null)
     {
+      try{
         if (Cache::has($key) && Cache::get($key) != '') return Cache::get($key);
         $setting = Option::where('key', trim($key))->first();
         if ($setting == null) {
@@ -175,5 +179,9 @@ if (!function_exists('get_option')) {
         //Set Cache Forever
         Cache::forever($key, $setting->value);
         return $setting->value ?? $default;
+      }catch(\Exception $e){
+        return $default;
+      }
+      
     }
 }
