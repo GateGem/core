@@ -149,7 +149,7 @@ class JwtManager
         $this->validateHeader((array) $this->urlSafeDecode($token[0]));
 
         // Validate signature.
-        if (!$this->verify($token[0] . '.' . $token[1], $token[2])) {
+        if (!$this->checkVerify($token[0] . '.' . $token[1], $token[2])) {
             throw new JWTException('Invalid token: Signature failed', static::ERROR_SIGNATURE_FAILED);
         }
 
@@ -159,7 +159,21 @@ class JwtManager
 
         return $payload;
     }
-
+    /**
+     * Verify the signature of given input.
+     *
+     * @param string $input
+     * @param string $signature
+     *
+     * @throws JWTException When key is invalid.
+     *
+     * @return bool
+     */
+    public function verify(string| array $token): bool
+    {
+        $token = is_array($token) ? $token : \explode('.', $token, 3);
+        return $this->checkVerify($token[0] . '.' . $token[1], $token[2]);
+    }
     /**
      * Spoof current timestamp for testing.
      *
@@ -203,7 +217,7 @@ class JwtManager
      *
      * @return bool
      */
-    protected function verify(string $input, string $signature): bool
+    protected function checkVerify(string $input, string $signature): bool
     {
         $algo = $this->algos[$this->algo];
 
