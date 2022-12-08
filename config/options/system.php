@@ -15,7 +15,7 @@ return [
         ],
         [
             'field' => 'page_description',
-            'fieldType' => FieldBuilder::Textarea,
+            'fieldType' => FieldBuilder::Quill,
             'title' => 'Page Description',
         ],
         

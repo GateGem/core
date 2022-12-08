@@ -15,3 +15,4 @@ import "./confirm";
 import "./treeview";
 import "./datetime";
 import "./tagify";
+import "./quill/index";

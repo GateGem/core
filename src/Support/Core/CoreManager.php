@@ -129,19 +129,14 @@ class CoreManager
             app()->setLocale(Session::get(self::KeyLanguage));
         }
         // session is available
-        else {
-            Log::info(Session::get(self::KeyLanguage));
-            // set application to session lang
-            app()->setLocale(Session::get(self::KeyLanguage));
-        }
+    
 
         // prefix is missing? add it
         if (!in_array($lang_uri, $languages)) {
             return Redirect::to(URL::current());
         }
         // a valid prefix is there, but not the correct lang? change app lang
-        elseif (in_array($lang_uri, $languages) and $lang_uri != Config::get('app.locale')) {
-            Session::put(self::KeyLanguage, $lang_uri);
+        elseif (in_array($lang_uri, $languages)) {
             app()->setLocale(Session::get(self::KeyLanguage));
         }
     }

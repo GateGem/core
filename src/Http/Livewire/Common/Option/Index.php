@@ -37,7 +37,6 @@ class Index extends Modal
         foreach (getValueByKey($this->getOption(), 'fields', []) as $item) {
             set_option($item['field'],  $this->_dataTemps[$item['field']]);
         }
-        $this->ShowMessage('Update success!');
     }
     public function render()
     {
