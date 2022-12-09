@@ -7,6 +7,7 @@
             File</button>
 
     <button wire:component="core::common.filemanager()" class="btn btn-danger btn-sm">Test</button>
+    <button wire:click="showMessage('test')" class="btn btn-danger btn-sm">Test2</button>
     </div>
     <div class="el-filemanager__body">
         @livewire('core::common.filemanager.folder')
