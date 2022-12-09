@@ -51,6 +51,18 @@ return [
             'keyColumn' => 'row1_1'
         ],
         [
+            'field' => 'admin',
+            'fieldType' => FieldBuilder::Text,
+            'title' => 'core::tables.theme.field.admin',
+            'funcCell' => function ($row, $column) {
+                if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
+                    return 'Admin';
+                }
+                return 'Site';
+            },
+            'keyColumn' => 'row'
+        ],
+        [
             'fieldType' => FieldBuilder::Dropdown,
             'funcData' => function () {
                 return collect([0, 1])->map(function ($item) {

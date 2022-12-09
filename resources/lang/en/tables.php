@@ -26,7 +26,8 @@ return [
             'name' => 'Name',
             'description' => 'Description',
             'status' => 'Status',
-            'title'=>'Title'
+            'title'=>'Title',
+            'admin'=>'admin'
         ]
     ],
     'user' => [
