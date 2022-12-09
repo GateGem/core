@@ -33,10 +33,13 @@ class Folder extends Component
                 'isActive' => $item['value'] == $this->path_current ? 1 : 0
             ];
         })->toArray();
+        $this->emitTo('core::common.filemanager', 'selectPath', $this->path_current, $this->disk);
+        $this->emitTo('core::common.filemanager.file', 'selectPath', $this->path_current, $this->disk);
     }
     public function mount()
     {
         $this->showFolder('');
+        $this->SelectPath('');
         // $this->hideFolder('');
     }
     public function treeFolder($path)

@@ -18,7 +18,7 @@ class Role extends Modal
         $this->role = ModelsRole::with('permissions')->find($this->roleId);
         $this->role_name =  $this->role->name;
         $this->permission =  $this->role->permissions->pluck('id', 'id');
-        $this->setTitle('Phân quyền cho:' .  $this->role_name);
+        $this->setTitle('Setup:' .  $this->role_name);
     }
     public function doSave()
     {
@@ -32,13 +32,14 @@ class Role extends Modal
     public function getOptionTree()
     {
         return [
-            'field'=>'permission',
+            'field' => 'permission',
             'funcData' => function () {
-                return Permission::all()->map(function ($item) {
+
+               return Permission::all()->map(function ($item) {
                     return [
                         'key' => $item->slug,
-                        'text'=>$item->name,
-                        'value'=>$item->id
+                        'text' => $item->name,
+                        'value' => $item->id
                     ];
                 })->toArray();
             }

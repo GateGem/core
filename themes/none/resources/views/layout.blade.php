@@ -81,7 +81,7 @@
     <div id='page-loader'>
         <div class="spinner"></div>
     </div>
-    <div class="modal"></div>
+    
 </body>
 
 </html>

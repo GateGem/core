@@ -90,11 +90,15 @@ class TreeViewBuilder extends HtmlBuilder
         if (count($gropData) == 0) return;
         ksort($gropData, SORT_STRING);
         echo "<ul>";
-        if (!getValueByKey($this->option, 'skipTop', false) && (isset($gropData[$keyPrent]) || $keyPrent == '' || $keyPrent == 'root')) {
-            if ($keyPrent == '') {
-                $keyPrent = "root";
+        if (!getValueByKey($this->option, 'skipTop', false) && (isset($gropData[$keyPrent]) || $treeLevel == 0 || $keyPrent == '' || $keyPrent == 'root')) {
+            if (isset($gropData[$keyPrent])) {
+                $this->TreeRenderItem($keyPrent, $gropData[$keyPrent], $treeLevel);
+            } else {
+                // foreach ($gropData as $key => $items) {
+                //     $this->TreeRenderItem($key, $items, $treeLevel);
+                //     continue;
+                // }
             }
-            $this->TreeRenderItem($keyPrent, $gropData[$keyPrent], $treeLevel);
         }
         foreach ($gropData as $key => $items) {
             if ($keyPrent == $key) {

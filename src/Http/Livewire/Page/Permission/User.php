@@ -20,7 +20,7 @@ class User extends Modal
         $this->user_name = $user->email;
         $this->role = $user->roles->pluck('id', 'id');
         $this->permission = $user->permissions->pluck('id', 'id');
-        $this->setTitle('Phân quyền cho:' . $this->user_name);
+        $this->setTitle('Setup:' . $this->user_name);
     }
     public function doSave()
     {

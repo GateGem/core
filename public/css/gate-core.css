@@ -13930,6 +13930,14 @@ textarea.form-control-lg {
   color: black;
 }
 
+.modal:nth-last-child(2) {
+  z-index: 1062 !important;
+}
+
+.modal-backdrop:nth-last-child(1) {
+  z-index: 1061 !important;
+}
+
 .table .cell-header,
 .table .cell-data {
   display: inline-block;

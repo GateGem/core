@@ -8,7 +8,7 @@
                             <div class="card-body p-md-4 mx-md-3">
 
                                 <div class="text-center">
-                                    <img src="{{asset('modules/lara-core/images/lotus.webp')}}"
+                                    <img src="{{asset('modules/gate-core/images/lotus.webp')}}"
                       style="width: 185px;" alt="logo">
                                     <h4 class="mt-1 mb-3 pb-1">Register to system</h4>
                                 </div>

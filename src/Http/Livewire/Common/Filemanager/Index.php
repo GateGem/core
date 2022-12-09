@@ -6,8 +6,24 @@ use GateGem\Core\Livewire\Modal;
 
 class Index extends Modal
 {
+    public $disk;
+    public $path_current;
+    protected function getListeners()
+    {
+        $listeners = parent::getListeners();
+        return [
+            ...$listeners,
+            'selectPath' => 'eventSelectPath',
+        ];
+    }
+    public function eventSelectPath($path, $local)
+    {
+        $this->disk = $local;
+        $this->path_current = $path;
+    }
     public function mount()
     {
+        $this->modal_size=Modal::FullscreenXL;
     }
     public function render()
     {

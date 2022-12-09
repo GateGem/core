@@ -23,20 +23,19 @@
     }
 }
 
-// .modal-backdrop {
-//     opacity: 0 !important;
-//     visibility: hidden;
+.modal:nth-last-child(2) {
+    z-index: 1062 !important;
+}
 
-//     &:nth-last-child(1) {
-//         visibility: visible;
-//         opacity: var(--bs-backdrop-opacity) !important;
+.modal-backdrop:nth-last-child(1) {
+    z-index: 1061 !important;
+}
+
+//     &::nth-last-child(-n+1) {
+//         z-index: 998 !important;
 //     }
-// }
 
-// .modal {
-//     z-index: 998 !important;
-
-//     &:nth-last-child(1) {
+//     &::nth-last-child(1) {
 //         z-index: var(--bs-modal-zindex) !important;
 //     }
 // }
@@ -90,6 +89,7 @@
         }
     }
 }
+
 .el-image {
     min-height: 150px;
     background: #eee;
@@ -145,7 +145,8 @@
 .bg-dark {
     background-color: #0d1b48 !important;
 }
-.ql-editor{
+
+.ql-editor {
     background: #fff;
     min-height: 200px;
 }

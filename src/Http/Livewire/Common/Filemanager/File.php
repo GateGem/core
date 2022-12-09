@@ -3,18 +3,36 @@
 namespace GateGem\Core\Http\Livewire\Common\Filemanager;
 
 use GateGem\Core\Livewire\Component;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class File extends Component
 {
-    protected function getListeners(){
-        $listeners= parent::getListeners();
+    public $disk;
+    public $path_current;
+    public $files;
+    protected function getListeners()
+    {
+        $listeners = parent::getListeners();
         return [
             ...$listeners,
-            'showFile'=>'eventShowFileInPath'
+            'selectPath' => 'eventSelectPath',
+            'uploadFile' => 'eventUploadFile'
         ];
     }
-    public function eventShowFileInPath($path,$local){
-
+    public function eventSelectPath($path, $local)
+    {
+        $this->disk = $local;
+        $this->path_current = $path;
+        $this->refreshFolder();
+    }
+    public function eventUploadFile($file)
+    {
+        Log::info($file);
+    }
+    public function refreshFolder()
+    {
+        $this->files = Storage::disk($this->disk)->files($this->path_current);
     }
     public function mount()
     {
