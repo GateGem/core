@@ -8,12 +8,34 @@ use Illuminate\Support\Str;
 
 class Folder extends Component
 {
+    protected function getListeners()
+    {
+        return [
+            ...parent::getListeners(),
+            'createFolder' => 'eventCreateFolder'
+        ];
+    }
+    public function eventCreateFolder($name)
+    {
+        $this->createFolder($name, $this->path_current);
+        $this->eventFolderExpand($this->path_current, true);
+    }
     public $disk = 'public';
     public $disks = ['local', 'public', 's3'];
     public $folders = [];
+    public $path_current;
+    public function SelectPath($path)
+    {
+        $this->path_current = $path;
+        $this->folders = collect($this->folders)->map(function ($item) {
+            return [
+                ...$item,
+                'isActive' => $item['value'] == $this->path_current ? 1 : 0
+            ];
+        })->toArray();
+    }
     public function mount()
     {
-        //  $this->folders = $this->getFolder('xin-chao3')->toArray();
         $this->showFolder('');
         // $this->hideFolder('');
     }
@@ -44,10 +66,16 @@ class Folder extends Component
             }
         }
     }
+    public function createFolder($name, $path = '')
+    {
+        $_path = ($path != '' ? $path . '/' : '') . $name;
+        Storage::disk($this->disk)->makeDirectory($_path);
+    }
     public function checkChildInFolder($path)
     {
         return count(Storage::disk($this->disk)->directories($path)) > 0;
     }
+
     public function getFolder($path)
     {
         return collect(Storage::disk($this->disk)->directories($path))->map(function ($item) use ($path) {
@@ -56,11 +84,11 @@ class Folder extends Component
                 'value' => $item,
                 'parent' => $path,
                 'isChild' => $this->checkChildInFolder($item),
-                'key' => 'root.' . str_replace('/', '.', $item)
+                'key' => 'root.' . str_replace('/', '.', str_replace('.', '-', $item))
             ];
         });
     }
-    public function TestEventExpand($value, $show)
+    public function eventFolderExpand($value, $show)
     {
         if ($show) {
             $this->showFolder($value);
@@ -71,7 +99,8 @@ class Folder extends Component
             if ($value == $item['value']) {
                 return [
                     ...$item,
-                    'show' => $show
+                    'show' => $show,
+                    'isChild' => $this->checkChildInFolder($item['value']),
                 ];
             }
             return $item;
@@ -82,7 +111,10 @@ class Folder extends Component
         return [
             'field' => 'abc',
             'funcData' => $this->folders,
-            'event-expand' => 'TestEventExpand'
+            'checkBox' => false,
+            'event-expand' => 'eventFolderExpand',
+            'skipTop' => true,
+            'selectEvent' => 'SelectPath'
         ];
     }
     public function render()

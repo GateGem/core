@@ -25,9 +25,13 @@ trait WithTableIndex
             return [];
         }
     }
+
     protected function getListeners()
     {
-        return ['refreshData' . $this->module => '__loadData', 'refreshData' . $this->id => '__loadData'];
+        return [
+            ...parent::getListeners(),
+            'refreshData' . $this->module => '__loadData'
+        ];
     }
     protected $paginationTheme = 'bootstrap';
     protected $isCheckDisableModule = true;

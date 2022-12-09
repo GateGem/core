@@ -1,10 +1,31 @@
 .el-filemanager {
     width: 100%;
-    min-height: 400px;
+    height: 100%;
+    min-height: 100px;
     background-color: #fff;
+    border: #ccc 1px solid;
+    display: flex;
+    flex-direction: column;
+    flex-basis: auto;
 
     &__toolbar {
         height: 45px;
-        background-color: red;
+        background: #ccc;
+        flex: none;
+    }
+
+    &__body {
+        display: flex;
+
+        &--folder {
+            width: 300px;
+            flex: none;
+            border: #ccc 1px solid;
+        }
+
+        &--file {
+            flex: auto;
+            border: #ccc 1px solid;
+        }
     }
 }

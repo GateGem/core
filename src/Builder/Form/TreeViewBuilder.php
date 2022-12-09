@@ -22,25 +22,25 @@ class TreeViewBuilder extends HtmlBuilder
         }
         return (getValueByKey($this->option, 'defer', true) ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', '')  . $this->option['field'] . '.' . $value . '"';
     }
-    private function TreeRender($data, $treeLevel = 0)
+    private function TreeRenderItem($key, $items, $treeLevel = 0)
     {
-        $gropData =  groupBy($data, function ($item) use ($treeLevel) {
-            if (strlen($item['key']) < $treeLevel) return $item['key'];
-            $pos =  strpos($item['key'], ".", $treeLevel);
-            if (!$pos) return $item['key'];
-            return substr($item['key'], 0, $pos);
-        });
-        if (count($gropData) == 0) return;
-        ksort($gropData, SORT_STRING);
-        echo "<ul>";
-        foreach ($gropData as $key => $items) {
-            if ($treeLevel == 0 || (isset($items[0]['isChild']) && $items[0]['isChild'] && isset($items[0]['show']) && $items[0]['show'])) {
-                echo '<li class="show">';
+        $class_li = '';
+        if ($treeLevel == 0 || (isset($items[0]['isChild']) && $items[0]['isChild'] && isset($items[0]['show']) && $items[0]['show'])) {
+            $class_li .= ' show ';
+        }
+        if (isset($items[0]['isActive']) && $items[0]['isActive']) {
+            $class_li .= ' active ';
+        }
+        echo '<li class="' . $class_li . '">';
+        $key_id = $this->option['field'] . '_' . $items[0]['value'] . '_' . time();
+        if ((isset($items[0]['isChild']) && $items[0]['isChild']) || count($items) > 1) {
+            $selectEvent = getValueByKey($this->option, 'selectEvent', "");
+            if ($selectEvent) {
+                echo '<div wire:click=\'' . $selectEvent . '("' . $items[0]['value'] . '")\'>';
             } else {
-                echo '<li >';
+                echo "<div >";
             }
-            $key_id = $this->option['field'] . '_' . $items[0]['value'] . '_' . time();
-            if ((isset($items[0]['isChild']) && $items[0]['isChild']) || count($items) > 1) {
+            if (getValueByKey($this->option, 'checkBox', true)) {
                 if (((isset($items[0]['show']) && $items[0]['show']) && count($items) > 1) || ((!isset($items[0]['show']) || !$items[0]['show']))) {
                     echo '<i class="bi bi-chevron-down"></i>
                     <i class="bi bi-chevron-right"></i>';
@@ -51,15 +51,56 @@ class TreeViewBuilder extends HtmlBuilder
                 echo '<input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
                     <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
                     </div>';
-                if (count($items) > 1)
-                    $this->TreeRender($items, strlen($key) + 2);
             } else {
-                echo '<div class="form-check  ms-4">
-                <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
-                <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
-                </div>';
+                if (((isset($items[0]['show']) && $items[0]['show']) && count($items) > 1) || ((!isset($items[0]['show']) || !$items[0]['show']))) {
+                    echo '<i class="bi bi-chevron-down"></i>
+                    <i class="bi bi-chevron-right"></i>';
+                }
+                echo '<label class="ps-1 label-item" for="cbk_id_' . $key_id . '" value="' . $items[0]['value'] . '" >' . $items[0]['text'] . '</label>';
             }
-            echo "</li>";
+            echo "</div>";
+            if (count($items) > 1)
+                $this->TreeRender($items, strlen($key) + 2, $key);
+        } else {
+            $selectEvent = getValueByKey($this->option, 'selectEvent', "");
+            if ($selectEvent) {
+                echo '<div wire:click=\'' . $selectEvent . '("' . $items[0]['value'] . '")\'>';
+            } else {
+                echo "<div >";
+            }
+            if (getValueByKey($this->option, 'checkBox', true)) {
+                echo '<div class="form-check  ms-4"> <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
+            <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
+            </div>';
+            } else {
+                echo '<label class="ps-3 label-item" for="cbk_id_' . $key_id . '" value="' . $items[0]['value'] . '">' . $items[0]['text'] . '</label>';
+            }
+            echo "</div>";
+        }
+        echo "</li>";
+    }
+    private function TreeRender($data, $treeLevel = 0, $keyPrent = '')
+    {
+        $gropData =  groupBy($data, function ($item) use ($treeLevel) {
+            if (strlen($item['key']) < $treeLevel) return $item['key'];
+            $pos =  strpos($item['key'], ".", $treeLevel);
+            if (!$pos) return $item['key'];
+            return substr($item['key'], 0, $pos);
+        });
+        if (count($gropData) == 0) return;
+        ksort($gropData, SORT_STRING);
+        echo "<ul>";
+        if (!getValueByKey($this->option, 'skipTop', false) && (isset($gropData[$keyPrent]) || $keyPrent == '' || $keyPrent == 'root')) {
+            if ($keyPrent == '') {
+                $keyPrent = "root";
+            }
+            $this->TreeRenderItem($keyPrent, $gropData[$keyPrent], $treeLevel);
+        }
+        foreach ($gropData as $key => $items) {
+            if ($keyPrent == $key) {
+                continue;
+            }
+            $this->TreeRenderItem($key, $items, $treeLevel);
         }
         echo "</ul>";
     }

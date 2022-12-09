@@ -7436,7 +7436,7 @@ if (window != undefined) {
         var _e$target$closest;
         var eventChangeExpand = (_e$target$closest = e.target.closest(".tree-view")) === null || _e$target$closest === void 0 ? void 0 : _e$target$closest.getAttribute("tree-event-expand");
         if (eventChangeExpand) {
-          var valueInput = li.querySelector("input").value;
+          var valueInput = li.querySelector("input") ? li.querySelector("input").value : li.querySelector(".label-item").getAttribute("value");
           window.livewire.find(wireElent.getAttribute("wire:id"))[eventChangeExpand](valueInput, li.classList.contains("show"));
         }
       }

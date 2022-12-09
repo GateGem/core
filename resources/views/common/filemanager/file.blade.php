@@ -1,3 +1,3 @@
-<div class="el-filemanager__file">
+<div class="el-filemanager__body--file">
     
 </div>

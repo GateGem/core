@@ -13,10 +13,12 @@ if (window != undefined) {
           .closest(".tree-view")
           ?.getAttribute("tree-event-expand");
         if (eventChangeExpand) {
-          let valueInput = li.querySelector("input").value;
+          let valueInput = li.querySelector("input")
+            ? li.querySelector("input").value
+            : li.querySelector(".label-item").getAttribute("value");
           window.livewire
             .find(wireElent.getAttribute("wire:id"))
-            [eventChangeExpand](valueInput,li.classList.contains("show"));
+            [eventChangeExpand](valueInput, li.classList.contains("show"));
         }
       }
     }
@@ -56,10 +58,7 @@ if (window != undefined) {
       elItem.removeEventListener("click", eventClickTreeview);
       elItem.addEventListener("click", eventClickTreeview);
       elItem.querySelectorAll(".cbk_root").forEach((elCheckInput) => {
-        elCheckInput.removeEventListener(
-          "change",
-          eventChangeCheckRootInput
-        );
+        elCheckInput.removeEventListener("change", eventChangeCheckRootInput);
         elCheckInput.addEventListener("change", eventChangeCheckRootInput);
       });
       elItem.querySelectorAll(".form-check-input").forEach((elCheckInput) => {

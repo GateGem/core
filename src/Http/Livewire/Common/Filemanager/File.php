@@ -6,6 +6,16 @@ use GateGem\Core\Livewire\Component;
 
 class File extends Component
 {
+    protected function getListeners(){
+        $listeners= parent::getListeners();
+        return [
+            ...$listeners,
+            'showFile'=>'eventShowFileInPath'
+        ];
+    }
+    public function eventShowFileInPath($path,$local){
+
+    }
     public function mount()
     {
     }

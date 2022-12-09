@@ -15,14 +15,21 @@
                 display: none;
             }
 
+            &.active>div {
+                background: #ccc;
+            }
+
             &.show> {
-                .bi-chevron-right {
-                    display: none;
+                & div {
+                    .bi-chevron-right {
+                        display: none;
+                    }
+
+                    .bi-chevron-down {
+                        display: unset;
+                    }
                 }
 
-                .bi-chevron-down {
-                    display: unset;
-                }
 
                 ul {
                     margin-left: 15px;
