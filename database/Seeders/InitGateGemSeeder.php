@@ -26,8 +26,8 @@ class InitGateGemSeeder extends Seeder
         $roleAdmin->save();
         $userAdmin = new User();
         $userAdmin->name = "nguyen van hau";
-        $userAdmin->email = "admin@lara.asia";
-        $userAdmin->password = "AdMin@123";
+        $userAdmin->email = env('GATE_CORE_EMAIL', "admin@lara.asia");
+        $userAdmin->password = env('GATE_CORE_PASSWORD', "AdMin@123");
         $userAdmin->status = 1;
         $userAdmin->save();
         $userAdmin->roles()->sync([$roleAdmin->id]);

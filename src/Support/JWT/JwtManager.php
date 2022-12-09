@@ -69,9 +69,10 @@ class JwtManager
         string $pass = null
     ) {
         if (!$key)
-            $key = env("JWT_KEY", "O6YyI/TK0EePdIbtiLojqg==");
-        $algo = env("JWT_ALGO", "HS256");
-        $maxAge = env("JWT_MAX_AGE", 3600);
+            $key = env("GATE_JWT_KEY", "O6YyI/TK0EePdIbtiLojqg==");
+        $algo = env("GATE_JWT_ALGO", "HS256");
+        $maxAge = env("GATE_JWT_MAX_AGE", 3600);
+        
         $this->validateConfig($key, $algo, $maxAge, $leeway);
 
         if (\is_array($key)) {
