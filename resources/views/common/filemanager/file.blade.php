@@ -5,7 +5,7 @@
             <div class="file-info" x-data='{ fileInfo: @json($file) }' :class="{ 'active': fileInfo!==undefined && fileSelect === fileInfo }"
                 x-on:click="fileSelect = fileInfo">
                 <div class="file-icon">
-                    <i class="bi bi-folder2 "></i>
+                    <i class="bi bi-file-text "></i>
                 </div>
                 <div class="file-name">
                     {{ $file }}
