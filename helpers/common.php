@@ -60,7 +60,7 @@ if (!function_exists('ReplaceTextInFile')) {
     function ReplaceTextInFile($file, $search, $replace, $checkOnly = false, $textCheck = '')
     {
         $content = file_get_contents($file);
-        if ($checkOnly && (Str::contains($replace, $content, true)|| ($textCheck!=''&&Str::contains($textCheck, $content, true)))) {
+        if ($checkOnly && (Str::contains($replace, $content, true) || ($textCheck != '' && Str::contains($textCheck, $content, true)))) {
             return;
         }
         file_put_contents($file, str_replace(
@@ -68,5 +68,18 @@ if (!function_exists('ReplaceTextInFile')) {
             $replace,
             $content
         ));
+    }
+}
+
+if (!function_exists('FieldRender')) {
+    function FieldRender($option, $data = null, $formData = null)
+    {
+        return \GateGem\Core\Builder\Form\FieldBuilder::Render($option, $data, $formData);
+    }
+}
+if (!function_exists('FormRender')) {
+    function FormRender($option, $data = null, $formData = null)
+    {
+        return \GateGem\Core\Builder\Form\FormBuilder::Render($option, $data, $formData);
     }
 }

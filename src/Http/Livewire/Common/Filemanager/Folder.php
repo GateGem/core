@@ -40,7 +40,6 @@ class Folder extends Component
     {
         $this->showFolder('');
         $this->SelectPath('');
-        // $this->hideFolder('');
     }
     public function treeFolder($path)
     {
@@ -113,11 +112,22 @@ class Folder extends Component
     {
         return [
             'field' => 'abc',
-            'funcData' => $this->folders,
+            'funcData' => [
+                [
+                    'text' => 'Disk ' . $this->disk,
+                    'isActive' => 1,
+                    'value' => '',
+                    'parent' => '',
+                    'isChild' => true,
+                    'key' => 'root'
+                ],
+                ...$this->folders
+            ],
             'checkBox' => false,
             'event-expand' => 'eventFolderExpand',
             'skipTop' => true,
-            'selectEvent' => 'SelectPath'
+            'selectEvent' => 'SelectPath',
+            'itemAttr' => ' x-on:click="fileSelect = false"',
         ];
     }
     public function render()

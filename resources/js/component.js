@@ -2,6 +2,7 @@ import loader from "./loader";
 import { getCsrfToken } from "./util/getCsrfToken";
 import { htmlToElement } from "./util/html";
 const loadComponentTo = (name, param, toEl) => {
+  if (!toEl) toEl = document.body;
   let csrfToken = getCsrfToken();
   fetch(`${web_base_url}gategem/livewire/component/${name}`, {
     method: "POST",

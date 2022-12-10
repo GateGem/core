@@ -23,6 +23,7 @@ class Index extends Modal
     }
     public function mount()
     {
+        $this->setTitle("File Manager");
         $this->modal_size=Modal::FullscreenXL;
     }
     public function render()

@@ -24,7 +24,7 @@ if (window != undefined) {
     modules: {
       imageResize: {
         displaySize: true,
-        resize: true
+        resize: true,
       },
       toolbar: toolbarOptions,
     },
@@ -44,6 +44,12 @@ if (window != undefined) {
       elQuill.on("text-change", function (delta, oldDelta, source) {
         elItem.value = elQuill.root.innerHTML;
         elItem.dispatchEvent(new Event("input"));
+      });
+      elQuill.getModule("toolbar").addHandler("image", () => {
+        let selectIndex=elQuill.getSelection()??0;
+        window.ShowFileManager(function (path) {
+          elQuill.insertText(selectIndex, path);
+        });
       });
       elItem.classList.remove("el-quill");
     });

@@ -6400,6 +6400,20 @@ if (document.querySelector('meta[name="web_url"]')) window.web_base_url = docume
 
 
 
+if (window) {
+  window.ShowFileManager = function (callback) {
+    window.eventSelectFile = undefined;
+    window.loadComponentTo("core::common.filemanager", undefined);
+    window.eventSelectFile = function (path) {
+      if (callback) callback(path);
+      window.eventSelectFile = undefined;
+      var filemanager = livewire.components.getComponentsByName("core::common.filemanager");
+      if (filemanager.length > 0) {
+        window.removeComponent(filemanager[filemanager.length - 1].id);
+      }
+    };
+  };
+}
 
 /***/ }),
 
@@ -6425,6 +6439,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var loadComponentTo = function loadComponentTo(name, param, toEl) {
+  if (!toEl) toEl = document.body;
   var csrfToken = (0,_util_getCsrfToken__WEBPACK_IMPORTED_MODULE_1__.getCsrfToken)();
   fetch("".concat(web_base_url, "gategem/livewire/component/").concat(name), {
     method: "POST",
@@ -6871,6 +6886,13 @@ if (window != undefined) {
       elQuill.on("text-change", function (delta, oldDelta, source) {
         elItem.value = elQuill.root.innerHTML;
         elItem.dispatchEvent(new Event("input"));
+      });
+      elQuill.getModule("toolbar").addHandler("image", function () {
+        var _elQuill$getSelection;
+        var selectIndex = (_elQuill$getSelection = elQuill.getSelection()) !== null && _elQuill$getSelection !== void 0 ? _elQuill$getSelection : 0;
+        window.ShowFileManager(function (path) {
+          elQuill.insertText(selectIndex, path);
+        });
       });
       elItem.classList.remove("el-quill");
     });

@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 class File extends Component
 {
-    public $disk;
-    public $path_current;
-    public $files;
+    public $disk = 'public';
+    public $path_current = '';
+    public $files = [];
     protected function getListeners()
     {
         $listeners = parent::getListeners();
@@ -32,10 +32,11 @@ class File extends Component
     }
     public function refreshFolder()
     {
-        $this->files = Storage::disk($this->disk)->files($this->path_current);
+        $this->files = collect(Storage::disk($this->disk)->files($this->path_current))->toArray();
     }
     public function mount()
     {
+        $this->refreshFolder();
     }
     public function render()
     {

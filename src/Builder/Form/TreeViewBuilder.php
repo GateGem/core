@@ -33,13 +33,17 @@ class TreeViewBuilder extends HtmlBuilder
         }
         echo '<li class="' . $class_li . '">';
         $key_id = $this->option['field'] . '_' . $items[0]['value'] . '_' . time();
+        $selectEvent = getValueByKey($this->option, 'selectEvent', "");
+        $itemAttr = getValueByKey($this->option, 'itemAttr', "");
+        if (is_callable($itemAttr)) {
+            $itemAttr = $itemAttr($items, $key, $treeLevel);
+        }
+        if ($selectEvent) {
+            $itemAttr .= ' ' . 'wire:click=\'' . $selectEvent . '("' . $items[0]['value'] . '")\'';
+        }
+        echo "<div " . $itemAttr . ">";
         if ((isset($items[0]['isChild']) && $items[0]['isChild']) || count($items) > 1) {
-            $selectEvent = getValueByKey($this->option, 'selectEvent', "");
-            if ($selectEvent) {
-                echo '<div wire:click=\'' . $selectEvent . '("' . $items[0]['value'] . '")\'>';
-            } else {
-                echo "<div >";
-            }
+
             if (getValueByKey($this->option, 'checkBox', true)) {
                 if (((isset($items[0]['show']) && $items[0]['show']) && count($items) > 1) || ((!isset($items[0]['show']) || !$items[0]['show']))) {
                     echo '<i class="bi bi-chevron-down"></i>
@@ -62,12 +66,7 @@ class TreeViewBuilder extends HtmlBuilder
             if (count($items) > 1)
                 $this->TreeRender($items, strlen($key) + 2, $key);
         } else {
-            $selectEvent = getValueByKey($this->option, 'selectEvent', "");
-            if ($selectEvent) {
-                echo '<div wire:click=\'' . $selectEvent . '("' . $items[0]['value'] . '")\'>';
-            } else {
-                echo "<div >";
-            }
+
             if (getValueByKey($this->option, 'checkBox', true)) {
                 echo '<div class="form-check  ms-4"> <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
             <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
@@ -93,11 +92,6 @@ class TreeViewBuilder extends HtmlBuilder
         if (!getValueByKey($this->option, 'skipTop', false) && (isset($gropData[$keyPrent]) || $treeLevel == 0 || $keyPrent == '' || $keyPrent == 'root')) {
             if (isset($gropData[$keyPrent])) {
                 $this->TreeRenderItem($keyPrent, $gropData[$keyPrent], $treeLevel);
-            } else {
-                // foreach ($gropData as $key => $items) {
-                //     $this->TreeRenderItem($key, $items, $treeLevel);
-                //     continue;
-                // }
             }
         }
         foreach ($gropData as $key => $items) {

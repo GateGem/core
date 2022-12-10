@@ -1,6 +1,6 @@
 <?php
 
-namespace GateGem\Core\Http\Livewire\Common\Filemanager;
+namespace GateGem\Core\Http\Livewire\Common\Filemanager\Form;
 
 use GateGem\Core\Livewire\Modal;
 
@@ -18,6 +18,6 @@ class InputName extends Modal
     }
     public function render()
     {
-        return $this->viewModal('core::common.filemanager.inputname');
+        return $this->viewModal('core::common.filemanager.form.inputname');
     }
 }
