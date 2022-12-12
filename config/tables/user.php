@@ -7,7 +7,7 @@ return [
     'model' => GateGem\Core\Models\User::class,
     'modelkey' => 'id',
     'excel' => [],
-    'tableInline' => true,
+    // 'tableInline' => true,
     'action' => [
         'title' => '#',
         'add' => true,
