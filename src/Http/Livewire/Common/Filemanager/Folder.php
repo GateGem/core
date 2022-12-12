@@ -115,7 +115,8 @@ class Folder extends Component
             'funcData' => [
                 [
                     'text' => 'Disk ' . $this->disk,
-                    'isActive' => 1,
+                    'icon' => '<i class="bi bi-hdd-rack"></i>',
+                    'isActive' => 0,
                     'value' => '',
                     'parent' => '',
                     'isChild' => true,
@@ -124,6 +125,8 @@ class Folder extends Component
                 ...$this->folders
             ],
             'checkBox' => false,
+            'icon-open' => '<i class="bi bi-folder2-open"></i>',
+            'icon-close' => '<i class="bi bi-folder"></i>',
             'event-expand' => 'eventFolderExpand',
             'skipTop' => true,
             'selectEvent' => 'SelectPath',

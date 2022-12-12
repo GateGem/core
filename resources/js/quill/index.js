@@ -46,9 +46,18 @@ if (window != undefined) {
         elItem.dispatchEvent(new Event("input"));
       });
       elQuill.getModule("toolbar").addHandler("image", () => {
-        let selectIndex=elQuill.getSelection()??0;
-        window.ShowFileManager(function (path) {
-          elQuill.insertText(selectIndex, path);
+        let selectIndex = elQuill.getSelection() ?? 0;
+        window.ShowFileManager(function (fileInfo) {
+          if (fileInfo?.basename?.match(/\.(jpg|jpeg|png|gif)$/i)) {
+            elQuill.insertEmbed(selectIndex, "image", fileInfo?.url);
+          } else {
+            elQuill.insertText(
+              selectIndex,
+              fileInfo?.basename,
+              "link",
+              fileInfo?.url
+            );
+          }
         });
       });
       elItem.classList.remove("el-quill");

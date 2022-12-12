@@ -46,8 +46,12 @@ class TreeViewBuilder extends HtmlBuilder
 
             if (getValueByKey($this->option, 'checkBox', true)) {
                 if (((isset($items[0]['show']) && $items[0]['show']) && count($items) > 1) || ((!isset($items[0]['show']) || !$items[0]['show']))) {
-                    echo '<i class="bi bi-chevron-down"></i>
-                    <i class="bi bi-chevron-right"></i>';
+                    if ($icon = getValueByKey($items[0], 'icon', '')) {
+                        echo $icon;
+                    } else {
+                        echo '<span class="icon-open">' . getValueByKey($this->option, 'icon-open', '<i class="bi bi-chevron-down"></i>') . '</span>
+                    <span class="icon-close">' . getValueByKey($this->option, 'icon-close', '<i class="bi bi-chevron-right"></i>') . '</span>';
+                    }
                     echo '<div class="d-inline-block form-check ms-2">';
                 } else {
                     echo '<div class="form-check  ms-4">';
@@ -57,8 +61,12 @@ class TreeViewBuilder extends HtmlBuilder
                     </div>';
             } else {
                 if (((isset($items[0]['show']) && $items[0]['show']) && count($items) > 1) || ((!isset($items[0]['show']) || !$items[0]['show']))) {
-                    echo '<i class="bi bi-chevron-down"></i>
-                    <i class="bi bi-chevron-right"></i>';
+                    if ($icon = getValueByKey($items[0], 'icon', '')) {
+                        echo $icon;
+                    } else {
+                        echo '<span class="icon-open">' . getValueByKey($this->option, 'icon-open', '<i class="bi bi-chevron-down"></i>') . '</span>
+                    <span class="icon-close">' . getValueByKey($this->option, 'icon-close', '<i class="bi bi-chevron-right"></i>') . '</span>';
+                    }
                 }
                 echo '<label class="ps-1 label-item" for="cbk_id_' . $key_id . '" value="' . $items[0]['value'] . '" >' . $items[0]['text'] . '</label>';
             }
@@ -68,10 +76,16 @@ class TreeViewBuilder extends HtmlBuilder
         } else {
 
             if (getValueByKey($this->option, 'checkBox', true)) {
+                if ($icon = getValueByKey($items[0], 'icon', '')) {
+                    echo $icon;
+                }
                 echo '<div class="form-check  ms-4"> <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
             <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
             </div>';
             } else {
+                if ($icon = getValueByKey($items[0], 'icon', '')) {
+                    echo $icon;
+                }
                 echo '<label class="ps-3 label-item" for="cbk_id_' . $key_id . '" value="' . $items[0]['value'] . '">' . $items[0]['text'] . '</label>';
             }
             echo "</div>";
@@ -89,8 +103,8 @@ class TreeViewBuilder extends HtmlBuilder
         if (count($gropData) == 0) return;
         ksort($gropData, SORT_STRING);
         echo "<ul>";
-        if (!getValueByKey($this->option, 'skipTop', false) && (isset($gropData[$keyPrent]) || $treeLevel == 0 || $keyPrent == '' || $keyPrent == 'root')) {
-            if (isset($gropData[$keyPrent])) {
+        if (!getValueByKey($this->option, 'skipTop', false)  && (isset($gropData[$keyPrent]) || $treeLevel == 0 || $keyPrent == '' || $keyPrent == 'root')) {
+            if (isset($gropData[$keyPrent]) && !getValueByKey($gropData[$keyPrent][0], 'skipTop', false)) {
                 $this->TreeRenderItem($keyPrent, $gropData[$keyPrent], $treeLevel);
             }
         }

@@ -9,7 +9,7 @@ class FormBuilder extends HtmlBuilder
     public $option;
     public $data;
     public $formData;
-    public function __construct($data, $option, $formData)
+    public function __construct($option, $data, $formData)
     {
         $this->option = $option;
         $this->data = $data;

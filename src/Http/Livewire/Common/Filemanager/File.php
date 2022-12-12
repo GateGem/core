@@ -32,7 +32,13 @@ class File extends Component
     }
     public function refreshFolder()
     {
-        $this->files = collect(Storage::disk($this->disk)->files($this->path_current))->toArray();
+        $this->files = collect(Storage::disk($this->disk)->files($this->path_current))->map(function ($pathFile) {
+            $files = get_file_info(Storage::disk($this->disk)->path($pathFile));
+            return [
+                ...$files,
+                'url' => Storage::disk($this->disk)->url($pathFile)
+            ];
+        })->toArray();
     }
     public function mount()
     {

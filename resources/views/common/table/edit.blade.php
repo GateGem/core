@@ -3,7 +3,7 @@
         @include($option['formInclude'])
     @else
         <div class="p-1">
-            {!! \GateGem\Core\Builder\Form\FormBuilder::Render($this, $option, ['isNew' => $isFormNew, 'errors' => $errors]) !!}
+            {!! FormRender($option,$this,  ['isNew' => $isFormNew, 'errors' => $errors]) !!}
             <div class="text-center pt-3">
                 <button class="btn btn-primary btn-sm" type="submit">
                     <i class="bi bi-download"></i> <span class="p-1">{{__("core::table.button.save")}}</span>

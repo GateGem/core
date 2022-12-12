@@ -6890,8 +6890,13 @@ if (window != undefined) {
       elQuill.getModule("toolbar").addHandler("image", function () {
         var _elQuill$getSelection;
         var selectIndex = (_elQuill$getSelection = elQuill.getSelection()) !== null && _elQuill$getSelection !== void 0 ? _elQuill$getSelection : 0;
-        window.ShowFileManager(function (path) {
-          elQuill.insertText(selectIndex, path);
+        window.ShowFileManager(function (fileInfo) {
+          var _fileInfo$basename;
+          if (fileInfo !== null && fileInfo !== void 0 && (_fileInfo$basename = fileInfo.basename) !== null && _fileInfo$basename !== void 0 && _fileInfo$basename.match(/\.(jpg|jpeg|png|gif)$/i)) {
+            elQuill.insertEmbed(selectIndex, "image", fileInfo === null || fileInfo === void 0 ? void 0 : fileInfo.url);
+          } else {
+            elQuill.insertText(selectIndex, fileInfo === null || fileInfo === void 0 ? void 0 : fileInfo.basename, "link", fileInfo === null || fileInfo === void 0 ? void 0 : fileInfo.url);
+          }
         });
       });
       elItem.classList.remove("el-quill");
@@ -7449,8 +7454,11 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 if (window != undefined) {
+  var checkClassOrParent = function checkClassOrParent(e, className) {
+    return e.target.classList.contains(className) || e.target.parentElement.classList.contains(className);
+  };
   var eventClickTreeview = function eventClickTreeview(e) {
-    if (e.target.classList.contains("bi-chevron-down") || e.target.classList.contains("bi-chevron-right")) {
+    if (checkClassOrParent(e, "icon-open") || checkClassOrParent(e, "icon-close")) {
       var li = e.target.closest("li");
       if (li.classList.contains("show")) li.classList.remove("show");else li.classList.add("show");
       var wireElent = e.target.closest("[wire\\:id]");

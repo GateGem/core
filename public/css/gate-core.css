@@ -13871,17 +13871,17 @@ textarea.form-control-lg {
   margin: 0;
   padding: 0;
 }
-.tree-view ul li .bi-chevron-down,
+.tree-view ul li .icon-open,
 .tree-view ul li ul {
   display: none;
 }
 .tree-view ul li.active > div {
   background: #ccc;
 }
-.tree-view ul li.show > div .bi-chevron-right {
+.tree-view ul li.show > div .icon-close {
   display: none;
 }
-.tree-view ul li.show > div .bi-chevron-down {
+.tree-view ul li.show > div .icon-open {
   display: unset;
 }
 .tree-view ul li.show > ul {
@@ -13923,6 +13923,17 @@ textarea.form-control-lg {
   min-height: 100%;
   padding: 5px;
 }
+.el-filemanager__body--file .file-property .property-item .property-key {
+  font-weight: 700;
+  padding: 1px;
+  margin: 0;
+}
+.el-filemanager__body--file .file-property .property-item .property-value {
+  text-align: left;
+  padding: 1px;
+  margin: 0;
+  word-wrap: break-word;
+}
 .el-filemanager__body--file .file-list {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   display: flex;
@@ -13934,7 +13945,6 @@ textarea.form-control-lg {
   width: 120px;
   height: 150px;
   margin: 2px;
-  word-wrap: break-word;
 }
 .el-filemanager__body--file .file-list .file-info:hover, .el-filemanager__body--file .file-list .file-info.active {
   background: #dbe1e6;
@@ -13956,6 +13966,7 @@ textarea.form-control-lg {
   overflow: hidden;
   text-align: center;
   padding: 1px;
+  word-wrap: break-word;
 }
 .el-filemanager__footer {
   height: 40px;

@@ -1,8 +1,14 @@
 if (window != undefined) {
+  const checkClassOrParent = (e, className) => {
+    return (
+      e.target.classList.contains(className) ||
+      e.target.parentElement.classList.contains(className)
+    );
+  };
   const eventClickTreeview = (e) => {
     if (
-      e.target.classList.contains("bi-chevron-down") ||
-      e.target.classList.contains("bi-chevron-right")
+      checkClassOrParent(e, "icon-open") ||
+      checkClassOrParent(e, "icon-close")
     ) {
       const li = e.target.closest("li");
       if (li.classList.contains("show")) li.classList.remove("show");

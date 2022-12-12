@@ -37,21 +37,31 @@ class User extends Modal
     public function getOptionTree()
     {
         return [
-            'field'=>'permission',
+            'field' => 'permission',
             'funcData' => function () {
-                return Permission::all()->map(function ($item) {
-                    return [
-                        'key' => $item->slug,
-                        'text'=>$item->name,
-                        'value'=>$item->id
-                    ];
-                })->toArray();
+                return [
+                    [
+                        'key' => 'core',
+                        'text' => 'Root',
+                        'skipTop' => true,
+                        'value' => '',
+                        'show' => true,
+                        'isChild' => true
+                    ],
+                    ...Permission::all()->map(function ($item) {
+                        return [
+                            'key' => $item->slug,
+                            'text' => $item->name,
+                            'value' => $item->id
+                        ];
+                    })->toArray()
+                ];
             }
         ];
     }
     public function render()
     {
-        return $this->viewModal('core::page.permission.user',[
+        return $this->viewModal('core::page.permission.user', [
             'roleAll' => Role::orderby('name')->get(),
             'optionTree' => $this->getOptionTree()
         ]);

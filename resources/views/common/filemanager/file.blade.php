@@ -7,12 +7,51 @@
                     <i class="bi bi-file-text "></i>
                 </div>
                 <div class="file-name">
-                    <span x-text="fileInfo"></span>
+                    <span x-text="fileInfo.basename"></span>
                 </div>
             </div>
         </template>
     </div>
     <div x-show="fileSelect" class="file-property">
-        <span x-text="fileSelect"></span>
+        <div class="property-item" x-show="fileSelect?.basename?.match(/\.(jpg|jpeg|png|gif)$/i)">
+            <p class="property-key">Thumbnail</p>
+            <p class="property-value" x-text="">
+                <img class="w-100" :src="fileSelect.url" />
+            </p>
+        </div>
+        <div class="property-item">
+            <p class="property-key">File Name</p>
+            <p class="property-value" x-text="fileSelect.basename"></p>
+        </div>
+        <div class="property-item" x-show="false">
+            <p class="property-key">File Path</p>
+            <p class="property-value" x-text="fileSelect.realpath"></p>
+        </div>
+        <div class="property-item">
+            <p class="property-key">File Url</p>
+            <p class="property-value"><a :href="fileSelect.url" x-text="fileSelect.url" target="_blank"></a></p>
+        </div>
+        <div class="property-item">
+            <p class="property-key">File Size</p>
+            <p class="property-value" x-text="fileSelect.size_string"></p>
+        </div>
+        <div class="property-item">
+            <p class="property-key">File Extension</p>
+            <p class="property-value" x-text="fileSelect.extension"></p>
+        </div>
+        <div class="property-item">
+            <p class="property-key">File Permission</p>
+            <p class="property-value" x-text="fileSelect.permission"></p>
+        </div>
+        <div class="property-item">
+            <p class="property-key">Create At</p>
+            <p class="property-value"
+                x-text='(new Date(fileSelect.atime*1000)).toISOString().slice(0,10).replace(/-/g,"")'></p>
+        </div>
+        <div class="property-item">
+            <p class="property-key">Update At</p>
+            <p class="property-value"
+                x-text='(new Date(fileSelect.mtime*1000)).toISOString().slice(0,10).replace(/-/g,"")'></p>
+        </div>
     </div>
 </div>

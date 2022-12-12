@@ -34,14 +34,24 @@ class Role extends Modal
         return [
             'field' => 'permission',
             'funcData' => function () {
+                return [
+                    [
+                        'key' => 'core',
+                        'text' => 'Root',
+                        'skipTop' => true,
+                        'value' => '',
+                        'show' => true,
+                        'isChild' => true
+                    ],
 
-               return Permission::all()->map(function ($item) {
-                    return [
-                        'key' => $item->slug,
-                        'text' => $item->name,
-                        'value' => $item->id
-                    ];
-                })->toArray();
+                    ...Permission::all()->map(function ($item) {
+                        return [
+                            'key' => $item->slug,
+                            'text' => $item->name,
+                            'value' => $item->id
+                        ];
+                    })->toArray()
+                ];
             }
         ];
     }

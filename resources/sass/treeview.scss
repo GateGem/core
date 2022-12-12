@@ -10,7 +10,7 @@
 
         li {
 
-            .bi-chevron-down,
+            .icon-open,
             ul {
                 display: none;
             }
@@ -21,11 +21,11 @@
 
             &.show> {
                 & div {
-                    .bi-chevron-right {
+                    .icon-close {
                         display: none;
                     }
 
-                    .bi-chevron-down {
+                    .icon-open {
                         display: unset;
                     }
                 }
