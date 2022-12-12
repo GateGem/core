@@ -10,6 +10,7 @@ use Livewire\WithPagination;
 trait WithTableIndex
 {
     use WithPagination;
+    use \Livewire\WithFileUploads;
     public function mount()
     {
         return $this->LoadData();
@@ -30,20 +31,26 @@ trait WithTableIndex
     {
         return [
             ...parent::getListeners(),
-            'refreshData' . $this->module => '__loadData'
+            'refreshData' . $this->module => '__loadData',
+            'EventTableUpdate' => 'EventTableUpdate'
         ];
     }
     protected $paginationTheme = 'bootstrap';
     protected $isCheckDisableModule = true;
     protected function getView()
     {
-        return 'core::common.table.index';
+        return 'core::table.index';
+    }
+    public function EventTableUpdate($name, $value)
+    {
+        $this->{$name} = $value;
     }
     public $pageSize = 10;
     public $module = '';
     private $option_temp = null;
     public $sort = [];
     public $filter = [];
+    public $tables = [];
     public $viewEdit = '';
     public function doSort($field, $sort)
     {
@@ -189,8 +196,10 @@ trait WithTableIndex
     }
     public function render()
     {
+        $data = $this->getData();
+        $this->tables =  $data->toArray()['data'];
         return $this->viewModal($this->getView(), [
-            'data' => $this->getData(),
+            'data' => $data,
             'option' => $this->option,
             'viewEdit' => $this->viewEdit,
             'checkAdd' => $this->checkAdd(),

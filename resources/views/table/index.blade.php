@@ -47,7 +47,7 @@
                 {!! apply_filters('module_' . $module . '_action_right', '', $this) !!}
             </div>
         </div>
-        {!! \GateGem\Core\Builder\Table\TableBuilder::Render($data, $option, ['sort' => $sort]) !!}
+        {!! TableRender($data, $option, ['sort' => $sort]) !!}
         @if (getValueByKey($option, 'viewIncludeAfter', ''))
             @includeIf(getValueByKey($option, 'viewIncludeAfter', ''))
         @endif

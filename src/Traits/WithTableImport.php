@@ -13,7 +13,7 @@ trait WithTableImport
     public $filename = '';
     protected function getView()
     {
-        return 'core::common.table.import';
+        return 'core::table.import';
     }
     public function getOptionProperty()
     {

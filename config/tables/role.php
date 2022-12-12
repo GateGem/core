@@ -8,6 +8,7 @@ return [
     'model' => \GateGem\Core\Models\Role::class,
     //'DisableModule' => true,
     'enableAction' => true,
+    'tableInline' => true,
     'action' => [
         'title' => '#',
         'add' => true,

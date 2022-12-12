@@ -14034,6 +14034,7 @@ textarea.form-control-lg {
 }
 
 .el-image {
+  min-width: 100px;
   min-height: 150px;
   background: #eee;
   padding: 0;

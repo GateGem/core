@@ -11,7 +11,7 @@ trait WithTableExport
     public $filename = '';
     protected function getView()
     {
-        return 'core::common.table.export';
+        return 'core::table.export';
     }
     public function getOptionProperty()
     {

@@ -18,12 +18,14 @@ class TableBuilder extends HtmlBuilder
     }
 
     private $cacheData = [];
-    public function RenderCell($row, $column)
+    public function RenderCell($row, $column, $key)
     {
         echo '<td>';
         echo '<div class="cell-data ' . getValueByKey($column, 'classData', '') . '">';
         if (isset($column['funcCell'])) {
             echo $column['funcCell']($row, $column);
+        } else if (isset($this->option['tableInline']) && $this->option['tableInline'] == true) {
+            echo FieldRender([...$column, 'prex' => 'tables.' . $key . '.']);
         } else if (isset($column['field'])) {
             $cell_value = isset($row[$column['field']]) ? $row[$column['field']] : null;
             $funcData = getValueByKey($column, 'funcData', null);
@@ -63,13 +65,13 @@ class TableBuilder extends HtmlBuilder
         echo '</div>';
         echo '</td>';
     }
-    public function RenderRow($row)
+    public function RenderRow($row, $key)
     {
         if ($this->option && isset($this->option['fields'])) {
             echo '<tr>';
             foreach ($this->option['fields'] as $column) {
                 if (getValueByKey($column, 'view', true) && getValueByKey($column, 'fieldType', FieldBuilder::Text) != FieldBuilder::Button) {
-                    $this->RenderCell($row, $column);
+                    $this->RenderCell($row, $column, $key);
                 }
             }
             echo '</tr>';
@@ -122,11 +124,11 @@ class TableBuilder extends HtmlBuilder
         $this->RenderHeader();
         echo '<tbody>';
         if ($this->data != null && count($this->data) > 0) {
-            foreach ($this->data as $row) {
+            foreach ($this->data as $key => $row) {
                 if ($this->option && isset($this->option['funcRow'])) {
-                    echo $this->option['funcRow']($row, $this->option);
+                    echo $this->option['funcRow']($row, $this->option, $key);
                 } else {
-                    $this->RenderRow($row);
+                    $this->RenderRow($row, $key);
                 }
             }
         } else {

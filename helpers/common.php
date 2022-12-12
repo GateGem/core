@@ -83,3 +83,10 @@ if (!function_exists('FormRender')) {
         return \GateGem\Core\Builder\Form\FormBuilder::Render($option, $data, $formData);
     }
 }
+
+if (!function_exists('TableRender')) {
+    function TableRender($option, $data = null, $formData = null)
+    {
+       return \GateGem\Core\Builder\Table\TableBuilder::Render($option, $data, $formData);
+    }
+}

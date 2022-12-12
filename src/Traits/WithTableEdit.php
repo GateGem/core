@@ -19,7 +19,7 @@ trait WithTableEdit
     }
     protected function getView()
     {
-        return 'core::common.table.edit';
+        return 'core::table.edit';
     }
     public function getOptionProperty()
     {
