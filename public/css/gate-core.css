@@ -13891,7 +13891,6 @@ textarea.form-control-lg {
 
 .el-filemanager {
   width: 100%;
-  min-height: 100px;
   background-color: #fff;
   border: #ccc 1px solid;
   display: flex;
@@ -13909,40 +13908,49 @@ textarea.form-control-lg {
 .el-filemanager__body--folder {
   width: 300px;
   flex: none;
-  border: #288AE1 1px solid;
+  min-height: 200px;
 }
 .el-filemanager__body--folder .active > div {
   background: #288AE1 !important;
 }
 .el-filemanager__body--file {
   flex: auto;
-  border: #288AE1 1px solid;
-  box-shadow: 1px saddlebrown;
+  display: flex;
+}
+.el-filemanager__body--file .file-property {
+  flex: none;
+  width: 250px;
+  min-height: 100%;
+  padding: 5px;
+}
+.el-filemanager__body--file .file-list {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   display: flex;
   flex-wrap: wrap;
+  flex: auto;
 }
-.el-filemanager__body--file .file-info {
+.el-filemanager__body--file .file-list .file-info {
   border-radius: 2px;
   width: 120px;
   height: 150px;
   margin: 2px;
   word-wrap: break-word;
 }
-.el-filemanager__body--file .file-info:hover, .el-filemanager__body--file .file-info.active {
+.el-filemanager__body--file .file-list .file-info:hover, .el-filemanager__body--file .file-list .file-info.active {
   background: #dbe1e6;
 }
-.el-filemanager__body--file .file-info:hover {
+.el-filemanager__body--file .file-list .file-info:hover {
   cursor: pointer;
 }
-.el-filemanager__body--file .file-info .file-icon {
+.el-filemanager__body--file .file-list .file-info .file-icon {
   text-align: center;
   height: 100px;
 }
-.el-filemanager__body--file .file-info .file-icon .bi {
+.el-filemanager__body--file .file-list .file-info .file-icon .bi {
   color: #288AE1;
   font-size: 75px;
 }
-.el-filemanager__body--file .file-info .file-name {
+.el-filemanager__body--file .file-list .file-info .file-name {
   height: 50px;
   text-overflow: ellipsis;
   overflow: hidden;

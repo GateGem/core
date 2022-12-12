@@ -14,6 +14,7 @@ class UploadFile extends Modal
     public $file;
     public function mount($path, $disk)
     {
+        $this->setTitle('Upload File');
         $this->disk = $disk;
         $this->path_current = $path;
     }
