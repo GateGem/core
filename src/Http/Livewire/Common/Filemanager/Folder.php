@@ -127,7 +127,7 @@ class Folder extends Component
             'event-expand' => 'eventFolderExpand',
             'skipTop' => true,
             'selectEvent' => 'SelectPath',
-            'itemAttr' => ' x-on:click="fileSelect = false"',
+            'itemAttr' => ' x-on:click="fileSelect = null"',
         ];
     }
     public function render()

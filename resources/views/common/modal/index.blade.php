@@ -1,4 +1,4 @@
-<div class="modal fade show" style="display: block;"  id="{{$this->id}}Modal" tabindex="-1" aria-labelledby="{{$this->id}}ModalLabel" aria-hidden="true">
+<div class="modal fade show" style="display: block;"   id="{{$this->id}}Modal" tabindex="-1" aria-labelledby="{{$this->id}}ModalLabel" aria-hidden="true">
     <div class="modal-dialog {{$modal_size}}">
         <div class="modal-content">
             @if(!$hideHeader)
