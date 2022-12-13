@@ -13,7 +13,7 @@ class Component extends ComponentBase
     public $_code_permission = "";
     public function checkPermissionView()
     {
-        return $this->_code_permission == '' || Core::checkPermission($this->_code_permission);
+        return !$this->_code_permission || ($this->_code_permission && Core::checkPermission($this->_code_permission));
     }
     public $_dataTemps = [];
     protected function getListeners()

@@ -20,6 +20,15 @@ class ThemeManager
     {
         $this->getAssets()->setData('page_title', $title);
     }
+    public function AddScript($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
+    {
+        $this->getAssets()->AddScript($local, $contentOrPath, $cdn, $priority, $isLink);
+    }
+    public function AddStyle($local, $contentOrPath, $cdn = '', $priority = 20, $isLink = true)
+    {
+        $this->getAssets()->AddStyle($local, $contentOrPath, $cdn, $priority, $isLink);
+    }
+
     public function getAssets(): Assets
     {
         return $this->assets ?? ($this->assets = new Assets());
@@ -64,7 +73,7 @@ class ThemeManager
     public function Layout($layout = '')
     {
         if (!isset($this->data_active) || !$this->data_active) {
-           
+
             $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_site_theme')));
             if ($this->data_active == null) {
                 $this->data_active = $this->findAndActive('gate-none');

@@ -32,7 +32,7 @@ class CoreManager
     {
         return $this->user ?? ($this->user = request()->user());
     }
-    public function checkPermission(string $per = '')
+    public function checkPermission($per = '')
     {
         return $per == '' || Gate::check($per, [$this->user()]);
     }
