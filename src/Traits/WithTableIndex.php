@@ -50,7 +50,6 @@ trait WithTableIndex
     private $option_temp = null;
     public $sort = [];
     public $filter = [];
-    public $tables = [];
     public $viewEdit = '';
     public function doSort($field, $sort)
     {
@@ -196,10 +195,8 @@ trait WithTableIndex
     }
     public function render()
     {
-        $data = $this->getData();
-        $this->tables =  $data->toArray()['data'];
         return $this->viewModal($this->getView(), [
-            'data' => $data,
+            'data' => $this->getData(),
             'option' => $this->option,
             'viewEdit' => $this->viewEdit,
             'checkAdd' => $this->checkAdd(),
