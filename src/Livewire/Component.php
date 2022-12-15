@@ -5,6 +5,8 @@ namespace GateGem\Core\Livewire;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Theme;
 use GateGem\Core\Traits\WithDoAction;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\File;
 use Livewire\Component as ComponentBase;
 
 class Component extends ComponentBase
@@ -44,7 +46,10 @@ class Component extends ComponentBase
     {
         parent::__construct($id);
     }
-
+    public function View($view)
+    {
+        return File::get(Core::getPathDirFromClass($this) . '/' . str_replace('.', '/', $view) . '.blade.php');
+    }
     protected function ensureViewHasValidLivewireLayout($view)
     {
         if ($view == null) {

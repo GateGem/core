@@ -46,12 +46,12 @@
         <div class="property-item">
             <p class="property-key">Create At</p>
             <p class="property-value"
-                x-text='(new Date(fileSelect.atime*1000)).toISOString().slice(0,10).replace(/-/g,"")'></p>
+                x-text='(new Date(fileSelect.atime*1000))'></p>
         </div>
         <div class="property-item">
             <p class="property-key">Update At</p>
             <p class="property-value"
-                x-text='(new Date(fileSelect.mtime*1000)).toISOString().slice(0,10).replace(/-/g,"")'></p>
+                x-text='(new Date(fileSelect.mtime*1000))'></p>
         </div>
     </div>
 </div>

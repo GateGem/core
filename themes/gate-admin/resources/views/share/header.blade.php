@@ -4,6 +4,7 @@
             <li><a onclick="switchSidebar()"> <i class="bi bi-justify fs-4"></i></a></li>
         </ul>
         <ul class="nav-right">
+            <li><widget:core::now/></li>
             <li class="">
                 @livewire(apply_filters('filter_theme_language_selector', 'core::common.language-selector'))
             </li>

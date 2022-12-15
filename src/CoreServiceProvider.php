@@ -11,6 +11,7 @@ use GateGem\Core\Builder\Menu\MenuBuilder;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Module;
 use GateGem\Core\Facades\Plugin;
+use GateGem\Core\TagCompiler\WidgetTagCompiler;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
@@ -20,9 +21,6 @@ class CoreServiceProvider extends ServiceProvider
 
     public function configurePackage(ServicePackage $package): void
     {
-        // $router = $this->app['router'];
-        //\GateGem\Core\Http\Middleware\CoreMiddleware::class,
-        // $router->middlewareGroup('web',[\GateGem\Core\Http\Middleware\CoreMiddleware::class]);
         /*
          * This class is a Package Service Provider
          *
@@ -134,8 +132,20 @@ class CoreServiceProvider extends ServiceProvider
             });
         }
     }
+
+    protected function registerTagCompiler()
+    {
+        if (method_exists($this->app['blade.compiler'], 'precompiler')) {
+            $this->app['blade.compiler']->precompiler(function ($string) {
+                return app(WidgetTagCompiler::class)->compile($string);
+            });
+        }
+    }
+
     public function bootingPackage()
     {
+        $this->registerTagCompiler();
+        
         add_link_symbolic(__DIR__ . '/../public', public_path('modules/gate-core'));
         add_asset_js(asset('modules/gate-core/js/gate-core.js'), '', 0);
         add_asset_css(asset('modules/gate-core/css/gate-core.css'), '',  0);

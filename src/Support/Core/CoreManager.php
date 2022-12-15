@@ -14,6 +14,7 @@ use GateGem\Core\Facades\Module;
 use GateGem\Core\Facades\Plugin;
 use GateGem\Core\Facades\Theme;
 use Illuminate\Support\Facades\Gate;
+use ReflectionClass;
 
 class CoreManager
 {
@@ -316,6 +317,11 @@ class CoreManager
         } else {
             $this->filesystem->link($target, $link);
         }
+    }
+    public function getPathDirFromClass($class){
+        $reflector = new ReflectionClass(get_class($class));
+
+        return dirname($reflector->getFileName());
     }
     public function getPermissionGuest()
     {

@@ -74,6 +74,7 @@ trait WithServiceProvider
 
         if (class_exists('\\Livewire\\Component')) {
             LivewireLoader::Register($this->package->basePath('/Http/Livewire'), $this->getNamespaceName() . '\\Http\\Livewire', $this->package->shortName() . '::');
+            LivewireLoader::RegisterWidget($this->package->basePath('/../widgets'), $this->getNamespaceName() . '\\Widget', $this->package->shortName() . '::');
         }
 
         if ($this->package->hasTranslations) {
@@ -256,9 +257,7 @@ trait WithServiceProvider
 
     protected function getPackageBaseDir(): string
     {
-        $reflector = new ReflectionClass(get_class($this));
-
-        return dirname($reflector->getFileName());
+        return Core::getPathDirFromClass($this);
     }
 
     protected function getNamespaceName(): string
