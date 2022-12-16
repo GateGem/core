@@ -27,14 +27,12 @@ class LivewireLoader
                     ->explode('.')
                     ->map([Str::class, 'kebab'])
                     ->implode('.');
-                Log::info($alias);
                 // fix class namespace
                 $alias_class = trim(Str::of($class)
                     ->replace(['/', '\\'], '.')
                     ->explode('.')
                     ->map([Str::class, 'kebab'])
                     ->implode('.'), '.');
-                Log::info($alias_class);
                 if (Str::endsWith($class, ['\Index', '\index'])) {
                     Livewire::component(Str::beforeLast($alias, '.index'), $class);
                     Livewire::component(Str::beforeLast($alias_class, '.index'), $class);
@@ -43,7 +41,6 @@ class LivewireLoader
                 Livewire::component($alias, $class);
             },
             function ($class) {
-                return true;
                 return is_subclass_of($class, Widget::class) && !(new ReflectionClass($class))->isAbstract();
             }
         );
