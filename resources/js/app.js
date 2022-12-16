@@ -1,5 +1,7 @@
 import Alpine from "alpinejs";
 import * as bootstrap from "bootstrap";
+import moment from 'moment';
+window.moment = moment;
 window.bootstrap = bootstrap;
 window.Alpine = Alpine;
 

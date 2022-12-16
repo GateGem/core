@@ -25,20 +25,22 @@ trait WithTagSync
     {
         return $this->belongsToMany($this->TagModel());
     }
-    public function syncTags($tags)
+    public function syncTags($arr)
     {
-        $arrTags = [];
-        foreach ($tags as $tag) {
-            if ($tag) {
-                $_tag = app($this->TagModel())->where('title', trim($tag))->first();
+        if($arr==null) return;
+        if (is_string($arr)) $arr = explode(",", $arr);
+        $arrCatalogs = [];
+        foreach ($arr as $item) {
+            if ($item) {
+                $_tag = app($this->TagModel())->where('title', trim($item))->first();
                 if ($_tag == null) {
-                    $arrTags[] = app($this->TagModel())->create(['title' => trim($tag)])->id;
+                    $arrCatalogs[] = app($this->TagModel())->create(['title' => trim($item)])->id;
                 } else {
-                    $arrTags[] = $_tag->id;
+                    $arrCatalogs[] = $_tag->id;
                 }
             }
         }
-        $this->Tags()->sync($arrTags);
+        $this->Tags()->sync($arrCatalogs);
     }
     public function getTagNames()
     {

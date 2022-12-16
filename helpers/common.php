@@ -87,6 +87,19 @@ if (!function_exists('FormRender')) {
 if (!function_exists('TableRender')) {
     function TableRender($option, $data = null, $formData = null)
     {
-       return \GateGem\Core\Builder\Table\TableBuilder::Render($option, $data, $formData);
+        return \GateGem\Core\Builder\Table\TableBuilder::Render($option, $data, $formData);
+    }
+}
+
+if (!function_exists('getClassByComponent')) {
+    function getClassByComponent($component)
+    {
+        return app('livewire')->getClass($component);
+    }
+}
+if (!function_exists('getClassByWidget')) {
+    function getClassByWidget($widget)
+    {
+        return getClassByComponent("widget-{$widget}");
     }
 }

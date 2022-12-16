@@ -23,10 +23,19 @@ trait WithSlug
             $slug = isset($this->FieldSlug) ? Str::slug($this->{$this->FieldSlug}) : Str::slug($this->title);
             if (!$slug) return;
             // check to see if any other slugs exist that are the same & count them
-            $count = static::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+            $slugMax =  static::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->orderByDesc('slug')->first();
+            $count = 0;
+            if ($slugMax == null) {
+                $this->slug = $slug;
+            } else {
+                if ($slug != $slugMax->slug)
+                    $count = (str_replace("{$slug}-", "", $slugMax->slug) ?? 0) + 1;
+            }
             do {
+
                 // if other slugs exist that are the same, append the count to the slug
-                $this->slug = $count ? "{$slug}-{$count}" : $slug;
+                if ($this->slug == null)
+                    $this->slug = $count > 0 ? "{$slug}-{$count}" : $slug;
                 if (static::where('slug',   $this->slug)->exists()) {
                     $this->slug = null;
                 }
