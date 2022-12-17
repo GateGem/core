@@ -3,6 +3,9 @@
 namespace GateGem\Core\Builder\Form;
 
 use GateGem\Core\Builder\HtmlBuilder;
+use GateGem\Core\Support\Config\ConfigManager;
+use GateGem\Core\Support\Config\FieldConfig;
+use GateGem\Core\Support\Config\FormConfig;
 
 class FormBuilder extends HtmlBuilder
 {
@@ -17,24 +20,25 @@ class FormBuilder extends HtmlBuilder
     }
     public function RenderItemField($item)
     {
-        echo '<div class="form-group field-' . $item['field'] . '">';
-        if (getValueByKey($item, 'fieldType', FieldBuilder::Text) != FieldBuilder::Button)
-            echo ' <label for="input-' . $item['field'] . '" class="form-label">' . __($item['title']) . '</label>';
+        echo '<div class="form-group field-' . $item[FieldConfig::FIELD] . '">';
+        if (getValueByKey($item, FieldConfig::FIELD_TYPE, FieldBuilder::Text) != FieldBuilder::Button)
+            echo ' <label for="input-' . $item[FieldConfig::FIELD] . '" class="form-label">' . __($item[FieldConfig::TITLE]) . '</label>';
         echo FieldBuilder::Render($item, $this->data, $this->formData);
         echo '</div>';
     }
     public function RenderHtml()
     {
-        echo '<div class="form-builder ' . getValueByKey($this->option, 'formClass', '') . '">';
-        $layoutForm = getValueByKey($this->option, 'layoutForm.common', null);
+        echo '<div class="form-builder ' . getValueByKey($this->option,  ConfigManager::FORM . '.' . FormConfig::FORM_CLASS, '') . '">';
+        $layoutForm = getValueByKey($this->option, ConfigManager::FORM . '.' . FormConfig::FORM_LAYOUT, null);
         if ($layoutForm) {
+            if (is_callable($layoutForm)) $layoutForm = $layoutForm($this->option, $this->data, $this->formData);
             foreach ($layoutForm as $row) {
                 echo '<div class="row">';
                 foreach ($row as $cell) {
                     if (isset($cell['key']) && $cell['key'] != "") {
                         echo '<div class="' . getValueByKey($cell, 'column', FieldBuilder::Col12) . ' ' . getValueByKey($cell, 'class', '') . ' " ' . getValueByKey($cell, 'attr', '') . '>';
-                        foreach ($this->option['fields'] as $item) {
-                            if ($this->checkRender($item) && isset($item['field']) && $item['field'] && isset($item['keyColumn']) && $item['keyColumn'] == $cell['key']) {
+                        foreach ($this->option[ConfigManager::FIELDS] as $item) {
+                            if ($this->checkRender($item) && isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] && isset($item['keyColumn']) && $item['keyColumn'] == $cell['key']) {
                                 $this->RenderItemField($item);
                             }
                         }
@@ -45,9 +49,9 @@ class FormBuilder extends HtmlBuilder
             }
         } else {
             echo '<div class="row">';
-            foreach ($this->option['fields'] as $item) {
-                if ($this->checkRender($item) && isset($item['field']) && $item['field']) {
-                    echo '<div class="' . getValueByKey($item, 'column', FieldBuilder::Col12) . '">';
+            foreach ($this->option[ConfigManager::FIELDS] as $item) {
+                if ($this->checkRender($item) && isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD]) {
+                    echo '<div class="' . getValueByKey($item, FieldConfig::FIELD_COLUMN, FieldBuilder::Col12) . '">';
                     $this->RenderItemField($item);
                     echo '</div>';
                 }

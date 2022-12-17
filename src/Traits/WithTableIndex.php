@@ -4,6 +4,10 @@ namespace GateGem\Core\Traits;
 
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Loader\TableLoader;
+use GateGem\Core\Support\Config\ButtonConfig;
+use GateGem\Core\Support\Config\ConfigManager;
+use GateGem\Core\Support\Config\FieldConfig;
+use GateGem\Core\Support\Config\FormConfig;
 use GateGem\Core\Utils\ColectionPaginate;
 use Livewire\WithPagination;
 
@@ -73,17 +77,17 @@ trait WithTableIndex
             } else {
                 $option = TableLoader::getDataByKey($this->module);
             }
-            if (!isset($option['fields'])) $option['fields'] = [];
+            if (!isset($option[ConfigManager::FIELDS])) $option[ConfigManager::FIELDS] = [];
             $option = apply_filters('filter_table_option_' . $this->module, $option);
             $this->option_temp = $option;
 
-            $this->viewEdit = getValueByKey($option, 'viewEdit', 'core::table.edit');
+            $this->viewEdit = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_EDIT, 'core::table.edit');
             if ($option && $this->checkAction()) {
-                $option['fields'][] =  [
-                    'title' => __(getValueByKey($option, 'action.title', '#')),
-                    'classData' => 'action-header',
-                    'classHeader' => 'action-data text-center',
-                    'funcCell' => function ($row, $column) use ($option) {
+                $option[ConfigManager::FIELDS][] =  [
+                    FieldConfig::TITLE => __(getValueByKey($option, ConfigManager::ACTION . '.' . ConfigManager::TITLE, '#')),
+                    FieldConfig::CLASS_DATA => 'action-header',
+                    FieldConfig::CLASS_HEADER => 'action-data text-center',
+                    FieldConfig::FUNC_CELL => function ($row, $column) use ($option) {
                         $html = '';
                         if ($this->checkEdit()) {
                             $html = $html . '<button class="btn btn-sm btn-success" wire:component=\'' . $this->viewEdit . '({"module":"' . $this->module . '","dataId":' . $row[getValueByKey($option, 'modalkey', 'id')] . '})\'><i class="bi bi-pencil-square"></i> <span>' . __('core::table.button.edit') . '</span></button>';
@@ -91,10 +95,10 @@ trait WithTableIndex
                         if ($this->checkRemove()) {
                             $html = $html . ' <button class="btn btn-sm btn-danger" data-confirm-message="' . __('core::table.message.confirm-remove') . '" wire:confirm=\'RemoveRow(' .  $row[getValueByKey($option, 'modalkey', 'id')] . ')\'><i class="bi bi-trash"></i> <span>' . __('core::table.button.remove') . '</span></button>';
                         }
-                        $buttonAppend = getValueByKey($option, 'action.append', []);
+                        $buttonAppend = getValueByKey($option, ConfigManager::ACTION . '.' . ConfigManager::BUTTON_APPEND, []);
                         foreach ($buttonAppend as $button) {
-                            if (getValueByKey($button, 'type', '') == 'update' && (!isset($button['permission']) ||  \GateGem\Core\Facades\Core::checkPermission($button['permission']))) {
-                                $html = $html . ' <button class="btn btn-sm  ' . getValueByKey($button, 'class', 'btn-danger') . ' " ' .  ($button['action']($row[getValueByKey($option, 'modalkey', 'id')], $row)) . '\'>' . getValueByKey($button, 'icon', '') . ' <span> ' . __(getValueByKey($button, 'title', '')) . ' </span></button>';
+                            if (getValueByKey($button, ButtonConfig::BUTTON_TYPE, '') == ButtonConfig::TYPE_UPDATE && (!isset($button[ButtonConfig::BUTTON_PERMISSION]) ||  \GateGem\Core\Facades\Core::checkPermission($button[ButtonConfig::BUTTON_PERMISSION]))) {
+                                $html = $html . ' <button class="btn btn-sm  ' . getValueByKey($button, ButtonConfig::BUTTON_CLASS, 'btn-danger') . ' " ' .  ($button[ButtonConfig::BUTTON_ACTION]($row[getValueByKey($option, 'modalkey', 'id')], $row)) . '\'>' . getValueByKey($button, ButtonConfig::BUTTON_ICON, '') . ' <span> ' . __(getValueByKey($button, ButtonConfig::BUTTON_TITLE, '')) . ' </span></button>';
                             }
                         }
                         return  $html;
@@ -107,7 +111,7 @@ trait WithTableIndex
     }
     public function RemoveRow($id)
     {
-        $model = app($this->option['model'])->find($id);
+        $model = app($this->option[ConfigManager::MODEL])->find($id);
         if ($model)
             $model->delete();
         $this->refreshData(['module' => $this->module]);
@@ -115,15 +119,15 @@ trait WithTableIndex
     public function LoadData()
     {
         $option = $this->option;
-        if (!$option || ($this->isCheckDisableModule && getValueByKey($option, 'DisableModule', false)))
+        if (!$option || ($this->isCheckDisableModule && getValueByKey($option, ConfigManager::DISABLE_MODULE, false)))
             return abort(404);
 
         if (!$this->modal_isPage) {
-            $this->modal_size = getValueByKey($option, 'page_size',  Modal::ExtraLarge);
+            $this->modal_size = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_SIZE,  Modal::ExtraLarge);
         }
 
-        $this->setTitle(__(getValueByKey($option, 'title', 'core::tables.' . $this->module . '.title')));
-        $this->pageSize = getValueByKey($option, 'pageSize', 10);
+        $this->setTitle(__(getValueByKey($option, ConfigManager::TITLE, 'core::tables.' . $this->module . '.title')));
+        $this->pageSize = getValueByKey($option, ConfigManager::PAGE_SIZE, 10);
         do_action("module_loaddata", $this->module, $this);
         do_action("module_" . $this->module . "_loaddata", $this);
     }
@@ -138,15 +142,15 @@ trait WithTableIndex
     }
     public function getModel()
     {
-        if (isset($this->option['model']) && $this->option['model'] != '') {
-            $model = app($this->option['model']);
-        } else if (isset($this->option['funcData']) && $this->option['funcData'] != '') {
-            $model = $this->option['funcData']();
+        if (isset($this->option[ConfigManager::MODEL]) && $this->option[ConfigManager::MODEL] != '') {
+            $model = app($this->option[ConfigManager::MODEL]);
+        } else if (isset($this->option[ConfigManager::FUNC_DATA]) && $this->option[ConfigManager::FUNC_DATA] != '') {
+            $model = $this->option[ConfigManager::FUNC_DATA]();
         } else {
             $model = collect([]);
         }
-        if (isset($this->option['funcQuery']) && $this->option['funcQuery'] != '') {
-            return $this->option['funcQuery']($model, request(), $this);
+        if (isset($this->option[ConfigManager::FUNC_QUERY]) && $this->option[ConfigManager::FUNC_QUERY] != '') {
+            return $this->option[ConfigManager::FUNC_QUERY]($model, request(), $this);
         }
         return $model;
     }
@@ -158,8 +162,8 @@ trait WithTableIndex
         }
         do_action("module_getdata_before", $this->module, $this);
         do_action("module_" . $this->module . "_getdata_before", $this, $model);
-        if (getValueByKey($this->option, 'funcFilter')) {
-            $model = getValueByKey($this->option, 'funcFilter')($model, $this->filter, $this);
+        if (getValueByKey($this->option, ConfigManager::FUNC_FILTER)) {
+            $model = getValueByKey($this->option, ConfigManager::FUNC_FILTER)($model, $this->filter, $this);
         } else {
             foreach ($this->filter as $key => $value) {
                 if ($value == '') {
@@ -208,10 +212,10 @@ trait WithTableIndex
     {
         if ($this->checkEdit()) return true;
         if ($this->checkRemove()) return true;
-        $buttonAppend = getValueByKey($this->getAction(), 'append', []);
+        $buttonAppend = getValueByKey($this->getAction(), ConfigManager::BUTTON_APPEND, []);
         $isAction = false;
         foreach ($buttonAppend as $button) {
-            if (getValueByKey($button, 'type', '') == 'update') {
+            if (getValueByKey($button, ButtonConfig::BUTTON_TYPE, '') == ButtonConfig::TYPE_UPDATE) {
                 $isAction = true;
                 break;
             }
@@ -220,26 +224,26 @@ trait WithTableIndex
     }
     private function getAction()
     {
-        return getValueByKey($this->option_temp, 'action', []);
+        return getValueByKey($this->option_temp, ConfigManager::ACTION, []);
     }
     public function checkAdd(): bool
     {
-        return getValueByKey($this->getAction(), 'add', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.add');
+        return getValueByKey($this->getAction(), ConfigManager::ADD, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.add');
     }
     protected function checkEdit()
     {
-        return getValueByKey($this->getAction(), 'edit', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.edit');
+        return getValueByKey($this->getAction(),  ConfigManager::EDIT, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.edit');
     }
     protected function checkRemove()
     {
-        return getValueByKey($this->getAction(), 'delete', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.delete');
+        return getValueByKey($this->getAction(),  ConfigManager::REMOVE, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.delete');
     }
     protected function checkInportExcel()
     {
-        return getValueByKey($this->getAction(), 'inport', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.inport');
+        return getValueByKey($this->getAction(), ConfigManager::INPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.inport');
     }
     protected function checkExportExcel()
     {
-        return getValueByKey($this->getAction(), 'export', true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.export');
+        return getValueByKey($this->getAction(), ConfigManager::EXPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.export');
     }
 }

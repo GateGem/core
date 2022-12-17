@@ -3,6 +3,7 @@
 namespace GateGem\Core\Builder\Form;
 
 use GateGem\Core\Builder\HtmlBuilder;
+use GateGem\Core\Support\Config\FieldConfig;
 
 class TreeViewBuilder extends HtmlBuilder
 {
@@ -18,7 +19,7 @@ class TreeViewBuilder extends HtmlBuilder
     public function getModelField($value)
     {
         if (getValueByKey($this->formData, 'filter', false)) {
-            return 'wire:model.lazy="' . getValueByKey($this->formData, 'prex', '') . $this->option['field'] . '"';
+            return 'wire:model.lazy="' . getValueByKey($this->formData, 'prex', '') . $this->option[FieldConfig::FIELD] . '"';
         }
         return (getValueByKey($this->option, 'defer', true) ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', '')  . $this->option['field'] . '.' . $value . '"';
     }
@@ -56,7 +57,7 @@ class TreeViewBuilder extends HtmlBuilder
                 } else {
                     echo '<div class="form-check  ms-4">';
                 }
-                echo '<input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
+                echo '<input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
                     <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
                     </div>';
             } else {
@@ -79,7 +80,7 @@ class TreeViewBuilder extends HtmlBuilder
                 if ($icon = getValueByKey($items[0], 'icon', '')) {
                     echo $icon;
                 }
-                echo '<div class="form-check  ms-4"> <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, 'attr', '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
+                echo '<div class="form-check  ms-4"> <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
             <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
             </div>';
             } else {
@@ -118,9 +119,8 @@ class TreeViewBuilder extends HtmlBuilder
     }
     public function RenderHtml()
     {
-        $funcData = getValueByKey($this->option, 'funcData', null);
-        if ($funcData && is_array($funcData)) {
-        } else if ($funcData) {
+        $funcData = getValueByKey($this->option, FieldConfig::FUNC_DATA, null);
+        if ($funcData && is_callable($funcData)) {
             $funcData = $funcData();
         }
         if ($funcData) {

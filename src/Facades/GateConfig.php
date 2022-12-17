@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static void setTitle(string $title)
  * @method static void disableModule(bool $flg)
  * @method static void setFuncQuery(callable $callback)
- * @method static \GateGem\Core\Support\Config\FieldConfig Field()
+ * @method static \GateGem\Core\Support\Config\FieldConfig Field($field='')
  * @method static \GateGem\Core\Support\Config\FormConfig Form()
- * @method static \GateGem\Core\Support\Config\ConfigManager NewItem()
+ * @method static \GateGem\Core\Support\Config\ConfigManager NewItem($title='')
  * 
  * 
  * 

@@ -10,24 +10,35 @@ class FormConfig  extends GateData
     public const FORM_CLASS = "FORM_CLASS";
     public const FORM_INCLUDE = "FORM_INCLUDE";
     public const FORM_LAYOUT = "FORM_LAYOUT";
-    public function setSize($Size): self
+    public const FORM_EDIT = "FORM_EDIT";
+    public const FORM_RULE = "FORM_RULE";
+    public const FORM_MESSAGE = "FORM_MESSAGE";
+    public function setMessage($value): self
     {
-        $this[self::FORM_SIZE] = $Size;
-        return $this;
+        return $this->setKeyData(self::FORM_MESSAGE, $value);
     }
-    public function setClass($Size): self
+    public function setRule($value): self
     {
-        $this[self::FORM_CLASS] = $Size;
-        return $this;
+        return $this->setKeyData(self::FORM_RULE, $value);
     }
-    public function setInclude($include): self
+    public function setEdit($value): self
     {
-        $this[self::FORM_INCLUDE] = $include;
-        return $this;
+        return $this->setKeyData(self::FORM_EDIT, $value);
     }
-    public function setLayout($layout): self
+    public function setSize($value): self
     {
-        $this[self::FORM_LAYOUT] = $layout;
-        return $this;
+        return $this->setKeyData(self::FORM_SIZE, $value);
+    }
+    public function setClass($value): self
+    {
+        return $this->setKeyData(self::FORM_CLASS, $value);
+    }
+    public function setInclude($value): self
+    {
+        return $this->setKeyData(self::FORM_INCLUDE, $value);
+    }
+    public function setLayout($value): self
+    {
+        return $this->setKeyData(self::FORM_LAYOUT, $value);
     }
 }

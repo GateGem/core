@@ -1,6 +1,7 @@
 <form wire:submit.prevent="SaveForm" class="edit-{{ $module }} edit-form">
-    @if (isset($option['formInclude']) && $option['formInclude'] != '')
-        @include($option['formInclude'])
+    @if (isset($option[\GateGem\Core\Support\Config\FormConfig::FORM_INCLUDE]) &&
+        $option[\GateGem\Core\Support\Config\FormConfig::FORM_INCLUDE] != '')
+        @include($option[\GateGem\Core\Support\Config\FormConfig::FORM_INCLUDE])
     @else
         <div class="p-1">
             {!! FormRender($option, $this, ['isNew' => $isFormNew, 'errors' => $errors]) !!}

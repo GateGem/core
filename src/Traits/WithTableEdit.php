@@ -4,6 +4,9 @@ namespace GateGem\Core\Traits;
 
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Loader\TableLoader;
+use GateGem\Core\Support\Config\ConfigManager;
+use GateGem\Core\Support\Config\FieldConfig;
+use GateGem\Core\Support\Config\FormConfig;
 use Livewire\WithFileUploads;
 
 trait WithTableEdit
@@ -28,56 +31,56 @@ trait WithTableEdit
     }
     public function getFieldsProperty()
     {
-        return  getValueByKey($this->getOptionProperty(), 'fields', []);
+        return  getValueByKey($this->getOptionProperty(), ConfigManager::FIELDS, []);
     }
     public function LoadData()
     {
         $option = $this->getOptionProperty();
-        if (!$option || !isset($option['model']) || $option['model'] == '')
+        if (!$option || !isset($option[ConfigManager::MODEL]) || $option[ConfigManager::MODEL] == '')
             return abort(404);
 
         if (!$this->modal_isPage) {
-            $this->modal_size = getValueByKey($option, 'modal_size',  Modal::FullscreenMd);
+            $this->modal_size = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_SIZE,  Modal::FullscreenMd);
         }
-        $this->setTitle(__(getValueByKey($option, 'title', 'core::tables.' . $this->module . '.title')));
+        $this->setTitle(__(getValueByKey($option, ConfigManager::TITLE, 'core::tables.' . $this->module . '.title')));
         $fields = $this->getFieldsProperty();
         $data = null;
         if ($this->dataId) {
             // edit
-            $data = app($option['model'])->find($this->dataId);
+            $data = app($option[ConfigManager::MODEL])->find($this->dataId);
             if (!$data)
                 return abort(404);
             $this->isFormNew = false;
         } else {
             // new
-            $data = new (app($option['model']));
+            $data = new (app($option[ConfigManager::MODEL]));
         }
         foreach ($fields as $item) {
-            if (isset($item['field']) && $item['field'] != '') {
-                if (isset($data->{$item['field']}))
-                    $this->{$item['field']} = $data->{$item['field']};
+            if (isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] != '') {
+                if (isset($data->{$item[FieldConfig::FIELD]}))
+                    $this->{$item[FieldConfig::FIELD]} = $data->{$item[FieldConfig::FIELD]};
                 else {
                     if ($this->isFormNew) {
-                        $default_value = getValueByKey($item, 'default', '');
+                        $default_value = getValueByKey($item, FieldConfig::DATA_DEFAULT, '');
                         if (is_callable($default_value))
-                            $this->{$item['field']} = $default_value($this->isFormNew);
+                            $this->{$item[FieldConfig::FIELD]} = $default_value($this->isFormNew);
                         else
-                            $this->{$item['field']} = $default_value;
+                            $this->{$item[FieldConfig::FIELD]} = $default_value;
                     } else {
-                        $default_value = getValueByKey($item, 'default', '');
+                        $default_value = getValueByKey($item, FieldConfig::DATA_DEFAULT, '');
                         if (is_callable($default_value))
-                            $this->{$item['field']} = $default_value($this->isFormNew);
+                            $this->{$item[FieldConfig::FIELD]} = $default_value($this->isFormNew);
                         else
-                            $this->{$item['field']} = '';
+                            $this->{$item[FieldConfig::FIELD]} = '';
                     }
                 }
             }
         }
-        $fnRule = getValueByKey($option, 'formRule', null);
+        $fnRule = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_RULE, null);
         if ($fnRule) {
             $this->rules = $fnRule($this->dataId, $this->isFormNew) ?? [];
         }
-        $fnRuleMessages = getValueByKey($option, 'ruleMessages', null);
+        $fnRuleMessages = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_MESSAGE, null);
         if ($fnRuleMessages) {
             $this->messages = $fnRuleMessages($this->dataId, $this->isFormNew) ?? [];
         }
@@ -103,29 +106,29 @@ trait WithTableEdit
         $data = null;
         if ($this->dataId) {
             // edit
-            $data = app($option['model'])->find($this->dataId);
+            $data = app($option[ConfigManager::MODEL])->find($this->dataId);
             if (!$data)
                 return abort(404);
             $this->isFormNew = false;
         } else {
             // new
-            $data = new (app($option['model']));
+            $data = new (app($option[ConfigManager::MODEL]));
         }
         $fields = $this->getFieldsProperty();
         if (method_exists($this, 'beforeBinding')) {
             $this->beforeBinding();
         }
         foreach ($fields as $item) {
-            if (isset($item['field']) && $item['field'] != '') {
-                $valuePreview = $this->{$item['field']};
+            if (isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] != '') {
+                $valuePreview = $this->{$item[FieldConfig::FIELD]};
                 if ($valuePreview && $valuePreview instanceof \Illuminate\Http\UploadedFile) {
-                    if (isset($item['imageFolder']) && $item['imageFolder'] != '')
-                        $valuePreview = $valuePreview->store('public/' . $item['imageFolder']);
+                    if (isset($item[FieldConfig::FOLDER]) && $item[FieldConfig::FOLDER] != '')
+                        $valuePreview = $valuePreview->store('public/' . $item[FieldConfig::FOLDER]);
                     else
                         $valuePreview = $valuePreview->store('public');
                     $valuePreview = str_replace('public', 'storage', $valuePreview);
                 }
-                $data->{$item['field']} =  $valuePreview;
+                $data->{$item[FieldConfig::FIELD]} =  $valuePreview;
             }
         }
         if (method_exists($this, 'beforeSave')) {

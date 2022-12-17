@@ -4,6 +4,8 @@ namespace GateGem\Core\Builder\Table;
 
 use GateGem\Core\Builder\HtmlBuilder;
 use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Support\Config\ConfigManager;
+use GateGem\Core\Support\Config\FieldConfig;
 
 class TableBuilder extends HtmlBuilder
 {
@@ -21,25 +23,25 @@ class TableBuilder extends HtmlBuilder
     public function RenderCell($row, $column, $key)
     {
         echo '<td>';
-        echo '<div class="cell-data ' . getValueByKey($column, 'classData', '') . '">';
+        echo '<div class="cell-data ' . getValueByKey($column, FieldConfig::CLASS_DATA, '') . '">';
         if (isset($column['funcCell'])) {
             echo $column['funcCell']($row, $column);
         } else if (isset($this->option['tableInline']) && $this->option['tableInline'] == true) {
             echo FieldRender([...$column, 'prex' => 'tables.' . $key . '.']);
-        } else if (isset($column['field'])) {
-            $cell_value = isset($row[$column['field']]) ? $row[$column['field']] : null;
+        } else if (isset($column[FieldConfig::FIELD])) {
+            $cell_value = isset($row[$column[FieldConfig::FIELD]]) ? $row[$column[FieldConfig::FIELD]] : null;
             $funcData = getValueByKey($column, 'funcData', null);
             if ($funcData && is_callable($funcData)) {
-                if (!isset($this->cacheData[$column['field']])) {
+                if (!isset($this->cacheData[$column[FieldConfig::FIELD]])) {
                     $funcData = $funcData();
-                    $this->cacheData[$column['field']] = $funcData;
+                    $this->cacheData[$column[FieldConfig::FIELD]] = $funcData;
                 } else {
-                    $funcData = $this->cacheData[$column['field']];
+                    $funcData = $this->cacheData[$column[FieldConfig::FIELD]];
                 }
             }
             if (!is_null($funcData) && (is_array($funcData) ||  is_a($funcData, \ArrayAccess::class))) {
-                $fieldKey = getValueByKey($column, 'fieldKey', 'id');
-                $fieldText = getValueByKey($column, 'fieldText', 'text');
+                $fieldKey = getValueByKey($column, FieldConfig::DATA_KEY, 'id');
+                $fieldText = getValueByKey($column, FieldConfig::DATA_TEXT, 'text');
                 foreach ($funcData as $item) {
                     if ($item[$fieldKey] == $cell_value) {
                         $cell_value = $item[$fieldText];
@@ -49,11 +51,11 @@ class TableBuilder extends HtmlBuilder
             }
             if (is_object($cell_value) || is_array($cell_value)) {
                 if ($cell_value instanceof \Illuminate\Support\Carbon) {
-                    echo $cell_value->format(getValueByKey($column, 'format', 'd/M/Y'));
+                    echo $cell_value->format(getValueByKey($column, FieldConfig::DATA_FORMAT, 'd/M/Y'));
                 } else {
                     htmlentities(print_r($cell_value));
                 }
-            } else if ($cell_value != "" && getValueByKey($column, 'fieldType', '') === FieldBuilder::Image) {
+            } else if ($cell_value != "" && getValueByKey($column, FieldConfig::FIELD_TYPE, '') === FieldBuilder::Image) {
                 echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
             } else if ($cell_value != "")
                 echo htmlentities($cell_value);
@@ -67,10 +69,10 @@ class TableBuilder extends HtmlBuilder
     }
     public function RenderRow($row, $key)
     {
-        if ($this->option && isset($this->option['fields'])) {
+        if ($this->option && isset($this->option[ConfigManager::FIELDS])) {
             echo '<tr>';
-            foreach ($this->option['fields'] as $column) {
-                if (getValueByKey($column, 'view', true) && getValueByKey($column, 'fieldType', FieldBuilder::Text) != FieldBuilder::Button) {
+            foreach ($this->option[ConfigManager::FIELDS] as $column) {
+                if (getValueByKey($column, FieldConfig::VIEW, true) && getValueByKey($column, FieldConfig::FIELD_TYPE, FieldBuilder::Text) != FieldBuilder::Button) {
                     $this->RenderCell($row, $column, $key);
                 }
             }
@@ -80,35 +82,35 @@ class TableBuilder extends HtmlBuilder
     public function RenderHeader()
     {
         echo '<thead  class="table-light"><tr>';
-        if ($this->option && isset($this->option['fields'])) {
-            foreach ($this->option['fields'] as $column) {
-                if (getValueByKey($column, 'view', true) && getValueByKey($column, 'fieldType', FieldBuilder::Text) != FieldBuilder::Button) {
+        if ($this->option && isset($this->option[ConfigManager::FIELDS])) {
+            foreach ($this->option[ConfigManager::FIELDS] as $column) {
+                if (getValueByKey($column, FieldConfig::VIEW, true) && getValueByKey($column, FieldConfig::FIELD_TYPE, FieldBuilder::Text) != FieldBuilder::Button) {
 
                     echo '<td x-data="{ filter: false }" class="position-relative">';
-                    echo '<div class="cell-header d-flex flex-row' . getValueByKey($column, 'classHeader', '') . '">';
+                    echo '<div class="cell-header d-flex flex-row' . getValueByKey($column, FieldConfig::CLASS_HEADER, '') . '">';
                     echo '<div class="cell-header_title flex-grow-1">';
-                    echo __($column['title']);
+                    echo __($column[FieldConfig::TITLE]);
                     echo '</div>';
                     echo '<div class="cell-header_extend">';
-                    if (isset($column['field'])) {
-                        if (getValueByKey($this->option, 'columnFilter', true) && getValueByKey($column, "filter", true)) {
+                    if (isset($column[FieldConfig::FIELD])) {
+                        if (getValueByKey($this->option, ConfigManager::FILTER, true) && getValueByKey($column, FieldConfig::FILTER, true)) {
                             echo '<i class="bi bi-funnel" @click="filter = true"></i>';
                         }
-                        if (getValueByKey($this->option, 'columnSort', true) && getValueByKey($column, "sort", true)) {
-                            if (getValueByKey($this->formData, 'sort.' . $column['field'], 1) == 1) {
-                                echo '<i class="bi bi-sort-alpha-down" wire:click="doSort(\'' . $column['field'] . '\',0)"></i>';
+                        if (getValueByKey($this->option, ConfigManager::SORT, true) && getValueByKey($column, FieldConfig::SORT, true)) {
+                            if (getValueByKey($this->formData, 'sort.' . $column[FieldConfig::FIELD], 1) == 1) {
+                                echo '<i class="bi bi-sort-alpha-down" wire:click="doSort(\'' . $column[FieldConfig::FIELD] . '\',0)"></i>';
                             } else {
-                                echo '<i class="bi bi-sort-alpha-down-alt" wire:click="doSort(\'' . $column['field'] . '\', 1)"></i>';
+                                echo '<i class="bi bi-sort-alpha-down-alt" wire:click="doSort(\'' . $column[FieldConfig::FIELD] . '\', 1)"></i>';
                             }
                         }
                     }
                     echo '</div>';
                     echo '</div>';
-                    if (isset($column['field'])) {
+                    if (isset($column[FieldConfig::FIELD])) {
                         echo '<div  x-show="filter"  @click.outside="filter = false" style="display:none;" class="form-filter-column">';
-                        echo "<p class='p-0'>" . __($column["title"]) . "</p>";
+                        echo "<p class='p-0'>" . __($column[FieldConfig::TITLE]) . "</p>";
                         echo  FieldBuilder::Render($column, [], ['prex' => 'filter.', 'filter' => true]);
-                        echo '<p class="text-end text-white p-0"> <i class="bi bi-eraser"  wire:click="clearFilter(\'' . $column['field'] . '\')"></i></p>';
+                        echo '<p class="text-end text-white p-0"> <i class="bi bi-eraser"  wire:click="clearFilter(\'' . $column[FieldConfig::FIELD] . '\')"></i></p>';
                         '</div>';
                     }
                     echo '</td>';
@@ -120,13 +122,13 @@ class TableBuilder extends HtmlBuilder
     public function RenderHtml()
     {
         echo '<div class="table-wapper">';
-        echo '<table class="table ' . getValueByKey($this->option, 'classTable', 'table-hover table-bordered') . '">';
+        echo '<table class="table ' . getValueByKey($this->option, ConfigManager::CLASS_TABLE, 'table-hover table-bordered') . '">';
         $this->RenderHeader();
         echo '<tbody>';
         if ($this->data != null && count($this->data) > 0) {
             foreach ($this->data as $key => $row) {
-                if ($this->option && isset($this->option['funcRow'])) {
-                    echo $this->option['funcRow']($row, $this->option, $key);
+                if ($this->option && isset($this->option[ConfigManager::FUNC_ROW])) {
+                    echo $this->option[ConfigManager::FUNC_ROW]($row, $this->option, $key);
                 } else {
                     $this->RenderRow($row, $key);
                 }
