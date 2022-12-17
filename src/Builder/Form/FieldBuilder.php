@@ -134,7 +134,7 @@ class FieldBuilder extends HtmlBuilder
     }
     public function RenderHtml()
     {
-        $fieldType = getValueByKey($this->option, FieldConfig::FIELD_TYPE, '');
+        $fieldType = isset($this->option[FieldConfig::FIELD_TYPE]) ? $this->option[FieldConfig::FIELD_TYPE] : "";
         if (getValueByKey($this->formData, 'filter', false) && ($fieldType == FieldBuilder::Quill || $fieldType == FieldBuilder::Textarea)) {
             $fieldType = FieldBuilder::Text;
         }
@@ -180,7 +180,7 @@ class FieldBuilder extends HtmlBuilder
                 $funcData = getValueByKey($this->option, FieldConfig::FUNC_DATA, null);
                 if ($funcData && is_callable($funcData)) {
                     $funcData = $funcData();
-                } 
+                }
                 echo '<select ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control"  id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' >';
                 $optionDefault = '';
                 if (getValueByKey($this->formData, 'filter', false) || ($optionDefault = getValueByKey($this->option, FieldConfig::DATA_DEFAULT, ''))) {
@@ -200,7 +200,7 @@ class FieldBuilder extends HtmlBuilder
                 $funcData = getValueByKey($this->option, FieldConfig::FUNC_DATA, null);
                 if ($funcData && is_callable($funcData)) {
                     $funcData = $funcData();
-                } 
+                }
                 echo '<select ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control" multiple id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . '>';
                 if ($funcData) {
                     foreach ($funcData as $item) {

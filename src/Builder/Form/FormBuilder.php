@@ -38,7 +38,7 @@ class FormBuilder extends HtmlBuilder
                     if (isset($cell['key']) && $cell['key'] != "") {
                         echo '<div class="' . getValueByKey($cell, 'column', FieldBuilder::Col12) . ' ' . getValueByKey($cell, 'class', '') . ' " ' . getValueByKey($cell, 'attr', '') . '>';
                         foreach ($this->option[ConfigManager::FIELDS] as $item) {
-                            if ($this->checkRender($item) && isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] && isset($item['keyColumn']) && $item['keyColumn'] == $cell['key']) {
+                            if ($this->checkRender($item) && isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] && isset($item[FieldConfig::KEY_LAYOUT]) && $item[FieldConfig::KEY_LAYOUT] == $cell['key']) {
                                 $this->RenderItemField($item);
                             }
                         }
