@@ -4,6 +4,7 @@ namespace GateGem\Core\Loader;
 
 use Illuminate\Support\Str;
 use GateGem\Core\Facades\Core;
+use GateGem\Core\Livewire\Contracts\SkipLoad;
 use GateGem\Core\Livewire\Widget;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -41,7 +42,9 @@ class LivewireLoader
                 Livewire::component($alias, $class);
             },
             function ($class) {
-                return is_subclass_of($class, Widget::class) && !(new ReflectionClass($class))->isAbstract();
+                if (!class_exists($class)) return false;
+                $refClass = new ReflectionClass($class);
+                return $refClass && !$refClass->isAbstract() && !$refClass->implementsInterface(SkipLoad::class) && $refClass->isSubclassOf(Widget::class);
             }
         );
     }
@@ -71,7 +74,9 @@ class LivewireLoader
                 Livewire::component($alias, $class);
             },
             function ($class) {
-                return is_subclass_of($class, Component::class) && !(new ReflectionClass($class))->isAbstract();
+                if (!class_exists($class)) return false;
+                $refClass = new ReflectionClass($class);
+                return  $refClass && !$refClass->isAbstract() && !$refClass->implementsInterface(SkipLoad::class) && $refClass->isSubclassOf(Component::class);
             }
         );
     }

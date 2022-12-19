@@ -17,14 +17,14 @@ class ConfigManager  extends GateData
     public const FORM = "FORM";
     public const CLASS_TABLE = "CLASS_TABLE";
     public const FIELDS = "FIELDS";
-    public const ACTION = "ACTION";
-    public const BUTTON_APPEND = "BUTTON_APPEND";
+    public const ACTION_TITLE = "ACTION_TITLE";
+    public const BUTTON_APPEND = "ACTION_BUTTON_APPEND";
     public const PAGE_SIZE = "PAGE_SIZE";
-    public const ADD = "ADD";
-    public const EDIT = "EDIT";
-    public const REMOVE = "REMOVE";
-    public const FILTER = "FILTER";
-    public const SORT = "SORT";
+    public const ADD = "ACTION_ADD";
+    public const EDIT = "ACTION_EDIT";
+    public const REMOVE = "ACTION_REMOVE";
+    public const FILTER = "ACTION_FILTER";
+    public const SORT = "ACTION_SORT";
     public const INPORT_EXCEL = "INPORT_EXCEL";
     public const EXPORT_EXCEL = "EXPORT_EXCEL";
     public const POLL = "POLL";
@@ -47,38 +47,32 @@ class ConfigManager  extends GateData
     }
     public function setButtonAppend(array $value = [])
     {
-        if (!isset($this[self::ACTION])) $this[self::ACTION] = [];
-        $this[self::ACTION][self::BUTTON_APPEND] = $value;
+        $this[self::BUTTON_APPEND] = $value;
         return $this;
     }
     public function hideRemove()
     {
-        if (!isset($this[self::ACTION])) $this[self::ACTION] = [];
-        $this[self::ACTION][self::REMOVE] = false;
+        $this[self::REMOVE] = false;
         return $this;
     }
     public function hideEdit()
     {
-        if (!isset($this[self::ACTION])) $this[self::ACTION] = [];
-        $this[self::ACTION][self::EDIT] = false;
+        $this[self::EDIT] = false;
         return $this;
     }
     public function hideAdd()
     {
-        if (!isset($this[self::ACTION])) $this[self::ACTION] = [];
-        $this[self::ACTION][self::ADD] = false;
+        $this[self::ADD] = false;
         return $this;
     }
     public function disableFilter(): self
     {
-        if (!isset($this[self::ACTION])) $this[self::ACTION] = [];
-        $this[self::ACTION][self::FILTER] = false;
+        $this[self::FILTER] = false;
         return $this;
     }
     public function disableSort(): self
     {
-        if (!isset($this[self::ACTION])) $this[self::ACTION] = [];
-        $this[self::ACTION][self::SORT] = false;
+        $this[self::SORT] = false;
         return $this;
     }
     public function setPageSize($value): self

@@ -27,9 +27,6 @@ trait WithDataLoader
             ...$config,
             'key' => $key
         ];
-        if ($key == 'catalog') {
-            Log::info(self::$datas[$key]);
-        }
     }
     public static function load($path)
     {

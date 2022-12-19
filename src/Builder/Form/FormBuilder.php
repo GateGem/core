@@ -21,7 +21,7 @@ class FormBuilder extends HtmlBuilder
     public function RenderItemField($item)
     {
         echo '<div class="form-group field-' . $item[FieldConfig::FIELD] . '">';
-        if (getValueByKey($item, FieldConfig::FIELD_TYPE, FieldBuilder::Text) != FieldBuilder::Button)
+        if ($item->getDataValue(FieldConfig::FIELD_TYPE, FieldBuilder::Text) != FieldBuilder::Button)
             echo ' <label for="input-' . $item[FieldConfig::FIELD] . '" class="form-label">' . __($item[FieldConfig::TITLE]) . '</label>';
         echo FieldBuilder::Render($item, $this->data, $this->formData);
         echo '</div>';
@@ -36,9 +36,9 @@ class FormBuilder extends HtmlBuilder
                 echo '<div class="row">';
                 foreach ($row as $cell) {
                     if (isset($cell['key']) && $cell['key'] != "") {
-                        echo '<div class="' . getValueByKey($cell, 'column', FieldBuilder::Col12) . ' ' . getValueByKey($cell, 'class', '') . ' " ' . getValueByKey($cell, 'attr', '') . '>';
+                        echo '<div class="key_' . $cell['key'] . ' ' . getValueByKey($cell, 'column', FieldBuilder::Col12) . ' ' . getValueByKey($cell, 'class', '') . ' " ' . getValueByKey($cell, 'attr', '') . '>';
                         foreach ($this->option[ConfigManager::FIELDS] as $item) {
-                            if ($this->checkRender($item) && isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] && isset($item[FieldConfig::KEY_LAYOUT]) && $item[FieldConfig::KEY_LAYOUT] == $cell['key']) {
+                            if ($this->checkRender($item) && isset($item[FieldConfig::KEY_LAYOUT]) && $item[FieldConfig::KEY_LAYOUT] == $cell['key']) {
                                 $this->RenderItemField($item);
                             }
                         }
@@ -50,7 +50,7 @@ class FormBuilder extends HtmlBuilder
         } else {
             echo '<div class="row">';
             foreach ($this->option[ConfigManager::FIELDS] as $item) {
-                if ($this->checkRender($item) && isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD]) {
+                if ($this->checkRender($item)) {
                     echo '<div class="' . getValueByKey($item, FieldConfig::FIELD_COLUMN, FieldBuilder::Col12) . '">';
                     $this->RenderItemField($item);
                     echo '</div>';
@@ -58,15 +58,16 @@ class FormBuilder extends HtmlBuilder
             }
             echo '</div>';
         }
-
         echo '</div>';
     }
     private function checkRender($item)
     {
         if (getValueByKey($this->formData, 'isNew', false)) {
-            return getValueByKey($item, 'add', true);
+            if (!$item->getDataValue(FieldConfig::ADD, true)) return false;
+        } else {
+            if (!$item->getDataValue(FieldConfig::EDIT, true)) return false;
         }
-        return getValueByKey($item, 'edit', true);
+        return isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] != "";
     }
     public static function Render($data, $option,  $formData)
     {

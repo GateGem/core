@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Http\Livewire\Page\Permission;
 
+use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Models\Permission;
 use GateGem\Core\Models\Role as ModelsRole;
@@ -31,29 +32,26 @@ class Role extends Modal
     }
     public function getOptionTree()
     {
-        return [
-            'field' => 'permission',
-            'funcData' => function () {
-                return [
-                    [
-                        'key' => 'core',
-                        'text' => 'Root',
-                        'skipTop' => true,
-                        'value' => '',
-                        'show' => true,
-                        'isChild' => true
-                    ],
+        return GateConfig::Field('permission')->setFuncData(function () {
+            return [
+                [
+                    'key' => 'core',
+                    'text' => 'Root',
+                    'skipTop' => true,
+                    'value' => '',
+                    'show' => true,
+                    'isChild' => true
+                ],
 
-                    ...Permission::all()->map(function ($item) {
-                        return [
-                            'key' => $item->slug,
-                            'text' => $item->name,
-                            'value' => $item->id
-                        ];
-                    })->toArray()
-                ];
-            }
-        ];
+                ...Permission::all()->map(function ($item) {
+                    return [
+                        'key' => $item->slug,
+                        'text' => $item->name,
+                        'value' => $item->id
+                    ];
+                })->toArray()
+            ];
+        });
     }
     public function render()
     {

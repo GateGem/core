@@ -5,12 +5,12 @@ namespace GateGem\Core\Livewire;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Theme;
 use GateGem\Core\Traits\WithDoAction;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\File;
 use Livewire\Component as ComponentBase;
 
 class Component extends ComponentBase
 {
+    public $childSlot;
     use WithDoAction;
     public $_code_permission = "";
     public function checkPermissionView()

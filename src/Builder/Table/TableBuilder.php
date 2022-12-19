@@ -23,14 +23,14 @@ class TableBuilder extends HtmlBuilder
     public function RenderCell($row, $column, $key)
     {
         echo '<td>';
-        echo '<div class="cell-data ' . getValueByKey($column, FieldConfig::CLASS_DATA, '') . '">';
-        if (isset($column['funcCell'])) {
-            echo $column['funcCell']($row, $column);
+        echo '<div class="cell-data ' . $column->getDataValue(FieldConfig::CLASS_DATA, '') . '">';
+        if (isset($column[FieldConfig::FUNC_CELL])) {
+            echo $column[FieldConfig::FUNC_CELL]($row[$column[FieldConfig::FIELD]], $row, $column);
         } else if (isset($this->option['tableInline']) && $this->option['tableInline'] == true) {
             echo FieldRender([...$column, 'prex' => 'tables.' . $key . '.']);
         } else if (isset($column[FieldConfig::FIELD])) {
             $cell_value = isset($row[$column[FieldConfig::FIELD]]) ? $row[$column[FieldConfig::FIELD]] : null;
-            $funcData = getValueByKey($column, 'funcData', null);
+            $funcData =  $column->getDataValue(FieldConfig::FUNC_DATA, null);
             if ($funcData && is_callable($funcData)) {
                 if (!isset($this->cacheData[$column[FieldConfig::FIELD]])) {
                     $funcData = $funcData();
@@ -40,8 +40,8 @@ class TableBuilder extends HtmlBuilder
                 }
             }
             if (!is_null($funcData) && (is_array($funcData) ||  is_a($funcData, \ArrayAccess::class))) {
-                $fieldKey = getValueByKey($column, FieldConfig::DATA_KEY, 'id');
-                $fieldText = getValueByKey($column, FieldConfig::DATA_TEXT, 'text');
+                $fieldKey = $column->getDataValue(FieldConfig::DATA_KEY, 'id');
+                $fieldText = $column->getDataValue(FieldConfig::DATA_TEXT, 'text');
                 foreach ($funcData as $item) {
                     if ($item[$fieldKey] == $cell_value) {
                         $cell_value = $item[$fieldText];
@@ -51,11 +51,11 @@ class TableBuilder extends HtmlBuilder
             }
             if (is_object($cell_value) || is_array($cell_value)) {
                 if ($cell_value instanceof \Illuminate\Support\Carbon) {
-                    echo $cell_value->format(getValueByKey($column, FieldConfig::DATA_FORMAT, 'd/M/Y'));
+                    echo $cell_value->format($column->getDataValue(FieldConfig::DATA_FORMAT, 'd/M/Y'));
                 } else {
                     htmlentities(print_r($cell_value));
                 }
-            } else if ($cell_value != "" && getValueByKey($column, FieldConfig::FIELD_TYPE, '') === FieldBuilder::Image) {
+            } else if ($cell_value != "" && $column->getDataValue(FieldConfig::FIELD_TYPE, '') === FieldBuilder::Image) {
                 echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
             } else if ($cell_value != "")
                 echo htmlentities($cell_value);
@@ -67,12 +67,19 @@ class TableBuilder extends HtmlBuilder
         echo '</div>';
         echo '</td>';
     }
+    public function CheckColumnShow($column)
+    {
+        if (!$column->getDataValue(FieldConfig::VIEW, true)) return false;
+        if ($column->getDataValue(FieldConfig::FIELD_TYPE, FieldBuilder::Text) == FieldBuilder::Button) return false;
+        if ($column->checkCallable(FieldConfig::CHECK_SHOW) && !$column[FieldConfig::CHECK_SHOW]()) return false;
+        return true;
+    }
     public function RenderRow($row, $key)
     {
         if ($this->option && isset($this->option[ConfigManager::FIELDS])) {
             echo '<tr>';
             foreach ($this->option[ConfigManager::FIELDS] as $column) {
-                if (getValueByKey($column, FieldConfig::VIEW, true) && getValueByKey($column, FieldConfig::FIELD_TYPE, FieldBuilder::Text) != FieldBuilder::Button) {
+                if ($this->CheckColumnShow($column)) {
                     $this->RenderCell($row, $column, $key);
                 }
             }
@@ -84,8 +91,7 @@ class TableBuilder extends HtmlBuilder
         echo '<thead  class="table-light"><tr>';
         if ($this->option && isset($this->option[ConfigManager::FIELDS])) {
             foreach ($this->option[ConfigManager::FIELDS] as $column) {
-                if (getValueByKey($column, FieldConfig::VIEW, true) && getValueByKey($column, FieldConfig::FIELD_TYPE, FieldBuilder::Text) != FieldBuilder::Button) {
-
+                if ($this->CheckColumnShow($column)) {
                     echo '<td x-data="{ filter: false }" class="position-relative">';
                     echo '<div class="cell-header d-flex flex-row' . getValueByKey($column, FieldConfig::CLASS_HEADER, '') . '">';
                     echo '<div class="cell-header_title flex-grow-1">';

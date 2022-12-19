@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void setFuncQuery(callable $callback)
  * @method static \GateGem\Core\Support\Config\FieldConfig Field($field='')
  * @method static \GateGem\Core\Support\Config\FormConfig Form()
+ * @method static \GateGem\Core\Support\Config\ButtonConfig Button($title = '')
  * @method static \GateGem\Core\Support\Config\ConfigManager NewItem($title='')
  * 
  * 

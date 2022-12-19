@@ -11,9 +11,11 @@ use GateGem\Core\Builder\Menu\MenuBuilder;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Module;
 use GateGem\Core\Facades\Plugin;
+use GateGem\Core\TagCompiler\LivewireGTagCompiler;
 use GateGem\Core\TagCompiler\WidgetTagCompiler;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use Livewire\Livewire;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -37,6 +39,7 @@ class CoreServiceProvider extends ServiceProvider
     }
     public function extending()
     {
+
         // First Setup Layout Theme
         add_action("theme_head_before", function ($isPageTitle = true) {
             if (!isset($isPageTitle) || $isPageTitle === true) {
@@ -89,6 +92,20 @@ class CoreServiceProvider extends ServiceProvider
 
         add_menu_item('core::menu.sidebar.dashboard', 'bi bi-speedometer', '', 'core.dashboard', MenuBuilder::ItemRouter, '', '', -100);
     }
+    protected function registerBladeDirectives()
+    {
+        Blade::directive('livewireG', [GateBladeDirectives::class, 'livewireG']);
+        Blade::directive('endLivewireG', [GateBladeDirectives::class, 'endLivewireG']);
+        Blade::directive('childSlot', [GateBladeDirectives::class, 'childSlot']);
+        //Blade directives
+        Blade::directive('role', function ($role) {
+            return "if(auth()->check() &&(auth()->user()->isSuperAdmin() || auth()->user()->hasRole('{$role}'))) :"; //return this if statement inside php tag
+        });
+
+        Blade::directive('endrole', function ($role) {
+            return "endif;"; //return this endif statement inside php tag
+        });
+    }
     public function packageRegistered()
     {
         Theme::LoadApp();
@@ -120,24 +137,24 @@ class CoreServiceProvider extends ServiceProvider
                     return true;
                 });
             }
-
-
-            //Blade directives
-            Blade::directive('role', function ($role) {
-                return "if(auth()->check() &&(auth()->user()->isSuperAdmin() || auth()->user()->hasRole('{$role}'))) :"; //return this if statement inside php tag
-            });
-
-            Blade::directive('endrole', function ($role) {
-                return "endif;"; //return this endif statement inside php tag
-            });
+            $this->registerBladeDirectives();
         }
     }
 
     protected function registerTagCompiler()
     {
         if (method_exists($this->app['blade.compiler'], 'precompiler')) {
+            // $this->app['blade.compiler']->precompiler(function ($string) {
+            //     foreach ([WidgetTagCompiler::class, LivewireGTagCompiler::class] as $item) {
+            //         $string = app($item)->compile($string);
+            //     }
+            //     return  $string;
+            // });
             $this->app['blade.compiler']->precompiler(function ($string) {
-                return app(WidgetTagCompiler::class)->compile($string);
+                return  app(WidgetTagCompiler::class)->compile($string);;
+            });
+            $this->app['blade.compiler']->precompiler(function ($string) {
+                return  app(LivewireGTagCompiler::class)->compile($string);;
             });
         }
     }
@@ -145,7 +162,7 @@ class CoreServiceProvider extends ServiceProvider
     public function bootingPackage()
     {
         $this->registerTagCompiler();
-        
+
         add_link_symbolic(__DIR__ . '/../public', public_path('modules/gate-core'));
         add_asset_js(asset('modules/gate-core/js/gate-core.js'), '', 0);
         add_asset_css(asset('modules/gate-core/css/gate-core.css'), '',  0);
@@ -153,6 +170,7 @@ class CoreServiceProvider extends ServiceProvider
 
         Module::RegisterApp();
         Plugin::RegisterApp();
+        Livewire::component("gate-layout", \GateGem\Core\Http\Livewire\Common\Layout\Index::class);
     }
     public function packageBooted()
     {

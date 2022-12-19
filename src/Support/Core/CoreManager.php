@@ -14,6 +14,7 @@ use GateGem\Core\Facades\Module;
 use GateGem\Core\Facades\Plugin;
 use GateGem\Core\Facades\Theme;
 use Illuminate\Support\Facades\Gate;
+use Livewire\LifecycleManager;
 use ReflectionClass;
 
 class CoreManager
@@ -130,7 +131,7 @@ class CoreManager
             app()->setLocale(Session::get(self::KeyLanguage));
         }
         // session is available
-    
+
 
         // prefix is missing? add it
         if (!in_array($lang_uri, $languages)) {
@@ -318,7 +319,8 @@ class CoreManager
             $this->filesystem->link($target, $link);
         }
     }
-    public function getPathDirFromClass($class){
+    public function getPathDirFromClass($class)
+    {
         $reflector = new ReflectionClass(get_class($class));
 
         return dirname($reflector->getFileName());
@@ -330,5 +332,21 @@ class CoreManager
     public function getPermissionCustom()
     {
         return apply_filters('core_auth_permission_custom', config('core.permission.custom') ?? []);
+    }
+    public function Livewire($name, $params = [])
+    {
+        // This is if a user doesn't pass params, BUT passes key() as the second argument.
+        if (is_string($params)) $params = [];
+
+        $id = str()->random(20);
+
+        if (class_exists($name)) {
+            $name = $name::getName();
+        }
+
+        return LifecycleManager::fromInitialRequest($name, $id)
+            ->boot()
+            ->initialHydrate()
+            ->mount($params);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use GateGem\Core\Support\Core\GateData;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -9,7 +10,7 @@ if (!function_exists('getValueByKey')) {
         if ($data && $key) {
             $arrkey = explode('.', $key);
             $dataTemp = $data;
-            if (is_array($dataTemp)) {
+            if (is_array($dataTemp) || is_a($dataTemp, GateData::class)) {
                 foreach ($arrkey as $keyItem) {
                     if (isset($dataTemp[$keyItem])) {
                         $dataTemp = $dataTemp[$keyItem];

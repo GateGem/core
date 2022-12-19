@@ -29,7 +29,13 @@ class FieldConfig  extends GateData
     public const FILTER = "FILTER";
     public const SORT = "SORT";
     public const ATTR = "ATTR";
+    public const CHECK_SHOW = "CHECK_SHOW";
+    public const DEFER = "DEFER";
 
+    public function setCheckShow($value): self
+    {
+        return $this->setKeyData(self::CHECK_SHOW, $value);
+    }
 
     public function setFieldColumn($value): self
     {
@@ -118,6 +124,10 @@ class FieldConfig  extends GateData
     public function disableFilter(): self
     {
         return $this->setKeyData(self::FILTER, false);
+    }
+    public function disableDefer(): self
+    {
+        return $this->setKeyData(self::DEFER, false);
     }
     public function disableSort(): self
     {

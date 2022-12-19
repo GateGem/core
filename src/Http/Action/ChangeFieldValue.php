@@ -13,6 +13,7 @@ class ChangeFieldValue extends ActionBase
     {
         if (method_exists($this->component, 'getModel')) {
 
+            Log::info($this->param);
             $message = getValueByKey($this->param, 'message');
             if ($message)
                 $this->component->showMessage(__($message));

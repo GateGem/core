@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Facade;
  * 
  * @method static \GateGem\Core\Models\User user()
  * @method static bool checkPermission(string $per)
+ * @method static void Livewire($name, $params = [])
  * 
  * 
  * @see \GateGem\Core\Facades\Core

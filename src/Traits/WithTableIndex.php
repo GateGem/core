@@ -2,11 +2,11 @@
 
 namespace GateGem\Core\Traits;
 
+use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Loader\TableLoader;
 use GateGem\Core\Support\Config\ButtonConfig;
 use GateGem\Core\Support\Config\ConfigManager;
-use GateGem\Core\Support\Config\FieldConfig;
 use GateGem\Core\Support\Config\FormConfig;
 use GateGem\Core\Utils\ColectionPaginate;
 use Livewire\WithPagination;
@@ -82,28 +82,41 @@ trait WithTableIndex
             $this->option_temp = $option;
 
             $this->viewEdit = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_EDIT, 'core::table.edit');
-            if ($option && $this->checkAction()) {
-                $option[ConfigManager::FIELDS][] =  [
-                    FieldConfig::TITLE => __(getValueByKey($option, ConfigManager::ACTION . '.' . ConfigManager::TITLE, '#')),
-                    FieldConfig::CLASS_DATA => 'action-header',
-                    FieldConfig::CLASS_HEADER => 'action-data text-center',
-                    FieldConfig::FUNC_CELL => function ($row, $column) use ($option) {
+            if ($option) {
+                $option[ConfigManager::FIELDS][] = GateConfig::Field('')
+                    ->setTitle(getValueByKey($option, ConfigManager::ACTION_TITLE, '#'))
+                    ->setCheckShow(function () {
+                        return $this->checkAction();
+                    })
+                    ->setClassData('action-data  text-center')
+                    ->setClassHeader('action-header text-center')
+                    ->setFuncCell(function ($valueCell, $row, $column) use ($option) {
                         $html = '';
+                        $valueId = $row[getValueByKey($option,ConfigManager::MODEL_KEY, 'id')];
                         if ($this->checkEdit()) {
-                            $html = $html . '<button class="btn btn-sm btn-success" wire:component=\'' . $this->viewEdit . '({"module":"' . $this->module . '","dataId":' . $row[getValueByKey($option, 'modalkey', 'id')] . '})\'><i class="bi bi-pencil-square"></i> <span>' . __('core::table.button.edit') . '</span></button>';
+                            $html = $html  . "&nbsp;" . GateConfig::Button('core::table.button.edit')
+                                ->setClass('btn btn-sm btn-success')
+                                ->setDoComponent($this->viewEdit, "{'module':'" . $this->module . "','dataId':" . $valueId . '}')
+                                ->setIcon('<i class="bi bi-pencil-square"></i> ')
+                                ->toHtml();
                         }
                         if ($this->checkRemove()) {
-                            $html = $html . ' <button class="btn btn-sm btn-danger" data-confirm-message="' . __('core::table.message.confirm-remove') . '" wire:confirm=\'RemoveRow(' .  $row[getValueByKey($option, 'modalkey', 'id')] . ')\'><i class="bi bi-trash"></i> <span>' . __('core::table.button.remove') . '</span></button>';
+                            $html = $html . "&nbsp;" . GateConfig::Button('core::table.button.remove')
+                                ->setClass('btn btn-sm btn-danger')
+                                ->setAttr(' data-confirm-message="' . __('core::table.message.confirm-remove') . '" ')
+                                ->setConfirm('RemoveRow', "{'module':'" . $this->module . "','dataId':" . $valueId . '}')
+                                ->setIcon('<i class="bi bi-trash"></i> ')
+                                ->toHtml();
                         }
-                        $buttonAppend = getValueByKey($option, ConfigManager::ACTION . '.' . ConfigManager::BUTTON_APPEND, []);
+
+                        $buttonAppend = getValueByKey($option,ConfigManager::BUTTON_APPEND, []);
                         foreach ($buttonAppend as $button) {
-                            if (getValueByKey($button, ButtonConfig::BUTTON_TYPE, '') == ButtonConfig::TYPE_UPDATE && (!isset($button[ButtonConfig::BUTTON_PERMISSION]) ||  \GateGem\Core\Facades\Core::checkPermission($button[ButtonConfig::BUTTON_PERMISSION]))) {
-                                $html = $html . ' <button class="btn btn-sm  ' . getValueByKey($button, ButtonConfig::BUTTON_CLASS, 'btn-danger') . ' " ' .  ($button[ButtonConfig::BUTTON_ACTION]($row[getValueByKey($option, 'modalkey', 'id')], $row)) . '\'>' . getValueByKey($button, ButtonConfig::BUTTON_ICON, '') . ' <span> ' . __(getValueByKey($button, ButtonConfig::BUTTON_TITLE, '')) . ' </span></button>';
+                            if ($button->checkType(ButtonConfig::TYPE_UPDATE)) {
+                                $html = $html . "&nbsp;" .  $button->toHtml($valueId, $row, $column);
                             }
                         }
                         return  $html;
-                    }
-                ];
+                    });
             }
             $this->option_temp = $option;
         }
@@ -142,14 +155,14 @@ trait WithTableIndex
     }
     public function getModel()
     {
-        if (isset($this->option[ConfigManager::MODEL]) && $this->option[ConfigManager::MODEL] != '') {
+        if (isset($this->option[ConfigManager::MODEL])) {
             $model = app($this->option[ConfigManager::MODEL]);
-        } else if (isset($this->option[ConfigManager::FUNC_DATA]) && $this->option[ConfigManager::FUNC_DATA] != '') {
+        } else if (isset($this->option[ConfigManager::FUNC_DATA])) {
             $model = $this->option[ConfigManager::FUNC_DATA]();
         } else {
             $model = collect([]);
         }
-        if (isset($this->option[ConfigManager::FUNC_QUERY]) && $this->option[ConfigManager::FUNC_QUERY] != '') {
+        if (isset($this->option[ConfigManager::FUNC_QUERY])) {
             return $this->option[ConfigManager::FUNC_QUERY]($model, request(), $this);
         }
         return $model;
@@ -208,42 +221,44 @@ trait WithTableIndex
             'checkExportExcel' => $this->checkExportExcel()
         ]);
     }
+
     private function checkAction()
     {
         if ($this->checkEdit()) return true;
         if ($this->checkRemove()) return true;
-        $buttonAppend = getValueByKey($this->getAction(), ConfigManager::BUTTON_APPEND, []);
+        $buttonAppend = $this->getDataValue(ConfigManager::BUTTON_APPEND, []);
         $isAction = false;
         foreach ($buttonAppend as $button) {
-            if (getValueByKey($button, ButtonConfig::BUTTON_TYPE, '') == ButtonConfig::TYPE_UPDATE) {
+            if ($button->checkType(ButtonConfig::TYPE_UPDATE)) {
                 $isAction = true;
                 break;
             }
         }
         return $isAction;
     }
-    private function getAction()
+    public function getDataValue($key, $default = '')
     {
-        return getValueByKey($this->option_temp, ConfigManager::ACTION, []);
+        if (isset($this->option[$key])) return $this->option[$key];
+        return $default;
     }
     public function checkAdd(): bool
     {
-        return getValueByKey($this->getAction(), ConfigManager::ADD, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.add');
+        return $this->getDataValue(ConfigManager::ADD, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.add');
     }
     protected function checkEdit()
     {
-        return getValueByKey($this->getAction(),  ConfigManager::EDIT, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.edit');
+        return $this->getDataValue(ConfigManager::EDIT, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.edit');
     }
     protected function checkRemove()
     {
-        return getValueByKey($this->getAction(),  ConfigManager::REMOVE, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.delete');
+        return $this->getDataValue(ConfigManager::REMOVE, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.delete');
     }
     protected function checkInportExcel()
     {
-        return getValueByKey($this->getAction(), ConfigManager::INPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.inport');
+        return $this->getDataValue(ConfigManager::INPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.inport');
     }
     protected function checkExportExcel()
     {
-        return getValueByKey($this->getAction(), ConfigManager::EXPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.export');
+        return $this->getDataValue(ConfigManager::EXPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.export');
     }
 }

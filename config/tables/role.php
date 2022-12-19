@@ -1,43 +1,25 @@
 <?php
 
-use GateGem\Core\Builder\Form\FieldBuilder;
-use GateGem\Core\Http\Action\Test;
+use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Support\Config\ButtonConfig;
 
-return [
-    'model' => \GateGem\Core\Models\Role::class,
-    //'DisableModule' => true,
-    'enableAction' => true,
-    // 'tableInline' => true,
-    'action' => [
-        'title' => '#',
-        'add' => true,
-        'edit' => true,
-        'delete' => true,
-        'export' => true,
-        'inport' => true,
-        'append' => [
-            [
-                'title' =>  'core::tables.role.button.permission',
-                'icon' => '<i class="bi bi-magic"></i>',
-                'permission' => 'core.role.permission',
-                'class' => 'btn-primary',
-                'type' => 'update',
-                'action' => function ($id) {
-                    return 'wire:component="core::page.permission.role({\'roleId\':\'' . $id . '\'})"';
-                }
-            ]
-        ]
-    ],
-    'formSize' => Modal::Small,
-    'fields' => [
-        [
-            'field' => 'slug',
-            'title' => 'core::tables.role.field.slug'
-        ],
-        [
-            'field' => 'name',
-            'title' => 'core::tables.role.field.name'
-        ],
-    ]
-];
+return GateConfig::NewItem()
+    ->setModel(\GateGem\Core\Models\Role::class)
+    ->setButtonAppend([
+        GateConfig::Button('core::tables.role.button.permission')
+            ->setIcon('<i class="bi bi-magic"></i>')
+            ->setClass('btn btn-primary btn-sm')
+            ->setPermission('core.role.permission')
+            ->setDoComponent('core::page.permission.role', function ($id) {
+                return "{'roleId':" . $id . "}";
+            })
+            ->setType(ButtonConfig::TYPE_UPDATE)
+    ])
+    ->setForm(GateConfig::Form()->setSize(Modal::Large))
+    ->setFields([
+        GateConfig::Field('slug')
+            ->setTitle('core::tables.role.field.slug'),
+        GateConfig::Field('name')
+            ->setTitle('core::tables.role.field.name')
+    ]);

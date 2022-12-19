@@ -2,117 +2,94 @@
 
 use GateGem\Core\Builder\Form\FieldBuilder;
 use GateGem\Core\Facades\Core;
+use GateGem\Core\Facades\GateConfig;
+use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Support\Config\ButtonConfig;
+use GateGem\Core\Support\Config\FieldConfig;
 
-return [
-    'model' => GateGem\Core\Models\User::class,
-    'modelkey' => 'id',
-    'excel' => [],
-    // 'tableInline' => true,
-    'action' => [
-        'title' => '#',
-        'add' => true,
-        'edit' => true,
-        'delete' => true,
-        'export' => true,
-        'inport' => true,
-        'append' => [
-            [
-                'title' => 'core::tables.user.button.permission',
-                'icon' => '<i class="bi bi-magic"></i>',
-                'permission' => 'core.user.permission',
-                'class' => 'btn-primary',
-                'type' => 'update',
-                'action' => function ($id) {
-                    return 'wire:component="core::page.permission.user({\'userId\':\'' . $id . '\'})"';
-                }
-            ]
-        ]
-    ],
-    'formEdit' => '',
-    'formRule' => function ($id, $isNew) {
-        return [
-            'name' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ];
-    },
-
-    'ruleMessages' => function ($id, $isNew) {
-        return [];
-    },
-    'formInclude' => '',
-    'formClass' => 'p-1',
-    'layoutForm' => [
-        'common' => [
-            [
-                ['key' => 'row1_1', 'column' => FieldBuilder::Col6],
-                ['key' => 'row1_2', 'column' => FieldBuilder::Col6],
-            ],
-            [
-                ['key' => 'row2_1', 'column' => FieldBuilder::Col12],
-            ]
-        ]
-    ],
-    'fields' => [
-        [
-            'field' => 'name',
-            'fieldType' => FieldBuilder::Text,
-            'title' => 'core::tables.user.field.name',
-            'keyColumn' => 'row1_1'
-        ],
-        [
-            'field' => 'avatar',
-            'imageFolder' => 'user',
-            'fieldType' => FieldBuilder::Image,
-            'title' => 'core::tables.user.field.avatar',
-            'keyColumn' => 'row1_1'
-        ],
-        [
-            'field' => 'email',
-            'title' => 'core::tables.user.field.email',
-            'view' => false,
-            'keyColumn' => 'row1_2'
-        ],
-        [
-            'field' => 'info',
-            'title' => 'core::tables.user.field.info',
-            'fieldType' => FieldBuilder::Textarea,
-            'keyColumn' => 'row2_1'
-        ],
-        [
-            'field' => 'password',
-            'title' => 'core::tables.user.field.password',
-            'fieldType' => FieldBuilder::Password,
-            'view' => false,
-            'edit' => false,
-            'keyColumn' => 'row1_1'
-        ],
-        [
-            'fieldType' => FieldBuilder::Dropdown,
-            'default' => 0,
-            'funcData' => function () {
+return GateConfig::NewItem()
+    ->setModel(\GateGem\Core\Models\User::class)
+    ->setButtonAppend([
+        GateConfig::Button('core::tables.user.button.permission')
+            ->setIcon('<i class="bi bi-magic"></i>')
+            ->setClass('btn btn-primary btn-sm')
+            ->setPermission('core.user.permission')
+            ->setDoComponent('core::page.permission.user', function ($id) {
+                return "{'userId':" . $id . "}";
+            })
+            ->setType(ButtonConfig::TYPE_UPDATE)
+    ])
+    ->setForm(
+        GateConfig::Form()->setSize(Modal::ExtraLarge)
+            ->setRule(function () {
+                return [
+                    'name' => ['required'],
+                    'email' => ['required', 'email'],
+                    'password' => ['required'],
+                ];
+            })
+            ->setLayout([
+                [
+                    ['key' => 'row1_1', 'column' => FieldBuilder::Col6],
+                    ['key' => 'row1_2', 'column' => FieldBuilder::Col6],
+                ],
+                [
+                    ['key' => 'row2_1', 'column' => FieldBuilder::Col12],
+                ]
+            ])
+    )
+    ->setFields([
+        GateConfig::Field('name')
+            ->setTitle('core::tables.user.field.name')
+            ->setKeyLayout('row1_1'),
+        GateConfig::Field('avatar')
+            ->setTitle('core::tables.user.field.avatar')
+            ->setFieldType(FieldBuilder::Image)
+            ->setFolder('user')
+            ->setKeyLayout('row1_1'),
+        GateConfig::Field('email')
+            ->hideView()
+            ->setTitle('core::tables.user.field.email')
+            ->setKeyLayout('row1_2'),
+        GateConfig::Field('info')
+            ->setTitle('core::tables.user.field.info')
+            ->setFieldType(FieldBuilder::Textarea)
+            ->setKeyLayout('row2_1'),
+        GateConfig::Field('password')
+            ->hideView()
+            ->hideEdit()
+            ->setTitle('core::tables.user.field.password')
+            ->setFieldType(FieldBuilder::Password)
+            ->setKeyLayout('row1_1'),
+        GateConfig::Field('status')
+            ->setDataDefault(0)
+            ->setFuncData(function () {
                 return collect([0, 1])->map(function ($item) {
                     return [
                         'id' => $item,
                         'text' => __('core::enums.status.' . $item)
                     ];
                 });
-            },
-            'funcCell' => function ($row, $column) {
+            })
+            ->setFuncCell(function ($value, $row, $column) {
                 if (Core::checkPermission('core.user.change-status')) {
-                    if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
-                        return '<button ' . aciton_change_field_value_hook('{"message":"core::tables.user.message.unactivated","id":' . $row['id'] . ',"field":"' . $column['field'] . '","value":0}') . ' class="btn btn-primary btn-sm text-nowrap">' . __('core::enums.status.1') . '</button>';
+                    if ($value == 1) {
+                        return  GateConfig::Button('core::enums.status.1')
+                            ->setClass('btn btn-primary btn-sm text-nowrap')
+                            ->setDoChangeField("{'id':" . $row['id'] . ",'field':'status','value':0,'key':'id'}")
+                            ->toHtml();
                     }
-                    return '<button ' . aciton_change_field_value_hook('{"id":' . $row['id'] . ',"field":"' . $column['field'] . '","value":1}') . ' class="btn btn-danger btn-sm text-nowrap">' . __('core::enums.status.0') . '</button>';
+                    return  GateConfig::Button('core::enums.status.0')
+                        ->setClass('btn btn-warning btn-sm text-nowrap')
+                        ->setDoChangeField("{'id':" . $row['id'] . ",'field':'status','value':1,'key':'id'}")
+                        ->toHtml();
                 }
-                if (isset($row[$column['field']]) && $row[$column['field']] == 1) {
+                if ($value == 1) {
                     return __('core::enums.status.1');
                 }
                 return __('core::enums.status.0');
-            },
-            'field' => 'status',
-            'title' => 'core::tables.user.field.status',
-            'keyColumn' => 'row1_2',
-        ]
-    ]
-];
+            })
+            ->setTitle('core::tables.user.field.status')
+            ->setFieldType(FieldBuilder::Dropdown)
+            ->setKeyLayout('row1_2')
+    ]);

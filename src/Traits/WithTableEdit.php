@@ -56,7 +56,7 @@ trait WithTableEdit
             $data = new (app($option[ConfigManager::MODEL]));
         }
         foreach ($fields as $item) {
-            if (isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] != '') {
+            if ($item->checkKey(FieldConfig::FIELD)) {
                 if (isset($data->{$item[FieldConfig::FIELD]}))
                     $this->{$item[FieldConfig::FIELD]} = $data->{$item[FieldConfig::FIELD]};
                 else {
@@ -92,7 +92,8 @@ trait WithTableEdit
         $this->dataId = $dataId;
         if (!$module) return abort(404);
         $this->module = $module;
-        $this->_code_permission = 'core.' . $this->module . ($dataId ? '.edit' : '.add');
+        if (!$this->_code_permission)
+            $this->_code_permission = 'core.' . $this->module . ($dataId ? '.edit' : '.add');
         if (!$this->checkPermissionView())
             return abort(403);
         $this->LoadData();
@@ -119,7 +120,7 @@ trait WithTableEdit
             $this->beforeBinding();
         }
         foreach ($fields as $item) {
-            if (isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] != '') {
+            if ($item->checkKey(FieldConfig::FIELD)) {
                 $valuePreview = $this->{$item[FieldConfig::FIELD]};
                 if ($valuePreview && $valuePreview instanceof \Illuminate\Http\UploadedFile) {
                     if (isset($item[FieldConfig::FOLDER]) && $item[FieldConfig::FOLDER] != '')
