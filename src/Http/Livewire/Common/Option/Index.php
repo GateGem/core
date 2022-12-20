@@ -12,30 +12,29 @@ class Index extends Modal
     public function getOption()
     {
         if (!$this->option_data) {
+            /*
+             * @var \GateGem\Core\Support\Config\OptionConfig
+             */
             $option_data = OptionLoader::getDataByKey($this->option_key);
-            $this->option_data = [
-                ...$option_data,
-                'fields' => collect($option_data['fields'])->map(function ($item) {
-                    return [
-                        ...$item,
-                        'prex' => '_dataTemps.'
-                    ];
-                })->toArray()
-            ];
+            $this->option_data = $option_data;
+            $this->option_data->setFields(collect($option_data->getFields())->map(function (\GateGem\Core\Support\Config\FieldConfig $item) {
+                $item->setPrex('_dataTemps.');
+                return $item;
+            })->toArray());
         }
         return $this->option_data;
     }
     public function mount($option_key)
     {
         $this->option_key = $option_key;
-        foreach (getValueByKey($this->getOption(), 'fields', []) as $item) {
-            $this->_dataTemps[$item['field']] = get_option($item['field'], '');
+        foreach ($this->getOption()->getFields() as $item) {
+            $this->_dataTemps[$item->getField()] = get_option($item->getField(), '');
         }
     }
     public function doSave()
     {
-        foreach (getValueByKey($this->getOption(), 'fields', []) as $item) {
-            set_option($item['field'],  $this->_dataTemps[$item['field']]);
+        foreach ($this->getOption()->getFields()  as $item) {
+            set_option($item->getField(),  $this->_dataTemps[$item->getField()]);
         }
     }
     public function render()

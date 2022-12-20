@@ -31,6 +31,12 @@ class FieldConfig  extends GateData
     public const ATTR = "ATTR";
     public const CHECK_SHOW = "CHECK_SHOW";
     public const DEFER = "DEFER";
+    public const PREX = "PREX";
+
+    public function setPrex($value): self
+    {
+        return $this->setKeyData(self::PREX, $value);
+    }
 
     public function setCheckShow($value): self
     {
@@ -108,6 +114,89 @@ class FieldConfig  extends GateData
     public function setField($value): self
     {
         return $this->setKeyData(self::FIELD, $value);
+    }
+
+    public function getPrex($value = '')
+    {
+        return $this->getDataValue(self::PREX, $value);
+    }
+
+    public function getCheckShow($value = '')
+    {
+        return $this->getDataValue(self::CHECK_SHOW, $value);
+    }
+
+    public function getFieldColumn($value = '')
+    {
+        return $this->getDataValue(self::FIELD_COLUMN, $value);
+    }
+    public function getFolder($value = '')
+    {
+        return $this->getDataValue(self::FOLDER, $value);
+    }
+    public function getInclude($value = '')
+    {
+        return $this->getDataValue(self::INCLUDE, $value);
+    }
+    public function getAction($value = '')
+    {
+        return $this->getDataValue(self::ACTION, $value);
+    }
+    public function getDataKey($value = '')
+    {
+        return $this->getDataValue(self::DATA_KEY, $value);
+    }
+    public function getDataText($value = '')
+    {
+        return $this->getDataValue(self::DATA_TEXT, $value);
+    }
+    public function getDataDefault($value = '')
+    {
+        return $this->getDataValue(self::DATA_DEFAULT, $value);
+    }
+    public function getDataFormat($value = '')
+    {
+        return $this->getDataValue(self::DATA_FORMAT, $value);
+    }
+    public function getDataFormatJs($value = '')
+    {
+        return $this->getDataValue(self::DATA_FORMAT_JS, $value);
+    }
+    public function getClassHeader($value = '')
+    {
+        return $this->getDataValue(self::CLASS_HEADER, $value);
+    }
+    public function getClassData($value = '')
+    {
+        return $this->getDataValue(self::CLASS_DATA, $value);
+    }
+    public function getFuncData($value = null)
+    {
+        return $this->getDataValue(self::FUNC_DATA, $value);
+    }
+    public function getFuncCell($value = null)
+    {
+        return $this->getDataValue(self::FUNC_CELL, $value);
+    }
+    public function getAttr($value = '')
+    {
+        return $this->getDataValue(self::ATTR, $value);
+    }
+    public function getKeyLayout($value = '')
+    {
+        return $this->getDataValue(self::KEY_LAYOUT, $value);
+    }
+    public function getFieldType($value = '')
+    {
+        return $this->getDataValue(self::FIELD_TYPE, $value);
+    }
+    public function getTitle($value = '')
+    {
+        return $this->getDataValue(self::TITLE, $value);
+    }
+    public function getField($value = '')
+    {
+        return $this->getDataValue(self::FIELD, $value);
     }
     public function hideView(): self
     {

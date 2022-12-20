@@ -79,10 +79,6 @@ class ConfigManager  extends GateData
     {
         return $this->setKeyData(self::PAGE_SIZE, $value);
     }
-    public function setAction($value): self
-    {
-        return $this->setKeyData(self::ACTION, $value);
-    }
     public function setFields(array $value = []): self
     {
         return $this->setKeyData(self::FIELDS, $value);
@@ -130,6 +126,10 @@ class ConfigManager  extends GateData
     public function Button($title = ''): ButtonConfig
     {
         return (new ButtonConfig())->setTitle($title);
+    }
+    public function Option($title = ''): OptionConfig
+    {
+        return (new OptionConfig())->setTitle($title);
     }
     public function NewItem($title = ''): self
     {

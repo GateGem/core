@@ -1,42 +1,25 @@
 <?php
 
 use GateGem\Core\Builder\Form\FieldBuilder;
-use GateGem\Core\Facades\Theme;
+use GateGem\Core\Facades\GateConfig;
 
-return [
-    'sort' => 1,
-    'icon' => '',
-    'title' => 'Auth',
-    'fields' => [
-        [
-            'field' => 'page_message_login_title',
-            'fieldType' => FieldBuilder::Text,
-            'title' => 'Login:Message Title',
-        ],
-        [
-            'field' => 'page_message_login_content',
-            'fieldType' => FieldBuilder::Textarea,
-            'title' => 'Login:Message Content',
-        ],
-        [
-            'field' => 'page_message_register_title',
-            'fieldType' => FieldBuilder::Text,
-            'title' => 'Register:Message Title',
-        ],
-        [
-            'field' => 'page_message_register_content',
-            'fieldType' => FieldBuilder::Textarea,
-            'title' => 'Register:Message Content',
-        ],
-        [
-            'field' => 'login_token_param',
-            'fieldType' => FieldBuilder::Text,
-            'title' => 'Login:Token Param',
-        ],
-        [
-            'field' => 'login_token_value',
-            'fieldType' => FieldBuilder::Text,
-            'title' => 'Login:Token Value',
-        ],
-    ]
-];
+return GateConfig::Option('Auth')->setSort(1)->setFields([
+    GateConfig::Field('page_message_login_title')
+        ->setFieldType(FieldBuilder::Text)
+        ->setTitle('Login:Message Title'),
+    GateConfig::Field('page_message_login_content')
+        ->setFieldType(FieldBuilder::Textarea)
+        ->setTitle('Login:Message Content'),
+    GateConfig::Field('page_message_register_title')
+        ->setFieldType(FieldBuilder::Text)
+        ->setTitle('Register:Message Title'),
+    GateConfig::Field('page_message_register_content')
+        ->setFieldType(FieldBuilder::Textarea)
+        ->setTitle('Register:Message Content'),
+    GateConfig::Field('login_token_param')
+        ->setFieldType(FieldBuilder::Text)
+        ->setTitle('Login:Token Param'),
+    GateConfig::Field('login_token_value')
+        ->setFieldType(FieldBuilder::Text)
+        ->setTitle('Login:Token Value'),
+]);

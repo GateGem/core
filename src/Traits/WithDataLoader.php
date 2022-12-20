@@ -23,10 +23,8 @@ trait WithDataLoader
     public static function Data($key, $config)
     {
         if (is_null(self::$datas) || !is_array(self::$datas))   self::$datas = [];
-        self::$datas[$key] = [
-            ...$config,
-            'key' => $key
-        ];
+        $config->setKey($key);
+        self::$datas[$key] = $config;
     }
     public static function load($path)
     {

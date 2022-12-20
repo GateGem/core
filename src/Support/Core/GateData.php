@@ -4,6 +4,7 @@ namespace GateGem\Core\Support\Core;
 
 class GateData extends \ArrayObject
 {
+    public const KEY = "KEY";
     public function __set($name, $val)
     {
         $this[$name] = $val;
@@ -12,6 +13,15 @@ class GateData extends \ArrayObject
     public function __get($name)
     {
         return $this[$name];
+    }
+
+    public function setKey($value): self
+    {
+        return $this->setKeyData(self::KEY, $value);
+    }
+    public function getKey($value = '')
+    {
+        return $this->getDataValue(self::KEY, $value);
     }
     public function checkKey($key)
     {

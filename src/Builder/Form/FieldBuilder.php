@@ -122,7 +122,7 @@ class FieldBuilder extends HtmlBuilder
         if (getValueByKey($this->formData, FieldConfig::FILTER, false)) {
             return 'wire:model.lazy="' . getValueByKey($this->formData, 'prex', '') . $this->option[FieldConfig::FIELD] . '"';
         }
-        return (getValueByKey($this->option, FieldConfig::DEFER, true) ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', getValueByKey($this->option, 'prex', ''))  . $this->option[FieldConfig::FIELD] . '"';
+        return (getValueByKey($this->option, FieldConfig::DEFER, true) ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', $this->option->getPrex())  . $this->option[FieldConfig::FIELD] . '"';
     }
     public function getFormatDateTime()
     {

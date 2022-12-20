@@ -4,6 +4,7 @@ namespace GateGem\Core\Http\Livewire\Page\Option;
 
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Loader\OptionLoader;
+use GateGem\Core\Support\Config\OptionConfig;
 
 class Index extends Modal
 {
@@ -13,16 +14,13 @@ class Index extends Modal
     {
         // $this->_code_permission = 'core.option';
         // if (!$this->checkPermissionView()) abort(403);
-        $this->data_option = collect(OptionLoader::getData())->where(function ($item) {
-            if (isset($item['enable']) && $item['enable'] == false) return false;
-            return true;
+        $this->data_option = collect(OptionLoader::getData())->where(function (OptionConfig $item) {
+            return $item->getEnable();
         })->toArray();
-        usort($this->data_option, function ($a, $b) {
-            $sortA = getValueByKey($a, 'sort', 100);
-            $sortB = getValueByKey($b, 'sort', 100);
-            return strcmp($sortA, $sortB);
+        usort($this->data_option, function (OptionConfig $a, OptionConfig $b) {
+            return strcmp($a->getSort(100), $b->getSort(100));
         });
-        $this->active_option = array_keys($this->data_option)[0];
+        $this->active_option = $this->data_option[0]->getKey();
         $this->setTitle(__('core::menu.sidebar.option'));
     }
     public function render()
