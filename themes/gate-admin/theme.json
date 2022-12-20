@@ -4,6 +4,7 @@
   "title": "gate theme",
   "description": "",
   "author": "GateGem",
+  "namespace": "Theme\\GateAdmin",
   "layout": "layout",
   "files": ["function.php"],
   "required_plugins": []

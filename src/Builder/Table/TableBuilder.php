@@ -51,11 +51,11 @@ class TableBuilder extends HtmlBuilder
             }
             if (is_object($cell_value) || is_array($cell_value)) {
                 if ($cell_value instanceof \Illuminate\Support\Carbon) {
-                    echo $cell_value->format($column->getDataValue(FieldConfig::DATA_FORMAT, 'd/M/Y'));
+                    echo $cell_value->format($column->getDataFormat('d/M/Y'));
                 } else {
                     htmlentities(print_r($cell_value));
                 }
-            } else if ($cell_value != "" && $column->getDataValue(FieldConfig::FIELD_TYPE, '') === FieldBuilder::Image) {
+            } else if ($cell_value != "" && $column->getFieldType('') === FieldBuilder::Image) {
                 echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
             } else if ($cell_value != "")
                 echo htmlentities($cell_value);

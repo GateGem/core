@@ -254,7 +254,7 @@ class FieldBuilder extends HtmlBuilder
                 echo TreeViewBuilder::Render($this->data, $this->option, $this->formData);
                 break;
             case FieldBuilder::Button:
-                echo ' <button type="button" class="btn btn-sm  ' . getValueByKey($this->option, 'class', 'btn-danger') . ' " ' .  ($this->option[FieldConfig::ACTION]($this->data, $this->option, $this->formData)) . '\'>' . getValueByKey($this->option, 'icon', '') . ' <span> ' . __(getValueByKey($this->option, 'title', '')) . ' </span></button>';
+                echo ' <button type="button" class="' . $this->option->getClass('btn btn-sm btn-danger') . ' " ' .  ($this->option[FieldConfig::ACTION]($this->data, $this->option, $this->formData)) . '\'>' . $this->option->getIcon() . ' <span> ' . __($this->option->getTitle('')) . ' </span></button>';
                 break;
             case FieldBuilder::includeInput:
                 if (getValueByKey($this->option, FieldConfig::INCLUDE)) {

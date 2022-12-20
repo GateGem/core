@@ -5,6 +5,8 @@
         </ul>
         <ul class="nav-right">
             <li>
+                <widget:theme::demo3 /></li>
+            <li>
                 <widget:core::now :isServer="false" />
             </li>
             <li class="">

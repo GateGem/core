@@ -33,23 +33,6 @@ class ConfigManager  extends GateData
 
     public const INCLUDE_AFTER = "INCLUDE_AFTER";
 
-    public function setIncludeAfter($value): self
-    {
-        return $this->setKeyData(self::INCLUDE_AFTER, $value);
-    }
-    public function setIncludeBefore($value): self
-    {
-        return $this->setKeyData(self::INCLUDE_BEFORE, $value);
-    }
-    public function setPoll($value): self
-    {
-        return $this->setKeyData(self::POLL, $value);
-    }
-    public function setButtonAppend(array $value = [])
-    {
-        $this[self::BUTTON_APPEND] = $value;
-        return $this;
-    }
     public function hideRemove()
     {
         $this[self::REMOVE] = false;
@@ -75,6 +58,22 @@ class ConfigManager  extends GateData
         $this[self::SORT] = false;
         return $this;
     }
+    public function disableModule($value = true): self
+    {
+        return $this->setKeyData(self::DISABLE_MODULE, $value);
+    }
+    public function setFuncFilter(callable $value): self
+    {
+        return $this->setKeyData(self::FUNC_FILTER, $value);
+    }
+    public function setFuncQuery(callable $value): self
+    {
+        return $this->setKeyData(self::FUNC_QUERY, $value);
+    }
+    public function setFuncData(callable| array $value): self
+    {
+        return $this->setKeyData(self::FUNC_DATA, $value);
+    }
     public function setPageSize($value): self
     {
         return $this->setKeyData(self::PAGE_SIZE, $value);
@@ -99,21 +98,75 @@ class ConfigManager  extends GateData
     {
         return $this->setKeyData(self::TITLE, $value);
     }
-    public function disableModule($value = true): self
+    public function setIncludeAfter($value): self
     {
-        return $this->setKeyData(self::DISABLE_MODULE, $value);
+        return $this->setKeyData(self::INCLUDE_AFTER, $value);
     }
-    public function setFuncFilter(callable $value): self
+    public function setIncludeBefore($value): self
     {
-        return $this->setKeyData(self::FUNC_FILTER, $value);
+        return $this->setKeyData(self::INCLUDE_BEFORE, $value);
     }
-    public function setFuncQuery(callable $value): self
+    public function setPoll($value): self
     {
-        return $this->setKeyData(self::FUNC_QUERY, $value);
+        return $this->setKeyData(self::POLL, $value);
     }
-    public function setFuncData(callable| array $value): self
+    public function setButtonAppend(array $value = [])
     {
-        return $this->setKeyData(self::FUNC_DATA, $value);
+        $this[self::BUTTON_APPEND] = $value;
+        return $this;
+    }
+
+    public function getFuncFilter($value = null)
+    {
+        return $this->getDataValue(self::FUNC_FILTER, $value);
+    }
+    public function getFuncQuery($value = null)
+    {
+        return $this->getDataValue(self::FUNC_QUERY, $value);
+    }
+    public function getFuncData($value = null)
+    {
+        return $this->getDataValue(self::FUNC_DATA, $value);
+    }
+    public function getPageSize($value = null)
+    {
+        return $this->getDataValue(self::PAGE_SIZE, $value);
+    }
+    public function getFields(array $value = [])
+    {
+        return $this->getDataValue(self::FIELDS, $value);
+    }
+    public function getForm($value = null)
+    {
+        return $this->getDataValue(self::FORM, $value);
+    }
+    public function getModel($value = null)
+    {
+        return $this->getDataValue(self::MODEL, $value);
+    }
+    public function getModelKey($value = "id")
+    {
+        return $this->getDataValue(self::MODEL_KEY, $value);
+    }
+    public function getTitle($value = null)
+    {
+        return $this->getDataValue(self::TITLE, $value);
+    }
+    public function getIncludeAfter($value = null)
+    {
+        return $this->getDataValue(self::INCLUDE_AFTER, $value);
+    }
+    public function getIncludeBefore($value = null)
+    {
+        return $this->getDataValue(self::INCLUDE_BEFORE, $value);
+    }
+    public function getPoll($value = null)
+    {
+        return $this->getDataValue(self::POLL, $value);
+    }
+    public function getButtonAppend(array $value = [])
+    {
+        return $this->getDataValue(self::BUTTON_APPEND, $value);
     }
     public function Field($field = ''): FieldConfig
     {

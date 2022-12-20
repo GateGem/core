@@ -1,0 +1,35 @@
+{
+  "name": "theme/gate-admin",
+  "description": "theme admin gate.",
+  "keywords": [],
+  "homepage": "https://github.com/GateGem/core",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nguyen Van Hau",
+      "email": "nguyenvanhau.soft@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Theme\\GateAdmin\\Widget\\": "widgets"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
+  },
+  "scripts": {
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

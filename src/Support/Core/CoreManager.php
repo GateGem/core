@@ -349,4 +349,13 @@ class CoreManager
             ->initialHydrate()
             ->mount($params);
     }
+    private $widgets = [];
+    public function getWidgets()
+    {
+        return $this->widgets;
+    }
+    public function registerWidget($path)
+    {
+        $this->widgets[$path] = $path;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Http\Livewire\Page\Dashboard;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Livewire\Component;
 
 class Index extends Component
@@ -13,6 +14,8 @@ class Index extends Component
     }
     public function render()
     {
-        return view('core::page.dashboard.index');
+        return view('core::page.dashboard.index',[
+            'data1'=>Core::getWidgets()
+        ]);
     }
 }

@@ -35,9 +35,13 @@ class LivewireLoader
                     ->map([Str::class, 'kebab'])
                     ->implode('.'), '.');
                 if (Str::endsWith($class, ['\Index', '\index'])) {
+                    Core::registerWidget(Str::beforeLast($alias, '.index'));
                     Livewire::component(Str::beforeLast($alias, '.index'), $class);
                     Livewire::component(Str::beforeLast($alias_class, '.index'), $class);
+                } else {
+                    Core::registerWidget($alias);
                 }
+                //Core::RegisterWidget($alias_class);
                 Livewire::component($alias_class, $class);
                 Livewire::component($alias, $class);
             },

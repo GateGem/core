@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Traits;
 
+use GateGem\Core\Facades\Theme;
 use Illuminate\Support\Facades\Log;
 
 trait WithDoAction
@@ -9,6 +10,7 @@ trait WithDoAction
     public $__Params;
     public function bootWithDoAction()
     {
+        Theme::Layout();
         if (request('param'))
             $this->__Params = $this->JsonParam(request('param'));
     }

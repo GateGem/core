@@ -5,6 +5,7 @@ namespace GateGem\Core\Support\Core;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use GateGem\Core\Facades\Core;
+use GateGem\Core\Loader\LivewireLoader;
 
 class DataInfo implements \ArrayAccess
 {
@@ -253,6 +254,10 @@ class DataInfo implements \ArrayAccess
     {
         return Str::lower($this->getName());
     }
+    public function getNamespaceInfo()
+    {
+        return $this->getValue('namespace');
+    }
     private $providers;
     public function DoRegister($namespace = null)
     {
@@ -274,6 +279,11 @@ class DataInfo implements \ArrayAccess
             });
         } else {
             Core::loadViewsFrom($this->getPath('resources/views'), $namespace);
+            if ($namespace == 'theme') {
+                LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', 'theme::');
+            } else {
+                LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', $this->getLowerName() . '::');
+            }
             Core::Link($this->getPath('public'), $this->getPublic($this->getKey()));
         }
         foreach ($this->getFiles() as $file) {
