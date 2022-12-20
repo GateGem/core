@@ -279,10 +279,16 @@ class DataInfo implements \ArrayAccess
             });
         } else {
             Core::loadViewsFrom($this->getPath('resources/views'), $namespace);
-            if ($namespace == 'theme') {
-                LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', 'theme::');
-            } else {
-                LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', $this->getLowerName() . '::');
+            switch ($this->base_type) {
+                case 'theme':
+                    LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', 'theme::');
+                    break;
+                case 'plugin':
+                    LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', 'plugin-' . $this->getLowerName() . '::');
+                    break;
+                default:
+                    LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget',  $this->getLowerName() . '::');
+                    break;
             }
             Core::Link($this->getPath('public'), $this->getPublic($this->getKey()));
         }

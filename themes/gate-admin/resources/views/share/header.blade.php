@@ -4,6 +4,7 @@
             <li><a onclick="switchSidebar()"> <i class="bi bi-justify fs-4"></i></a></li>
         </ul>
         <ul class="nav-right">
+            <li><widget:plugin-hello::demo3/></li>
             <li>
                 <widget:theme::demo3 /></li>
             <li>

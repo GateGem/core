@@ -15,7 +15,7 @@ class Index extends Modal
         // $this->_code_permission = 'core.option';
         // if (!$this->checkPermissionView()) abort(403);
         $this->data_option = collect(OptionLoader::getData())->where(function (OptionConfig $item) {
-            return $item->getEnable();
+            return $item->getEnable() == true;
         })->toArray();
         usort($this->data_option, function (OptionConfig $a, OptionConfig $b) {
             return strcmp($a->getSort(100), $b->getSort(100));
