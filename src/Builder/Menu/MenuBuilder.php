@@ -200,11 +200,12 @@ class MenuBuilder extends HtmlBuilder
                 }
                 if ($attrLink == "" && $item->checkChild() == false) continue;
                 $attrLink = $attrLink . ' permission="' . $this->getPermission() . '" ';
+                $title= __($item->getValue('name', '')) ;
                 echo "<li class='menu-item " . ($item->checkActive() ? 'active' : '') . "'>";
-                echo "<a $attrLink title='" . $item->getValue('name', '') . "'>";
+                echo "<a $attrLink title='" . $title . "'>";
                 if ($item->checkValue('icon'))
                     echo " <i class='menu-icon " . $item->data["icon"] . "'></i> ";
-                echo " <span>" . __($item->getValue('name', '')) . "</span> ";
+                echo " <span>" . $title . "</span> ";
 
                 echo "</a>";
                 if ($item->checkChild()) {

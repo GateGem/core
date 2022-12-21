@@ -16,6 +16,7 @@ trait WithTableEdit
     public $dataId = 0;
     public $isFormNew = true;
     public $rules = [];
+    private $flgDataCache = false;
     public function mount()
     {
         return $this->LoadData();
@@ -56,22 +57,42 @@ trait WithTableEdit
             $data = new (app($option[ConfigManager::MODEL]));
         }
         foreach ($fields as $item) {
-            if ($item->checkKey(FieldConfig::FIELD)) {
-                if (isset($data->{$item[FieldConfig::FIELD]}))
-                    $this->{$item[FieldConfig::FIELD]} = $data->{$item[FieldConfig::FIELD]};
+            $this->flgDataCache = true;
+            $item->DoFuncData($this->__request, $this);
+            $field_name = $item->getField();
+            if ($field_name) {
+                if (isset($data->{$field_name}))
+                    $this->{$field_name} = $data->{$field_name};
                 else {
                     if ($this->isFormNew) {
-                        $default_value = getValueByKey($item, FieldConfig::DATA_DEFAULT, '');
-                        if (is_callable($default_value))
-                            $this->{$item[FieldConfig::FIELD]} = $default_value($this->isFormNew);
-                        else
-                            $this->{$item[FieldConfig::FIELD]} = $default_value;
+                        $default_value = $item->getDataDefault(null);
+                        if ($default_value && is_callable($default_value))
+                            $this->{$field_name} = $default_value($this->isFormNew);
+                        else {
+                            if (!$default_value) {
+                                $key = $item->getDataKey();
+                                $dataCache = $item->getDataCache();
+                                if ($dataCache && count($dataCache) > 0) {
+                                    $default_value = $dataCache[0][$key];
+                                }
+                            }
+                            $this->{$field_name} = $default_value;
+                        }
                     } else {
-                        $default_value = getValueByKey($item, FieldConfig::DATA_DEFAULT, '');
-                        if (is_callable($default_value))
-                            $this->{$item[FieldConfig::FIELD]} = $default_value($this->isFormNew);
-                        else
-                            $this->{$item[FieldConfig::FIELD]} = '';
+                        $default_value = $item->getDataDefault(null);
+                        if ($default_value && is_callable($default_value))
+                            $this->{$field_name} = $default_value($this->isFormNew);
+                        else {
+                            if (!$default_value) {
+                                $key = $item->getDataKey();
+                                $dataCache = $item->getDataCache();
+                                if ($dataCache && count($dataCache) > 0) {
+                                    $default_value = $dataCache[0][$key];
+                                }
+                            }
+
+                            $this->{$field_name} = $default_value;
+                        }
                     }
                 }
             }
@@ -120,8 +141,12 @@ trait WithTableEdit
             $this->beforeBinding();
         }
         foreach ($fields as $item) {
+            $this->flgDataCache = true;
+            $item->DoFuncData($this->__request, $this);
+            $field_name = $item->getField();
+            // $item->DoFuncData($this->__request, $this);
             if ($item->checkKey(FieldConfig::FIELD)) {
-                $valuePreview = $this->{$item[FieldConfig::FIELD]};
+                $valuePreview = $this->{$field_name};
                 if ($valuePreview && $valuePreview instanceof \Illuminate\Http\UploadedFile) {
                     if (isset($item[FieldConfig::FOLDER]) && $item[FieldConfig::FOLDER] != '')
                         $valuePreview = $valuePreview->store('public/' . $item[FieldConfig::FOLDER]);
@@ -129,7 +154,7 @@ trait WithTableEdit
                         $valuePreview = $valuePreview->store('public');
                     $valuePreview = str_replace('public', 'storage', $valuePreview);
                 }
-                $data->{$item[FieldConfig::FIELD]} =  $valuePreview;
+                $data->{$field_name} =  $valuePreview;
             }
         }
         if (method_exists($this, 'beforeSave')) {
@@ -142,9 +167,16 @@ trait WithTableEdit
     }
     public function render()
     {
+        $fields = $this->fields;
+        if (!$this->flgDataCache) {
+            foreach ($fields as $item) {
+                $this->flgDataCache = true;
+                $item->DoFuncData($this->__request, $this);
+            }
+        }
         return $this->viewModal($this->getView(), [
             'option' => $this->option,
-            'fields' => $this->fields
+            'fields' => $fields
         ]);
     }
     public function CheckNullAndEmptySetValue($arrayField, $default)

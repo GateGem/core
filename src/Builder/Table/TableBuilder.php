@@ -30,18 +30,10 @@ class TableBuilder extends HtmlBuilder
             echo FieldRender([...$column, 'prex' => 'tables.' . $key . '.']);
         } else if (isset($column[FieldConfig::FIELD])) {
             $cell_value = isset($row[$column[FieldConfig::FIELD]]) ? $row[$column[FieldConfig::FIELD]] : null;
-            $funcData =  $column->getDataValue(FieldConfig::FUNC_DATA, null);
-            if ($funcData && is_callable($funcData)) {
-                if (!isset($this->cacheData[$column[FieldConfig::FIELD]])) {
-                    $funcData = $funcData();
-                    $this->cacheData[$column[FieldConfig::FIELD]] = $funcData;
-                } else {
-                    $funcData = $this->cacheData[$column[FieldConfig::FIELD]];
-                }
-            }
+            $funcData =  $column->getDataCache();
             if (!is_null($funcData) && (is_array($funcData) ||  is_a($funcData, \ArrayAccess::class))) {
-                $fieldKey = $column->getDataValue(FieldConfig::DATA_KEY, 'id');
-                $fieldText = $column->getDataValue(FieldConfig::DATA_TEXT, 'text');
+                $fieldKey = $column->getDataKey();
+                $fieldText = $column->getDataText();
                 foreach ($funcData as $item) {
                     if ($item[$fieldKey] == $cell_value) {
                         $cell_value = $item[$fieldText];
@@ -49,18 +41,24 @@ class TableBuilder extends HtmlBuilder
                     }
                 }
             }
-            if (is_object($cell_value) || is_array($cell_value)) {
-                if ($cell_value instanceof \Illuminate\Support\Carbon) {
-                    echo $cell_value->format($column->getDataFormat('d/M/Y'));
-                } else {
-                    htmlentities(print_r($cell_value));
-                }
-            } else if ($cell_value != "" && $column->getFieldType('') === FieldBuilder::Image) {
-                echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
-            } else if ($cell_value != "")
-                echo htmlentities($cell_value);
-            else
-                echo "&nbsp;";
+            $format_value = $column->getDataFormat('d/M/Y');
+            if (is_callable($format_value)) {
+                echo  $format_value($cell_value);
+            } else {
+                if (is_object($cell_value) || is_array($cell_value)) {
+
+                    if ($cell_value instanceof \Illuminate\Support\Carbon) {
+                        echo $cell_value->format($format_value);
+                    } else {
+                        htmlentities(print_r($cell_value));
+                    }
+                } else if ($cell_value != "" && $column->getFieldType('') === FieldBuilder::Image) {
+                    echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
+                } else if ($cell_value != "")
+                    echo htmlentities($cell_value);
+                else
+                    echo "&nbsp;";
+            }
         } else {
             echo "&nbsp;";
         }

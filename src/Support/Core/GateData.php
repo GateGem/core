@@ -33,7 +33,7 @@ class GateData extends \ArrayObject
     }
     public function getDataValue($key, $default = '')
     {
-        return isset($this[$key]) && $this[$key] != '' ? $this[$key] : $default;
+        return isset($this[$key]) && $this[$key] !== '' ? $this[$key] : $default;
     }
     public function setKeyData($key, $data): self
     {

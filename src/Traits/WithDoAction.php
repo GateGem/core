@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Log;
 trait WithDoAction
 {
     public $__Params;
+    protected $__request;
     public function bootWithDoAction()
     {
         Theme::Layout();
-        if (request('param'))
-            $this->__Params = $this->JsonParam(request('param'));
+        $this->__request = request();
+        if ($this->__request->get('param'))
+            $this->__Params = $this->JsonParam($this->__request->get('param'));
     }
     public function getValueBy($key, $default = null)
     {

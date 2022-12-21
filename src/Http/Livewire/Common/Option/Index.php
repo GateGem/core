@@ -19,6 +19,7 @@ class Index extends Modal
             $this->option_data = $option_data;
             $this->option_data->setFields(collect($option_data->getFields())->map(function (\GateGem\Core\Support\Config\FieldConfig $item) {
                 $item->setPrex('_dataTemps.');
+                $item->DoFuncData($this->__request, $this);
                 return $item;
             })->toArray());
         }

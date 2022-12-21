@@ -10,12 +10,15 @@ class FieldConfig  extends GateData
     public const FIELD_COLUMN = "FIELD_COLUMN";
     public const FIELD_TYPE = "FIELD_TYPE";
     public const ACTION = "ACTION";
+    public const DISABLE = "DISABLE";
     public const TITLE = "TITLE";
     public const CLASS_HEADER = "CLASS_HEADER";
     public const CLASS_DATA = "CLASS_DATA";
+    public const CLASS_FIELD = "CLASS_FIELD";
     public const KEY_LAYOUT = "KEY_LAYOUT";
     public const FUNC_DATA = "FUNC_DATA";
     public const FUNC_CELL = "FUNC_CELL";
+    public const DATA_CACHE = "DATA_CACHE";
     public const DATA_KEY = "DATA_KEY";
     public const DATA_TEXT = "DATA_TEXT";
     public const DATA_DEFAULT = "DATA_DEFAULT";
@@ -33,6 +36,10 @@ class FieldConfig  extends GateData
     public const DEFER = "DEFER";
     public const PREX = "PREX";
 
+    public function setDisable($value): self
+    {
+        return $this->setKeyData(self::DISABLE, $value);
+    }
     public function setPrex($value): self
     {
         return $this->setKeyData(self::PREX, $value);
@@ -86,6 +93,10 @@ class FieldConfig  extends GateData
     public function setClassData($value): self
     {
         return $this->setKeyData(self::CLASS_DATA, $value);
+    }
+    public function setClassField($value): self
+    {
+        return $this->setKeyData(self::CLASS_FIELD, $value);
     }
     public function setFuncData(callable| array $value): self
     {
@@ -142,11 +153,15 @@ class FieldConfig  extends GateData
     {
         return $this->getDataValue(self::ACTION, $value);
     }
-    public function getDataKey($value = '')
+    public function getDataCache($value = [])
+    {
+        return $this->getDataValue(self::DATA_CACHE, $value);
+    }
+    public function getDataKey($value = 'id')
     {
         return $this->getDataValue(self::DATA_KEY, $value);
     }
-    public function getDataText($value = '')
+    public function getDataText($value = 'name')
     {
         return $this->getDataValue(self::DATA_TEXT, $value);
     }
@@ -169,6 +184,10 @@ class FieldConfig  extends GateData
     public function getClassData($value = '')
     {
         return $this->getDataValue(self::CLASS_DATA, $value);
+    }
+    public function getClassField($value = '')
+    {
+        return $this->getDataValue(self::CLASS_FIELD, $value);
     }
     public function getFuncData($value = null)
     {
@@ -198,6 +217,15 @@ class FieldConfig  extends GateData
     {
         return $this->getDataValue(self::FIELD, $value);
     }
+    public function getDisable($value = null)
+    {
+        return $this->getDataValue(self::DISABLE, $value);
+    }
+    public function getDefer($value = null)
+    {
+        return $this->getDataValue(self::DEFER, $value);
+    }
+    
     public function hideView(): self
     {
         return $this->setKeyData(self::VIEW, false);
@@ -221,5 +249,39 @@ class FieldConfig  extends GateData
     public function disableSort(): self
     {
         return $this->setKeyData(self::SORT, false);
+    }
+    public function disableEdit(): self
+    {
+        return $this->setKeyData(self::DISABLE, function ($isNew) {
+            if ($isNew)
+                return false;
+            return true;
+        });
+    }
+    public function disableAdd(): self
+    {
+        return $this->setKeyData(self::DISABLE, function ($isNew) {
+            if ($isNew)
+                return true;
+            return false;
+        });
+    }
+    public function DoFuncData($request, $component)
+    {
+        $funcData = $this->getFuncData(null);
+        if ($funcData && is_callable($funcData)) {
+            $funcData = $funcData($request, $component);
+        }
+        if (!$funcData) $funcData = [];
+        return $this->setKeyData(self::DATA_CACHE, $funcData);
+    }
+    public static function DoFuncDatas($fields, $request, $component)
+    {
+        if ($fields) {
+            foreach ($fields as $item) {
+                $item->DoFuncData($component, $request);
+            }
+        }
+        return $fields;
     }
 }

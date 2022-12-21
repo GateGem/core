@@ -1,7 +1,9 @@
 <?php
 
+use GateGem\Core\Builder\Form\FieldBuilder;
 use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Livewire\Modal;
+use GateGem\Core\Models\Role;
 use GateGem\Core\Support\Config\ButtonConfig;
 
 return GateConfig::NewItem()
@@ -19,7 +21,9 @@ return GateConfig::NewItem()
     ->setForm(GateConfig::Form()->setSize(Modal::Large))
     ->setFields([
         GateConfig::Field('slug')
-            ->setTitle('core::tables.role.field.slug'),
+            ->setTitle('core::tables.role.field.slug')
+            ->disableEdit(),
+           
         GateConfig::Field('name')
             ->setTitle('core::tables.role.field.name')
     ]);

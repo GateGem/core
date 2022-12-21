@@ -92,7 +92,7 @@ trait WithTableIndex
                     ->setClassHeader('action-header text-center')
                     ->setFuncCell(function ($valueCell, $row, $column) use ($option) {
                         $html = '';
-                        $valueId = $row[getValueByKey($option,ConfigManager::MODEL_KEY, 'id')];
+                        $valueId = $row[getValueByKey($option, ConfigManager::MODEL_KEY, 'id')];
                         if ($this->checkEdit()) {
                             $html = $html  . "&nbsp;" . GateConfig::Button('core::table.button.edit')
                                 ->setClass('btn btn-sm btn-success')
@@ -109,7 +109,7 @@ trait WithTableIndex
                                 ->toHtml();
                         }
 
-                        $buttonAppend = getValueByKey($option,ConfigManager::BUTTON_APPEND, []);
+                        $buttonAppend = getValueByKey($option, ConfigManager::BUTTON_APPEND, []);
                         foreach ($buttonAppend as $button) {
                             if ($button->checkType(ButtonConfig::TYPE_UPDATE)) {
                                 $html = $html . "&nbsp;" .  $button->toHtml($valueId, $row, $column);
@@ -117,6 +117,9 @@ trait WithTableIndex
                         }
                         return  $html;
                     });
+                foreach ($option[ConfigManager::FIELDS] as $item) {
+                    $item->DoFuncData($this->__request, $this);
+                }
             }
             $this->option_temp = $option;
         }

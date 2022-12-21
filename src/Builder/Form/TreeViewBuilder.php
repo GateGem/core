@@ -19,9 +19,9 @@ class TreeViewBuilder extends HtmlBuilder
     public function getModelField($value)
     {
         if (getValueByKey($this->formData, 'filter', false)) {
-            return 'wire:model.lazy="' . getValueByKey($this->formData, 'prex', '') . $this->option[FieldConfig::FIELD] . '"';
+            return 'wire:model.lazy="' . getValueByKey($this->formData, 'prex', '') . $this->option->getField() . '"';
         }
-        return (getValueByKey($this->option, FieldConfig::DEFER, true) ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', '')  . $this->option[FieldConfig::FIELD] . '.' . $value . '"';
+        return (getValueByKey($this->option, FieldConfig::DEFER, true) ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', '')  . $this->option->getField() . '.' . $value . '"';
     }
     private function TreeRenderItem($key, $items, $treeLevel = 0)
     {
@@ -33,7 +33,7 @@ class TreeViewBuilder extends HtmlBuilder
             $class_li .= ' active ';
         }
         echo '<li class="' . $class_li . '">';
-        $key_id = $this->option[FieldConfig::FIELD] . '_' . $items[0]['value'] . '_' . time();
+        $key_id = $this->option->getField() . '_' . $items[0]['value'] . '_' . time();
         $selectEvent = getValueByKey($this->option, 'selectEvent', "");
         $itemAttr = getValueByKey($this->option, 'itemAttr', "");
         if (is_callable($itemAttr)) {
@@ -119,10 +119,7 @@ class TreeViewBuilder extends HtmlBuilder
     }
     public function RenderHtml()
     {
-        $funcData = getValueByKey($this->option, FieldConfig::FUNC_DATA, null);
-        if ($funcData && is_callable($funcData)) {
-            $funcData = $funcData();
-        }
+        $funcData = $this->option->getDataCache();
         if ($funcData) {
             echo '<div class="tree-view form-tree" tree-event-expand="' . getValueByKey($this->option, 'event-expand') . '" id="input-' . $this->option[FieldConfig::FIELD] . '">';
             $this->TreeRender($funcData, 0);

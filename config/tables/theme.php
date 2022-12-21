@@ -45,7 +45,7 @@ return GateConfig::NewItem()
                 return collect([0, 1])->map(function ($item) {
                     return [
                         'id' => $item,
-                        'text' => __('core::enums.status.' . $item)
+                        'name' => __('core::enums.status.' . $item)
                     ];
                 });
             })

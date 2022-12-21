@@ -56,7 +56,7 @@ class User extends Modal
                     ];
                 })->toArray()
             ];
-        });
+        })->DoFuncData($this->__request,$this);
     }
     public function render()
     {

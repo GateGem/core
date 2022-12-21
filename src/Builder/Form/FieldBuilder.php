@@ -120,13 +120,13 @@ class FieldBuilder extends HtmlBuilder
     public function getModelField()
     {
         if (getValueByKey($this->formData, FieldConfig::FILTER, false)) {
-            return 'wire:model.lazy="' . getValueByKey($this->formData, 'prex', '') . $this->option[FieldConfig::FIELD] . '"';
+            return 'wire:model.lazy="' . getValueByKey($this->formData, 'prex', '') . $this->option->getField() . '"';
         }
-        return (getValueByKey($this->option, FieldConfig::DEFER, true) ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', $this->option->getPrex())  . $this->option[FieldConfig::FIELD] . '"';
+        return ($this->option->getDefer(true) == true ? 'wire:model.defer' : 'wire:model') . '="' . getValueByKey($this->formData, 'prex', $this->option->getPrex())  . $this->option->getField() . '"';
     }
     public function getFormatDateTime()
     {
-        $formatDate = getValueByKey($this->option, FieldConfig::DATA_FORMAT_JS, '');
+        $formatDate = $this->option->getDataFormatJs('');
         if ($formatDate) {
             return 'data-date-format="' . $formatDate . '"';
         }
@@ -134,54 +134,63 @@ class FieldBuilder extends HtmlBuilder
     }
     public function RenderHtml()
     {
-        $fieldType = isset($this->option[FieldConfig::FIELD_TYPE]) ? $this->option[FieldConfig::FIELD_TYPE] : "";
+        $fieldType = $this->option->getFieldType(FieldBuilder::Text);
         if (getValueByKey($this->formData, 'filter', false) && ($fieldType == FieldBuilder::Quill || $fieldType == FieldBuilder::Textarea)) {
             $fieldType = FieldBuilder::Text;
         }
+        $attr = $this->option->getAttr();
+        $field_name = $this->option->getField();
+        $class_name = $this->option->getClassField();
+        if (!getValueByKey($this->formData, 'filter', false)) {
+            $disable = $this->option->getDisable(false);
+            if ($disable && is_callable($disable)) {
+                $disable = $disable(getValueByKey($this->formData, 'isNew', true), $this->data, $this->option);
+            }
+            if ($disable)
+                $attr .= ' disabled ';
+        }
+
         switch ($fieldType) {
             case FieldBuilder::Check:
-                echo '<div class="form-check"><input type="checkbox" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-check-input" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' /></div>';
+                echo '<div class="form-check ' . $class_name . '"><input type="checkbox" ' . $attr . ' class="form-check-input" id="input-' . $field_name . '" ' .  $this->getModelField() . ' /></div>';
                 break;
             case FieldBuilder::Number:
-                echo '<input type="number" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="number" ' . $attr . ' class="form-control ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' />';
                 break;
 
             case FieldBuilder::Date:
-                echo '<input type="text" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' ' . $this->getFormatDateTime() . ' class="form-control el-date" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="text" ' . $attr . ' ' . $this->getFormatDateTime() . ' class="form-control el-date ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' />';
                 break;
 
             case FieldBuilder::DateTime:
-                echo '<input type="text" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' ' . $this->getFormatDateTime() . ' data-enable-time="true" class="form-control el-date" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="text" ' . $attr . ' ' . $this->getFormatDateTime() . ' data-enable-time="true" class="form-control el-date ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' />';
                 break;
 
             case FieldBuilder::Time:
-                echo '<input type="text"  ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' ' . $this->getFormatDateTime() . ' data-mode="time" class="form-control el-date" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="text"  ' . $attr . ' ' . $this->getFormatDateTime() . ' data-mode="time" class="form-control el-date ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' />';
                 break;
 
             case FieldBuilder::Color:
-                echo '<input type="color" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="color" ' . $attr . ' class="form-control ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' />';
                 break;
 
             case FieldBuilder::Textarea:
-                echo '<textarea ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' ></textarea>';
+                echo '<textarea ' . $attr . ' class="form-control  ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' ></textarea>';
                 break;
 
             case FieldBuilder::Quill:
-                echo '<textarea ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control  el-quill" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' ></textarea>';
+                echo '<textarea ' . $attr . ' class="form-control el-quill  ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' ></textarea>';
                 break;
 
             case FieldBuilder::Password:
-                echo '<input type="password" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="password" ' . $attr . ' class="form-control  ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' />';
                 break;
             case FieldBuilder::Tag:
-                echo '<input type="text" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control el-tag" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="text" ' . $attr . ' class="form-control el-tag  ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' />';
                 break;
             case FieldBuilder::Dropdown:
-                $funcData = getValueByKey($this->option, FieldConfig::FUNC_DATA, null);
-                if ($funcData && is_callable($funcData)) {
-                    $funcData = $funcData();
-                }
-                echo '<select ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control"  id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' >';
+                $funcData = $this->option->getDataCache([]);
+                echo '<select ' . $attr . ' class="form-control ' . $class_name . '"  id="input-' . $field_name . '" ' .  $this->getModelField() . ' >';
                 $optionDefault = '';
                 if (getValueByKey($this->formData, 'filter', false) || ($optionDefault = getValueByKey($this->option, FieldConfig::DATA_DEFAULT, ''))) {
                     if ($optionDefault === true)
@@ -191,20 +200,25 @@ class FieldBuilder extends HtmlBuilder
                 }
                 if ($funcData) {
                     foreach ($funcData as $item) {
-                        echo '<option value="' . getValueByKey($item, getValueByKey($this->option, FieldConfig::DATA_KEY, 'id'), $item) . '">' . getValueByKey($item, getValueByKey($this->option, FieldConfig::DATA_TEXT, 'text'), $item) . '</option>';
+                        $data_key = getValueByKey($item, $this->option->getDataKey(), $item);
+                        $data_text = getValueByKey($item, $this->option->getDataText(), $item);
+                        if(is_array($data_text)) $data_text=json_encode($data_text);
+                        if(is_array($data_key)) $data_key=json_encode($data_key);
+                        echo '<option value="' . $data_key . '">' . $data_text . '</option>';
                     }
                 }
                 echo '</select>';
                 break;
             case FieldBuilder::Multiselect:
-                $funcData = getValueByKey($this->option, FieldConfig::FUNC_DATA, null);
-                if ($funcData && is_callable($funcData)) {
-                    $funcData = $funcData();
-                }
-                echo '<select ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control" multiple id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . '>';
+                $funcData = $this->option->getDataCache([]);
+                echo '<select ' . $attr . ' class="form-control ' . $class_name . '" multiple id="input-' . $field_name . '" ' .  $this->getModelField() . '>';
                 if ($funcData) {
                     foreach ($funcData as $item) {
-                        echo '<option value="' . getValueByKey($item, getValueByKey($this->option, FieldConfig::DATA_KEY, 'id'), $item) . '">' . getValueByKey($item, getValueByKey($this->option, FieldConfig::DATA_TEXT, 'text'), $item) . '</option>';
+                        $data_key = getValueByKey($item, $this->option->getDataKey(), $item);
+                        $data_text = getValueByKey($item, $this->option->getDataText(), $item);
+                        if(is_array($data_text)) $data_text=json_encode($data_text);
+                        if(is_array($data_key)) $data_key=json_encode($data_key);
+                        echo '<option value="' . $data_key . '">' . $data_text . '</option>';
                     }
                 }
                 echo '</select>';
@@ -218,7 +232,7 @@ class FieldBuilder extends HtmlBuilder
                 x-on:livewire-upload-error="isUploading = false"
                 x-on:livewire-upload-progress="progress = $event.detail.progress"
             >';
-                echo '<input type="file" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control el-file" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />';
+                echo '<input type="file" ' . $attr . ' class="form-control el-file ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' />';
                 echo '<div x-show="isUploading">
                 <progress max="100" x-bind:value="progress"></progress>
             </div>
@@ -232,7 +246,7 @@ class FieldBuilder extends HtmlBuilder
                 x-on:livewire-upload-finish="isUploading = false"
                 x-on:livewire-upload-error="isUploading = false"
                 x-on:livewire-upload-progress="progress = $event.detail.progress"
-                class="form-control el-image" for="input-' . $this->option[FieldConfig::FIELD] . '" >';
+                class="form-control el-image" for="input-' . $field_name . '" >';
                 if ($value_image && !is_string($value_image)) {
                     echo '<img src="' . $value_image->temporaryUrl() . '"/>';
                 } else if ($value_image) {
@@ -241,20 +255,20 @@ class FieldBuilder extends HtmlBuilder
                 echo '<div x-show="isUploading">
                 <progress max="100" x-bind:value="progress"></progress>
             </div>';
-                echo '<input type="file" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class=" " id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' />
+                echo '<input type="file" ' . $attr . ' class=" " id="input-' . $field_name . '" ' .  $this->getModelField() . ' />
                 </div>';
                 break;
             case FieldBuilder::Cron:
-                echo '<input type="text" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control text-warning fw-bold fs-6" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' style="background-color: rgb(56, 43, 95);"/>';
+                echo '<input type="text" ' . $attr . ' class="form-control text-warning fw-bold fs-6 ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' style="background-color: rgb(56, 43, 95);"/>';
                 break;
             case FieldBuilder::MultiCron:
-                echo '<textarea type="text" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control text-warning fw-bold fs-6" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . ' style="background-color: rgb(56, 43, 95);"></textarea>';
+                echo '<textarea type="text" ' . $attr . ' class="form-control text-warning fw-bold fs-6 ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . ' style="background-color: rgb(56, 43, 95);"></textarea>';
                 break;
             case FieldBuilder::TreeView:
                 echo TreeViewBuilder::Render($this->data, $this->option, $this->formData);
                 break;
             case FieldBuilder::Button:
-                echo ' <button type="button" class="' . $this->option->getClass('btn btn-sm btn-danger') . ' " ' .  ($this->option[FieldConfig::ACTION]($this->data, $this->option, $this->formData)) . '\'>' . $this->option->getIcon() . ' <span> ' . __($this->option->getTitle('')) . ' </span></button>';
+                echo ' <button type="button" class="' . ($class_name ?? 'btn btn-sm btn-danger') . ' " ' .  ($this->option[FieldConfig::ACTION]($this->data, $this->option, $this->formData)) . '\'>' . $this->option->getIcon() . ' <span> ' . __($this->option->getTitle('')) . ' </span></button>';
                 break;
             case FieldBuilder::includeInput:
                 if (getValueByKey($this->option, FieldConfig::INCLUDE)) {
@@ -263,12 +277,12 @@ class FieldBuilder extends HtmlBuilder
                 break;
             case FieldBuilder::Text:
             default:
-                echo '<input type="text" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-control" id="input-' . $this->option[FieldConfig::FIELD] . '" ' .  $this->getModelField() . '/>';
+                echo '<input type="text" ' . $attr . ' class="form-control ' . $class_name . '" id="input-' . $field_name . '" ' .  $this->getModelField() . '/>';
                 break;
         }
         $errors = getValueByKey($this->formData, 'errors');
-        if ($errors && $errors->has($this->option[FieldConfig::FIELD])) {
-            echo '<span class="error">' . $errors->first($this->option[FieldConfig::FIELD]) . '</span> ';
+        if ($errors && $errors->has($field_name)) {
+            echo '<span class="error">' . $errors->first($field_name) . '</span> ';
         }
     }
     public static function Render($option, $data, $formData)

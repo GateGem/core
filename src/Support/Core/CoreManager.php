@@ -36,7 +36,7 @@ class CoreManager
     }
     public function checkPermission($per = '')
     {
-        return $per == '' || Gate::check($per, [$this->user()]);
+        return apply_filters("core_check_permission", ($per == '' || Gate::check($per, [$this->user()])), $per);
     }
     /**
      * Setup an after resolving listener, or fire immediately if already resolved.

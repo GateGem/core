@@ -21,14 +21,14 @@ class FormBuilder extends HtmlBuilder
     public function RenderItemField($item)
     {
         echo '<div class="form-group field-' . $item[FieldConfig::FIELD] . '">';
-        if ($item->getDataValue(FieldConfig::FIELD_TYPE, FieldBuilder::Text) != FieldBuilder::Button)
+        if ($item->getFieldType(FieldBuilder::Text) != FieldBuilder::Button)
             echo ' <label for="input-' . $item[FieldConfig::FIELD] . '" class="form-label">' . __($item[FieldConfig::TITLE]) . '</label>';
         echo FieldBuilder::Render($item, $this->data, $this->formData);
         echo '</div>';
     }
     public function RenderHtml()
     {
-        echo '<div class="form-builder ' . getValueByKey($this->option,  ConfigManager::FORM . '.' . FormConfig::FORM_CLASS, '') . '">';
+        echo '<div class="form-builder ' . getValueByKey($this->option,  ConfigManager::FORM . '.' . FormConfig::FORM_CLASS, 'p-1') . '">';
         $layoutForm = getValueByKey($this->option, ConfigManager::FORM . '.' . FormConfig::FORM_LAYOUT, null);
         if ($layoutForm) {
             if (is_callable($layoutForm)) $layoutForm = $layoutForm($this->option, $this->data, $this->formData);
@@ -37,8 +37,8 @@ class FormBuilder extends HtmlBuilder
                 foreach ($row as $cell) {
                     if (isset($cell['key']) && $cell['key'] != "") {
                         echo '<div class="key_' . $cell['key'] . ' ' . getValueByKey($cell, 'column', FieldBuilder::Col12) . ' ' . getValueByKey($cell, 'class', '') . ' " ' . getValueByKey($cell, 'attr', '') . '>';
-                        foreach ($this->option[ConfigManager::FIELDS] as $item) {
-                            if ($this->checkRender($item) && isset($item[FieldConfig::KEY_LAYOUT]) && $item[FieldConfig::KEY_LAYOUT] == $cell['key']) {
+                        foreach ($this->option->getFields() as $item) {
+                            if ($this->checkRender($item) && $item->getKeyLayout() === $cell['key']) {
                                 $this->RenderItemField($item);
                             }
                         }
@@ -67,7 +67,7 @@ class FormBuilder extends HtmlBuilder
         } else {
             if (!$item->getDataValue(FieldConfig::EDIT, true)) return false;
         }
-        return isset($item[FieldConfig::FIELD]) && $item[FieldConfig::FIELD] != "";
+        return $item->getField() !== '';
     }
     public static function Render($data, $option,  $formData)
     {
