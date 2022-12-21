@@ -18,6 +18,7 @@ import "./treeview";
 import "./datetime";
 import "./tagify";
 import "./quill/index";
+import './chartjs';
 
 if (window) {
   window.ShowFileManager = (callback) => {

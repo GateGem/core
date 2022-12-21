@@ -14,7 +14,7 @@
                 @if ($checkAdd === true)
                     {!! \GateGem\Core\Facades\GateConfig::Button('core::table.button.add')->setClass('btn btn-primary btn-sm')->setDoComponent($viewEdit, '{\'module\':\'' . $module . '\'}')->setIcon('<i class="bi bi-plus-square"></i>')->toHtml() !!}
                 @endif
-                @foreach (getValueByKey($option,\GateGem\Core\Support\Config\ConfigManager::BUTTON_APPEND, []) as $button)
+                @foreach ($option->getButtonAppend([]) as $button)
                     @if ($button->checkType(\GateGem\Core\Support\Config\ButtonConfig::TYPE_ADD))
                         @if (!$button->checkKey(\GateGem\Core\Support\Config\ButtonConfig::BUTTON_CLASS))
                             @php

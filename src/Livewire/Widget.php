@@ -8,4 +8,5 @@ use GateGem\Core\Traits\WithDoAction;
 
 class Widget extends Component
 {
+    public $poll = '';
 }

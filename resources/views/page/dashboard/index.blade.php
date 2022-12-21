@@ -2,6 +2,7 @@
     <div class="mb-2">
         <h4>{{ $page_title }}</h4>
         {!! (new \GateGem\Core\Builder\Dashboard\DashboardBuilder())->ToHtml() !!}
+        <widget:core::chartjs :option="$option" poll='.1s' />
         @json($data1)
     </div>
 </div>
