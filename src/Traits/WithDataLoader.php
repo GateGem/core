@@ -26,12 +26,12 @@ trait WithDataLoader
         $config->setKey($key);
         self::$datas[$key] = $config;
     }
-    public static function load($path)
+    public static function load($path, $key = '')
     {
         $files = Core::AllFile($path);
         if ($files && count($files)) {
             foreach ($files as $file) {
-                self::Data($file->getBasename('.' . $file->getExtension()), Core::FileReturn($file->getRealPath()));
+                self::Data($key . ($file->getBasename('.' . $file->getExtension())), Core::FileReturn($file->getRealPath()));
             }
         }
     }

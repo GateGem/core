@@ -5,7 +5,6 @@ use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Support\Config\ButtonConfig;
-use GateGem\Core\Support\Config\FieldConfig;
 
 return GateConfig::NewItem()
     ->setModel(\GateGem\Core\Models\User::class)
@@ -44,7 +43,7 @@ return GateConfig::NewItem()
             ->setKeyLayout('row1_1'),
         GateConfig::Field('avatar')
             ->setTitle('core::tables.user.field.avatar')
-            ->setFieldType(FieldBuilder::Image)
+            ->setType(FieldBuilder::Image)
             ->setFolder('user')
             ->setKeyLayout('row1_1'),
         GateConfig::Field('email')
@@ -53,13 +52,13 @@ return GateConfig::NewItem()
             ->setKeyLayout('row1_2'),
         GateConfig::Field('info')
             ->setTitle('core::tables.user.field.info')
-            ->setFieldType(FieldBuilder::Textarea)
+            ->setType(FieldBuilder::Textarea)
             ->setKeyLayout('row2_1'),
         GateConfig::Field('password')
             ->hideView()
             ->hideEdit()
             ->setTitle('core::tables.user.field.password')
-            ->setFieldType(FieldBuilder::Password)
+            ->setType(FieldBuilder::Password)
             ->setKeyLayout('row1_1'),
         GateConfig::Field('status')
             ->setDataDefault(0)
@@ -90,6 +89,6 @@ return GateConfig::NewItem()
                 return __('core::enums.status.0');
             })
             ->setTitle('core::tables.user.field.status')
-            ->setFieldType(FieldBuilder::Dropdown)
+            ->setType(FieldBuilder::Dropdown)
             ->setKeyLayout('row1_2')
     ]);

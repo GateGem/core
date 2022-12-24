@@ -57,7 +57,7 @@ class TreeViewBuilder extends HtmlBuilder
                 } else {
                     echo '<div class="form-check  ms-4">';
                 }
-                echo '<input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
+                echo '<input type="checkbox" value="' . $items[0]['value'] . '" ' . ($this->option->getAttr()) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
                     <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
                     </div>';
             } else {
@@ -80,7 +80,7 @@ class TreeViewBuilder extends HtmlBuilder
                 if ($icon = getValueByKey($items[0], 'icon', '')) {
                     echo $icon;
                 }
-                echo '<div class="form-check  ms-4"> <input type="checkbox" value="' . $items[0]['value'] . '" ' . (getValueByKey($this->option, FieldConfig::ATTR, '')) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
+                echo '<div class="form-check  ms-4"> <input type="checkbox" value="' . $items[0]['value'] . '" ' . ($this->option->getAttr()) . ' class="form-check-input" id="cbk_id_' . $key_id . '" ' .  $this->getModelField($items[0]['value']) . '/>
             <label class="form-check-label" for="cbk_id_' . $key_id . '">' . $items[0]['text'] . '</label>
             </div>';
             } else {

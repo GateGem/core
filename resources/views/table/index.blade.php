@@ -16,11 +16,6 @@
                 @endif
                 @foreach ($option->getButtonAppend([]) as $button)
                     @if ($button->checkType(\GateGem\Core\Support\Config\ButtonConfig::TYPE_ADD))
-                        @if (!$button->checkKey(\GateGem\Core\Support\Config\ButtonConfig::BUTTON_CLASS))
-                            @php
-                                $button->setClass('btn btn-sm btn-danger');
-                            @endphp
-                        @endif
                         {!! call_user_func([$button,'toHtml'],$module) !!}
                     @endif
                 @endforeach

@@ -18,7 +18,7 @@ class ActionBase implements IAction
     }
     public function CallAction($action)
     {
-        app($action)->SetComponent($this->component)->SetParam($this->param)->DoAction();
+        return app($action)->SetComponent($this->component)->SetParam($this->param)->DoAction();
     }
     public function DoAction()
     {

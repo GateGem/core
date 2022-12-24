@@ -5,6 +5,7 @@ namespace GateGem\Core\Support\Core;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use GateGem\Core\Facades\Core;
+use GateGem\Core\Loader\DashboardLoader;
 use GateGem\Core\Loader\LivewireLoader;
 
 class DataInfo implements \ArrayAccess
@@ -281,12 +282,15 @@ class DataInfo implements \ArrayAccess
             Core::loadViewsFrom($this->getPath('resources/views'), $namespace);
             switch ($this->base_type) {
                 case 'theme':
+                    DashboardLoader::load($this->getPath('config/dashboards'),'theme_');
                     LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', 'theme::');
                     break;
                 case 'plugin':
+                    DashboardLoader::load($this->getPath('config/dashboards'),'plugin_'.$this->getLowerName().'_');
                     LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', 'plugin-' . $this->getLowerName() . '::');
                     break;
                 default:
+                case 'plugin':
                     LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget',  $this->getLowerName() . '::');
                     break;
             }

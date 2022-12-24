@@ -134,7 +134,7 @@ class FieldBuilder extends HtmlBuilder
     }
     public function RenderHtml()
     {
-        $fieldType = $this->option->getFieldType(FieldBuilder::Text);
+        $fieldType = $this->option->getType(FieldBuilder::Text);
         if (getValueByKey($this->formData, 'filter', false) && ($fieldType == FieldBuilder::Quill || $fieldType == FieldBuilder::Textarea)) {
             $fieldType = FieldBuilder::Text;
         }
@@ -142,11 +142,11 @@ class FieldBuilder extends HtmlBuilder
         $field_name = $this->option->getField();
         $class_name = $this->option->getClassField();
         if (!getValueByKey($this->formData, 'filter', false)) {
-            $disable = $this->option->getDisable(false);
+            $disable = $this->option->getEnable(true);
             if ($disable && is_callable($disable)) {
                 $disable = $disable(getValueByKey($this->formData, 'isNew', true), $this->data, $this->option);
             }
-            if ($disable)
+            if (!$disable)
                 $attr .= ' disabled ';
         }
 
@@ -194,7 +194,7 @@ class FieldBuilder extends HtmlBuilder
                 $optionDefault = '';
                 if (getValueByKey($this->formData, 'filter', false) || ($optionDefault = getValueByKey($this->option, FieldConfig::DATA_DEFAULT, ''))) {
                     if ($optionDefault === true)
-                        echo '<option value="">' . __($this->option[FieldConfig::TITLE]) . '</option>';
+                        echo '<option value="">' . __($this->option->getTitle()) . '</option>';
                     if ($optionDefault !== '' && $optionDefault !== true)
                         echo '<option value="">' . __($optionDefault) . '</option>';
                 }
@@ -202,8 +202,8 @@ class FieldBuilder extends HtmlBuilder
                     foreach ($funcData as $item) {
                         $data_key = getValueByKey($item, $this->option->getDataKey(), $item);
                         $data_text = getValueByKey($item, $this->option->getDataText(), $item);
-                        if(is_array($data_text)) $data_text=json_encode($data_text);
-                        if(is_array($data_key)) $data_key=json_encode($data_key);
+                        if (is_array($data_text)) $data_text = json_encode($data_text);
+                        if (is_array($data_key)) $data_key = json_encode($data_key);
                         echo '<option value="' . $data_key . '">' . $data_text . '</option>';
                     }
                 }
@@ -216,8 +216,8 @@ class FieldBuilder extends HtmlBuilder
                     foreach ($funcData as $item) {
                         $data_key = getValueByKey($item, $this->option->getDataKey(), $item);
                         $data_text = getValueByKey($item, $this->option->getDataText(), $item);
-                        if(is_array($data_text)) $data_text=json_encode($data_text);
-                        if(is_array($data_key)) $data_key=json_encode($data_key);
+                        if (is_array($data_text)) $data_text = json_encode($data_text);
+                        if (is_array($data_key)) $data_key = json_encode($data_key);
                         echo '<option value="' . $data_key . '">' . $data_text . '</option>';
                     }
                 }

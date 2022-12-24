@@ -34,6 +34,6 @@ trait WithDoAction
     public function DoAction($action, $param)
     {
         $this->__Params = $this->JsonParam64($param);
-        app(urldecode(base64_decode($action)))->SetComponent($this)->SetParam($this->__Params)->DoAction();
+        return  app(urldecode(base64_decode($action)))->SetComponent($this)->SetParam($this->__Params)->DoAction();
     }
 }

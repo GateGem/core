@@ -21,7 +21,7 @@ class GateData extends \ArrayObject
     }
     public function getKey($value = '')
     {
-        return $this->getDataValue(self::KEY, $value);
+        return $this->getKeyData(self::KEY, $value);
     }
     public function checkKey($key)
     {
@@ -31,7 +31,7 @@ class GateData extends \ArrayObject
     {
         return isset($this[$key]) && is_callable($this[$key]);
     }
-    public function getDataValue($key, $default = '')
+    public function getKeyData($key, $default = '')
     {
         return isset($this[$key]) && $this[$key] !== '' ? $this[$key] : $default;
     }

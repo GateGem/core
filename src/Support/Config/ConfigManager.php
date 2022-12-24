@@ -2,12 +2,24 @@
 
 namespace GateGem\Core\Support\Config;
 
-use GateGem\Core\Support\Core\GateData;
+/**
+ * 
+ * @method  \GateGem\Core\Support\Config\ConfigManager Disable()
+ * @method  \GateGem\Core\Support\Config\ConfigManager Enable()
+ * @method  \GateGem\Core\Support\Config\ConfigManager Hide()
+ * @method  \GateGem\Core\Support\Config\ConfigManager setClass(string $value)
+ * @method  \GateGem\Core\Support\Config\ConfigManager setTitle(string $value)
+ * @method  \GateGem\Core\Support\Config\ConfigManager setType($value)
+ * @method  \GateGem\Core\Support\Config\ConfigManager setIcon($value)
+ * @method  \GateGem\Core\Support\Config\ConfigManager setPermission($value)
+ * @method  \GateGem\Core\Support\Config\ConfigManager setSort($value)
+ * @method  \GateGem\Core\Support\Config\ConfigManager setAttr($value)
+ * 
+ * @see  \GateGem\Core\Support\Config\ConfigManager
+ */
 
-class ConfigManager  extends GateData
+class ConfigManager  extends BaseConfig
 {
-    public const TITLE = "TITLE";
-    public const DISABLE_MODULE = "DISABLE_MODULE";
     public const FUNC_QUERY = "FUNC_QUERY";
     public const FUNC_DATA = "FUNC_DATA";
     public const FUNC_FILTER = "FUNC_FILTER";
@@ -20,11 +32,11 @@ class ConfigManager  extends GateData
     public const ACTION_TITLE = "ACTION_TITLE";
     public const BUTTON_APPEND = "ACTION_BUTTON_APPEND";
     public const PAGE_SIZE = "PAGE_SIZE";
-    public const ADD = "ACTION_ADD";
-    public const EDIT = "ACTION_EDIT";
-    public const REMOVE = "ACTION_REMOVE";
-    public const FILTER = "ACTION_FILTER";
-    public const SORT = "ACTION_SORT";
+    public const ACTION_ADD = "ACTION_ADD";
+    public const ACTION_EDIT = "ACTION_EDIT";
+    public const ACTION_REMOVE = "ACTION_REMOVE";
+    public const ACTION_FILTER = "ACTION_FILTER";
+    public const ACTION_SORT = "ACTION_SORT";
     public const INPORT_EXCEL = "INPORT_EXCEL";
     public const EXPORT_EXCEL = "EXPORT_EXCEL";
     public const POLL = "POLL";
@@ -33,34 +45,45 @@ class ConfigManager  extends GateData
 
     public const INCLUDE_AFTER = "INCLUDE_AFTER";
 
-    public function hideRemove()
+    public function disableRemove(): self
     {
-        $this[self::REMOVE] = false;
-        return $this;
+        return $this->setKeyData(self::ACTION_REMOVE, false);
     }
-    public function hideEdit()
+    public function disableEdit(): self
     {
-        $this[self::EDIT] = false;
-        return $this;
+        return $this->setKeyData(self::ACTION_EDIT, false);
     }
-    public function hideAdd()
+    public function disableAdd(): self
     {
-        $this[self::ADD] = false;
-        return $this;
+        return $this->setKeyData(self::ACTION_ADD, false);
     }
     public function disableFilter(): self
     {
-        $this[self::FILTER] = false;
-        return $this;
+        return $this->setKeyData(self::ACTION_FILTER, false);
     }
     public function disableSort(): self
     {
-        $this[self::SORT] = false;
-        return $this;
+        return $this->setSort(false);
     }
-    public function disableModule($value = true): self
+    public function getRemove()
     {
-        return $this->setKeyData(self::DISABLE_MODULE, $value);
+        return $this->getKeyData(self::ACTION_REMOVE, true);
+    }
+    public function getEdit()
+    {
+        return $this->getKeyData(self::ACTION_EDIT, true);
+    }
+    public function getAdd()
+    {
+        return $this->getKeyData(self::ACTION_ADD, true);
+    }
+    public function checkFilter()
+    {
+        return $this->getKeyData(self::ACTION_FILTER, true) == true;
+    }
+    public function checkSort()
+    {
+        return $this->getSort(true) == true;
     }
     public function setFuncFilter(callable $value): self
     {
@@ -94,10 +117,6 @@ class ConfigManager  extends GateData
     {
         return $this->setKeyData(self::MODEL_KEY, $value);
     }
-    public function setTitle($value): self
-    {
-        return $this->setKeyData(self::TITLE, $value);
-    }
     public function setIncludeAfter($value): self
     {
         return $this->setKeyData(self::INCLUDE_AFTER, $value);
@@ -118,55 +137,51 @@ class ConfigManager  extends GateData
 
     public function getFuncFilter($value = null)
     {
-        return $this->getDataValue(self::FUNC_FILTER, $value);
+        return $this->getKeyData(self::FUNC_FILTER, $value);
     }
     public function getFuncQuery($value = null)
     {
-        return $this->getDataValue(self::FUNC_QUERY, $value);
+        return $this->getKeyData(self::FUNC_QUERY, $value);
     }
     public function getFuncData($value = null)
     {
-        return $this->getDataValue(self::FUNC_DATA, $value);
+        return $this->getKeyData(self::FUNC_DATA, $value);
     }
     public function getPageSize($value = null)
     {
-        return $this->getDataValue(self::PAGE_SIZE, $value);
+        return $this->getKeyData(self::PAGE_SIZE, $value);
     }
     public function getFields(array $value = [])
     {
-        return $this->getDataValue(self::FIELDS, $value);
+        return $this->getKeyData(self::FIELDS, $value);
     }
-    public function getForm($value = null)
+    public function getForm($value = null): FormConfig|null
     {
-        return $this->getDataValue(self::FORM, $value);
+        return $this->getKeyData(self::FORM, $value);
     }
     public function getModel($value = null)
     {
-        return $this->getDataValue(self::MODEL, $value);
+        return $this->getKeyData(self::MODEL, $value);
     }
     public function getModelKey($value = "id")
     {
-        return $this->getDataValue(self::MODEL_KEY, $value);
-    }
-    public function getTitle($value = null)
-    {
-        return $this->getDataValue(self::TITLE, $value);
+        return $this->getKeyData(self::MODEL_KEY, $value);
     }
     public function getIncludeAfter($value = null)
     {
-        return $this->getDataValue(self::INCLUDE_AFTER, $value);
+        return $this->getKeyData(self::INCLUDE_AFTER, $value);
     }
     public function getIncludeBefore($value = null)
     {
-        return $this->getDataValue(self::INCLUDE_BEFORE, $value);
+        return $this->getKeyData(self::INCLUDE_BEFORE, $value);
     }
     public function getPoll($value = null)
     {
-        return $this->getDataValue(self::POLL, $value);
+        return $this->getKeyData(self::POLL, $value);
     }
     public function getButtonAppend(array $value = [])
     {
-        return $this->getDataValue(self::BUTTON_APPEND, $value);
+        return $this->getKeyData(self::BUTTON_APPEND, $value);
     }
     public function Field($field = ''): FieldConfig
     {
@@ -184,8 +199,20 @@ class ConfigManager  extends GateData
     {
         return (new OptionConfig())->setTitle($title);
     }
+    public function Widget($title = ''): WidgetConfig
+    {
+        return (new WidgetConfig())->setTitle($title);
+    }
     public function NewItem($title = ''): self
     {
         return (new self)->setTitle($title);
+    }
+    public function getValueInForm($value = null, $default = '')
+    {
+        $form = $this->getForm();
+        if ($form) {
+            return $form->getKeyData($value, $default);
+        }
+        return $default;
     }
 }

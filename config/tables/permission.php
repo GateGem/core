@@ -1,22 +1,23 @@
 <?php
 
-use GateGem\Core\Builder\Form\FieldBuilder;
 use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Http\Action\LoadPermission;
 use GateGem\Core\Livewire\Modal;
-use GateGem\Core\Models\Permission;
 use GateGem\Core\Support\Config\ButtonConfig;
 
 return GateConfig::NewItem()
     ->setModel(\GateGem\Core\Models\Permission::class)
     ->setButtonAppend([
         GateConfig::Button('core::tables.permission.button.load')
+            ->setDoAction(LoadPermission::class)
             ->setIcon('<i class="bi bi-magic"></i>')
             ->setPermission('core.permission.load-permission')
-            ->setDoAction(LoadPermission::class)
             ->setType(ButtonConfig::TYPE_ADD)
     ])
-    ->setForm(GateConfig::Form()->setSize(Modal::ExtraLarge))
+    ->disableAdd()
+    ->disableEdit()
+    ->disableRemove()
+   // ->setForm(GateConfig::Form()->setSize(Modal::ExtraLarge))
     ->setFields([
         GateConfig::Field('group')
             ->setTitle('core::tables.permission.field.group'),

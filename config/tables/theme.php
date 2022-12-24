@@ -14,9 +14,9 @@ return GateConfig::NewItem()
         })->toBase();
     })
     ->setModelKey('key')
-    ->hideAdd()
-    ->hideEdit()
-    ->hideRemove()
+    ->disableAdd()
+    ->disableEdit()
+    ->disableRemove()
     ->setForm(
         GateConfig::Form()
             ->setLayout([
@@ -30,17 +30,17 @@ return GateConfig::NewItem()
             ])->setClass('p-1')
     )
     ->setFields([
-        GateConfig::Field('name')->setTitle('core::tables.theme.field.name')->setFieldType(FieldBuilder::Text)->setKeyLayout('row1_1'),
-        GateConfig::Field('key')->setTitle('core::tables.theme.field.key')->setFieldType(FieldBuilder::Text)->setKeyLayout('row1_2'),
-        GateConfig::Field('description')->setTitle('core::tables.theme.field.description')->setFieldType(FieldBuilder::Text)->setKeyLayout('row1_1'),
-        GateConfig::Field('admin')->setTitle('core::tables.theme.field.admin')->setFieldType(FieldBuilder::Text)->setKeyLayout('row1_1')
+        GateConfig::Field('name')->setTitle('core::tables.theme.field.name')->setType(FieldBuilder::Text)->setKeyLayout('row1_1'),
+        GateConfig::Field('key')->setTitle('core::tables.theme.field.key')->setType(FieldBuilder::Text)->setKeyLayout('row1_2'),
+        GateConfig::Field('description')->setTitle('core::tables.theme.field.description')->setType(FieldBuilder::Text)->setKeyLayout('row1_1'),
+        GateConfig::Field('admin')->setTitle('core::tables.theme.field.admin')->setType(FieldBuilder::Text)->setKeyLayout('row1_1')
             ->setFuncCell(function ($value, $row, $column) {
                 if ($value == 1) {
                     return 'Admin';
                 }
                 return 'Site';
             }),
-        GateConfig::Field('status')->setTitle('core::tables.theme.field.status')->setFieldType(FieldBuilder::Dropdown)->setKeyLayout('row1_1')
+        GateConfig::Field('status')->setTitle('core::tables.theme.field.status')->setType(FieldBuilder::Dropdown)->setKeyLayout('row1_1')
             ->setFuncData(function () {
                 return collect([0, 1])->map(function ($item) {
                     return [

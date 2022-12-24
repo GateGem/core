@@ -2,16 +2,28 @@
 
 namespace GateGem\Core\Support\Config;
 
-use GateGem\Core\Support\Core\GateData;
 
-class FieldConfig  extends GateData
+/**
+ * 
+ * @method  \GateGem\Core\Support\Config\FieldConfig Disable()
+ * @method  \GateGem\Core\Support\Config\FieldConfig Enable()
+ * @method  \GateGem\Core\Support\Config\FieldConfig Hide()
+ * @method  \GateGem\Core\Support\Config\FieldConfig setClass(string $value)
+ * @method  \GateGem\Core\Support\Config\FieldConfig setTitle(string $value)
+ * @method  \GateGem\Core\Support\Config\FieldConfig setType($value)
+ * @method  \GateGem\Core\Support\Config\FieldConfig setIcon($value)
+ * @method  \GateGem\Core\Support\Config\FieldConfig setPermission($value)
+ * @method  \GateGem\Core\Support\Config\FieldConfig setSort($value)
+ * @method  \GateGem\Core\Support\Config\FieldConfig setAttr($value)
+ * 
+ * @see  \GateGem\Core\Support\Config\FieldConfig
+ */
+class FieldConfig  extends BaseConfig
 {
+
     public const FIELD = "FIELD";
     public const FIELD_COLUMN = "FIELD_COLUMN";
-    public const FIELD_TYPE = "FIELD_TYPE";
     public const ACTION = "ACTION";
-    public const DISABLE = "DISABLE";
-    public const TITLE = "TITLE";
     public const CLASS_HEADER = "CLASS_HEADER";
     public const CLASS_DATA = "CLASS_DATA";
     public const CLASS_FIELD = "CLASS_FIELD";
@@ -26,30 +38,21 @@ class FieldConfig  extends GateData
     public const DATA_FORMAT_JS = "DATA_FORMAT_JS";
     public const INCLUDE = "INCLUDE";
     public const FOLDER = "FOLDER";
-    public const VIEW = "VIEW";
-    public const EDIT = "EDIT";
-    public const ADD = "ADD";
+    public const ON_VIEW = "ON_VIEW";
+    public const ON_EDIT = "ON_EDIT";
+    public const ON_ADD = "ON_ADD";
     public const FILTER = "FILTER";
-    public const SORT = "SORT";
-    public const ATTR = "ATTR";
     public const CHECK_SHOW = "CHECK_SHOW";
     public const DEFER = "DEFER";
     public const PREX = "PREX";
-
-    public function setDisable($value): self
-    {
-        return $this->setKeyData(self::DISABLE, $value);
-    }
     public function setPrex($value): self
     {
         return $this->setKeyData(self::PREX, $value);
     }
-
     public function setCheckShow($value): self
     {
         return $this->setKeyData(self::CHECK_SHOW, $value);
     }
-
     public function setFieldColumn($value): self
     {
         return $this->setKeyData(self::FIELD_COLUMN, $value);
@@ -106,21 +109,9 @@ class FieldConfig  extends GateData
     {
         return $this->setKeyData(self::FUNC_CELL, $value);
     }
-    public function setAttr($value): self
-    {
-        return $this->setKeyData(self::ATTR, $value);
-    }
     public function setKeyLayout($value): self
     {
         return $this->setKeyData(self::KEY_LAYOUT, $value);
-    }
-    public function setFieldType($value): self
-    {
-        return $this->setKeyData(self::FIELD_TYPE, $value);
-    }
-    public function setTitle($value): self
-    {
-        return $this->setKeyData(self::TITLE, $value);
     }
     public function setField($value): self
     {
@@ -129,114 +120,138 @@ class FieldConfig  extends GateData
 
     public function getPrex($value = '')
     {
-        return $this->getDataValue(self::PREX, $value);
+        return $this->getKeyData(self::PREX, $value);
     }
 
     public function getCheckShow($value = '')
     {
-        return $this->getDataValue(self::CHECK_SHOW, $value);
+        return $this->getKeyData(self::CHECK_SHOW, $value);
     }
 
     public function getFieldColumn($value = '')
     {
-        return $this->getDataValue(self::FIELD_COLUMN, $value);
+        return $this->getKeyData(self::FIELD_COLUMN, $value);
     }
     public function getFolder($value = '')
     {
-        return $this->getDataValue(self::FOLDER, $value);
+        return $this->getKeyData(self::FOLDER, $value);
     }
     public function getInclude($value = '')
     {
-        return $this->getDataValue(self::INCLUDE, $value);
+        return $this->getKeyData(self::INCLUDE, $value);
     }
     public function getAction($value = '')
     {
-        return $this->getDataValue(self::ACTION, $value);
+        return $this->getKeyData(self::ACTION, $value);
     }
     public function getDataCache($value = [])
     {
-        return $this->getDataValue(self::DATA_CACHE, $value);
+        return $this->getKeyData(self::DATA_CACHE, $value);
     }
     public function getDataKey($value = 'id')
     {
-        return $this->getDataValue(self::DATA_KEY, $value);
+        return $this->getKeyData(self::DATA_KEY, $value);
     }
     public function getDataText($value = 'name')
     {
-        return $this->getDataValue(self::DATA_TEXT, $value);
+        return $this->getKeyData(self::DATA_TEXT, $value);
     }
     public function getDataDefault($value = '')
     {
-        return $this->getDataValue(self::DATA_DEFAULT, $value);
+        return $this->getKeyData(self::DATA_DEFAULT, $value);
     }
     public function getDataFormat($value = '')
     {
-        return $this->getDataValue(self::DATA_FORMAT, $value);
+        return $this->getKeyData(self::DATA_FORMAT, $value);
     }
     public function getDataFormatJs($value = '')
     {
-        return $this->getDataValue(self::DATA_FORMAT_JS, $value);
+        return $this->getKeyData(self::DATA_FORMAT_JS, $value);
     }
     public function getClassHeader($value = '')
     {
-        return $this->getDataValue(self::CLASS_HEADER, $value);
+        return $this->getKeyData(self::CLASS_HEADER, $value);
     }
     public function getClassData($value = '')
     {
-        return $this->getDataValue(self::CLASS_DATA, $value);
+        return $this->getKeyData(self::CLASS_DATA, $value);
     }
     public function getClassField($value = '')
     {
-        return $this->getDataValue(self::CLASS_FIELD, $value);
+        return $this->getKeyData(self::CLASS_FIELD, $value);
     }
     public function getFuncData($value = null)
     {
-        return $this->getDataValue(self::FUNC_DATA, $value);
+        return $this->getKeyData(self::FUNC_DATA, $value);
     }
     public function getFuncCell($value = null)
     {
-        return $this->getDataValue(self::FUNC_CELL, $value);
-    }
-    public function getAttr($value = '')
-    {
-        return $this->getDataValue(self::ATTR, $value);
+        return $this->getKeyData(self::FUNC_CELL, $value);
     }
     public function getKeyLayout($value = '')
     {
-        return $this->getDataValue(self::KEY_LAYOUT, $value);
-    }
-    public function getFieldType($value = '')
-    {
-        return $this->getDataValue(self::FIELD_TYPE, $value);
-    }
-    public function getTitle($value = '')
-    {
-        return $this->getDataValue(self::TITLE, $value);
+        return $this->getKeyData(self::KEY_LAYOUT, $value);
     }
     public function getField($value = '')
     {
-        return $this->getDataValue(self::FIELD, $value);
-    }
-    public function getDisable($value = null)
-    {
-        return $this->getDataValue(self::DISABLE, $value);
+        return $this->getKeyData(self::FIELD, $value);
     }
     public function getDefer($value = null)
     {
-        return $this->getDataValue(self::DEFER, $value);
+        return $this->getKeyData(self::DEFER, $value);
     }
-    
+
+    public function checkHideView()
+    {
+        return $this->getKeyData(self::ON_VIEW, self::Type_SHOW) === self::Type_HIDE;
+    }
+    public function checkHideEdit()
+    {
+        return $this->getKeyData(self::ON_EDIT, self::Type_SHOW) === self::Type_HIDE;
+    }
+    public function checkHideAdd()
+    {
+        return $this->getKeyData(self::ON_ADD, self::Type_SHOW) === self::Type_HIDE;
+    }
+    public function checkDisableAdd()
+    {
+        return $this->getKeyData(self::ON_ADD, self::Type_SHOW) === self::Type_DISABLE;
+    }
+    public function checkDisableEdit()
+    {
+        return $this->getKeyData(self::ON_EDIT, self::Type_SHOW) === self::Type_DISABLE;
+    }
+    public function checkSort()
+    {
+        return $this->getSort(true) === true;
+    }
+    public function checkFilter()
+    {
+        return $this->getKeyData(self::FILTER, true);
+    }
+    public function checkDefer()
+    {
+        return $this->getKeyData(self::DEFER, true);
+    }
     public function hideView(): self
     {
-        return $this->setKeyData(self::VIEW, false);
-    }
-    public function hideAdd(): self
-    {
-        return $this->setKeyData(self::ADD, false);
+        return $this->setKeyData(self::ON_VIEW, self::Type_HIDE);
     }
     public function hideEdit(): self
     {
-        return $this->setKeyData(self::EDIT, false);
+        return $this->setKeyData(self::ON_EDIT, self::Type_HIDE);
+    }
+    public function hideAdd(): self
+    {
+        return $this->setKeyData(self::ON_ADD, self::Type_HIDE);
+    }
+    public function disableAdd(): self
+    {
+        return $this->setKeyData(self::ON_ADD, self::Type_DISABLE);
+    }
+    public function disableEdit(): self
+    {
+        return $this->setKeyData(self::ON_EDIT, self::Type_DISABLE);
     }
     public function disableFilter(): self
     {
@@ -246,26 +261,7 @@ class FieldConfig  extends GateData
     {
         return $this->setKeyData(self::DEFER, false);
     }
-    public function disableSort(): self
-    {
-        return $this->setKeyData(self::SORT, false);
-    }
-    public function disableEdit(): self
-    {
-        return $this->setKeyData(self::DISABLE, function ($isNew) {
-            if ($isNew)
-                return false;
-            return true;
-        });
-    }
-    public function disableAdd(): self
-    {
-        return $this->setKeyData(self::DISABLE, function ($isNew) {
-            if ($isNew)
-                return true;
-            return false;
-        });
-    }
+
     public function DoFuncData($request, $component)
     {
         $funcData = $this->getFuncData(null);

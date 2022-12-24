@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static \GateGem\Core\Support\Config\FormConfig Form()
  * @method static \GateGem\Core\Support\Config\ButtonConfig Button($title = '')
  * @method static \GateGem\Core\Support\Config\OptionConfig Option($title = '')
+ * @method static \GateGem\Core\Support\Config\WidgetConfig Widget($title = '')
  * @method static \GateGem\Core\Support\Config\ConfigManager NewItem($title='')
- * 
  * 
  * 
  * @see \GateGem\Core\Facades\GateConfig

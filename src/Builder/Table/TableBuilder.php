@@ -23,7 +23,7 @@ class TableBuilder extends HtmlBuilder
     public function RenderCell($row, $column, $key)
     {
         echo '<td>';
-        echo '<div class="cell-data ' . $column->getDataValue(FieldConfig::CLASS_DATA, '') . '">';
+        echo '<div class="cell-data ' . $column->getKeyData(FieldConfig::CLASS_DATA, '') . '">';
         if (isset($column[FieldConfig::FUNC_CELL])) {
             echo $column[FieldConfig::FUNC_CELL]($row[$column[FieldConfig::FIELD]], $row, $column);
         } else if (isset($this->option['tableInline']) && $this->option['tableInline'] == true) {
@@ -52,7 +52,7 @@ class TableBuilder extends HtmlBuilder
                     } else {
                         htmlentities(print_r($cell_value));
                     }
-                } else if ($cell_value != "" && $column->getFieldType('') === FieldBuilder::Image) {
+                } else if ($cell_value != "" && $column->getType('') === FieldBuilder::Image) {
                     echo '<img src="' . url($cell_value) . '" style="max-height:35px"/>';
                 } else if ($cell_value != "")
                     echo htmlentities($cell_value);
@@ -65,10 +65,10 @@ class TableBuilder extends HtmlBuilder
         echo '</div>';
         echo '</td>';
     }
-    public function CheckColumnShow($column)
+    public function CheckColumnShow(FieldConfig $column)
     {
-        if (!$column->getDataValue(FieldConfig::VIEW, true)) return false;
-        if ($column->getDataValue(FieldConfig::FIELD_TYPE, FieldBuilder::Text) == FieldBuilder::Button) return false;
+        if ($column->checkHideView()) return false;
+        if ($column->getType(FieldBuilder::Text) == FieldBuilder::Button) return false;
         if ($column->checkCallable(FieldConfig::CHECK_SHOW) && !$column[FieldConfig::CHECK_SHOW]()) return false;
         return true;
     }
@@ -90,31 +90,33 @@ class TableBuilder extends HtmlBuilder
         if ($this->option && isset($this->option[ConfigManager::FIELDS])) {
             foreach ($this->option[ConfigManager::FIELDS] as $column) {
                 if ($this->CheckColumnShow($column)) {
+                    $field_name = $column->getField();
+                    $title_name = __($column->getTitle());
                     echo '<td x-data="{ filter: false }" class="position-relative">';
                     echo '<div class="cell-header d-flex flex-row' . getValueByKey($column, FieldConfig::CLASS_HEADER, '') . '">';
                     echo '<div class="cell-header_title flex-grow-1">';
-                    echo __($column[FieldConfig::TITLE]);
+                    echo $title_name;
                     echo '</div>';
                     echo '<div class="cell-header_extend">';
-                    if (isset($column[FieldConfig::FIELD])) {
-                        if (getValueByKey($this->option, ConfigManager::FILTER, true) && getValueByKey($column, FieldConfig::FILTER, true)) {
+                    if ($field_name) {
+                        if ($this->option->checkFilter() && $column->checkFilter()) {
                             echo '<i class="bi bi-funnel" @click="filter = true"></i>';
                         }
-                        if (getValueByKey($this->option, ConfigManager::SORT, true) && getValueByKey($column, FieldConfig::SORT, true)) {
-                            if (getValueByKey($this->formData, 'sort.' . $column[FieldConfig::FIELD], 1) == 1) {
-                                echo '<i class="bi bi-sort-alpha-down" wire:click="doSort(\'' . $column[FieldConfig::FIELD] . '\',0)"></i>';
+                        if ($this->option->checkSort() && $column->checkSort()) {
+                            if (getValueByKey($this->formData, 'sort.' .  $field_name, 1) == 1) {
+                                echo '<i class="bi bi-sort-alpha-down" wire:click="doSort(\'' . $field_name . '\',0)"></i>';
                             } else {
-                                echo '<i class="bi bi-sort-alpha-down-alt" wire:click="doSort(\'' . $column[FieldConfig::FIELD] . '\', 1)"></i>';
+                                echo '<i class="bi bi-sort-alpha-down-alt" wire:click="doSort(\'' . $field_name . '\', 1)"></i>';
                             }
                         }
                     }
                     echo '</div>';
                     echo '</div>';
-                    if (isset($column[FieldConfig::FIELD])) {
+                    if ($field_name) {
                         echo '<div  x-show="filter"  @click.outside="filter = false" style="display:none;" class="form-filter-column">';
-                        echo "<p class='p-0'>" . __($column[FieldConfig::TITLE]) . "</p>";
+                        echo "<p class='p-0'>" . $title_name . "</p>";
                         echo  FieldBuilder::Render($column, [], ['prex' => 'filter.', 'filter' => true]);
-                        echo '<p class="text-end text-white p-0"> <i class="bi bi-eraser"  wire:click="clearFilter(\'' . $column[FieldConfig::FIELD] . '\')"></i></p>';
+                        echo '<p class="text-end text-white p-0"> <i class="bi bi-eraser"  wire:click="clearFilter(\'' . $field_name . '\')"></i></p>';
                         '</div>';
                     }
                     echo '</td>';

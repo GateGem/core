@@ -6447,11 +6447,12 @@ if (window != undefined) {
       }));else {
         // window.GateChart[elItem.id].data.datasets=content.data.datasets;
         window.GateChart[elItem.id].data.datasets.forEach(function (item, index) {
-          item.data = content.data.datasets[index].data;
-          item.label = content.data.datasets[index].label;
+          Object.keys(item).forEach(function (key) {
+            item[key] = content.data.datasets[index][key];
+          });
         });
         window.GateChart[elItem.id].data.labels = content.data.labels;
-        window.GateChart[elItem.id].update('none');
+        window.GateChart[elItem.id].update();
       }
     });
     // window.addEventListener('resize', function(event) {
@@ -6460,22 +6461,6 @@ if (window != undefined) {
 
   window.addEventListener("load", function () {
     loadEventChart(document.body);
-    // let instTimeout = undefined;
-    // window.addEventListener("resize", () => {
-    //   if (instTimeout != undefined) {
-    //     clearTimeout(instTimeout);
-    //   }
-    //   instTimeout = setTimeout(() => {
-    //     for (let id in Chart.instances) {
-    //       setTimeout(() => {
-    //         Chart.instances[id].resize();
-    //       });
-    //     }
-    //     if (instTimeout != undefined) {
-    //       clearTimeout(instTimeout);
-    //     }
-    //   }, 50);
-    // });
     Livewire.hook("message.processed", function (message, component) {
       loadEventChart(component.el);
     });

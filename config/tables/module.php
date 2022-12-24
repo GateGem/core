@@ -11,9 +11,9 @@ return GateConfig::NewItem()
         return Module::getData();
     })
     ->setModelKey('key')
-    ->hideAdd()
-    ->hideEdit()
-    ->hideRemove()
+    ->disableAdd()
+    ->disableEdit()
+    ->disableRemove()
     ->setForm(
         GateConfig::Form()
             ->setLayout([
@@ -27,10 +27,10 @@ return GateConfig::NewItem()
             ])->setClass('p-1')
     )
     ->setFields([
-        GateConfig::Field('name')->setTitle('core::tables.module.field.name')->setFieldType(FieldBuilder::Text)->setKeyLayout('row1_1'),
-        GateConfig::Field('key')->setTitle('core::tables.module.field.key')->setFieldType(FieldBuilder::Text)->setKeyLayout('row1_2'),
-        GateConfig::Field('description')->setTitle('core::tables.module.field.description')->setFieldType(FieldBuilder::Text)->setKeyLayout('row1_1'),
-        GateConfig::Field('status')->setTitle('core::tables.module.field.status')->setFieldType(FieldBuilder::Dropdown)->setKeyLayout('row1_1')
+        GateConfig::Field('name')->setTitle('core::tables.module.field.name')->setType(FieldBuilder::Text)->setKeyLayout('row1_1'),
+        GateConfig::Field('key')->setTitle('core::tables.module.field.key')->setType(FieldBuilder::Text)->setKeyLayout('row1_2'),
+        GateConfig::Field('description')->setTitle('core::tables.module.field.description')->setType(FieldBuilder::Text)->setKeyLayout('row1_1'),
+        GateConfig::Field('status')->setTitle('core::tables.module.field.status')->setType(FieldBuilder::Dropdown)->setKeyLayout('row1_1')
             ->setFuncData(function () {
                 return collect([0, 1])->map(function ($item) {
                     return [

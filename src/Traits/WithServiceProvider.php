@@ -10,6 +10,7 @@ use GateGem\Core\Exceptions\InvalidPackage;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Theme;
 use GateGem\Core\Http\Middleware\Authenticate;
+use GateGem\Core\Loader\DashboardLoader;
 use GateGem\Core\Loader\LivewireLoader;
 use GateGem\Core\Loader\OptionLoader;
 use GateGem\Core\Loader\TableLoader;
@@ -56,6 +57,7 @@ trait WithServiceProvider
         }
 
         Theme::Load($this->package->basePath('/../themes'));
+        DashboardLoader::load($this->package->basePath('/../config/dashboards'));
         TableLoader::load($this->package->basePath('/../config/tables'));
         OptionLoader::load($this->package->basePath('/../config/options'));
         $this->packageRegistered();

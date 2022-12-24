@@ -6,13 +6,13 @@ use GateGem\Core\Facades\Theme;
 
 return GateConfig::Option('System')->setSort(0)->setFields([
     GateConfig::Field('page_title')
-        ->setFieldType(FieldBuilder::Text)
+        ->setType(FieldBuilder::Text)
         ->setTitle('Page Title'),
     GateConfig::Field('page_description')
-        ->setFieldType(FieldBuilder::Quill)
+        ->setType(FieldBuilder::Quill)
         ->setTitle('Page Description'),
     GateConfig::Field('page_admin_theme')
-        ->setFieldType(FieldBuilder::Dropdown)
+        ->setType(FieldBuilder::Dropdown)
         ->setDataDefault(true)
         ->setDataKey('key')
         ->setDataText('name')
@@ -24,7 +24,7 @@ return GateConfig::Option('System')->setSort(0)->setFields([
         ->setTitle('Theme Admin'),
 
     GateConfig::Field('page_site_theme')
-        ->setFieldType(FieldBuilder::Dropdown)
+        ->setType(FieldBuilder::Dropdown)
         ->setDataDefault(true)
         ->setDataKey('key')
         ->setDataText('name')

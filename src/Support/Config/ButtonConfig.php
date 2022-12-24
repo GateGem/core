@@ -3,27 +3,31 @@
 namespace GateGem\Core\Support\Config;
 
 use GateGem\Core\Http\Action\ChangeFieldValue;
-use GateGem\Core\Support\Core\GateData;
 
-class ButtonConfig  extends GateData
+/**
+ * 
+ * @method  \GateGem\Core\Support\Config\ButtonConfig Disable()
+ * @method  \GateGem\Core\Support\Config\ButtonConfig Enable()
+ * @method  \GateGem\Core\Support\Config\ButtonConfig Hide()
+ * @method  \GateGem\Core\Support\Config\ButtonConfig setClass(string $value)
+ * @method  \GateGem\Core\Support\Config\ButtonConfig setTitle(string $value)
+ * @method  \GateGem\Core\Support\Config\ButtonConfig setType($value)
+ * @method  \GateGem\Core\Support\Config\ButtonConfig setIcon($value)
+ * @method  \GateGem\Core\Support\Config\ButtonConfig setPermission($value)
+ * @method  \GateGem\Core\Support\Config\ButtonConfig setSort($value)
+ * @method  \GateGem\Core\Support\Config\ButtonConfig setAttr($value)
+ * 
+ * @see  \GateGem\Core\Support\Config\ButtonConfig
+ */
+class ButtonConfig  extends BaseConfig
 {
     public const TYPE_ADD = "TYPE_ADD";
     public const TYPE_UPDATE = "TYPE_UPDATE";
-    public const BUTTON_TITLE = "BUTTON_TITLE";
-    public const BUTTON_CLASS = "BUTTON_CLASS";
-    public const BUTTON_TYPE = "BUTTON_TYPE";
-    public const BUTTON_PERMISSION = "BUTTON_PERMISSION";
     public const BUTTON_ACTION = "BUTTON_ACTION";
     public const BUTTON_DO_ACTION = "BUTTON_DO_ACTION";
     public const BUTTON_DO_COMPONENT = "BUTTON_DO_COMPONENT";
     public const BUTTON_DO_CONFIRM = "BUTTON_DO_CONFIRM";
-    public const BUTTON_ATTR = "BUTTON_ATTR";
-    public const BUTTON_ICON = "BUTTON_ICON";
 
-    public function setIcon($value): self
-    {
-        return $this->setKeyData(self::BUTTON_ICON, $value);
-    }
     public function setConfirm($value, $param = '{}'): self
     {
         if (is_string($param)) $param = function () use ($param) {
@@ -64,31 +68,11 @@ class ButtonConfig  extends GateData
         $value['param'] = $param;
         return $this->setKeyData(self::BUTTON_DO_COMPONENT, $value);
     }
-    public function setAttr($value): self
-    {
-        return $this->setKeyData(self::BUTTON_ATTR, $value);
-    }
-    public function setPermission($value): self
-    {
-        return $this->setKeyData(self::BUTTON_PERMISSION, $value);
-    }
-    public function setType($value): self
-    {
-        return $this->setKeyData(self::BUTTON_TYPE, $value);
-    }
-    public function setClass($value): self
-    {
-        return $this->setKeyData(self::BUTTON_CLASS, $value);
-    }
-    public function setTitle($value): self
-    {
-        return $this->setKeyData(self::BUTTON_TITLE, $value);
-    }
     public function checkType($type = '')
     {
-        if (!(!isset($this[ButtonConfig::BUTTON_PERMISSION]) ||  \GateGem\Core\Facades\Core::checkPermission($this[ButtonConfig::BUTTON_PERMISSION]))) return false;
-        if (!$this->CheckKey(ButtonConfig::BUTTON_TYPE)) return $type == '';
-        return $this[ButtonConfig::BUTTON_TYPE] == $type;
+        if (!\GateGem\Core\Facades\Core::checkPermission($this->getPermission())) return false;
+        if ($type == '') return true;
+        return $this->getType() == $type;
     }
     private function getActionAndParam($type, $param)
     {
@@ -99,34 +83,45 @@ class ButtonConfig  extends GateData
         if (is_callable($_param)) $_param =  count($param) > 0 ? call_user_func_array($_param, $param) : $_param();
         return ['_action' => $_action, '_param' => $_param];
     }
+    public function getActionButton($param)
+    {
+        if ($this->CheckKey(self::BUTTON_ACTION)) {
+            return [...$this->getActionAndParam(self::BUTTON_ACTION, $param), '_type' => self::BUTTON_ACTION];
+        }
+        if ($this->CheckKey(self::BUTTON_DO_ACTION)) {
+            return  [...$this->getActionAndParam(self::BUTTON_DO_ACTION, $param), '_type' => self::BUTTON_DO_ACTION];
+        }
+        if ($this->CheckKey(self::BUTTON_DO_COMPONENT)) {
+            return  [...$this->getActionAndParam(self::BUTTON_DO_COMPONENT, $param), '_type' => self::BUTTON_DO_COMPONENT];
+        }
+        if ($this->CheckKey(self::BUTTON_DO_CONFIRM)) {
+            return  [...$this->getActionAndParam(self::BUTTON_DO_CONFIRM, $param), '_type' => self::BUTTON_DO_CONFIRM];
+        }
+        return null;
+    }
     public function toHtml()
     {
         $attr = '';
-        if ($this->CheckKey(self::BUTTON_ACTION)) {
-            ['_action' => $_action, '_param' => $_param] = $this->getActionAndParam(self::BUTTON_ACTION, func_get_args());
-            $attr = "wire:click=\"{$_action}($_param)\"";
+        if (['_action' => $_action, '_param' => $_param, '_type' => $_type] = $this->getActionButton(func_get_args())) {
+            switch ($_type) {
+                case self::BUTTON_ACTION:
+                    $attr = "wire:click=\"{$_action}($_param)\"";
+                    break;
+                case self::BUTTON_DO_ACTION:
+                    $attr = "wire:click=\"DoAction('" . base64_encode(urlencode($_action)) . "','" . base64_encode(urlencode($_param))  . "')\"";
+                    break;
+                case self::BUTTON_DO_COMPONENT:
+                    $attr = "wire:component=\"{$_action}($_param)\"";
+                    break;
+                case self::BUTTON_DO_CONFIRM:
+                    $attr = "wire:confirm=\"{$_action}($_param)\"";
+                    break;
+            }
         }
-        if ($this->CheckKey(self::BUTTON_DO_ACTION)) {
-            ['_action' => $_action, '_param' => $_param] = $this->getActionAndParam(self::BUTTON_DO_ACTION, func_get_args());
-            $attr = "wire:click=\"DoAction('" . base64_encode(urlencode($_action)) . "','" . base64_encode(urlencode($_param))  . "')\"";
-        }
-        if ($this->CheckKey(self::BUTTON_DO_COMPONENT)) {
-            ['_action' => $_action, '_param' => $_param] = $this->getActionAndParam(self::BUTTON_DO_COMPONENT, func_get_args());
-            $attr = "wire:component=\"{$_action}($_param)\"";
-        }
-        if ($this->CheckKey(self::BUTTON_DO_CONFIRM)) {
-            ['_action' => $_action, '_param' => $_param] = $this->getActionAndParam(self::BUTTON_DO_CONFIRM, func_get_args());
-            $attr = "wire:confirm=\"{$_action}($_param)\"";
-        }
-        if ($this->CheckKey(self::BUTTON_ATTR))
-            $attr = $attr . ' ' . $this[self::BUTTON_ATTR];
-        $title = __($this[self::BUTTON_TITLE]);
-        $icon = '';
-        if ($this->CheckKey(self::BUTTON_ICON))
-            $icon = $this[self::BUTTON_ICON];
-            $class = 'btn btn-sm btn-default';
-            if ($this->CheckKey(self::BUTTON_CLASS))
-                $class = $this[self::BUTTON_CLASS];
+        $attr = $attr . ' ' . $this->getAttr();
+        $title = __($this->getTitle());
+        $icon = $this->getIcon();
+        $class =  $this->getClass('btn btn-sm btn-danger');
         return <<<EOT
         <button class="{$class}" {$attr} title="{$title}">
         {$icon}

@@ -2,63 +2,47 @@
 
 namespace GateGem\Core\Support\Config;
 
-use GateGem\Core\Support\Core\GateData;
-
-class OptionConfig  extends GateData
+/**
+ * 
+ * @method  \GateGem\Core\Support\Config\OptionConfig Disable()
+ * @method  \GateGem\Core\Support\Config\OptionConfig Enable()
+ * @method  \GateGem\Core\Support\Config\OptionConfig Hide()
+ * @method  \GateGem\Core\Support\Config\OptionConfig setClass(string $value)
+ * @method  \GateGem\Core\Support\Config\OptionConfig setTitle(string $value)
+ * @method  \GateGem\Core\Support\Config\OptionConfig setType($value)
+ * @method  \GateGem\Core\Support\Config\OptionConfig setIcon($value)
+ * @method  \GateGem\Core\Support\Config\OptionConfig setPermission($value)
+ * @method  \GateGem\Core\Support\Config\OptionConfig setSort($value)
+ * @method  \GateGem\Core\Support\Config\OptionConfig setAttr($value)
+ * 
+ * @see  \GateGem\Core\Support\Config\OptionConfig
+ */
+class OptionConfig  extends BaseConfig
 {
-    public const TITLE = "BUTTON_TITLE";
-    public const CLASS_NAME = "CLASS_NAME";
-    public const SORT = "SORT";
-    public const ICON = "BUTTON_ICON";
-    public const FIELDS = "FIELDS";
-    public const ENABLE = "ENABLE";
-
-    public function setIcon($value): self
-    {
-        return $this->setKeyData(self::ICON, $value);
-    }
-    public function setClass($value): self
-    {
-        return $this->setKeyData(self::CLASS_NAME, $value);
-    }
-    public function setTitle($value): self
-    {
-        return $this->setKeyData(self::TITLE, $value);
-    }
-    public function setSort($value): self
-    {
-        return $this->setKeyData(self::SORT, $value);
-    }
+    public const OPTION_FIELDS = "OPTION_FIELDS";
+    public const FORM = "FORM";
     public function setFields(array $value = []): self
     {
-        return $this->setKeyData(self::FIELDS, $value);
-    }
-    public function Disable($value = false):self
-    {
-        return $this->setKeyData(self::ENABLE, $value);
-    }
-    public function getIcon($value = '')
-    {
-        return $this->getDataValue(self::ICON, $value);
-    }
-    public function getClass($value = '')
-    {
-        return $this->getDataValue(self::CLASS_NAME, $value);
-    }
-    public function getTitle($value = '')
-    {
-        return $this->getDataValue(self::TITLE, $value);
-    }
-    public function getSort($value = '')
-    {
-        return $this->getDataValue(self::SORT, $value);
+        return $this->setKeyData(self::OPTION_FIELDS, $value);
     }
     public function getFields($value = [])
     {
-        return $this->getDataValue(self::FIELDS, $value);
+        return $this->getKeyData(self::OPTION_FIELDS, $value);
     }
-    public function getEnable($value = true)
+    public function setForm($value): self
     {
-        return $this->getDataValue(self::ENABLE, $value);
+        return $this->setKeyData(self::FORM, $value);
+    }
+    public function getForm($value = null): FormConfig|null
+    {
+        return $this->getKeyData(self::FORM, $value);
+    }
+    public function getValueInForm($value = null, $default = '')
+    {
+        $form = $this->getForm();
+        if ($form) {
+            return $form->getKeyData($value, $default);
+        }
+        return $default;
     }
 }

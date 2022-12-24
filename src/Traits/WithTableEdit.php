@@ -39,9 +39,8 @@ trait WithTableEdit
         $option = $this->getOptionProperty();
         if (!$option || !isset($option[ConfigManager::MODEL]) || $option[ConfigManager::MODEL] == '')
             return abort(404);
-
         if (!$this->modal_isPage) {
-            $this->modal_size = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_SIZE,  Modal::FullscreenMd);
+            $this->modal_size = $option->getValueInForm(FormConfig::FORM_SIZE, Modal::Large);
         }
         $this->setTitle(__($option->getTitle('core::tables.' . $this->module . '.title')));
         $fields = $this->getFieldsProperty();

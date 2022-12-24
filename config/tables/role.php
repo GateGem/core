@@ -23,7 +23,7 @@ return GateConfig::NewItem()
         GateConfig::Field('slug')
             ->setTitle('core::tables.role.field.slug')
             ->disableEdit(),
-           
+
         GateConfig::Field('name')
             ->setTitle('core::tables.role.field.name')
     ]);

@@ -69,7 +69,7 @@ trait WithTableIndex
             $this->filter = [];
         }
     }
-    public function getOptionProperty()
+    public function getOptionProperty(): ConfigManager
     {
         if (is_null($this->option_temp)) {
             if (method_exists($this, "getOption")) {
@@ -135,15 +135,15 @@ trait WithTableIndex
     public function LoadData()
     {
         $option = $this->option;
-        if (!$option || ($this->isCheckDisableModule && getValueByKey($option, ConfigManager::DISABLE_MODULE, false)))
+        if (!$option || ($this->isCheckDisableModule && !$option->getEnable()))
             return abort(404);
 
         if (!$this->modal_isPage) {
-            $this->modal_size = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_SIZE,  Modal::ExtraLarge);
+            $this->modal_size = $option->getValueInForm(FormConfig::FORM_SIZE, Modal::Large);
         }
 
-        $this->setTitle(__(getValueByKey($option, ConfigManager::TITLE, 'core::tables.' . $this->module . '.title')));
-        $this->pageSize = getValueByKey($option, ConfigManager::PAGE_SIZE, 10);
+        $this->setTitle(__($option->getTitle('core::tables.' . $this->module . '.title')));
+        $this->pageSize = $option->getPageSize(10);
         do_action("module_loaddata", $this->module, $this);
         do_action("module_" . $this->module . "_loaddata", $this);
     }
@@ -229,7 +229,7 @@ trait WithTableIndex
     {
         if ($this->checkEdit()) return true;
         if ($this->checkRemove()) return true;
-        $buttonAppend = $this->getDataValue(ConfigManager::BUTTON_APPEND, []);
+        $buttonAppend = $this->getKeyData(ConfigManager::BUTTON_APPEND, []);
         $isAction = false;
         foreach ($buttonAppend as $button) {
             if ($button->checkType(ButtonConfig::TYPE_UPDATE)) {
@@ -239,29 +239,29 @@ trait WithTableIndex
         }
         return $isAction;
     }
-    public function getDataValue($key, $default = '')
+    public function getKeyData($key, $default = '')
     {
         if (isset($this->option[$key])) return $this->option[$key];
         return $default;
     }
     public function checkAdd(): bool
     {
-        return $this->getDataValue(ConfigManager::ADD, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.add');
+        return $this->getKeyData(ConfigManager::ACTION_ADD, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.add');
     }
     protected function checkEdit()
     {
-        return $this->getDataValue(ConfigManager::EDIT, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.edit');
+        return $this->getKeyData(ConfigManager::ACTION_EDIT, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.edit');
     }
     protected function checkRemove()
     {
-        return $this->getDataValue(ConfigManager::REMOVE, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.delete');
+        return $this->getKeyData(ConfigManager::ACTION_REMOVE, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.delete');
     }
     protected function checkInportExcel()
     {
-        return $this->getDataValue(ConfigManager::INPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.inport');
+        return $this->getKeyData(ConfigManager::INPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.inport');
     }
     protected function checkExportExcel()
     {
-        return $this->getDataValue(ConfigManager::EXPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.export');
+        return $this->getKeyData(ConfigManager::EXPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.export');
     }
 }
