@@ -1,5 +1,6 @@
 <?php
 
+use GateGem\Core\Loader\DashboardLoader;
 use GateGem\Core\Support\Core\GateData;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -102,5 +103,12 @@ if (!function_exists('getClassByWidget')) {
     function getClassByWidget($widget)
     {
         return getClassByComponent("widget-{$widget}");
+    }
+}
+
+if (!function_exists('getDashboard')) {
+    function getDashboard($postion='')
+    {
+        return DashboardLoader::getConfigByPostion($postion);
     }
 }

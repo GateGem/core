@@ -57,7 +57,7 @@ trait WithServiceProvider
         }
 
         Theme::Load($this->package->basePath('/../themes'));
-        DashboardLoader::load($this->package->basePath('/../config/dashboards'));
+        DashboardLoader::load($this->package->basePath('/../config/dashboards'), $this->package->shortName().'::');
         TableLoader::load($this->package->basePath('/../config/tables'));
         OptionLoader::load($this->package->basePath('/../config/options'));
         $this->packageRegistered();
