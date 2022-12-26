@@ -89,7 +89,7 @@ class CoreManager
         }
         return $arr;
     }
-    private const KeyLanguage = 'language';
+    private const KeyLanguage = 'language_current';
     public function SwitchLanguage($lang, $redirect_current = false)
     {
         Session::put(self::KeyLanguage, $lang);
@@ -100,7 +100,7 @@ class CoreManager
     {
         // current uri language ($lang_uri)
         $lang_uri = Request::segment(1);
-        $languages = apply_filters('language_list', []);
+        $languages = array_keys(apply_filters('language_list', []));
         // Set default session language if none is set
         if (!Session::has(self::KeyLanguage)) {
             // use lang in uri, if provided
@@ -128,18 +128,17 @@ class CoreManager
 
             // set application language for that user
             Session::put(self::KeyLanguage, $lang);
-            app()->setLocale(Session::get(self::KeyLanguage));
         }
         // session is available
 
-
+        $lang_uri = Session::get(self::KeyLanguage);
         // prefix is missing? add it
         if (!in_array($lang_uri, $languages)) {
             return Redirect::to(URL::current());
         }
         // a valid prefix is there, but not the correct lang? change app lang
         elseif (in_array($lang_uri, $languages)) {
-            app()->setLocale(Session::get(self::KeyLanguage));
+            app()->setLocale($lang_uri);
         }
     }
     public function RootPath($path = '')

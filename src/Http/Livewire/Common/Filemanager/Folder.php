@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Http\Livewire\Common\Filemanager;
 
+use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Livewire\Component;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -110,28 +111,28 @@ class Folder extends Component
     }
     private function getOptionTree()
     {
-        return [
-            'field' => 'abc',
-            'funcData' => [
-                [
-                    'text' => 'Disk ' . $this->disk,
-                    'icon' => '<i class="bi bi-hdd-rack"></i>',
-                    'isActive' => 0,
-                    'value' => '',
-                    'parent' => '',
-                    'isChild' => true,
-                    'key' => 'root'
-                ],
-                ...$this->folders
-            ],
-            'checkBox' => false,
-            'icon-open' => '<i class="bi bi-folder2-open"></i>',
-            'icon-close' => '<i class="bi bi-folder"></i>',
-            'event-expand' => 'eventFolderExpand',
-            'skipTop' => true,
-            'selectEvent' => 'SelectPath',
-            'itemAttr' => ' x-on:click="fileSelect = null"',
-        ];
+        return GateConfig::Field('abc')
+            ->setFuncData(function () {
+                return  [
+                    [
+                        'text' => 'Disk ' . $this->disk,
+                        'icon' => '<i class="bi bi-hdd-rack"></i>',
+                        'isActive' => 0,
+                        'value' => '',
+                        'parent' => '',
+                        'isChild' => true,
+                        'key' => 'root'
+                    ],
+                    ...$this->folders
+                ];
+            })->setKeyData('checkBox', false)
+            ->setKeyData('icon-open', '<i class="bi bi-folder2-open"></i>')
+            ->setKeyData('icon-close', '<i class="bi bi-folder"></i>')
+            ->setKeyData('event-expand', 'eventFolderExpand')
+            ->setKeyData('skipTop', true)
+            ->setKeyData('selectEvent', 'SelectPath')
+            ->setKeyData('itemAttr', ' x-on:click="fileSelect = null" ')
+            ->DoFuncData(null,null);
     }
     public function render()
     {

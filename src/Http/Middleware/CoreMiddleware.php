@@ -20,7 +20,7 @@ class CoreMiddleware
     public function handle($request, \Closure $next)
     {
         // It does other things here
-        Core::checkCurrentLanguage();
+      Core::checkCurrentLanguage();
         $request = apply_filters('core_before', $request);
         if (($request instanceof BinaryFileResponse) or
             ($request instanceof JsonResponse) or

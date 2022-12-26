@@ -12,6 +12,12 @@ class UploadFile extends Modal
     public $disk;
     public $path_current;
     public $file;
+    public function updatedFile()
+    {
+        $this->validate([
+            'file' => 'image|max:10024', // 1MB Max
+        ]);
+    }
     public function mount($path, $disk)
     {
         $this->setTitle('Upload File');
@@ -20,6 +26,9 @@ class UploadFile extends Modal
     }
     public function DoWork()
     {
+        $this->validate([
+            'file' => 'image|max:10024', // 1MB Max
+        ]);
         $this->file->storeAs($this->path_current, $this->file->getClientOriginalName(), [
             'disk' => $this->disk
         ]);

@@ -4,7 +4,7 @@ use GateGem\Core\Builder\Form\FieldBuilder;
 use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Models\User;
 
-return GateConfig::Widget('User')
+return GateConfig::Widget('core::dashboard.user.title')
    // ->setPoll('.750ms')
     ->setColumn(FieldBuilder::Col3)
     ->setFuncData(function () {

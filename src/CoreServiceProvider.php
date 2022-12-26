@@ -14,7 +14,6 @@ use GateGem\Core\Facades\Plugin;
 use GateGem\Core\TagCompiler\LivewireGTagCompiler;
 use GateGem\Core\TagCompiler\WidgetTagCompiler;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Livewire\Livewire;
 
 class CoreServiceProvider extends ServiceProvider
@@ -74,6 +73,12 @@ class CoreServiceProvider extends ServiceProvider
             }
             return $prev;
         }, 20, 3);
+        add_filter('core_check_permission', function ($prev, $slug) {
+            if (!auth()->user()->isSuperAdmin() && in_array($slug, ['core.module', 'core.plugin', 'core.theme'])) {
+                return false;
+            }
+            return $prev;
+        }, 20, 2);
     }
     public function registerMenu()
     {

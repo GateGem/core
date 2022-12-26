@@ -14,6 +14,7 @@ return GateConfig::Option('System')->setSort(0)->setFields([
     GateConfig::Field('page_admin_theme')
         ->setType(FieldBuilder::Dropdown)
         ->setDataDefault(true)
+        ->setFieldColumn(FieldBuilder::Col6)
         ->setDataKey('key')
         ->setDataText('name')
         ->setFuncData(function () {
@@ -25,6 +26,7 @@ return GateConfig::Option('System')->setSort(0)->setFields([
 
     GateConfig::Field('page_site_theme')
         ->setType(FieldBuilder::Dropdown)
+        ->setFieldColumn(FieldBuilder::Col6)
         ->setDataDefault(true)
         ->setDataKey('key')
         ->setDataText('name')
