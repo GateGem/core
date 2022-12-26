@@ -192,11 +192,12 @@ class FieldBuilder extends HtmlBuilder
                 $funcData = $this->option->getDataCache([]);
                 echo '<select ' . $attr . ' class="form-control ' . $class_name . '"  id="input-' . $field_name . '" ' .  $this->getModelField() . ' >';
                 $optionDefault = '';
-                if (getValueByKey($this->formData, 'filter', false) || ($optionDefault = getValueByKey($this->option, FieldConfig::DATA_DEFAULT, ''))) {
-                    if ($optionDefault === true)
+                $optionTextDefault='';
+                if (getValueByKey($this->formData, 'filter', false) || (($optionDefault = $this->option->getDataDefault()) !== '' && ($optionTextDefault = $this->option->getDataTextDefault()))) {
+                    if ($optionDefault === true || $optionTextDefault == '')
                         echo '<option value="">' . __($this->option->getTitle()) . '</option>';
-                    if ($optionDefault !== '' && $optionDefault !== true)
-                        echo '<option value="">' . __($optionDefault) . '</option>';
+                    if ($optionTextDefault !== '' && $optionTextDefault !== true)
+                        echo '<option value="">' . __($optionTextDefault)  . '</option>';
                 }
                 if ($funcData) {
                     foreach ($funcData as $item) {

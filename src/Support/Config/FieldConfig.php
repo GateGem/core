@@ -34,6 +34,7 @@ class FieldConfig  extends BaseConfig
     public const DATA_KEY = "DATA_KEY";
     public const DATA_TEXT = "DATA_TEXT";
     public const DATA_DEFAULT = "DATA_DEFAULT";
+    public const DATA_DEFAULT_TEXT = "DATA_DEFAULT_TEXT";
     public const DATA_FORMAT = "DATA_FORMAT";
     public const DATA_FORMAT_JS = "DATA_FORMAT_JS";
     public const INCLUDE = "INCLUDE";
@@ -76,6 +77,10 @@ class FieldConfig  extends BaseConfig
     public function setDataText($value): self
     {
         return $this->setKeyData(self::DATA_TEXT, $value);
+    }
+    public function setDataTextDefault($value): self
+    {
+        return $this->setKeyData(self::DATA_DEFAULT_TEXT, $value);
     }
     public function setDataDefault($value): self
     {
@@ -155,6 +160,10 @@ class FieldConfig  extends BaseConfig
     public function getDataText($value = 'name')
     {
         return $this->getKeyData(self::DATA_TEXT, $value);
+    }
+    public function getDataTextDefault($value = '')
+    {
+        return $this->getKeyData(self::DATA_DEFAULT_TEXT, $value);
     }
     public function getDataDefault($value = '')
     {

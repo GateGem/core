@@ -61,7 +61,7 @@ return GateConfig::NewItem()
             ->setType(FieldBuilder::Password)
             ->setKeyLayout('row1_1'),
         GateConfig::Field('status')
-            ->setDataDefault(0)
+            ->setDataDefault(1)
             ->setFuncData(function () {
                 return collect([0, 1])->map(function ($item) {
                     return [
