@@ -11,4 +11,5 @@ return GateConfig::Widget('Permission')
         return Permission::count();
     })
     ->setClass('border-danger bg-danger text-white')
-    ->setIcon('bi bi-shield-fill-check');
+    ->setIcon('bi bi-shield-fill-check')
+    ->Disable();

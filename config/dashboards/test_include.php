@@ -5,7 +5,7 @@ use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Support\Config\WidgetConfig;
 
 return GateConfig::Widget('Biểu đồ tài chính hàng ngày trong tháng')
-    ->setPoll('.5s')
+    //->setPoll('.5s')
     ->setColumn(FieldBuilder::Col6)
     ->setFuncData(function () {
         return [
@@ -41,7 +41,8 @@ return GateConfig::Widget('Biểu đồ tài chính hàng ngày trong tháng')
         ];
     })
     ->setPosition('body')
-    ->setType(WidgetConfig::TYPE_WIDGET_CHARTJS)
+    ->setInclude('core::test')
+    ->setType(WidgetConfig::TYPE_WIDGET_INCLUDE)
     ->Disable()
     //->setIcon('bi bi-shield-fill-check')
 ;

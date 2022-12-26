@@ -8,8 +8,7 @@
             {{ __($widget_title) }}
         </h4>
         <p>
-            <canvas wire:ignore data-wire-id="{{ $this->id }}" id="chartjs-{{ $this->id }}" class="el-chartjs"
-                data-config='widget_data'></canvas>
+            @includeif()
         </p>
     </div>
 </div>

@@ -22,13 +22,34 @@ use GateGem\Core\Builder\Form\FieldBuilder;
 
 class WidgetConfig  extends BaseConfig
 {
+    public const TYPE_WIDGET_DEFAULT="index";
+    public const TYPE_WIDGET_CHARTJS="chartjs";
+    public const TYPE_WIDGET_INCLUDE="include";
+    public const TYPE_WIDGET_TABLE="table";
+    public const TYPE_WIDGET_FORM="form";
+
     public const WIDGET_FUNC_DATA = "WIDGET_FUNC_DATA";
     public const WIDGET_ACTION_NAME = "WIDGET_ACTION_NAME";
     public const WIDGET_ACTION_PARAM = "WIDGET_ACTION_PARAM";
     public const WIDGET_POLL = "WIDGET_POLL";
+    public const WIDGET_FIELDS = "WIDGET_FIELDS";
+    public const WIDGET_FORM = "WIDGET_FORM";
+    public const WIDGET_INCLUDE = "WIDGET_INCLUDE";
     public const WIDGET_COLUMN = "WIDGET_COLUMN";
     public const WIDGET_NAME = "WIDGET_NAME";
     public const WIDGET_POSITION = "WIDGET_POSITION";
+    public function setFields($value = []): self
+    {
+        return $this->setKeyData(self::WIDGET_FIELDS, $value);
+    }
+    public function setForm($value): self
+    {
+        return $this->setKeyData(self::WIDGET_FORM, $value);
+    }
+    public function setInclude($value): self
+    {
+        return $this->setKeyData(self::WIDGET_INCLUDE, $value);
+    }
     public function setFuncData($value): self
     {
         return $this->setKeyData(self::WIDGET_FUNC_DATA, $value);
@@ -56,6 +77,18 @@ class WidgetConfig  extends BaseConfig
     public function setWidgetName($value): self
     {
         return $this->setKeyData(self::WIDGET_NAME, $value);
+    }
+    public function getFields($value = []): self
+    {
+        return $this->getKeyData(self::WIDGET_FIELDS, $value);
+    }
+    public function getForm($value = ''): self
+    {
+        return $this->getKeyData(self::WIDGET_FORM, $value);
+    }
+    public function getInclude($value = '')
+    {
+        return $this->getKeyData(self::WIDGET_INCLUDE, $value);
     }
     public function getFuncData($value = '')
     {

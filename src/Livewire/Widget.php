@@ -16,6 +16,7 @@ class Widget extends Component
     public $widget_class = "";
     public $widget_view = "";
     public $widget_column = "";
+    public $widget_include = "";
     public $widget_poll = "";
 
     protected WidgetConfig $widget_config;
@@ -30,6 +31,7 @@ class Widget extends Component
         $func_data =  $this->widget_config->getFuncData();
         $this->widget_data = is_callable($func_data) ? $func_data() : $func_data;
         $this->widget_poll =  $this->widget_config->getPoll();
+        $this->widget_include =  $this->widget_config->getInclude();
         // $this->widget_column =  $this->widget_config->getColumn();
     }
     public function mount($key_widget = '')
