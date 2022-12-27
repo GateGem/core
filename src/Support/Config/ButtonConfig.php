@@ -81,21 +81,21 @@ class ButtonConfig  extends BaseConfig
         $_param = $action['param'];
         if (is_callable($_action)) $_action = count($param) > 0 ? call_user_func_array($_action, $param) : $_action();
         if (is_callable($_param)) $_param =  count($param) > 0 ? call_user_func_array($_param, $param) : $_param();
-        return ['_action' => $_action, '_param' => $_param];
+        return ['_action' => $_action, '_param' => $_param, '_type' => $type];
     }
     public function getActionButton($param)
     {
         if ($this->CheckKey(self::BUTTON_ACTION)) {
-            return [...$this->getActionAndParam(self::BUTTON_ACTION, $param), '_type' => self::BUTTON_ACTION];
+            return $this->getActionAndParam(self::BUTTON_ACTION, $param);
         }
         if ($this->CheckKey(self::BUTTON_DO_ACTION)) {
-            return  [...$this->getActionAndParam(self::BUTTON_DO_ACTION, $param), '_type' => self::BUTTON_DO_ACTION];
+            return $this->getActionAndParam(self::BUTTON_DO_ACTION, $param);
         }
         if ($this->CheckKey(self::BUTTON_DO_COMPONENT)) {
-            return  [...$this->getActionAndParam(self::BUTTON_DO_COMPONENT, $param), '_type' => self::BUTTON_DO_COMPONENT];
+            return  $this->getActionAndParam(self::BUTTON_DO_COMPONENT, $param);
         }
         if ($this->CheckKey(self::BUTTON_DO_CONFIRM)) {
-            return  [...$this->getActionAndParam(self::BUTTON_DO_CONFIRM, $param), '_type' => self::BUTTON_DO_CONFIRM];
+            return  $this->getActionAndParam(self::BUTTON_DO_CONFIRM, $param);
         }
         return null;
     }

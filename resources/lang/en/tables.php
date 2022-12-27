@@ -6,8 +6,8 @@ return [
             'name' => 'Name',
             'description' => 'Description',
             'status' => 'Status',
-            'title'=>'Title',
-            'key'=>'Key'
+            'title' => 'Title',
+            'key' => 'Key'
         ]
     ],
     'plugin' => [
@@ -15,7 +15,7 @@ return [
         'field' => [
             'name' => 'Name',
             'description' => 'Description',
-            'title'=>'Title',
+            'title' => 'Title',
             'status' => 'Status'
         ]
     ],
@@ -26,8 +26,8 @@ return [
             'name' => 'Name',
             'description' => 'Description',
             'status' => 'Status',
-            'title'=>'Title',
-            'admin'=>'admin'
+            'title' => 'Title',
+            'admin' => 'admin'
         ]
     ],
     'user' => [
@@ -37,9 +37,9 @@ return [
             'description' => 'Description',
             'status' => 'Status',
             'info' => 'Info',
-            'email'=>'Email',
-            'avatar'=>'Avatar',
-            'password'=>'Password'
+            'email' => 'Email',
+            'avatar' => 'Avatar',
+            'password' => 'Password'
         ],
         'message' => [
             'unactivated' => 'UnActivated'
@@ -69,7 +69,7 @@ return [
             'name' => 'Name',
             'slug' => 'slug',
             'group' => 'group',
-            
+
         ],
         'message' => [
             'unactivated' => 'UnActivated'
@@ -83,5 +83,15 @@ return [
     ],
     'schedule_history' => [
         'title' => 'Schedule history managment'
+    ],
+    'datalist' => [
+        'title' => 'Data List',
+        'field' => [
+            'key' => 'Key',
+            'title' => 'Title',
+            'content' => 'Content',
+            'status' => 'Status',
+            'item_default' => 'Item Default',
+        ],
     ]
 ];

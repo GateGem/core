@@ -40,6 +40,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static \GateGem\Core\Models\User user()
  * @method static bool checkPermission(string $per)
  * @method static void Livewire($name, $params = [])
+ * @method static void mereArr($arr1=[],$arr2=[])
+ * @method static mixed getLinks()
+ *  
  * 
  * 
  * @see \GateGem\Core\Facades\Core

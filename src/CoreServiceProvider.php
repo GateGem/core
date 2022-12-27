@@ -60,12 +60,12 @@ class CoreServiceProvider extends ServiceProvider
             return $prev . (session('admin_sidebar_mini') ? ' is-sidebar-mini ' : '');
         });
         add_filter('language_list', function ($prev) {
-            return [
-                ...$prev,
+
+            return Core::mereArr($prev, [
                 'en' => 'us',
                 'vi' => 'vn',
                 'jp' => 'jp'
-            ];
+            ]);
         });
         add_filter('core_auth_filter_gate', function ($prev, $user, $permission) {
             if ($permission->slug == 'core.option') {

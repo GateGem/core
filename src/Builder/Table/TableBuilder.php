@@ -4,6 +4,7 @@ namespace GateGem\Core\Builder\Table;
 
 use GateGem\Core\Builder\HtmlBuilder;
 use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Support\Config\ConfigManager;
 use GateGem\Core\Support\Config\FieldConfig;
 
@@ -27,7 +28,7 @@ class TableBuilder extends HtmlBuilder
         if (isset($column[FieldConfig::FUNC_CELL])) {
             echo $column[FieldConfig::FUNC_CELL]($row[$column[FieldConfig::FIELD]], $row, $column);
         } else if (isset($this->option['tableInline']) && $this->option['tableInline'] == true) {
-            echo FieldRender([...$column, 'prex' => 'tables.' . $key . '.']);
+            echo FieldRender(Core::mereArr($column, ['prex' => 'tables.' . $key . '.']));
         } else if (isset($column[FieldConfig::FIELD])) {
             $cell_value = isset($row[$column[FieldConfig::FIELD]]) ? $row[$column[FieldConfig::FIELD]] : null;
             $funcData =  $column->getDataCache();

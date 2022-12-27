@@ -45,10 +45,10 @@ trait WithServiceProvider
             $name = $this->package->name;
             $path = $this->package->basePath('');
             add_filter('service_provider_register', function ($prev) use ($name, $path) {
-                return [
-                    ...$prev,
+
+                return Core::mereArr($prev, [
                     $name => $path
-                ];
+                ]);
             });
         }
 
@@ -57,7 +57,7 @@ trait WithServiceProvider
         }
 
         Theme::Load($this->package->basePath('/../themes'));
-        DashboardLoader::load($this->package->basePath('/../config/dashboards'), $this->package->shortName().'::');
+        DashboardLoader::load($this->package->basePath('/../config/dashboards'), $this->package->shortName() . '::');
         TableLoader::load($this->package->basePath('/../config/tables'));
         OptionLoader::load($this->package->basePath('/../config/options'));
         $this->packageRegistered();

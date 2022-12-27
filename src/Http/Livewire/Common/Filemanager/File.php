@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Http\Livewire\Common\Filemanager;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Livewire\Component;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -13,12 +14,10 @@ class File extends Component
     public $files = [];
     protected function getListeners()
     {
-        $listeners = parent::getListeners();
-        return [
-            ...$listeners,
+        return Core::mereArr(parent::getListeners(), [
             'selectPath' => 'eventSelectPath',
             'uploadFile' => 'eventUploadFile'
-        ];
+        ]);
     }
     public function eventSelectPath($path, $local)
     {
@@ -33,11 +32,12 @@ class File extends Component
     public function refreshFolder()
     {
         $this->files = collect(Storage::disk($this->disk)->files($this->path_current))->map(function ($pathFile) {
-            $files = get_file_info(Storage::disk($this->disk)->path($pathFile));
-            return [
-                ...$files,
-                'url' => Storage::disk($this->disk)->url($pathFile)
-            ];
+            return Core::mereArr(
+                get_file_info(Storage::disk($this->disk)->path($pathFile)),
+                [
+                    'url' => Storage::disk($this->disk)->url($pathFile)
+                ]
+            );
         })->toArray();
     }
     public function mount()

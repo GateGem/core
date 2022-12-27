@@ -42,7 +42,6 @@ class Role extends Modal
                     'show' => true,
                     'isChild' => true
                 ],
-
                 ...Permission::all()->map(function ($item) {
                     return [
                         'key' => $item->slug,

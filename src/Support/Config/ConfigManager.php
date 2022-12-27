@@ -2,6 +2,9 @@
 
 namespace GateGem\Core\Support\Config;
 
+use GateGem\Core\Builder\Form\FieldBuilder;
+use GateGem\Core\Facades\Core;
+
 /**
  * 
  * @method  \GateGem\Core\Support\Config\ConfigManager Disable()
@@ -187,9 +190,9 @@ class ConfigManager  extends BaseConfig
     {
         return (new FieldConfig())->setField($field);
     }
-    public function FieldStatus($field = 'status',$model='user'): FieldConfig
+    public function FieldStatus($field = 'status', $model = 'user'): FieldConfig
     {
-       return GateConfig::Field($field)
+        return $this->Field($field)
             ->setDataDefault(1)
             ->setFuncData(function () {
                 return collect([0, 1])->map(function ($item) {
@@ -199,17 +202,17 @@ class ConfigManager  extends BaseConfig
                     ];
                 });
             })
-            ->setFuncCell(function ($value, $row, $column) use($model,$field){
-                if (Core::checkPermission('core.'.$model.'.change-status')) {
+            ->setFuncCell(function ($value, $row, $column) use ($model, $field) {
+                if (Core::checkPermission('core.' . $model . '.change-status')) {
                     if ($value == 1) {
-                        return  GateConfig::Button('core::enums.status.1')
+                        return  $this->Button('core::enums.status.1')
                             ->setClass('btn btn-primary btn-sm text-nowrap')
-                            ->setDoChangeField("{'id':" . $row['id'] . ",'field':'".$field."','value':0,'key':'id'}")
+                            ->setDoChangeField("{'id':" . $row['id'] . ",'field':'" . $field . "','value':0,'key':'id'}")
                             ->toHtml();
                     }
-                    return  GateConfig::Button('core::enums.status.0')
+                    return $this->Button('core::enums.status.0')
                         ->setClass('btn btn-warning btn-sm text-nowrap')
-                        ->setDoChangeField("{'id':" . $row['id'] . ",'field':'".$field."','value':1,'key':'id'}")
+                        ->setDoChangeField("{'id':" . $row['id'] . ",'field':'" . $field . "','value':1,'key':'id'}")
                         ->toHtml();
                 }
                 if ($value == 1) {
@@ -218,7 +221,7 @@ class ConfigManager  extends BaseConfig
                 return __('core::enums.status.0');
             })
             ->setTitle('core::tables.user.field.status')
-            ->setType(FieldBuilder::Dropdown)
+            ->setType(FieldBuilder::Dropdown);
     }
     public function Form(): FormConfig
     {

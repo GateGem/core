@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Http\Livewire\Common\Filemanager;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Livewire\Component;
 use Illuminate\Support\Facades\Storage;
@@ -11,10 +12,9 @@ class Folder extends Component
 {
     protected function getListeners()
     {
-        return [
-            ...parent::getListeners(),
+        return Core::mereArr(parent::getListeners(), [
             'createFolder' => 'eventCreateFolder'
-        ];
+        ]);
     }
     public function eventCreateFolder($name)
     {
@@ -29,10 +29,8 @@ class Folder extends Component
     {
         $this->path_current = $path;
         $this->folders = collect($this->folders)->map(function ($item) {
-            return [
-                ...$item,
-                'isActive' => $item['value'] == $this->path_current ? 1 : 0
-            ];
+
+            return Core::mereArr($item, ['isActive' => $item['value'] == $this->path_current ? 1 : 0]);
         })->toArray();
         $this->emitTo('core::common.filemanager', 'selectPath', $this->path_current, $this->disk);
         $this->emitTo('core::common.filemanager.file', 'selectPath', $this->path_current, $this->disk);
@@ -100,11 +98,11 @@ class Folder extends Component
         }
         $this->folders = collect($this->folders)->map(function ($item) use ($value, $show) {
             if ($value == $item['value']) {
-                return [
-                    ...$item,
+
+                return Core::mereArr($item, [
                     'show' => $show,
-                    'isChild' => $this->checkChildInFolder($item['value']),
-                ];
+                    'isChild' => $this->checkChildInFolder($item['value'])
+                ]);
             }
             return $item;
         })->toArray();
@@ -132,7 +130,7 @@ class Folder extends Component
             ->setKeyData('skipTop', true)
             ->setKeyData('selectEvent', 'SelectPath')
             ->setKeyData('itemAttr', ' x-on:click="fileSelect = null" ')
-            ->DoFuncData(null,null);
+            ->DoFuncData(null, null);
     }
     public function render()
     {

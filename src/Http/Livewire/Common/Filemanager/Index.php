@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Http\Livewire\Common\Filemanager;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Livewire\Modal;
 
 class Index extends Modal
@@ -10,11 +11,9 @@ class Index extends Modal
     public $path_current;
     protected function getListeners()
     {
-        $listeners = parent::getListeners();
-        return [
-            ...$listeners,
+        return Core::mereArr(parent::getListeners(), [
             'selectPath' => 'eventSelectPath',
-        ];
+        ]);
     }
     public function eventSelectPath($path, $local)
     {
@@ -24,7 +23,7 @@ class Index extends Modal
     public function mount()
     {
         $this->setTitle("File Manager");
-        $this->modal_size=Modal::FullscreenXL;
+        $this->modal_size = Modal::FullscreenXL;
     }
     public function render()
     {

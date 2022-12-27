@@ -300,23 +300,19 @@ class CoreManager
             return $this->filesystem->directories($directory);
         }
     }
+    public function getLinks()
+    {
+        return $this->arrLink;
+    }
+    private $arrLink = [];
     public function Link($target, $link, $relative = false, $force = true)
     {
-        if (file_exists($link) && is_link($link) && $force) {
-
-            return;
-        }
-
-        self::checkFolder();
-        if (is_link($link)) {
-            $this->filesystem->delete($link);
-        }
-
-        if ($relative) {
-            $this->filesystem->relativeLink($target, $link);
-        } else {
-            $this->filesystem->link($target, $link);
-        }
+        $this->arrLink[$target . $link] = [
+            'target' => $target,
+            'link' => $link,
+            'relative' => $relative,
+            'force' => $force
+        ];
     }
     public function getPathDirFromClass($class)
     {
@@ -356,5 +352,17 @@ class CoreManager
     public function registerWidget($path)
     {
         $this->widgets[$path] = $path;
+    }
+    public function mereArr($arr1, $arr2)
+    {
+        if ($arr1 == null) $arr1 = [];
+
+        if (is_array($arr2)) {
+            foreach (array_keys($arr2) as $key) {
+                $arr1[$key] = $arr2[$key];
+            }
+        }
+
+        return $arr1;
     }
 }

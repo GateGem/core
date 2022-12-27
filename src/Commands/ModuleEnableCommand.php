@@ -55,12 +55,9 @@ class ModuleEnableCommand extends Command
      */
     public function enableAll()
     {
-        /** @var Modules $modules */
-        $modules = $this->laravel['modules']->all();
-
-        foreach ($modules as $module) {
-            if ($module->isDisabled()) {
-                $module->enable();
+        foreach (Module::getData() as $module) {
+            if (!$module->isActive()) {
+                $module->Active();
 
                 $this->info("Module [{$module}] enabled successful.");
             } else {

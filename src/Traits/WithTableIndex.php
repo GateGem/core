@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Traits;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\GateConfig;
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Loader\TableLoader;
@@ -33,11 +34,10 @@ trait WithTableIndex
 
     protected function getListeners()
     {
-        return [
-            ...parent::getListeners(),
+        return Core::mereArr(parent::getListeners(), [
             'refreshData' . $this->module => '__loadData',
             'EventTableUpdate' => 'EventTableUpdate'
-        ];
+        ]);
     }
     protected $paginationTheme = 'bootstrap';
     protected $isCheckDisableModule = true;
