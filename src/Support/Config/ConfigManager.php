@@ -93,7 +93,7 @@ class ConfigManager  extends BaseConfig
     {
         return $this->setKeyData(self::FUNC_QUERY, $value);
     }
-    public function setFuncData(callable| array $value): self
+    public function setFuncData($value): self
     {
         return $this->setKeyData(self::FUNC_DATA, $value);
     }
@@ -186,6 +186,39 @@ class ConfigManager  extends BaseConfig
     public function Field($field = ''): FieldConfig
     {
         return (new FieldConfig())->setField($field);
+    }
+    public function FieldStatus($field = 'status',$model='user'): FieldConfig
+    {
+       return GateConfig::Field($field)
+            ->setDataDefault(1)
+            ->setFuncData(function () {
+                return collect([0, 1])->map(function ($item) {
+                    return [
+                        'id' => $item,
+                        'name' => __('core::enums.status.' . $item)
+                    ];
+                });
+            })
+            ->setFuncCell(function ($value, $row, $column) use($model,$field){
+                if (Core::checkPermission('core.'.$model.'.change-status')) {
+                    if ($value == 1) {
+                        return  GateConfig::Button('core::enums.status.1')
+                            ->setClass('btn btn-primary btn-sm text-nowrap')
+                            ->setDoChangeField("{'id':" . $row['id'] . ",'field':'".$field."','value':0,'key':'id'}")
+                            ->toHtml();
+                    }
+                    return  GateConfig::Button('core::enums.status.0')
+                        ->setClass('btn btn-warning btn-sm text-nowrap')
+                        ->setDoChangeField("{'id':" . $row['id'] . ",'field':'".$field."','value':1,'key':'id'}")
+                        ->toHtml();
+                }
+                if ($value == 1) {
+                    return __('core::enums.status.1');
+                }
+                return __('core::enums.status.0');
+            })
+            ->setTitle('core::tables.user.field.status')
+            ->setType(FieldBuilder::Dropdown)
     }
     public function Form(): FormConfig
     {
