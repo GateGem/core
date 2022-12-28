@@ -69,7 +69,7 @@ trait WithTableIndex
             $this->filter = [];
         }
     }
-    public function getOptionProperty(): ConfigManager
+    public function getOptionProperty(): ConfigManager| null
     {
         if (is_null($this->option_temp)) {
             if (method_exists($this, "getOption")) {
@@ -77,11 +77,14 @@ trait WithTableIndex
             } else {
                 $option = TableLoader::getDataByKey($this->module);
             }
-            if (!isset($option[ConfigManager::FIELDS])) $option[ConfigManager::FIELDS] = [];
+            if ($option == null || !is_a($option, ConfigManager::class)) {
+                return null;
+            }
+
             $option = apply_filters('filter_table_option_' . $this->module, $option);
             $this->option_temp = $option;
 
-            $this->viewEdit = getValueByKey($option, ConfigManager::FORM . '.' . FormConfig::FORM_EDIT, 'core::table.edit');
+            $this->viewEdit = getValueByKey($option, FormConfig::FORM_EDIT, 'core::table.edit');
             if ($option) {
                 $option[ConfigManager::FIELDS][] = GateConfig::Field('')
                     ->setTitle(getValueByKey($option, ConfigManager::ACTION_TITLE, '#'))
@@ -151,9 +154,11 @@ trait WithTableIndex
     {
         if (!$module) return abort(404);
         $this->module = $module;
+
         $this->_code_permission = 'core.' . $this->module;
         if (!$this->checkPermissionView())
             return abort(403);
+        if ($this->option == null) return abort(404);
         $this->LoadData();
     }
     public function getModel()
