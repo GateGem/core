@@ -83,19 +83,25 @@ class CoreServiceProvider extends ServiceProvider
     }
     public function registerMenu()
     {
+
         add_menu_with_sub(function ($subItem) {
             $subItem
                 ->addItem('core::menu.sidebar.user', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'user']], MenuBuilder::ItemRouter)
                 ->addItem('core::menu.sidebar.role', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'role']], MenuBuilder::ItemRouter)
                 ->addItem('core::menu.sidebar.permission', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'permission']], MenuBuilder::ItemRouter);
         }, 'core::menu.sidebar.user',  'bi bi-speedometer');
+
+        add_menu_with_sub(function ($subItem) {
+            $subItem
+                ->addItem('core::menu.sidebar.data-list', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'data_list']], MenuBuilder::ItemRouter)
+                ->addItem('core::menu.sidebar.custom-field', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'custom_field']], MenuBuilder::ItemRouter);
+        }, 'core::menu.sidebar.data-extend',  'bi bi-speedometer');
         add_menu_with_sub(function ($subItem) {
             $subItem->addItem('core::menu.sidebar.setting', 'bi bi-speedometer', '', ['name' => 'core.option', 'param' => []], MenuBuilder::ItemRouter)
                 ->addItem('core::menu.sidebar.module', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'module']], MenuBuilder::ItemRouter)
                 ->addItem('core::menu.sidebar.plugin', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'plugin']], MenuBuilder::ItemRouter)
                 ->addItem('core::menu.sidebar.theme', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'theme']], MenuBuilder::ItemRouter);
         }, 'core::menu.sidebar.setting', 'bi bi-speedometer');
-
         add_menu_item('core::menu.sidebar.dashboard', 'bi bi-speedometer', '', 'core.dashboard', MenuBuilder::ItemRouter, '', '', -100);
     }
     protected function registerBladeDirectives()

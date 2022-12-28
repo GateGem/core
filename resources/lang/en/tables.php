@@ -84,7 +84,7 @@ return [
     'schedule_history' => [
         'title' => 'Schedule history managment'
     ],
-    'datalist' => [
+    'data_list' => [
         'title' => 'Data List',
         'field' => [
             'key' => 'Key',
@@ -93,5 +93,8 @@ return [
             'status' => 'Status',
             'item_default' => 'Item Default',
         ],
+        'button' => [
+            'list' => 'Item List'
+        ]
     ]
 ];

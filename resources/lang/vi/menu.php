@@ -7,7 +7,9 @@ return [
         "setting" => "Cấu hình",
         "user" => "Tài khoản",
         "role" => "Vai trò",
-        "permission" =>
-        "Quyền"
+        "permission" => "Quyền",
+        'data-extend' => 'Dữ liệu mở rộng',
+        'data-list'=>'Danh sách',
+        'custom-field'=>'Trường dữ liệu'
     ]
 ];

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->integer('group_id');
             $table->string('key');
-            $table->string('title'); 
+            $table->string('title');
             $table->string('format')->nullable();
             $table->string('list_key')->nullable();
             $table->json('list_data')->nullable();

@@ -10,6 +10,9 @@ return [
         "permission" => "Permission",
         'plugin' => 'Plugin',
         'theme' => 'Theme',
-        'module' => 'Module'
+        'module' => 'Module',
+        'data-extend'=>'Data Extend',
+        'data-list'=>'Data List',
+        'custom-field'=>'Custom Field'
     ]
 ];

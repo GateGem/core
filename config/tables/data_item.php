@@ -6,7 +6,10 @@ use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Support\Config\ButtonConfig;
 
 return GateConfig::NewItem()
-    ->setModel(\GateGem\Core\Models\Role::class)
+    ->setModel(\GateGem\Core\Models\DataItem::class)
+    ->setFuncQuery(function ($query) {
+        return $query;
+    })
     ->setButtonAppend([
         GateConfig::Button('core::tables.role.button.permission')
             ->setIcon('<i class="bi bi-magic"></i>')
@@ -17,7 +20,7 @@ return GateConfig::NewItem()
             })
             ->setType(ButtonConfig::TYPE_UPDATE)
     ])
-    ->setForm(GateConfig::Form()->setSize(Modal::Large))
+    ->setForm(GateConfig::Form()->setSize(Modal::ExtraLarge))
     ->setFields([
         GateConfig::Field('slug')
             ->setTitle('core::tables.role.field.slug')

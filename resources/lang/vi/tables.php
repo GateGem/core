@@ -23,5 +23,18 @@ return [
     ],
     'schedule_history' => [
         'title' => 'Quản lý lịch sử schedule'
+    ],
+    'data_list' => [
+        'title' => 'Mở rộng danh sách',
+        'field' => [
+            'key' => 'Key',
+            'title' => 'Title',
+            'content' => 'Content',
+            'status' => 'Status',
+            'item_default' => 'Item Default',
+        ],
+        'button' => [
+            'list' => 'Danh sách phần tử'
+        ]
     ]
 ];
