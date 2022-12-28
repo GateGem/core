@@ -14,6 +14,7 @@ use GateGem\Core\Facades\Plugin;
 use GateGem\Core\TagCompiler\LivewireGTagCompiler;
 use GateGem\Core\TagCompiler\WidgetTagCompiler;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Livewire\Livewire;
 
 class CoreServiceProvider extends ServiceProvider
@@ -168,7 +169,7 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->registerTagCompiler();
 
-        add_link_symbolic(__DIR__ . '/../public', public_path('modules/gate-core'));
+        add_link_symbolic($this->package->basePath('/../public'), public_path('modules/gate-core'));
         add_asset_js(asset('modules/gate-core/js/gate-core.js'), '', 0);
         add_asset_css(asset('modules/gate-core/css/gate-core.css'), '',  0);
         add_asset_css('https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css', 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css',  0);
