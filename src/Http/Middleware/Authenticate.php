@@ -13,6 +13,9 @@ class Authenticate extends Middleware
         $response = parent::handle($request, $next, ...$guards);
         // Like: users.index
         $route = $request->route()->getName();
+        if ($route == 'core.table.slug') {
+            $route = 'core.' . $request->route('module');
+        }
         // Hasn't permission
         if (!Core::checkPermission($route)) {
             return abort(403);
