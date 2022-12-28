@@ -190,7 +190,7 @@ class ConfigManager  extends BaseConfig
     {
         return (new FieldConfig())->setField($field);
     }
-    public function FieldStatus($field = 'status', $model = 'user'): FieldConfig
+    public function FieldStatus($field = 'status', $model = 'user', $modelKey = 'id'): FieldConfig
     {
         return $this->Field($field)
             ->setDataDefault(1)
@@ -202,17 +202,17 @@ class ConfigManager  extends BaseConfig
                     ];
                 });
             })
-            ->setFuncCell(function ($value, $row, $column) use ($model, $field) {
+            ->setFuncCell(function ($value, $row, $column) use ($model, $field, $modelKey) {
                 if (Core::checkPermission('core.' . $model . '.change-status')) {
                     if ($value == 1) {
                         return  $this->Button('core::enums.status.1')
                             ->setClass('btn btn-primary btn-sm text-nowrap')
-                            ->setDoChangeField("{'id':" . $row['id'] . ",'field':'" . $field . "','value':0,'key':'id'}")
+                            ->setDoChangeField("{'id':'" . $row[$modelKey] . "','field':'" . $field . "','value':0,'key':'" . $modelKey . "'}")
                             ->toHtml();
                     }
                     return $this->Button('core::enums.status.0')
                         ->setClass('btn btn-warning btn-sm text-nowrap')
-                        ->setDoChangeField("{'id':" . $row['id'] . ",'field':'" . $field . "','value':1,'key':'id'}")
+                        ->setDoChangeField("{'id':'" . $row[$modelKey] . "','field':'" . $field . "','value':1,'key':'" . $modelKey . "'}")
                         ->toHtml();
                 }
                 if ($value == 1) {

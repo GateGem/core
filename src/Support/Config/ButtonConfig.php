@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Support\Config;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Http\Action\ChangeFieldValue;
 
 /**
@@ -108,7 +109,7 @@ class ButtonConfig  extends BaseConfig
                     $attr = "wire:click=\"{$_action}($_param)\"";
                     break;
                 case self::BUTTON_DO_ACTION:
-                    $attr = "wire:click=\"DoAction('" . base64_encode(urlencode($_action)) . "','" . base64_encode(urlencode($_param))  . "')\"";
+                    $attr = "wire:click=\"DoAction('" . (Core::base64Encode($_action)) . "','" . (Core::base64Encode($_param))  . "')\"";
                     break;
                 case self::BUTTON_DO_COMPONENT:
                     $attr = "wire:component=\"{$_action}($_param)\"";

@@ -23,7 +23,7 @@ trait WithDataLoader
     public static function Data($key, $config)
     {
         if (is_null(self::$datas) || !is_array(self::$datas))   self::$datas = [];
-        if (method_exists($config, 'setKey'))
+        if (is_object($config) && method_exists($config, 'setKey'))
             $config->setKey($key);
         self::$datas[$key] = $config;
     }

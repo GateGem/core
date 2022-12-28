@@ -37,6 +37,12 @@ trait WithSystemExtend
     {
         return public_path($this->getName() . 's');
     }
+    public function ResetData()
+    {
+        $this->arrData = collect($this->arrData)->where(function ($item) {
+            return $item->isVendor();
+        })->toBase();
+    }
     public function LoadApp()
     {
         $this->Load(apply_filters($this->HookFilterPath(), $this->PathFolder()));

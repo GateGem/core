@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use GateGem\Core\Facades\Core;
 use GateGem\Core\Loader\DashboardLoader;
 use GateGem\Core\Loader\LivewireLoader;
+use Illuminate\Support\Facades\Artisan;
 
 class DataInfo implements \ArrayAccess
 {
@@ -204,12 +205,18 @@ class DataInfo implements \ArrayAccess
     {
         return get_option($this->getKeyOption('status'));
     }
+    public function isVendor()
+    {
+        return !str_starts_with($this->getPath(), config('core.appdir.root', 'GateApp'));
+    }
     public function setStatusData($value)
     {
         if ($value == self::Active && !$this->checkDump()) {
             $this->Dump();
         }
-        return set_option($this->getKeyOption('status'), $value);
+        $flg = set_option($this->getKeyOption('status'), $value);
+        Core::reModuleLink();
+        return $flg;
     }
     public function isActive()
     {
@@ -282,11 +289,11 @@ class DataInfo implements \ArrayAccess
             Core::loadViewsFrom($this->getPath('resources/views'), $namespace);
             switch ($this->base_type) {
                 case 'theme':
-                    DashboardLoader::load($this->getPath('config/dashboards'),'theme_');
+                    DashboardLoader::load($this->getPath('config/dashboards'), 'theme_');
                     LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', 'theme::');
                     break;
                 case 'plugin':
-                    DashboardLoader::load($this->getPath('config/dashboards'),'plugin_'.$this->getLowerName().'_');
+                    DashboardLoader::load($this->getPath('config/dashboards'), 'plugin_' . $this->getLowerName() . '_');
                     LivewireLoader::RegisterWidget($this->getPath('widgets'), $this->getNamespaceInfo() . '\\Widget', 'plugin-' . $this->getLowerName() . '::');
                     break;
                 default:

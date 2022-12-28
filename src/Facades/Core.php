@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static void RegisterAllFile(string $path)
  * @method static void minifyOptimizeHtml(string $buffer)
  * @method static mixed By(string $name)
- * @method static string checkFolder()
+ * @method static string checkFolder($remove=false)
  * @method static bool FileExists(string $path)
  * @method static bool SaveFileJson(string $path,string $content)
  * @method static string FileJson(string $path)
@@ -42,7 +42,11 @@ use Illuminate\Support\Facades\Facade;
  * @method static void Livewire($name, $params = [])
  * @method static void mereArr($arr1=[],$arr2=[])
  * @method static mixed getLinks()
- *  
+ * @method static void resetLinks()
+ * @method static void UnLockLink();
+ * @method static string base64Encode(string $text)
+ * @method static string base64Decode(string $hash)
+ * @method static string jsonDecode(string $hash)
  * 
  * 
  * @see \GateGem\Core\Facades\Core

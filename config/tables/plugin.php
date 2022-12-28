@@ -30,6 +30,6 @@ return GateConfig::NewItem()
         GateConfig::Field('name')->setTitle('core::tables.plugin.field.name')->setType(FieldBuilder::Text)->setKeyLayout('row1_1'),
         GateConfig::Field('key')->setTitle('core::tables.plugin.field.key')->setType(FieldBuilder::Text)->setKeyLayout('row1_2'),
         GateConfig::Field('description')->setTitle('core::tables.plugin.field.description')->setType(FieldBuilder::Text)->setKeyLayout('row1_1'),
-        GateConfig::FieldStatus('status', 'plugin')
+        GateConfig::FieldStatus('status', 'plugin','key')
             ->setKeyLayout('row1_1'),
     ]);

@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Traits;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Facades\Theme;
 use Illuminate\Support\Facades\Log;
 
@@ -29,11 +30,12 @@ trait WithDoAction
     }
     public function JsonParam64($param)
     {
-        return  $this->JsonParam(base64_decode($param));
+        return  $this->JsonParam(Core::base64Decode($param));
     }
     public function DoAction($action, $param)
     {
-        $this->__Params = $this->JsonParam64($param);
-        return  app(urldecode(base64_decode($action)))->SetComponent($this)->SetParam($this->__Params)->DoAction();
+        $this->__Params = Core::jsonDecode(Core::base64Decode($param));
+        $action = Core::base64Decode($action);
+        return  app($action)->SetComponent($this)->SetParam($this->__Params)->DoAction();
     }
 }

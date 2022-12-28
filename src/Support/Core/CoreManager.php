@@ -13,9 +13,11 @@ use Symfony\Component\Finder\SplFileInfo;
 use GateGem\Core\Facades\Module;
 use GateGem\Core\Facades\Plugin;
 use GateGem\Core\Facades\Theme;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
 use Livewire\LifecycleManager;
 use ReflectionClass;
+use Symfony\Component\Process\Process;
 
 class CoreManager
 {
@@ -216,13 +218,16 @@ class CoreManager
             return Plugin::getFacadeRoot();
         }
     }
-    public function checkFolder()
+    public function checkFolder($remove = false)
     {
-        $arr = [config('core.appdir.theme', 'Themes'), config('core.appdir.module', 'Modules'), config('core.appdir.plugin', 'Plugins')];
+        $arr = [config('core.appdir.theme', 'themes'), config('core.appdir.module', 'modules'), config('core.appdir.plugin', 'plugins')];
         $root_path = config('core.appdir.root', 'GateApp');
         foreach ($arr as $item) {
             $public = Str::lower(public_path($item));
             $appdir = Str::lower(base_path($root_path . '/' . $item));
+            if ($remove) {
+                $this->filesystem->deleteDirectory($public);
+            }
             $this->filesystem->ensureDirectoryExists($public);
             $this->filesystem->ensureDirectoryExists($appdir);
         }
@@ -300,9 +305,20 @@ class CoreManager
             return $this->filesystem->directories($directory);
         }
     }
+    public function resetLinks()
+    {
+        return $this->arrLink = collect($this->arrLink)->where(function ($item) {
+            return $item['lockLink'] == true;
+        })->toArray();
+    }
     public function getLinks()
     {
         return $this->arrLink;
+    }
+    private $lockLink = true;
+    public function UnLockLink()
+    {
+        $this->lockLink = false;
     }
     private $arrLink = [];
     public function Link($target, $link, $relative = false, $force = true)
@@ -311,7 +327,8 @@ class CoreManager
             'target' => $target,
             'link' => $link,
             'relative' => $relative,
-            'force' => $force
+            'force' => $force,
+            'lockLink' => $this->lockLink
         ];
     }
     public function getPathDirFromClass($class)
@@ -364,5 +381,24 @@ class CoreManager
         }
 
         return $arr1;
+    }
+    public function base64Encode($text)
+    {
+        return base64_encode(urlencode($text));
+    }
+    public function base64Decode($hash)
+    {
+        return urldecode(base64_decode($hash));
+    }
+    public function jsonDecode($hash)
+    {
+        return json_decode(str_replace("'", '"', str_replace('"', "\\\"", $hash)), true);
+    }
+    public function reModuleLink()
+    {
+
+        Artisan::call('module:link', ['--reload' => 1]);
+        // $process = new Process(["php artisan module:link"]);
+        // $process->start();
     }
 }

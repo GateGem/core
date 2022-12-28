@@ -173,7 +173,7 @@ class CoreServiceProvider extends ServiceProvider
         add_asset_js(asset('modules/gate-core/js/gate-core.js'), '', 0);
         add_asset_css(asset('modules/gate-core/css/gate-core.css'), '',  0);
         add_asset_css('https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css', 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css',  0);
-
+        Core::UnLockLink();
         Module::RegisterApp();
         Plugin::RegisterApp();
         Livewire::component("gate-layout", \GateGem\Core\Http\Livewire\Common\Layout\Index::class);

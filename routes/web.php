@@ -23,3 +23,6 @@ Route::group(['prefix' => 'gategem'], function () {
 Route::get(apply_filters('route_page_login_url', 'auth/login'), apply_filters('route_page_login_component', GateGem\Core\Http\Livewire\Page\Auth\Login::class))->name('core.login');
 Route::get(apply_filters('route_page_register_url', 'auth/register'), apply_filters('route_page_register_component', GateGem\Core\Http\Livewire\Page\Auth\Register::class))->name('core.register');
 Route::get(apply_filters('route_page_forgot_password_url', 'auth/forgot-password'), apply_filters('route_page_forgot_password_component', GateGem\Core\Http\Livewire\Page\Auth\ForgotPssword::class))->name('core.forgot_password');
+Route::get('test',function(){
+    return Core::getLinks();
+});

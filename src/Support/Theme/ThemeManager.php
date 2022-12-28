@@ -2,9 +2,11 @@
 
 namespace GateGem\Core\Support\Theme;
 
+use GateGem\Core\Facades\Core;
 use GateGem\Core\Support\Core\Assets;
 use GateGem\Core\Support\Core\DataInfo;
 use GateGem\Core\Traits\WithSystemExtend;
+use Illuminate\Support\Facades\Artisan;
 
 class ThemeManager
 {
@@ -64,11 +66,11 @@ class ThemeManager
     public function setStatusData($theme, $value)
     {
         if (isset($theme['admin']) && $theme['admin'] == 1) {
-
             set_option('page_admin_theme', $theme->getKey());
         } else {
             set_option('page_site_theme', $theme->getKey());
         }
+        Core::reModuleLink();
     }
     public function Layout($layout = '')
     {

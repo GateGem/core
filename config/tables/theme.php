@@ -40,6 +40,6 @@ return GateConfig::NewItem()
                 }
                 return 'Site';
             }),
-        GateConfig::FieldStatus('status', 'theme')
+        GateConfig::FieldStatus('status', 'theme','key')
             ->setKeyLayout('row1_1'),
     ]);
