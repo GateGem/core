@@ -43,9 +43,9 @@ class ModuleLinkCommand extends Command
     {
         $this->components->info('Generating optimized symbolic links.');
         Core::checkFolder(true);
-        $force = $this->option('force');
-        $relative = $this->option('relative');
-        $reload = $this->option('reload');
+        $force = $this->option('force') || true;
+        $relative = $this->option('relative') || false;
+        $reload = $this->option('reload') || false;
         if ($reload) {
             Core::resetLinks();
             Theme::ResetData();
@@ -72,7 +72,7 @@ class ModuleLinkCommand extends Command
         ]) {
             try {
                 $link = ($link);
-                $target = (realpath($target));
+                $target = (($target));
                 $this->components->info("The [$link] link has been connected to [$target].");
                 if (file_exists($link) && !$this->isRemovableSymlink($link, $force)) {
                     $this->components->error("The [$link] link already exists.");

@@ -6,7 +6,7 @@ let switchSidebar = () => {
     document.body.classList.add("is-sidebar-mini");
   }
   let csrfToken = getCsrfToken();
-  fetch(`${web_base_url}lara/switchSidebar`, {
+  fetch(`${web_base_url}gategem/switchSidebar`, {
     method: "POST",
     credentials: "same-origin",
     body: JSON.stringify({}),
