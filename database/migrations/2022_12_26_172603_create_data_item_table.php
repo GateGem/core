@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('link')->nullable();
             $table->string('image')->nullable();
+            $table->string('value')->nullable();
             $table->mediumText('content_short')->nullable();
             $table->longText('content')->nullable();
             $table->boolean('status')->nullable();

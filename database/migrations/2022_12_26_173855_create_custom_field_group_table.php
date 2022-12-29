@@ -17,10 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('key');
             $table->string('title');
-            $table->string('module_key')->nullable();
-            $table->string('model_key')->nullable();
-            $table->string('page_key')->nullable();
-            $table->string('data_key')->nullable();
             $table->boolean('status')->nullable();
             $table->integer('sort')->default(0);
             $table->timestamps();

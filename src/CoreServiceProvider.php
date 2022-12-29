@@ -94,7 +94,7 @@ class CoreServiceProvider extends ServiceProvider
         add_menu_with_sub(function ($subItem) {
             $subItem
                 ->addItem('core::menu.sidebar.data-list', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'data_list']], MenuBuilder::ItemRouter)
-                ->addItem('core::menu.sidebar.custom-field', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'custom_field']], MenuBuilder::ItemRouter);
+                ->addItem('core::menu.sidebar.custom-field', 'bi bi-speedometer', '', ['name' => 'core.table.slug', 'param' => ['module' => 'custom_field_group']], MenuBuilder::ItemRouter);
         }, 'core::menu.sidebar.data-extend',  'bi bi-speedometer');
         add_menu_with_sub(function ($subItem) {
             $subItem->addItem('core::menu.sidebar.setting', 'bi bi-speedometer', '', ['name' => 'core.option', 'param' => []], MenuBuilder::ItemRouter)

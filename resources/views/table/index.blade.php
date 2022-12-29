@@ -12,11 +12,11 @@
         <div class="mb-2 d-flex flex-row">
             <div style="flex:auto">
                 @if ($checkAdd === true)
-                    {!! \GateGem\Core\Facades\GateConfig::Button('core::table.button.add')->setClass('btn btn-primary btn-sm')->setDoComponent($viewEdit, '{\'module\':\'' . $module . '\'}')->setIcon('<i class="bi bi-plus-square"></i>')->toHtml() !!}
+                    {!! \GateGem\Core\Facades\GateConfig::Button('core::table.button.add')->setClass('btn btn-primary btn-sm')->setDoComponent($viewEdit, '{\'module\':\'' . $module . '\'' . $paraText . '}')->setIcon('<i class="bi bi-plus-square"></i>')->toHtml() !!}
                 @endif
                 @foreach ($option->getButtonAppend([]) as $button)
                     @if ($button->checkType(\GateGem\Core\Support\Config\ButtonConfig::TYPE_ADD))
-                        {!! call_user_func([$button,'toHtml'],$module) !!}
+                        {!! call_user_func([$button, 'toHtml'], $module, $paraText) !!}
                     @endif
                 @endforeach
                 {!! apply_filters('module_action_left', '', $this) !!}

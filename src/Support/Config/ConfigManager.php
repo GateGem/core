@@ -27,6 +27,8 @@ class ConfigManager  extends BaseConfig
     public const FUNC_DATA = "FUNC_DATA";
     public const FUNC_FILTER = "FUNC_FILTER";
     public const FUNC_ROW = "FUNC_ROW";
+    public const FUNC_DATA_CHANGE_EVENT = "FUNC_DATA_CHANGE_EVENT";
+    public const FUNC_EXTEND_PARAM = "FUNC_EXTEND_PARAM";
     public const MODEL_KEY = "MODEL_KEY";
     public const MODEL = "MODEL";
     public const FORM = "FORM";
@@ -88,6 +90,14 @@ class ConfigManager  extends BaseConfig
     {
         return $this->getSort(true) == true;
     }
+    public function setFuncExtendParam(callable $value): self
+    {
+        return $this->setKeyData(self::FUNC_EXTEND_PARAM, $value);
+    }
+    public function setFuncDataChangeEvent(callable $value): self
+    {
+        return $this->setKeyData(self::FUNC_DATA_CHANGE_EVENT, $value);
+    }
     public function setFuncFilter(callable $value): self
     {
         return $this->setKeyData(self::FUNC_FILTER, $value);
@@ -138,6 +148,14 @@ class ConfigManager  extends BaseConfig
         return $this;
     }
 
+    public function getFuncExtendParam($value = null)
+    {
+        return $this->getKeyData(self::FUNC_EXTEND_PARAM, $value);
+    }
+    public function getFuncDataChangeEvent($value = null)
+    {
+        return $this->getKeyData(self::FUNC_DATA_CHANGE_EVENT, $value);
+    }
     public function getFuncFilter($value = null)
     {
         return $this->getKeyData(self::FUNC_FILTER, $value);

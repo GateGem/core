@@ -36,6 +36,7 @@ trait WithTableEdit
     }
     public function LoadData()
     {
+
         $option = $this->getOptionProperty();
         if (!$option || !isset($option[ConfigManager::MODEL]) || $option[ConfigManager::MODEL] == '')
             return abort(404);
@@ -63,36 +64,22 @@ trait WithTableEdit
                 if (isset($data->{$field_name}))
                     $this->{$field_name} = $data->{$field_name};
                 else {
-                    if ($this->isFormNew) {
-                        $default_value = $item->getDataDefault(null);
-                        if ($default_value && is_callable($default_value))
-                            $this->{$field_name} = $default_value($this->isFormNew);
-                        else {
-                            if (!$default_value) {
-                                $key = $item->getDataKey();
-                                $dataCache = $item->getDataCache();
-                                if ($dataCache && count($dataCache) > 0) {
-                                    $default_value = $dataCache[0][$key];
-                                }
+                    $default_value = $item->getDataDefault(null);
+                    if ($default_value && is_callable($default_value))
+                        $default_value = $default_value($this->isFormNew);
+                    else {
+                        if (!$default_value) {
+                            $key = $item->getDataKey();
+                            $dataCache = $item->getDataCache();
+                            if ($dataCache && count($dataCache) > 0) {
+                                $default_value = $dataCache[0][$key];
                             }
-                            $this->{$field_name} = $default_value;
-                        }
-                    } else {
-                        $default_value = $item->getDataDefault(null);
-                        if ($default_value && is_callable($default_value))
-                            $this->{$field_name} = $default_value($this->isFormNew);
-                        else {
-                            if (!$default_value) {
-                                $key = $item->getDataKey();
-                                $dataCache = $item->getDataCache();
-                                if ($dataCache && count($dataCache) > 0) {
-                                    $default_value = $dataCache[0][$key];
-                                }
-                            }
-
-                            $this->{$field_name} = $default_value;
                         }
                     }
+                    if ($funcBindData = $item->getFuncDataBing()) {
+                        $default_value = $funcBindData($this->isFormNew, $this->__Params, $this);
+                    }
+                    $this->{$field_name} = $default_value;
                 }
             }
         }
@@ -163,6 +150,7 @@ trait WithTableEdit
         $this->refreshData(['module' => $this->module]);
         $this->hideModal();
         $this->ShowMessage('Update successful!');
+        $this->ChangeDataEvent();
     }
     public function render()
     {
@@ -184,6 +172,12 @@ trait WithTableEdit
             if (isset($this->{$field}) && ($this->{$field} == null || $this->{$field} == '')) {
                 $this->{$field} = $default;
             }
+        }
+    }
+    public function ChangeDataEvent()
+    {
+        if ($event = $this->option->getFuncDataChangeEvent()) {
+            $event($this->__Params, $this, request());
         }
     }
 }

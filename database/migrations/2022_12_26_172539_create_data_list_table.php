@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('data_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('key');
+            $table->string('key')->unique();
             $table->string('title')->nullable();
             $table->longText('content')->nullable();
             $table->boolean('status')->nullable();

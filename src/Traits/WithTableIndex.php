@@ -10,6 +10,7 @@ use GateGem\Core\Support\Config\ButtonConfig;
 use GateGem\Core\Support\Config\ConfigManager;
 use GateGem\Core\Support\Config\FormConfig;
 use GateGem\Core\Utils\ColectionPaginate;
+use Illuminate\Support\Facades\Log;
 use Livewire\WithPagination;
 
 trait WithTableIndex
@@ -55,6 +56,7 @@ trait WithTableIndex
     public $sort = [];
     public $filter = [];
     public $viewEdit = '';
+    public $paraText = '';
     public function doSort($field, $sort)
     {
         $this->sort = [];
@@ -80,11 +82,17 @@ trait WithTableIndex
             if ($option == null || !is_a($option, ConfigManager::class)) {
                 return null;
             }
-
-            $option = apply_filters('filter_table_option_' . $this->module, $option);
+            $paraText = "";
+            if (isset($this->__Params) && is_array($this->__Params) && count($this->__Params) > 0) {
+                foreach ($this->__Params as $key => $value) {
+                    if (!in_array($key, ['module', 'dataId'])) {
+                        $paraText .= ",'" . $key . "':'" . $value . "'";
+                    }
+                }
+            }
+            $this->paraText = $paraText;
             $this->option_temp = $option;
-
-            $this->viewEdit = getValueByKey($option, FormConfig::FORM_EDIT, 'core::table.edit');
+            $this->viewEdit = $option->getValueInForm(FormConfig::FORM_EDIT, 'core::table.edit');
             if ($option) {
                 $option[ConfigManager::FIELDS][] = GateConfig::Field('')
                     ->setTitle(getValueByKey($option, ConfigManager::ACTION_TITLE, '#'))
@@ -93,13 +101,16 @@ trait WithTableIndex
                     })
                     ->setClassData('action-data  text-center')
                     ->setClassHeader('action-header text-center')
-                    ->setFuncCell(function ($valueCell, $row, $column) use ($option) {
+                    ->setFuncCell(function ($valueCell, $row, $column) use ($option, $paraText) {
+                        if ($func = $option->getFuncExtendParam()) {
+                            $paraText .= $func($row, $column);
+                        }
                         $html = '';
                         $valueId = $row[getValueByKey($option, ConfigManager::MODEL_KEY, 'id')];
                         if ($this->checkEdit()) {
                             $html = $html  . "&nbsp;" . GateConfig::Button('core::table.button.edit')
                                 ->setClass('btn btn-sm btn-success')
-                                ->setDoComponent($this->viewEdit, "{'module':'" . $this->module . "','dataId':" . $valueId . '}')
+                                ->setDoComponent($this->viewEdit, "{'module':'" . $this->module . "','dataId':" . $valueId . $paraText . '}')
                                 ->setIcon('<i class="bi bi-pencil-square"></i> ')
                                 ->toHtml();
                         }
@@ -107,7 +118,7 @@ trait WithTableIndex
                             $html = $html . "&nbsp;" . GateConfig::Button('core::table.button.remove')
                                 ->setClass('btn btn-sm btn-danger')
                                 ->setAttr(' data-confirm-message="' . __('core::table.message.confirm-remove') . '" ')
-                                ->setConfirm('RemoveRow', "{'module':'" . $this->module . "','dataId':" . $valueId . '}')
+                                ->setConfirm('RemoveRow', "{'module':'" . $this->module . "','dataId':" . $valueId . $paraText . '}')
                                 ->setIcon('<i class="bi bi-trash"></i> ')
                                 ->toHtml();
                         }
@@ -115,7 +126,7 @@ trait WithTableIndex
                         $buttonAppend = getValueByKey($option, ConfigManager::BUTTON_APPEND, []);
                         foreach ($buttonAppend as $button) {
                             if ($button->checkType(ButtonConfig::TYPE_UPDATE)) {
-                                $html = $html . "&nbsp;" .  $button->toHtml($valueId, $row, $column);
+                                $html = $html . "&nbsp;" .  $button->toHtml($valueId, $row, $column, $paraText);
                             }
                         }
                         return  $html;
@@ -128,12 +139,16 @@ trait WithTableIndex
         }
         return  $this->option_temp;
     }
-    public function RemoveRow($id)
+    public function RemoveRow($paramRemove)
     {
-        $model = app($this->option[ConfigManager::MODEL])->find($id);
-        if ($model)
-            $model->delete();
-        $this->refreshData(['module' => $this->module]);
+        if ($id = $paramRemove['dataId']) {
+            $this->__Params = Core::mereArr($this->__Params, $paramRemove);
+            $model = $this->getModel();
+            if ($model)
+                $model->where($this->option->getModelKey(), $id)->delete();
+            $this->refreshData(['module' => $this->module]);
+            $this->ChangeDataEvent();
+        }
     }
     public function LoadData()
     {
@@ -163,15 +178,15 @@ trait WithTableIndex
     }
     public function getModel()
     {
-        if (isset($this->option[ConfigManager::MODEL])) {
-            $model = app($this->option[ConfigManager::MODEL]);
-        } else if (isset($this->option[ConfigManager::FUNC_DATA])) {
-            $model = $this->option[ConfigManager::FUNC_DATA]();
+        if ($__model = $this->option->getModel()) {
+            $model = app($__model);
+        } else if ($funcData = $this->option->getFuncData()) {
+            $model = $funcData();
         } else {
             $model = collect([]);
         }
-        if (isset($this->option[ConfigManager::FUNC_QUERY])) {
-            return $this->option[ConfigManager::FUNC_QUERY]($model, request(), $this);
+        if ($funcQuery = $this->option->getFuncQuery()) {
+            return $funcQuery($model, request(), $this->__Params, $this);
         }
         return $model;
     }
@@ -268,5 +283,11 @@ trait WithTableIndex
     protected function checkExportExcel()
     {
         return $this->getKeyData(ConfigManager::EXPORT_EXCEL, true) && \GateGem\Core\Facades\Core::checkPermission($this->_code_permission . '.export');
+    }
+    public function ChangeDataEvent()
+    {
+        if ($event = $this->option->getFuncDataChangeEvent()) {
+            $event($this->__Params, $this, request());
+        }
     }
 }

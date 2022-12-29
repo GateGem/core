@@ -30,6 +30,7 @@ class FieldConfig  extends BaseConfig
     public const KEY_LAYOUT = "KEY_LAYOUT";
     public const FUNC_DATA = "FUNC_DATA";
     public const FUNC_CELL = "FUNC_CELL";
+    public const FUNC_DATA_BIND = "FUNC_DATA_BIND";
     public const DATA_CACHE = "DATA_CACHE";
     public const DATA_KEY = "DATA_KEY";
     public const DATA_TEXT = "DATA_TEXT";
@@ -90,6 +91,7 @@ class FieldConfig  extends BaseConfig
     {
         return $this->setKeyData(self::DATA_FORMAT, $value);
     }
+
     public function setDataFormatJs($value): self
     {
         return $this->setKeyData(self::DATA_FORMAT_JS, $value);
@@ -113,6 +115,10 @@ class FieldConfig  extends BaseConfig
     public function setFuncCell(callable $value): self
     {
         return $this->setKeyData(self::FUNC_CELL, $value);
+    }
+    public function setFuncDataBind($funcDataBing)
+    {
+        return $this->hideAll()->setKeyData(self::FUNC_DATA_BIND, $funcDataBing);
     }
     public function setKeyLayout($value): self
     {
@@ -176,6 +182,10 @@ class FieldConfig  extends BaseConfig
     public function getDataFormatJs($value = '')
     {
         return $this->getKeyData(self::DATA_FORMAT_JS, $value);
+    }
+    public function getFuncDataBing($value = null)
+    {
+        return $this->getKeyData(self::FUNC_DATA_BIND, $value);
     }
     public function getClassHeader($value = '')
     {
@@ -241,6 +251,10 @@ class FieldConfig  extends BaseConfig
     public function checkDefer()
     {
         return $this->getKeyData(self::DEFER, true);
+    }
+    public function hideAll()
+    {
+        return $this->hideAdd()->hideEdit()->hideView();
     }
     public function hideView(): self
     {

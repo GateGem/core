@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 trait WithDoAction
 {
-    public $__Params;
+    public $__Params=[];
     protected $__request;
     public function bootWithDoAction()
     {
@@ -34,7 +34,8 @@ trait WithDoAction
     }
     public function DoAction($action, $param)
     {
-        $this->__Params = Core::jsonDecode(Core::base64Decode($param));
+       $_param = Core::jsonDecode(Core::base64Decode($param));
+       $this->__Params=  Core::mereArr($this->__Params,$_param);
         $action = Core::base64Decode($action);
         return  app($action)->SetComponent($this)->SetParam($this->__Params)->DoAction();
     }

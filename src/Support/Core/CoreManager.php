@@ -373,6 +373,7 @@ class CoreManager
     public function mereArr($arr1, $arr2)
     {
         if ($arr1 == null) $arr1 = [];
+        if ($arr2 == null) $arr2 = [];
 
         if (is_array($arr2)) {
             foreach (array_keys($arr2) as $key) {

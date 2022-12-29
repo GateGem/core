@@ -96,5 +96,37 @@ return [
         'button' => [
             'list' => 'Item List'
         ]
+    ],
+    'data_item' => [
+        'title' => 'Item List',
+        'field' => [
+            'link' => 'Link',
+            'title' => 'Title',
+            'image' => 'Image',
+            'content_short' => 'Content Short',
+            'content' => 'Content',
+            'status' => 'Status',
+            'value' => 'Value',
+            'item_default' => 'Item Default',
+            'sort' => 'Sort',
+        ],
+        'button' => []
+    ],
+    'custom_field_group' => [
+        'title' => 'Custom Field Group',
+        'field' => [
+            'key' => 'key',
+            'title' => 'Title',
+            'module_key' => 'Module',
+            'model_key' => 'Content Short',
+            'content' => 'Content',
+            'status' => 'Status',
+            'value' => 'Value',
+            'item_default' => 'Item Default',
+            'sort' => 'Sort',
+        ],
+        'button' => [
+            'list' => 'Item List'
+        ]
     ]
 ];
