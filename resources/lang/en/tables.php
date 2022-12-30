@@ -128,5 +128,23 @@ return [
         'button' => [
             'list' => 'Item List'
         ]
-    ]
+        ],
+        'custom_field_item' => [
+            'title' => 'Custom Field',
+            'field' => [
+                'key' => 'key',
+                'title' => 'Title',
+                'module_key' => 'Module',
+                'model_key' => 'Content Short',
+                'content' => 'Content',
+                'status' => 'Status',
+                'value' => 'Value',
+                'item_default' => 'Item Default',
+                'sort' => 'Sort',
+            ],
+            'button' => [
+                'list' => 'Item List'
+            ]
+        ]
+    
 ];

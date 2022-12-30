@@ -2,6 +2,7 @@
 
 namespace GateGem\Core\Support\Config;
 
+use GateGem\Core\Builder\Form\FieldBuilder;
 
 /**
  * 
@@ -35,6 +36,7 @@ class FieldConfig  extends BaseConfig
     public const DATA_KEY = "DATA_KEY";
     public const DATA_TEXT = "DATA_TEXT";
     public const DATA_DEFAULT = "DATA_DEFAULT";
+    public const DATA_LIST_KEY = "DATA_LIST_KEY";
     public const DATA_DEFAULT_TEXT = "DATA_DEFAULT_TEXT";
     public const DATA_FORMAT = "DATA_FORMAT";
     public const DATA_FORMAT_JS = "DATA_FORMAT_JS";
@@ -47,6 +49,13 @@ class FieldConfig  extends BaseConfig
     public const CHECK_SHOW = "CHECK_SHOW";
     public const DEFER = "DEFER";
     public const PREX = "PREX";
+    public function setListKey($value): self
+    {
+        return $this->setType(FieldBuilder::Dropdown)
+            ->setDataKey('value')
+            ->setDataText('title')
+            ->setKeyData(self::DATA_LIST_KEY, $value);
+    }
     public function setPrex($value): self
     {
         return $this->setKeyData(self::PREX, $value);
@@ -128,7 +137,10 @@ class FieldConfig  extends BaseConfig
     {
         return $this->setKeyData(self::FIELD, $value);
     }
-
+    public function getListKey($value = '')
+    {
+        return $this->getKeyData(self::DATA_LIST_KEY, $value);
+    }
     public function getPrex($value = '')
     {
         return $this->getKeyData(self::PREX, $value);
@@ -290,6 +302,11 @@ class FieldConfig  extends BaseConfig
         $funcData = $this->getFuncData(null);
         if ($funcData && is_callable($funcData)) {
             $funcData = $funcData($request, $component);
+        }
+        if (!$funcData) $funcData = [];
+
+        if (count($funcData) == 0 && $list_key = $this->getListKey()) {
+            $funcData = get_list($list_key)->items;
         }
         if (!$funcData) $funcData = [];
         return $this->setKeyData(self::DATA_CACHE, $funcData);

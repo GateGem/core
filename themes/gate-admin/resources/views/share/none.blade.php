@@ -1,1 +1,1 @@
-<div class="text-center p-1 ">@ {{date('Y')}}</div>
+<div class="text-center p-1 border-top border-primary">Gate @ {{date('Y')}}</div>

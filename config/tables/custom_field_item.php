@@ -22,13 +22,34 @@ return GateConfig::NewItem()
     })
     ->setFields([
         GateConfig::Field('key')
-            ->setTitle('core::tables.data_list.field.key')
+            ->setTitle('core::tables.custom_field_item.field.key')
             ->hideEdit()
             ->disableEdit(),
         GateConfig::Field('title')
-            ->setTitle('core::tables.data_list.field.title'),
-        GateConfig::FieldStatus('status', 'data_list')
+            ->setTitle('core::tables.custom_field_item.field.title'),
+        GateConfig::Field('format')
+            ->setTitle('core::tables.custom_field_item.field.format'),
+        GateConfig::Field('list_key')
+            ->setTitle('core::tables.custom_field_item.field.list_key'),
+        GateConfig::Field('list_data')
+            ->setTitle('core::tables.custom_field_item.field.list_data'),
+        GateConfig::Field('type')
+            ->setListKey('Custom_Field_Type')
+            ->setTitle('core::tables.custom_field_item.field.type'),
+        GateConfig::Field('placeholder')
+            ->setTitle('core::tables.custom_field_item.field.placeholder'),
+        GateConfig::Field('prepend')
+            ->setTitle('core::tables.custom_field_item.field.prepend'),
+        GateConfig::Field('append')
+            ->setTitle('core::tables.custom_field_item.field.append'),
+        GateConfig::Field('default')
+            ->setTitle('core::tables.custom_field_item.field.default'),
+        GateConfig::Field('character_limit')
+            ->setTitle('core::tables.custom_field_item.field.character_limit'),
+        GateConfig::Field('required')
+            ->setTitle('core::tables.custom_field_item.field.required'),
+        GateConfig::Field('status')
+            ->setTitle('core::tables.custom_field_item.field.status'),
+        GateConfig::FieldStatus('status', 'custom_field_item')
             ->setKeyLayout('row1_1'),
-        // GateConfig::Field('item_default')
-        //     ->setTitle('core::tables.data_list.field.item_default')
     ]);
