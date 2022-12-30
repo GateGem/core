@@ -191,10 +191,9 @@ class FieldBuilder extends HtmlBuilder
             case FieldBuilder::Dropdown:
                 $funcData = $this->option->getDataCache([]);
                 echo '<select ' . $attr . ' class="form-control ' . $class_name . '"  id="input-' . $field_name . '" ' .  $this->getModelField() . ' >';
-                $optionDefault = '';
-                $optionTextDefault='';
-                if (getValueByKey($this->formData, 'filter', false) || (($optionDefault = $this->option->getDataDefault()) !== '' && ($optionTextDefault = $this->option->getDataTextDefault()))) {
-                    if ($optionDefault === true || $optionTextDefault == '')
+                $optionTextDefault = '';
+                if (getValueByKey($this->formData, 'filter', false) || ($optionTextDefault = $this->option->getDataTextDefault())) {
+                    if ($optionTextDefault === true)
                         echo '<option value="">' . __($this->option->getTitle()) . '</option>';
                     if ($optionTextDefault !== '' && $optionTextDefault !== true)
                         echo '<option value="">' . __($optionTextDefault)  . '</option>';

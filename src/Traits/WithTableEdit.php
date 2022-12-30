@@ -7,11 +7,10 @@ use GateGem\Core\Loader\TableLoader;
 use GateGem\Core\Support\Config\ConfigManager;
 use GateGem\Core\Support\Config\FieldConfig;
 use GateGem\Core\Support\Config\FormConfig;
-use Livewire\WithFileUploads;
 
 trait WithTableEdit
 {
-    use WithFileUploads;
+    use WithFieldSave;
     public $module = '';
     public $dataId = 0;
     public $isFormNew = true;
@@ -68,7 +67,7 @@ trait WithTableEdit
                     if ($default_value && is_callable($default_value))
                         $default_value = $default_value($this->isFormNew);
                     else {
-                        if (!$default_value) {
+                        if ($default_value === null && ($item->getDataTextDefault(null) === null)) {
                             $key = $item->getDataKey();
                             $dataCache = $item->getDataCache();
                             if ($dataCache && count($dataCache) > 0) {
@@ -129,18 +128,8 @@ trait WithTableEdit
         foreach ($fields as $item) {
             $this->flgDataCache = true;
             $item->DoFuncData($this->__request, $this);
-            $field_name = $item->getField();
-            // $item->DoFuncData($this->__request, $this);
-            if ($item->checkKey(FieldConfig::FIELD)) {
-                $valuePreview = $this->{$field_name};
-                if ($valuePreview && $valuePreview instanceof \Illuminate\Http\UploadedFile) {
-                    if (isset($item[FieldConfig::FOLDER]) && $item[FieldConfig::FOLDER] != '')
-                        $valuePreview = $valuePreview->store('public/' . $item[FieldConfig::FOLDER]);
-                    else
-                        $valuePreview = $valuePreview->store('public');
-                    $valuePreview = str_replace('public', 'storage', $valuePreview);
-                }
-                $data->{$field_name} =  $valuePreview;
+            if ($field_name = $item->getField()) {
+                $data->{$field_name} = $this->getFieldValueData($this->{$field_name}, $item, $data->{$field_name});
             }
         }
         if (method_exists($this, 'beforeSave')) {

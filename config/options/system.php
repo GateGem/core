@@ -36,4 +36,8 @@ return GateConfig::Option('System')->setSort(0)->setFields([
             })->toArray();
         })
         ->setTitle('Theme Site'),
+    GateConfig::Field('page_site_theme_logo')
+        ->setType(FieldBuilder::Image)
+        ->setFieldColumn(FieldBuilder::Col6)
+        ->setTitle('Theme Logo'),
 ]);

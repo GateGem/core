@@ -4,9 +4,11 @@ namespace GateGem\Core\Http\Livewire\Common\Option;
 
 use GateGem\Core\Livewire\Modal;
 use GateGem\Core\Loader\OptionLoader;
+use GateGem\Core\Traits\WithFieldSave;
 
 class Index extends Modal
 {
+    use WithFieldSave;
     private $option_data;
     public string $option_key = "";
     public function getOption()
@@ -32,10 +34,11 @@ class Index extends Modal
             $this->_dataTemps[$item->getField()] = get_option($item->getField(), '');
         }
     }
+
     public function doSave()
     {
         foreach ($this->getOption()->getFields()  as $item) {
-            set_option($item->getField(),  $this->_dataTemps[$item->getField()]);
+            set_option($item->getField(),  $this->getFieldValueData($this->_dataTemps[$item->getField()], $item, null));
         }
     }
     public function render()

@@ -128,23 +128,32 @@ return [
         'button' => [
             'list' => 'Item List'
         ]
+    ],
+    'custom_field_item' => [
+        'title' => 'Custom Field',
+        'field' => [
+            'key' => 'key',
+            'title' => 'Title',
+            'list_key' => 'List Key',
+            'list_data' => 'List Data',
+            'type' => 'Type',
+            'placeholder'=>'Placeholder',
+            'prepend'=>'prepend',
+            'append'=>'append',
+            'character_limit'=>'character_limit',
+            'required'=>'required',
+            'default'=>'default',
+            'format' => 'Format',
+            'module_key' => 'Module',
+            'model_key' => 'Content Short',
+            'content' => 'Content',
+            'status' => 'Status',
+            'value' => 'Value',
+            'sort' => 'Sort',
         ],
-        'custom_field_item' => [
-            'title' => 'Custom Field',
-            'field' => [
-                'key' => 'key',
-                'title' => 'Title',
-                'module_key' => 'Module',
-                'model_key' => 'Content Short',
-                'content' => 'Content',
-                'status' => 'Status',
-                'value' => 'Value',
-                'item_default' => 'Item Default',
-                'sort' => 'Sort',
-            ],
-            'button' => [
-                'list' => 'Item List'
-            ]
+        'button' => [
+            'list' => 'Item List'
         ]
-    
+    ]
+
 ];
