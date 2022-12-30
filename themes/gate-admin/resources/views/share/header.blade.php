@@ -10,7 +10,7 @@
             <li class="">
                 @livewire(apply_filters('filter_theme_language_selector', 'core::common.language-selector'))
             </li>
-            <li> @livewire(apply_filters('filter_theme_language_selector', 'core::common.profile'))</li>
+            <li> @livewire(apply_filters('filter_theme_profile_selector', 'core::common.profile'))</li>
         </ul>
     </div>
 </div>
