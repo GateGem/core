@@ -13,7 +13,8 @@
     .sidebar-inner {
         position: relative;
         height: 100%;
-
+        display: flex;
+        flex-direction: column;
         .sidebar-logo {
             border-bottom: 1px solid rgba(0, 0, 0, 0.0625);
             border-right: 1px solid rgba(0, 0, 0, 0.0625);
@@ -22,7 +23,7 @@
             -o-transition: all 0.2s ease;
             transition: all 0.2s ease;
             height: $header_height;
-
+            flex: none;
             .sidebar-logo-mini {
                 display: none;
                 text-align: center;
@@ -30,8 +31,8 @@
         }
 
         .sidebar-menu {
+          flex: auto;
             border-right: 1px solid rgba(0, 0, 0, 0.0625);
-            height: calc(100vh - 40px);
             list-style: none;
             margin: 0;
             overflow: auto;
