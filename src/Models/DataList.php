@@ -25,7 +25,7 @@ class DataList extends Model
     ];
     public function Items()
     {
-        return $this->hasMany(DataItem::class,'list_id');
+        return $this->hasMany(DataItem::class,'list_id')->orderby('sort');
     }
 }
 

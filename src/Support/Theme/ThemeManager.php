@@ -76,7 +76,11 @@ class ThemeManager
     {
         if (!isset($this->data_active) || !$this->data_active) {
 
-            $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_site_theme')));
+            if (Request()->route()->getPrefix() === Core::adminPrefix()) {
+                $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_admin_theme', 'gate-admin')));
+            } else {
+                $this->data_active = $this->findAndActive(apply_filters("filter_theme_layout", get_option('page_site_theme', 'none')));
+            }
             if ($this->data_active == null) {
                 $this->data_active = $this->findAndActive('gate-none');
             }

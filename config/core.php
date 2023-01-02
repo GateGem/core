@@ -7,6 +7,8 @@ use GateGem\Core\Commands\ModuleDisableCommand;
 use GateGem\Core\Commands\ModuleDumpCommand;
 use GateGem\Core\Commands\ModuleEnableCommand;
 use GateGem\Core\Commands\ModuleLinkCommand;
+use GateGem\Core\Commands\PluginDumpCommand;
+use GateGem\Core\Commands\ThemeDumpCommand;
 
 return [
     'web' => [
@@ -32,5 +34,7 @@ return [
         ModuleDisableCommand::class,
         ModuleEnableCommand::class,
         ModuleLinkCommand::class,
+        ThemeDumpCommand::class,
+        PluginDumpCommand::class
     ]
 ];

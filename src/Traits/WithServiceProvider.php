@@ -204,10 +204,6 @@ trait WithServiceProvider
             Route::middleware('web', Authenticate::class)
                 ->prefix(Core::adminPrefix())
                 ->group($this->package->basePath('/../routes/admin.php'));
-        // foreach ($this->package->routeFileNames as $routeFileName) {
-        //     $this->loadRoutesFrom("{$this->package->basePath('/../routes/')}{$routeFileName}.php");
-        // }
-
         foreach ($this->package->sharedViewData as $name => $value) {
             View::share($name, $value);
         }

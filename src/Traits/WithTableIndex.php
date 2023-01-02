@@ -82,6 +82,7 @@ trait WithTableIndex
             if ($option == null || !is_a($option, ConfigManager::class)) {
                 return null;
             }
+            $option = apply_filters('filter_table_option_' . $this->module, $option);
             $paraText = "";
             if (isset($this->__Params) && is_array($this->__Params) && count($this->__Params) > 0) {
                 foreach ($this->__Params as $key => $value) {

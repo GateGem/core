@@ -22,6 +22,7 @@ class Widget extends Component
     protected WidgetConfig $widget_config;
     public function process_data()
     {
+        if (!$this->key_widget) return;
         $this->widget_config = DashboardLoader::getDataByKey($this->key_widget);
         $this->widget_title =  $this->widget_config->getTitle();
         $this->widget_icon =  $this->widget_config->getIcon();

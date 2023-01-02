@@ -28,6 +28,6 @@ return GateConfig::NewItem()
         GateConfig::Field('name')->setTitle('core::tables.module.field.name')->setType(FieldBuilder::Text)->setKeyLayout('row1_1'),
         GateConfig::Field('key')->setTitle('core::tables.module.field.key')->setType(FieldBuilder::Text)->setKeyLayout('row1_2'),
         GateConfig::Field('description')->setTitle('core::tables.module.field.description')->setType(FieldBuilder::Text)->setKeyLayout('row1_1'),
-        GateConfig::FieldStatus('status', 'module','key')
+        GateConfig::FieldStatus('status', 'module', 'key')
             ->setKeyLayout('row1_1')
     ]);
